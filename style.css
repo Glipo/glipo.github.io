@@ -222,6 +222,7 @@ card.post .actions div button {
 }
 
 dialog {
+    position: fixed;
     max-width: calc(100vw - 20px);
     padding: 0;
     background-color: var(--background);
