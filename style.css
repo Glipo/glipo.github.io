@@ -16,6 +16,7 @@
     --blueText: white;
     --yellow: #fff726;
     --yellowText: black;
+    --blur: rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -64,6 +65,11 @@ nav .search input {
     padding-left: 40px;
 }
 
+[dir="rtl"] nav .search input {
+    padding-left: 20px;
+    padding-right: 40px;
+}
+
 nav .search icon {
     position: absolute;
     top: 10px;
@@ -77,7 +83,14 @@ nav .location {
     width: calc(20vw - 33px);
     margin-left: 15px;
     padding-right: 40px;
-    text-align: left;
+    text-align: start;
+}
+
+[dir="rtl"] nav .location {
+    margin-left: 0;
+    margin-right: 15px;
+    padding-left: 40px;
+    padding-right: 20px;
 }
 
 nav .location icon {
@@ -87,9 +100,19 @@ nav .location icon {
     font-size: 20px;
 }
 
+[dir="rtl"] nav .location icon {
+    left: 12px;
+    right: unset;
+}
+
 nav .menuButton {
     width: calc(10vw - 5px);
     margin-left: 5px;
+}
+
+[dir="rtl"] nav .menuButton {
+    margin-left: unset;
+    margin-right: 5px;
 }
 
 nav .menuButtonBig {
@@ -128,6 +151,11 @@ main aside {
     width: calc(30vw - 30px);
     margin-left: 15px;
     vertical-align: top;
+}
+
+[dir="rtl"] main aside {
+    margin-left: 0;
+    margin-right: 15px;
 }
 
 card {
@@ -170,19 +198,78 @@ card.post .actions {
 card.post .actions div:first-of-type {
     float: left;
     width: 50%;
-    text-align: left;
+    text-align: start;
+}
+
+[dir="rtl"] card.post .actions div:first-of-type {
+    float: right;
 }
 
 card.post .actions div:last-of-type {
     float: right;
     width: 50%;
-    text-align: right;
+    text-align: end;
+}
+
+[dir="rtl"] card.post .actions div:last-of-type {
+    float: left;
 }
 
 card.post .actions div button {
     padding: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+dialog {
+    max-width: calc(100vw - 20px);
+    padding: 0;
+    background-color: var(--background);
+    color: var(--foreground);
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+dialog::backdrop, dialog + .backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: 1s opacity;
+}
+
+dialog .title {
+    background-color: var(--shade1);
+    padding: 10px;
+}
+
+dialog .title span {
+    display: inline-block;
+    width: calc(100% - 35px);
+    font-size: 20px;
+}
+
+dialog .title button {
+    width: 30px;
+    padding: 5px;
+}
+
+dialog .content {
+    padding: 10px;
+}
+
+dialog .content h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+label {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+label > span:first-of-type {
+    display: inline-block;
+    width: 150px;
 }
 
 button {
@@ -223,6 +310,7 @@ button.yellow {
 }
 
 input {
+    width: 200px;
     padding: 10px;
     background-color: var(--shade2);
     color: var(--foreground);
@@ -244,6 +332,18 @@ a:hover {
     text-decoration: underline;
 }
 
+.start {
+    text-align: start;
+}
+
+.middle {
+    text-align: middle;
+}
+
+.end {
+    text-align: end;
+}
+
 .desktop {
     display: unset;
 }
@@ -252,12 +352,69 @@ a:hover {
     display: none;
 }
 
+.spacer {
+    height: 10px;
+}
+
 .menuButtonBig {
     display: unset;
 }
 
 .menuButtonSmall {
     display: none;
+}
+
+.menu {
+    position: fixed;
+    display: none;
+    top: 70px;
+    right: calc(10vw + 6px);
+    width: calc(30vw - 30px);
+    max-height: calc(100vh - 100px);
+    background-color: var(--shade2);
+    border-radius: 10px;
+    overflow: auto;
+}
+
+[dir="rtl"] .menu {
+    left: calc(10vw + 6px);
+    right: unset;
+}
+
+.menu button {
+    width: 100%;
+    border-radius: 0;
+    text-align: start;
+    overflow: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: 0.5s background-color, 0.5s opacity;
+}
+
+.menu button:hover {
+    background-color: var(--shade1);
+}
+
+.labelDescription {
+    max-width: 375px;
+}
+
+.buttonRow {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.buttonRow button {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.buttonRow button:first-of-type {
+    margin-right: 0;
+}
+
+.errorMessage {
+    color: var(--yellow);
 }
 
 @media (max-width: 1000px) {
@@ -272,6 +429,7 @@ a:hover {
 
 @media (max-width: 600px) {
     nav {
+        width: calc(100vw - 40px);
         padding-left: 20px;
         padding-right: 20px;
     }
@@ -312,5 +470,21 @@ a:hover {
 
     .mobile {
         display: unset;
+    }
+
+    .menu {
+        left: 10px;
+        right: 10px;
+        width: calc(100vw - 20px);
+    }
+}
+
+@media (max-width: 400px) {
+    label span:first-of-type {
+        display: block;
+    }
+
+    label input {
+        width: calc(100% - 20px);
     }
 }

@@ -21,3 +21,9 @@ var core = {
         return key;
     }
 };
+
+$(function() {
+    for (var i = 0; i < $("dialog").length; i++) {
+        dialogPolyfill.registerDialog($("dialog")[i]);
+    }
+});

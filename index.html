@@ -12,8 +12,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=3">
         <link rel="shortcut icon" href="/media/small.png">
+        <link rel="stylesheet" href="/lib/dialog-polyfill.css">
         <link rel="stylesheet" href="/lib/font.css">
         <link rel="stylesheet" href="/style.css">
+        <script src="/lib/dialog-polyfill.js"></script>
         <script src="/lib/jquery.min.js"></script>
         <script src="/lib/firebase-app.js"></script>
         <script src="/lib/firebase-analytics.js"></script>
@@ -23,7 +25,7 @@
         <script src="/lib/firebase-storage.js"></script>
         <script src="/core.js"></script>
         <script src="/lang.js"></script>
-        <script src="/index.js"></script>
+        <script src="/script.js"></script>
         <script src="/lang/en_GB.js"></script>
     </head>
     <body>
@@ -36,10 +38,15 @@
                 <input type="search" placeholder="@Search">
                 <icon>search</icon>
             </div>
-            <button class="location desktop"><span>@Feed</span><icon aria-hidden="true">arrow_drop_down</icon></button>
-            <button class="menuButton menuButtonBig blue">@Sign in</button>
-            <button class="menuButton menuButtonSmall"><icon>menu</icon></button>
+            <button onclick="toggleMenu();" class="location desktop"><span>@Feed</span><icon aria-hidden="true" class="locationDropdownIndicator">arrow_drop_down</icon></button>
+            <button onclick="showSignInDialog();" class="menuButton menuButtonBig blue">@Sign in</button>
+            <button onclick="toggleMenu();" class="menuButton menuButtonSmall"><icon>menu</icon></button>
         </nav>
+        <div class="menu">
+            <button>@Feed</button>
+            <button>@Your profile</button>
+            <button>@Settings</button>
+        </div>
         <main>
             <section class="posts">
                 <card class="post">
@@ -113,7 +120,7 @@
                 <card>
                     <h1>@Welcome to Glipo</h1>
                     <p>@Glipo is a social network where you can discover your community through our groups.</p>
-                    <button class="big blue">Sign up</button>
+                    <button onclick="showSignUpDialog();" class="big blue">Sign up</button>
                 </card>
                 <card>
                     <h2>@Trending groups</h2>
@@ -135,5 +142,74 @@
                 </card>
             </aside>
         </main>
+        <dialog class="signInDialog">
+            <div class="title">
+                <span>Sign in</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <h2>@Welcome back</h2>
+                <p class="labelDescription">@Enter your email address and password to sign into your Glipo account.</p>
+                <p><span>Don't have an account yet?</span> <a href="javascript:switchToSignUpDialog();">@Sign up instead</a></p>
+                <label>
+                    <span>@Email address</span>
+                    <input type="email" id="signInEmail">
+                </label>
+                <label>
+                    <span>@Password</span>
+                    <input type="password" id="signInPassword">
+                </label>
+                <p class="errorMessage labelDescription" id="signInError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button class="blue">@Sign in</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="signUpDialog">
+            <div class="title">
+                <span>Sign up</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <h2>@Join the fun</h2>
+                <p class="labelDescription"><span>@Enter your email address and password below to sign up to Glipo and discover your community.</span> <a href="javascript:switchToSignInDialog();">@Sign in instead</a></p>
+                <label>
+                    <span>@Email address</span>
+                    <input type="email" id="signUpEmail">
+                </label>
+                <label>
+                    <span>@Password</span>
+                    <input type="password" id="signUpPassword">
+                </label>
+                <p class="errorMessage labelDescription" id="signUpError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="switchToSignUpUsernameDialog();" class="blue">@Next</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="signUpUsernameDialog">
+            <div class="title">
+                <span>Sign up</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <h2>@Nearly there</h2>
+                <p class="labelDescription"><span>@Choose a username for your account. Your username will be visible to everyone when you post or comment on Glipo.</span></p>
+                <label>
+                    <span>@Username</span>
+                    <input id="signUpUsername">
+                </label>
+                <p class="errorMessage labelDescription" id="signUpUsernameError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button class="blue">@Sign up</button>
+                    <button onclick="switchToSignUpDialog();">@Back</button>
+                </div>
+            </div>
+        </dialog>
     </body>
 </html>
