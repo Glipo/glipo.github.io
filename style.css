@@ -407,6 +407,10 @@ hr {
     background-color: var(--shade1);
 }
 
+.forMenuButtonSmall {
+    display: none;
+}
+
 .labelDescription {
     max-width: 375px;
 }
@@ -430,11 +434,15 @@ hr {
 }
 
 @media (max-width: 1000px) {
+    nav .location {
+        width: calc(30vw - 28px);
+    }
+
     nav .menuButtonBig {
         display: none;
     }
 
-    nav .menuButtonSmall {
+    .forMenuButtonSmall {
         display: unset;
     }
 }
@@ -454,6 +462,10 @@ hr {
 
     nav .search input {
         width: calc(100vw - 180px);
+    }
+
+    nav .menuButtonSmall {
+        display: unset;
     }
 
     main {
