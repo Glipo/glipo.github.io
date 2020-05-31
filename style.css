@@ -332,6 +332,15 @@ a:hover {
     text-decoration: underline;
 }
 
+hr {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+}
+
 .start {
     text-align: start;
 }
@@ -374,6 +383,7 @@ a:hover {
     background-color: var(--shade2);
     border-radius: 10px;
     overflow: auto;
+    z-index: 1;
 }
 
 [dir="rtl"] .menu {
@@ -427,11 +437,12 @@ a:hover {
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
     nav {
         width: calc(100vw - 40px);
         padding-left: 20px;
         padding-right: 20px;
+        text-align: center;
     }
 
     nav .logo img {
@@ -440,7 +451,7 @@ a:hover {
     }
 
     nav .search input {
-        width: calc(100vw - 160px);
+        width: calc(100vw - 180px);
     }
 
     main {
