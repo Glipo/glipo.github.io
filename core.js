@@ -1,7 +1,7 @@
 /*
     Glipo
 
-    Copyright (C) Glipo. All Rights Reserved.
+    Copyright (C) Glipo Technologies. All Rights Reserved.
 
     https://glipo.cf
 */

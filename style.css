@@ -1,0 +1,316 @@
+/*
+    Glipo
+
+    Copyright (C) Glipo Technologies. All Rights Reserved.
+
+    https://glipo.cf
+*/
+
+:root {
+    --background: #202c3b;
+    --foreground: white;
+    --shade1: #2e4057;
+    --shade2: #3d5370;
+    --shade3: #89b5ee;
+    --blue: #3089ff;
+    --blueText: white;
+    --yellow: #fff726;
+    --yellowText: black;
+}
+
+* {
+    font-family: "Nunito", sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: calc(100vw - 20px);
+    height: 40px;
+    padding: 10px;
+    background-color: var(--shade1);
+}
+
+nav > * {
+    vertical-align: middle;
+}
+
+nav .logo {
+    display: inline-block;
+    height: 100%;
+}
+
+nav .logo img {
+    width: calc(10vw - 10px);
+    height: 100%;
+    object-fit: contain;
+}
+
+nav .search {
+    display: inline-block;
+    position: relative;
+}
+
+nav .search input {
+    width: 50vw;
+    padding-left: 40px;
+}
+
+nav .search icon {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    font-size: 20px;
+    pointer-events: none;
+}
+
+nav .location {
+    position: relative;
+    width: calc(20vw - 33px);
+    margin-left: 15px;
+    padding-right: 40px;
+    text-align: left;
+}
+
+nav .location icon {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 20px;
+}
+
+nav .menuButton {
+    width: calc(10vw - 5px);
+    margin-left: 5px;
+}
+
+nav .menuButtonBig {
+    width: calc(10vw - 7px);
+}
+
+nav .menuButtonSmall {
+    position: relative;
+    height: 100%;
+}
+
+nav .menuButtonSmall icon {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    right: 0;
+    font-size: 24px;
+}
+
+main {
+    margin-top: 60px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: calc(10vw + 5px);
+    padding-right: calc(10vw + 5px);
+}
+
+main section.posts {
+    display: inline-block;
+    width: 50vw;
+    vertical-align: top;
+}
+
+main aside {
+    display: inline-block;
+    width: calc(30vw - 30px);
+    margin-left: 15px;
+    vertical-align: top;
+}
+
+card {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: var(--shade1);
+    border-radius: 10px;
+}
+
+card h1, card h2, card h3, card h4, card h5, card h6 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+card p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+card.post .info {
+    margin-bottom: 10px;
+    color: var(--shade3);
+}
+
+card.post .info a.group {
+    font-weight: bold;
+}
+
+card.post h2.title a {
+    color: var(--foreground);
+    text-decoration: none;
+}
+
+card.post .actions {
+    height: 30px;
+    margin-top: 15px;
+}
+
+card.post .actions div:first-of-type {
+    float: left;
+    width: 50%;
+    text-align: left;
+}
+
+card.post .actions div:last-of-type {
+    float: right;
+    width: 50%;
+    text-align: right;
+}
+
+card.post .actions div button {
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+button {
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: var(--shade2);
+    color: var(--foreground);
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.5s opacity;
+}
+
+button:hover {
+    opacity: 0.7;
+}
+
+button:active {
+    opacity: 0.5;
+}
+
+button.big {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button.blue {
+    background-color: var(--blue);
+    color: var(--blueText);
+}
+
+button.yellow {
+    background-color: var(--yellow);
+    color: var(--yellowText);
+}
+
+input {
+    padding: 10px;
+    background-color: var(--shade2);
+    color: var(--foreground);
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+}
+
+input::placeholder {
+    color: var(--shade3);
+}
+
+a {
+    color: var(--shade3);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.desktop {
+    display: unset;
+}
+
+.mobile {
+    display: none;
+}
+
+.menuButtonBig {
+    display: unset;
+}
+
+.menuButtonSmall {
+    display: none;
+}
+
+@media (max-width: 1000px) {
+    nav .menuButtonBig {
+        display: none;
+    }
+
+    nav .menuButtonSmall {
+        display: unset;
+    }
+}
+
+@media (max-width: 600px) {
+    nav {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    nav .logo img {
+        width: 50px;
+        margin-right: 10px;
+    }
+
+    nav .search input {
+        width: calc(100vw - 160px);
+    }
+
+    main {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    main section.posts {
+        width: 100%;
+    }
+
+    main aside {
+        display: none;
+    }
+
+    card.post .info {
+        font-size: 12px;
+    }
+
+    card.post .actions div:first-of-type {
+        width: 100%;
+    }
+
+    .desktop {
+        display: none;
+    }
+
+    .mobile {
+        display: unset;
+    }
+}
