@@ -253,7 +253,9 @@ dialog .title button {
 }
 
 dialog .content {
+    max-height: calc(100vh - 100px);
     padding: 10px;
+    overflow: auto;
 }
 
 dialog .content h2 {
