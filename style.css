@@ -119,6 +119,12 @@ nav .menuButtonBig {
     width: calc(10vw - 7px);
 }
 
+nav .menuButtonHalf {
+    width: calc(5vw - 8px);
+    padding-left: 0;
+    padding-right: 0;
+}
+
 nav .menuButtonSmall {
     position: relative;
     height: 100%;
@@ -296,6 +302,11 @@ button:active {
     opacity: 0.5;
 }
 
+button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
 button.big {
     display: block;
     width: 100%;
@@ -362,6 +373,18 @@ hr {
 
 .mobile {
     display: none;
+}
+
+.signedIn {
+    display: none;
+}
+
+.signedOut {
+    display: unset;
+}
+
+[dir="rtl"] .flippable {
+    transform: rotateY(180deg);
 }
 
 .spacer {
@@ -439,7 +462,7 @@ hr {
         width: calc(30vw - 28px);
     }
 
-    nav .menuButtonBig {
+    nav .menuButtonBig, nav .menuButtonHalf {
         display: none;
     }
 
