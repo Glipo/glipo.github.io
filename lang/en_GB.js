@@ -10,5 +10,7 @@ lang.load("en_GB", {
     name: "English (United Kingdom)",
     nameShort: "English",
     textDirection: "ltr",
-    strings: {}
+    strings: {
+        "{0} - Selected": "{0} - Selected"
+    }
 });

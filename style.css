@@ -183,6 +183,12 @@ card p {
     margin-bottom: 5px;
 }
 
+card.sorts button {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 card.post .info {
     margin-bottom: 10px;
     color: var(--shade3);
@@ -386,6 +392,22 @@ hr {
 
 [dir="rtl"] .flippable {
     transform: rotateY(180deg);
+}
+
+.floatStart {
+    float: left;
+}
+
+[dir="rtl"] .floatStart {
+    float: right;
+}
+
+.floatEnd {
+    float: right;
+}
+
+[dir="rtl"] .floatEnd {
+    float: left;
 }
 
 .spacer {
