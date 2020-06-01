@@ -67,12 +67,21 @@
             </div>
         </div>
         <main>
-            <section class="posts">
+            <span class="error404">
+                <section class="posts middle">
+                    <h1>@A bit lost?</h1>
+                    <p>@The page that you requested was not found.</p>
+                    <button onclick="window.location.href = '/';" class="blue">@Go home</button>
+                    <div class="spacer"></div>
+                    <small>404</small>
+                </section>
+            </span>
+            <section class="posts" data-location="^g\/.*|\/$"> <!-- Feed and group page -->
                 <card class="sorts">
                     <button aria-label="@{0} - Selected|@Popular" class="sort blue"><icon aria-hidden="true">whatshot</icon> <span>@Popular</span></button>
                     <button aria-label="@Best" class="sort"><icon aria-hidden="true">bar_chart</icon> <span>@Best</span></button>
                     <button aria-label="@Newest" class="sort"><icon aria-hidden="true">new_releases</icon> <span>@Newest</span></button>
-                    <button class="newPost yellow floatEnd"><icon aria-hidden="true">add</icon> <span>@New post</span></button>
+                    <button onclick="visitSubmitPost();" class="newPost yellow floatEnd"><icon aria-hidden="true">add</icon> <span>@New post</span></button>
                 </card>
                 <card class="post">
                     <div class="info">
@@ -140,6 +149,20 @@
                         </div>
                     </div>
                 </card>
+            </section>
+            <section class="posts" data-location="^submit.*$"> <!-- Post submitting page -->
+                <div class="signedIn">
+                    <h1>@Submit your post</h1>
+                    <input placeholder="@Enter a group to post to" class="grow">
+                    <p>@Post editor coming soon!</p>
+                </div>
+                <div class="signedOut middle">
+                    <div>
+                        <h1>@Make your mark</h1>
+                        <p>@Sign in to submit your brand new post. If you don't have an account, sign up!</p>
+                        <button onclick="showSignInDialog();" class="blue">@Sign in</button>
+                    </div>
+                </div>
             </section>
             <aside>
                 <div class="signedOut">

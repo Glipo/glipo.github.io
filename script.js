@@ -161,6 +161,14 @@ function visitUserProfile() {
     }
 }
 
+function visitSubmitPost() {
+    if (currentUser.uid != null) {
+        window.location.href = "/submit";
+    } else {
+        showSignInDialog();
+    }
+}
+
 $(function() {
     if (localStorage.getItem("signedInUsername") != null) {
         currentUser.username = localStorage.getItem("signedInUsername");

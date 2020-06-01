@@ -157,6 +157,10 @@ main section.posts {
     vertical-align: top;
 }
 
+main section.posts h1:first-of-type {
+    margin-top: 0;
+}
+
 main aside {
     display: inline-block;
     width: calc(30vw - 30px);
@@ -348,6 +352,12 @@ input::placeholder {
     color: var(--shade3);
 }
 
+input.big {
+    display: block;
+    width: calc(100% - 20px);
+    margin-top: 10px;
+}
+
 a {
     color: var(--shade3);
     text-decoration: none;
@@ -371,7 +381,7 @@ hr {
 }
 
 .middle {
-    text-align: middle;
+    text-align: center;
 }
 
 .end {
@@ -484,6 +494,14 @@ hr {
     color: var(--yellow);
 }
 
+.error404 {
+    display: none;
+}
+
+[data-location] {
+    display: none;
+}
+
 @media (max-width: 1000px) {
     nav .location {
         width: calc(30vw - 28px);
@@ -542,6 +560,18 @@ hr {
 
     dialog.hasInputs {
         top: 10px;
+    }
+
+    button.grow {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    input.grow {
+        display: block;
+        width: calc(100% - 20px);
+        margin-top: 10px;
     }
 
     card.post .info {
