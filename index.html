@@ -26,6 +26,7 @@
         <script src="/core.js"></script>
         <script src="/lang.js"></script>
         <script src="/script.js"></script>
+        <script src="/pages.js"></script>
         <script src="/lang/en_GB.js"></script>
     </head>
     <body>
@@ -38,7 +39,7 @@
                 <input type="search" placeholder="@Search">
                 <icon>search</icon>
             </div>
-            <button onclick="toggleMenu();" class="location desktop"><span>@Feed</span><icon aria-hidden="true" class="locationDropdownIndicator">arrow_drop_down</icon></button>
+            <button onclick="toggleMenu();" class="location desktop"><span class="currentLocation">@Feed</span><icon aria-hidden="true" class="locationDropdownIndicator">arrow_drop_down</icon></button>
             <span class="signedIn">
                 <button title="@Settings" class="menuButton menuButtonHalf"><icon aria-label="@Settings">settings</icon></button>
                 <button title="@Sign out" onclick="signOut();" class="menuButton menuButtonHalf"><icon aria-label="@Sign out" class="flippable">exit_to_app</icon></button>
@@ -60,9 +61,9 @@
                 </div>
                 <hr>
             </div>
-            <button>@Feed</button>
+            <button onclick="window.location.href = '/';">@Feed</button>
             <div class="signedIn">
-                <button>u/<span class="currentUsername"></span></button>
+                <button onclick="visitUserProfile();">u/<span class="currentUsername"></span></button>
             </div>
         </div>
         <main>

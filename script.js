@@ -155,7 +155,22 @@ function signOut() {
     firebase.auth().signOut();
 }
 
+function visitUserProfile() {
+    if (currentUser.username != null) {
+        window.location.href = "/u/" + currentUser.username;
+    }
+}
+
 $(function() {
+    if (localStorage.getItem("signedInUsername") != null) {
+        currentUser.username = localStorage.getItem("signedInUsername");
+
+        $(".currentUsername").text(currentUser.username);
+
+        $(".signedOut").hide();
+        $(".signedIn").show();
+    }
+
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             currentUser.uid = user.uid;
@@ -180,6 +195,7 @@ $(function() {
                 currentUser.username = $("#signUpUsername").val();
 
                 $(".currentUsername").text(currentUser.username);
+                localStorage.setItem("signedInUsername", currentUser.username);
 
                 accountRequiresSettingUp = false;
             } else {
@@ -187,6 +203,7 @@ $(function() {
                     currentUser.username = document.data().username;
 
                     $(".currentUsername").text(currentUser.username);
+                    localStorage.setItem("signedInUsername", currentUser.username);
                 });
             }
 
@@ -200,6 +217,7 @@ $(function() {
             $(".signedOut").show();
 
             $(".currentUsername").text("");
+            localStorage.removeItem("signedInUsername");
         }
     });
 
