@@ -38,6 +38,7 @@ nav {
     height: 40px;
     padding: 10px;
     background-color: var(--shade1);
+    z-index: 1;
 }
 
 nav > * {
