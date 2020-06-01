@@ -505,6 +505,10 @@ hr {
         display: none;
     }
 
+    dialog.hasInputs {
+        top: 10px;
+    }
+
     card.post .info {
         font-size: 12px;
     }
