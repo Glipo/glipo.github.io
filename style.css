@@ -34,7 +34,7 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    width: calc(100vw - 20px);
+    width: calc(100% - 20px);
     height: 40px;
     padding: 10px;
     background-color: var(--shade1);
@@ -430,7 +430,7 @@ hr {
     position: fixed;
     display: none;
     top: 70px;
-    right: calc(10vw + 6px);
+    left: calc(60vw + 24px);
     width: calc(30vw - 30px);
     max-height: calc(100vh - 100px);
     background-color: var(--shade2);
@@ -440,8 +440,8 @@ hr {
 }
 
 [dir="rtl"] .menu {
-    left: calc(10vw + 6px);
-    right: unset;
+    left: unset;
+    right: calc(60vw + 24px);
 }
 
 .menu button {
@@ -508,7 +508,7 @@ hr {
 
 @media (max-width: 700px) {
     nav {
-        width: calc(100vw - 40px);
+        width: calc(100% - 40px);
         padding-left: 20px;
         padding-right: 20px;
         text-align: center;
@@ -563,7 +563,7 @@ hr {
     .menu {
         left: 10px;
         right: 10px;
-        width: calc(100vw - 20px);
+        width: calc(100% - 20px);
     }
 }
 
