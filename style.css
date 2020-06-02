@@ -356,7 +356,7 @@ input::placeholder {
 
 input[type="search"] {
     border-radius: 10px!important;
-    -webkit-appearance: textfield;
+    -webkit-appearance: none;
     -webkit-border-radius: 10px!important;
 }
 
