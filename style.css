@@ -244,6 +244,7 @@ card.post .actions div button {
 
 dialog {
     position: fixed;
+    top: 50%;
     max-width: calc(100vw - 20px);
     padding: 0;
     background-color: var(--background);
@@ -251,6 +252,7 @@ dialog {
     border: none;
     border-radius: 10px;
     overflow: hidden;
+    transform: translate(0, -50%);
 }
 
 dialog::backdrop, dialog + .backdrop {
@@ -663,6 +665,7 @@ hr {
 
     dialog.hasInputs {
         top: 10px;
+        transform: none;
     }
 
     button.grow {

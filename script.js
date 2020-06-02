@@ -46,9 +46,9 @@ function toggleMenu() {
 }
 
 function closeDialogs() {
-    for (var i = 0; i < $("dialog").length; i++) {
-        $("dialog")[i].close();
-    }
+    $("dialog").each(function() {
+        this.close();
+    });
 }
 
 function showSignInDialog() {
