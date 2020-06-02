@@ -48,6 +48,8 @@ function toggleMenu() {
 function closeDialogs() {
     $("dialog").each(function() {
         this.close();
+
+        $(this).attr("open", null);
     });
 }
 
