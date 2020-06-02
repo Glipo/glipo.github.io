@@ -348,5 +348,27 @@
                 </div>
             </div>
         </dialog>
+        <dialog class="ceInsertLinkDialog hasInputs">
+            <div class="title">
+                <span>Insert link</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <label>
+                    <span>@Link text</span>
+                    <input id="ceInsertLinkText">
+                </label>
+                <label>
+                    <span>@URL to content</span>
+                    <input id="ceInsertLinkUrl">
+                </label>
+                <p class="errorMessage labelDescription" id="ceInsertLinkError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="ceInsertLink();" class="blue">@Insert</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
     </body>
 </html>
