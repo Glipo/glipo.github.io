@@ -243,6 +243,14 @@ $(function() {
         }
     });
 
+    $("html").on("click", ".tabs .tabstrip [data-tab]", function() {
+        $(this).parent().parent().find(".tabcontents > *:not([data-tab='" + $(this).attr("data-tab") + "'])").hide();
+        $(this).parent().parent().find(".tabcontents > [data-tab='" + $(this).attr("data-tab") + "']").show();
+
+        $(this).parent().find("[data-tab]").removeClass("selected");
+        $(this).addClass("selected");
+    });
+
     $("#signInPassword").keypress(function(event) {
         if (event.keyCode == 13) {
             signIn();

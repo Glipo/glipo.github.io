@@ -358,6 +358,22 @@ input.big {
     margin-top: 10px;
 }
 
+textarea {
+    width: calc(100% - 20px);
+    min-height: 100px;
+    padding: 10px;
+    background-color: var(--shade2);
+    color: var(--foreground);
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    resize: vertical;
+}
+
+textarea::placeholder {
+    color: var(--shade3);
+}
+
 a {
     color: var(--shade3);
     text-decoration: none;
@@ -428,6 +444,24 @@ hr {
     height: 10px;
 }
 
+.cutOff {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.overflowX {
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
+.split {
+    margin-left: 5px;
+    margin-right: 5px;
+    border-left: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+}
+
 .menuButtonBig {
     display: unset;
 }
@@ -488,6 +522,75 @@ hr {
 
 .buttonRow button:first-of-type {
     margin-right: 0;
+}
+
+.tabs {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.tabs .tabstrip {
+    border-bottom: 5px solid rgba(245, 167, 167, 0.2);
+    border-radius: 5px;
+}
+
+.tabs .tabstrip button {
+    margin-bottom: -5px;
+    background-color: transparent;
+    color: inherit;
+    border-bottom: 5px solid transparent;
+    border-radius: 5px;
+    transition: 0.5s color, 0.5s border-bottom;
+}
+
+.tabs .tabstrip button.selected {
+    color: var(--blue);
+    border-bottom: 5px solid var(--blue);
+}
+
+.tabs .tabcontents {
+    margin-top: 5px;
+}
+
+.tabs .tabcontents > *:not(:first-of-type) {
+    display: none;
+}
+
+.contentEditor {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    padding-bottom: 0;
+    background-color: var(--shade1);
+    color: var(--foreground);
+    border-radius: 10px;
+}
+
+.contentEditor .toolbar {
+    margin-bottom: 5px;
+}
+
+.contentEditor .toolbar button {
+    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: transparent;
+    color: inherit;
+    transition: 0.5s background-color;
+}
+
+.contentEditor .toolbar button:hover {
+    background-color: var(--shade2);
+}
+
+.contentEditor .toolbar button.special {
+    background-color: var(--blue);
+    color: var(--blueText);
+    transition: 0.5s opacity;
+}
+
+.contentEditor .toolbar button.special:hover {
+    opacity: 0.8;
 }
 
 .errorMessage {
