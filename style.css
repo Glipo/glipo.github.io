@@ -394,6 +394,38 @@ hr {
     border-radius: 2px;
 }
 
+details {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+summary {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: 0.5s opacity;
+    cursor: pointer;
+}
+
+summary:hover {
+    opacity: 0.8;
+}
+
+summary::-webkit-details-marker {
+    position: relative;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    background: url("/media/graphics/expandWhite.png") center no-repeat;
+    background-size: contain;
+    color: transparent;
+    transform: rotate(0deg);
+    transition: 0.5s transform;
+}
+
+details[open] summary::-webkit-details-marker {
+    transform: rotate(-180deg);
+}
+
 .start {
     text-align: start;
 }
