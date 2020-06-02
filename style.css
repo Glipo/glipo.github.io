@@ -62,7 +62,7 @@ nav .search {
 }
 
 nav .search input {
-    width: 50vw;
+    width: calc(50vw - 50px);
     padding-left: 40px;
 }
 
@@ -354,12 +354,6 @@ input::placeholder {
     color: var(--shade3);
 }
 
-input[type="search"] {
-    border-radius: 10px!important;
-    -webkit-appearance: none;
-    -webkit-border-radius: 10px!important;
-}
-
 input.big {
     display: block;
     width: calc(100% - 20px);
@@ -649,7 +643,7 @@ hr {
     }
 
     nav .search input {
-        width: calc(100vw - 180px);
+        width: calc(100vw - 210px);
     }
 
     nav .menuButtonSmall {
