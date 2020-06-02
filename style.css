@@ -354,6 +354,10 @@ input::placeholder {
     color: var(--shade3);
 }
 
+input[type="search"] {
+    -webkit-appearance: textfield;
+}
+
 input.big {
     display: block;
     width: calc(100% - 20px);
