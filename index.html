@@ -38,9 +38,12 @@
             </a>
             <div class="search">
                 <input placeholder="@Search">
-                <icon>search</icon>
+                <icon aria-hidden="true">search</icon>
             </div>
-            <button onclick="toggleMenu();" class="location desktop"><span class="currentLocation">@Feed</span><icon aria-hidden="true" class="locationDropdownIndicator">arrow_drop_down</icon></button>
+            <button onclick="toggleMenu();" class="location desktop">
+                <span class="currentLocation">@Feed</span>
+                <icon aria-hidden="true" class="locationDropdownIndicator">arrow_drop_down</icon>
+            </button>
             <span class="signedIn">
                 <button title="@Notifications" class="menuButton menuButtonHalf"><icon aria-label="@Notifications">notifications</icon></button>
                 <button title="@Sign out" onclick="signOut();" class="menuButton menuButtonHalf"><icon aria-label="@Sign out" class="flippable">exit_to_app</icon></button>
@@ -99,13 +102,13 @@
                     <p>This is a test post</p>
                     <div class="actions">
                         <div>
-                            <button class="yellow"><icon>arrow_upward</icon> <span>1083</span></button>
-                            <button><icon>arrow_downward</icon> <span>7</span></button>
+                            <button title="@Upvote" aria-label="@Upvote - 1083" class="yellow"><icon>arrow_upward</icon> <span>1083</span></button>
+                            <button title="@Downvote" aria-label="@Downvote - 7"><icon>arrow_downward</icon> <span>7</span></button>
                         </div>
                         <div class="desktop">
-                            <button><icon>comment</icon> <span>15</span></button>
-                            <button><icon>share</icon> <span>3</span></button>
-                            <button><icon>flag</icon></button>
+                            <button title="@Comment" aria-label="@Comment - 15"><icon>comment</icon> <span>15</span></button>
+                            <button title="@Crosspost" aria-label="@Crosspost - 3"><icon>share</icon> <span>3</span></button>
+                            <button title="@Report" aria-label="@Report this post"><icon>flag</icon></button>
                         </div>
                     </div>
                 </card>
@@ -121,13 +124,13 @@
                     <p>Yes, I know that this is another test post</p>
                     <div class="actions">
                         <div>
-                            <button><icon>arrow_upward</icon> <span>1083</span></button>
-                            <button><icon>arrow_downward</icon> <span>7</span></button>
+                            <button title="@Upvote" aria-label="@Upvote - 1083"><icon>arrow_upward</icon> <span>1083</span></button>
+                            <button title="@Downvote" aria-label="@Downvote - 7"><icon>arrow_downward</icon> <span>7</span></button>
                         </div>
                         <div class="desktop">
-                            <button><icon>comment</icon> <span>15</span></button>
-                            <button><icon>share</icon> <span>3</span></button>
-                            <button><icon>flag</icon></button>
+                            <button title="@Comment" aria-label="@Comment - 15"><icon>comment</icon> <span>15</span></button>
+                            <button title="@Crosspost" aria-label="@Crosspost - 3"><icon>share</icon> <span>3</span></button>
+                            <button title="@Report" aria-label="@Report this post"><icon>flag</icon></button>
                         </div>
                     </div>
                 </card>
@@ -143,13 +146,13 @@
                     <p>This is again a test post</p>
                     <div class="actions">
                         <div>
-                            <button><icon>arrow_upward</icon> <span>1083</span></button>
-                            <button class="blue"><icon>arrow_downward</icon> <span>7</span></button>
+                            <button title="@Upvote" aria-label="@Upvote - 1083"><icon>arrow_upward</icon> <span>1083</span></button>
+                            <button title="@Downvote" aria-label="@Downvote - 7"ss="blue"><icon>arrow_downward</icon> <span>7</span></button>
                         </div>
                         <div class="desktop">
-                            <button><icon>comment</icon> <span>15</span></button>
-                            <button><icon>share</icon> <span>3</span></button>
-                            <button><icon>flag</icon></button>
+                            <button title="@Comment" aria-label="@Comment - 15"><icon>comment</icon> <span>15</span></button>
+                            <button title="@Crosspost" aria-label="@Crosspost - 3"><icon>share</icon> <span>3</span></button>
+                            <button title="@Report" aria-label="@Report this post"><icon>flag</icon></button>
                         </div>
                     </div>
                 </card>
