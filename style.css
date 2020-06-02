@@ -718,3 +718,9 @@ hr {
         display: none;
     }
 }
+
+@-moz-document url-prefix() {
+    .contentEditor {
+        padding-bottom: 5px;
+    }
+}
