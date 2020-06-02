@@ -47,7 +47,9 @@ function toggleMenu() {
 
 function closeDialogs() {
     $("dialog").each(function() {
-        this.close();
+        try {
+            this.close();
+        } catch (e) {}
 
         $(this).attr("open", null);
     });
