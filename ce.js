@@ -341,4 +341,16 @@ $(function() {
             ceInsertLink();
         }
     });
+
+    $("#ceInsertTableRows").keypress(function(event) {
+        if (event.keyCode == 13) {
+            ceInsertTable();
+        }
+    });
+
+    $("#ceInsertMediaDescription").keypress(function(event) {
+        if (event.keyCode == 13) {
+            ceInsertMedia();
+        }
+    });
 });
