@@ -22,6 +22,15 @@ var core = {
     }
 };
 
+function alert(content, title = _("Information")) {
+    $(".alertTitle").text(title);
+    $(".alertContent").text(content);
+
+    closeDialogs();
+    $(".alertDialog")[0].showModal();
+    $(".alertDialog button:last-of-type").focus();
+}
+
 $(function() {
     for (var i = 0; i < $("dialog").length; i++) {
         dialogPolyfill.registerDialog($("dialog")[i]);

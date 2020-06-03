@@ -12,7 +12,7 @@ function loadContentEditors() {
     $(".contentEditor").html("");
 
     $(".contentEditor").append([
-        $("<div class='toolbar'>").append([
+        $("<div class='toolbar editing'>").append([
             $("<button>")
                 .attr("aria-label", _("Bold"))
                 .attr("title", _("Bold"))
@@ -217,9 +217,37 @@ function loadContentEditors() {
                     $("<icon>").text("perm_media")
                 )
             ,
-            $("<button class='special floatEnd'>").text(_("Preview"))
+            $("<button class='special floatEnd'>")
+                .text(_("Preview"))
+                .click(function() {
+                    if ($(this).closest(".contentEditor").find("textarea").val().trim() != "") {
+                        $(this).closest(".contentEditor").find(".toolbar.editing").hide();
+                        $(this).closest(".contentEditor").find(".toolbar.previewing").show();
+
+                        $(this).closest(".contentEditor").find(".preview").html(
+                            renderMarkdown($(this).closest(".contentEditor").find("textarea").val())
+                        );
+
+                        $(this).closest(".contentEditor").find("textarea").hide();
+                        $(this).closest(".contentEditor").find(".preview").show();
+                    } else {
+                        alert(_("Please enter some content before previewing it."), _("Nothing to preview yet"));
+                    }
+                })
         ]),
-        $("<textarea>").attr("placeholder", _("Write your thoughts here..."))
+        $("<div class='toolbar previewing'>").append([
+            $("<button class='special floatEnd'>")
+                .text(_("Edit"))
+                .click(function() {
+                    $(this).closest(".contentEditor").find(".toolbar.previewing").hide();
+                    $(this).closest(".contentEditor").find(".toolbar.editing").show();
+
+                    $(this).closest(".contentEditor").find(".preview").hide();
+                    $(this).closest(".contentEditor").find("textarea").show();
+                })
+        ]),
+        $("<textarea>").attr("placeholder", _("Write your thoughts here...")),
+        $("<div class='preview postContent'>")
     ]);
 }
 

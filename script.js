@@ -261,6 +261,16 @@ $(function() {
         $(this).addClass("selected");
     });
 
+    $("html").on("click", ".spoiler", function() {
+        $(this).toggleClass("open");
+    });
+
+    $("html").on("keypress", ".spoiler", function() {
+        if (event.keyCode == 13) {
+            $(this).toggleClass("open");
+        }
+    });
+
     $("#signInPassword").keypress(function(event) {
         if (event.keyCode == 13) {
             signIn();

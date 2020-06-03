@@ -484,6 +484,69 @@ details[open] summary::-webkit-details-marker {
     transform: rotate(-180deg);
 }
 
+pre {
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    font-family: monospace;
+    overflow-x: auto;
+}
+
+pre > code {
+    padding: 0;
+    background-color: transparent;
+}
+
+code {
+    padding: 3px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    font-family: monospace;
+}
+
+table {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--shade2);
+    border-radius: 10px;
+    border-spacing: 0;
+}
+
+th, td {
+    padding: 5px;
+    border: 1px solid var(--shade2);
+}
+
+table tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+
+table tr:first-child th:last-child {
+    border-top-right-radius: 10px;
+}
+
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+blockquote {
+    margin: 0;
+    padding-left: 10px;
+    border-left: 5px solid var(--blue);
+    border-radius: 5px;
+}
+
+[dir="rtl"] blockquote {
+    padding-left: 0;
+    padding-right: 10px;
+    border-left: none;
+    border-right: 5px solid var(--blue);
+}
+
 .start {
     text-align: start;
 }
@@ -659,7 +722,12 @@ details[open] summary::-webkit-details-marker {
 }
 
 .contentEditor .toolbar {
+    min-height: 33px;
     margin-bottom: 5px;
+}
+
+.contentEditor .toolbar.previewing {
+    display: none;
 }
 
 .contentEditor .toolbar button {
@@ -685,12 +753,45 @@ details[open] summary::-webkit-details-marker {
     opacity: 0.8;
 }
 
+.contentEditor .preview {
+    display: none;
+    padding: 10px;
+}
+
+.postContent {
+    word-break: break-all;
+}
+
+.postContent img {
+    display: block;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.spoiler {
+    background-color: var(--foreground);
+    color: var(--foreground);
+    border-radius: 3px;
+    transition: 1s background-color;
+    cursor: pointer;
+}
+
+.spoiler.open {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 .errorMessage {
     color: var(--yellow);
 }
 
 .error404 {
     display: none;
+}
+
+.task-list-item input[type="checkbox"] {
+    position: relative;
+    top: 1px;
 }
 
 [data-location] {

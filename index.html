@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="/style.css">
         <script src="/lib/dialog-polyfill.js"></script>
         <script src="/lib/jquery.min.js"></script>
+        <script src="/lib/showdown.min.js"></script>
         <script src="/lib/firebase-app.js"></script>
         <script src="/lib/firebase-analytics.js"></script>
         <script src="/lib/firebase-auth.js"></script>
@@ -26,6 +27,7 @@
         <script src="/core.js"></script>
         <script src="/lang.js"></script>
         <script src="/pages.js"></script>
+        <script src="/mdRenderer.js"></script>
         <script src="/ce.js"></script>
         <script src="/script.js"></script>
         <script src="/lang/en_GB.js"></script>
@@ -278,6 +280,19 @@
                 </card>
             </aside>
         </main>
+        <dialog class="alertDialog">
+            <div class="title">
+                <span class="alertTitle"></span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="alertContent"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="closeDialogs();" class="blue">@OK</button>
+                </div>
+            </div>
+        </dialog>
         <dialog class="signInDialog hasInputs">
             <div class="title">
                 <span>Sign in</span>
