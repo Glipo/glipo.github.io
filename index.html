@@ -369,5 +369,70 @@
                 </div>
             </div>
         </dialog>
+        <dialog class="ceInsertCheckboxDialog hasInputs">
+            <div class="title">
+                <span>Insert checkbox</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <label>
+                    <span>@Checkbox state</span>
+                    <input type="checkbox" id="ceInsertCheckboxState">
+                </label>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="ceInsertCheckbox();" class="blue">@Insert</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="ceInsertTableDialog hasInputs">
+            <div class="title">
+                <span>Insert table</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <label>
+                    <span>@Columns</span>
+                    <input type="number" min="1" max="20" step="1" value="3" id="ceInsertTableColumns">
+                </label>
+                <label>
+                    <span>@Rows</span>
+                    <input type="number" min="1" max="100" step="1" value="3" id="ceInsertTableRows">
+                </label>
+                <p class="errorMessage labelDescription" id="ceInsertTableError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="ceInsertTable();" class="blue">@Insert</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="ceInsertMediaDialog hasInputs">
+            <div class="title">
+                <span>Insert media</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="labelDescription">
+                    @PNG, JPEG and GIF photos are supported, as well as Imgur,
+                    YouTube, GIPHY and Gfycat links.
+                </p>
+                <label>
+                    <span>@URL to media</span>
+                    <input id="ceInsertMediaUrl">
+                </label>
+                <label>
+                    <span>@Brief description</span>
+                    <input placeholder="@eg. Photo of dancing lizard" id="ceInsertMediaDescription">
+                </label>
+                <p class="errorMessage labelDescription" id="ceInsertMediaError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="ceInsertMedia();" class="blue">@Insert</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
     </body>
 </html>

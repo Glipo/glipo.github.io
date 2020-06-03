@@ -340,7 +340,7 @@ button.yellow {
     color: var(--yellowText);
 }
 
-input {
+input, select {
     width: 200px;
     padding: 10px;
     background-color: var(--shade2);
@@ -350,14 +350,72 @@ input {
     border-radius: 10px;
 }
 
+select {
+    width: 220px;
+    padding-right: 30px;
+    background-image: url("/media/graphics/dropdownWhite.png");
+    background-size: 20px;
+    background-position: right 10px top 10px;
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+[dir="rtl"] select {
+    padding-left: 30px;
+    padding-right: 10px;
+    background-position: left 10px top 10px;
+}
+
 input::placeholder {
     color: var(--shade3);
+}
+
+input:disabled, select:disabled {
+    opacity: 0.6;
+    cursor: default;
 }
 
 input.big {
     display: block;
     width: calc(100% - 20px);
     margin-top: 10px;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    position: relative;
+    display: inline-block;
+    top: 8px;
+    width: unset;
+    -webkit-appearance: none;
+    padding: 10px;
+    background-color: var(--shade2);
+    border-radius: 5px;
+    transition: 0.5s background-color;
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--blue);
+    background-image: url("/media/graphics/checkWhite.png");
+    background-size: contain;
+}
+
+input[type="checkbox"]:indeterminate {
+    background-color: var(--blue);
+    background-image: url("/media/graphics/indeterminateWhite.png");
+    background-size: contain;
+}
+
+input[type="radio"] {
+    border-radius: 10px;
+}
+
+input[type="radio"]:checked {
+    background-color: var(--blue);
+    background-image: url("/media/graphics/radioWhite.png");
+    background-size: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 textarea {
@@ -559,8 +617,8 @@ details[open] summary::-webkit-details-marker {
 }
 
 .tabs {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .tabs .tabstrip {

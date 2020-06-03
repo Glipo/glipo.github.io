@@ -134,6 +134,12 @@ function loadContentEditors() {
             $("<button>")
                 .attr("aria-label", _("Checkbox"))
                 .attr("title", _("Checkbox"))
+                .click(function() {
+                    $("#ceInsertCheckboxState").prop("checked", false);
+
+                    $(".ceInsertCheckboxDialog")[0].showModal();
+                    $("#ceInsertCheckboxState").focus();
+                })
                 .append(
                     $("<icon>").text("check_box")
                 )
@@ -158,10 +164,28 @@ function loadContentEditors() {
                     $("<icon>").text("description")
                 )
             ,
+            $("<button>")
+                .attr("aria-label", _("Horizontal rule"))
+                .attr("title", _("Horizontal rule"))
+                .click(function() {
+                    formatContentEditorText("\n\n---\n\n");
+                })
+                .append(
+                    $("<icon>").text("remove")
+                )
+            ,
             $("<span class='split'>"),
             $("<button>")
                 .attr("aria-label", _("Table"))
                 .attr("title", _("Table"))
+                .click(function() {
+                    $("#ceInsertTableColumns").val("3");
+                    $("#ceInsertTableRows").val("3");
+                    $("#ceInsertTableError").text("");
+
+                    $(".ceInsertTableDialog")[0].showModal();
+                    $("#ceInsertTableColumns").focus();
+                })
                 .append(
                     $("<icon>").text("table_chart")
                 )
@@ -169,6 +193,26 @@ function loadContentEditors() {
             $("<button>")
                 .attr("aria-label", _("Media"))
                 .attr("title", _("Media"))
+                .click(function() {
+                    var linkText = lastActiveTextArea.value.substring(
+                        lastActiveTextArea.selectionStart,
+                        lastActiveTextArea.selectionEnd
+                    );
+
+                    $("#ceInsertMediaUrl").val("");
+                    $("#ceInsertMediaDescription").val("");
+                    $("#ceInsertMediaError").text("");
+
+                    if (linkText != "") {
+                        $("#ceInsertMediaUrl").val(linkText);
+
+                        $(".ceInsertMediaDialog")[0].showModal();
+                        $("#ceInsertMediaDescription").focus();
+                    } else {
+                        $(".ceInsertMediaDialog")[0].showModal();
+                        $("#ceInsertMediaUrl").focus();
+                    }
+                })
                 .append(
                     $("<icon>").text("perm_media")
                 )
@@ -219,8 +263,72 @@ function ceInsertLink() {
     }
 }
 
+function ceInsertCheckbox() {
+    if ($("#ceInsertCheckboxState").is(":checked")) {
+        formatContentEditorText("- [x] ");
+    } else {
+        formatContentEditorText("- [ ] ");
+    }
+
+    closeDialogs();
+}
+
+function ceInsertTable() {
+    var columns = Number($("#ceInsertTableColumns").val());
+    var rows = Number($("#ceInsertTableRows").val());
+    var textSelected = lastActiveTextArea.value.substring(
+        lastActiveTextArea.selectionStart,
+        lastActiveTextArea.selectionEnd
+    );
+
+    if (
+        columns != NaN &&
+        columns > 0 &&
+        rows != NaN &&
+        rows > 0
+    ) {
+        var rowRender = String("| " + " | ".repeat(columns - 1) + " |\n").repeat(rows)
+
+        formatContentEditorText(
+            "| ", " | ".repeat(columns - 1) + " |\n" +
+            "|-" + "-".repeat(textSelected.length) + "-|-".repeat(columns - 1) + "-|\n" +
+            rowRender.substring(0, rowRender.length - 1)
+        );
+
+        closeDialogs();
+    } else {
+        $("#ceInsertTableError").text(_("Please enter a valid number for both the columns and rows."));
+    }
+}
+
+function ceInsertMedia() {
+    if ($("#ceInsertMediaUrl").val() != "" && $("#ceInsertMediaDescription").val() != "") {
+        if ($("#ceInsertMediaUrl").val().startsWith("http://") || $("#ceInsertMediaUrl").val().startsWith("https://")) {
+            if (
+                RE_IMAGE.test($("#ceInsertMediaUrl").val()) ||
+                RE_IMGUR.test($("#ceInsertMediaUrl").val()) ||
+                RE_YOUTUBE.test($("#ceInsertMediaUrl").val()) ||
+                RE_GIPHY.test($("#ceInsertMediaUrl").val()) ||
+                RE_GFYCAT.test($("#ceInsertMediaUrl").val())
+            ) {
+                formatContentEditorText("", "", "![" + $("#ceInsertMediaDescription").val() + "](" + $("#ceInsertMediaUrl").val() + ")");
+
+                closeDialogs();
+            } else {
+                $("#ceInsertMediaError").text(_("Sorry, we don't support the media type that you have entered."));
+            }
+        } else {
+            $("#ceInsertMediaError").text(_("Make sure that the URL starts with http:// or https:// to insert the media."));
+        }
+    } else {
+        $("#ceInsertMediaError").text(_("Please enter the media URL and description to insert the media."));
+    }
+}
+
 $(function() {
     loadContentEditors();
+
+    lastActiveTextArea = $("textarea").length > 0 ? $("textarea")[0] : null;
 
     setInterval(function() {
         if (document.activeElement.tagName.toLowerCase() == "textarea") {

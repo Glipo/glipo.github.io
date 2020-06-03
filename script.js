@@ -6,6 +6,12 @@
     https://glipo.cf
 */
 
+const RE_IMAGE = /.*(\.png|\.jpg|\.jpeg|\.gif)/;
+const RE_IMGUR = /https:\/\/imgur.com\/gallery\/(.*)/;
+const RE_YOUTUBE = /(https:\/\/www\.youtube\.com\/watch\?v=|https:\/\/youtu\.be\/)([a-zA-Z0-9_-]{1,64})/;
+const RE_GIPHY = /https:\/\/giphy.com\/gifs\/(.*)/;
+const RE_GFYCAT = /https:\/\/gfycat.com\/(.*)/;
+
 var firebaseConfig = {
     apiKey: "AIzaSyBxs_F52qiFI85ZbFQ7ysIrvBhKDEvutuw",
     authDomain: "glipo-net.firebaseapp.com",
