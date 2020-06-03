@@ -36,8 +36,6 @@ function renderMarkdown(markdown) {
         splitAdjacentBlockquotes: true
     });
     var html = showdownConverter.makeHtml(markdown);
-
-    console.log(html);
     
     // JS injection blocking
     html = html.replace(/(?<!<code)javascript:(?!([\w\s])*<\/code>)/g, "javascript:return;");
