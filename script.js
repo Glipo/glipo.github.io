@@ -175,7 +175,7 @@ function visitSubmitPost() {
     if (currentUser.uid != null) {
         window.location.href = "/submit";
     } else {
-        showSignInDialog();
+        showSignUpDialog();
     }
 }
 
