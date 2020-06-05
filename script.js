@@ -145,19 +145,19 @@ function signIn() {
             $("#signInPassword").val("");
         }).catch(function(error) {
             if (error.code == "auth/invalid-email") {
-                $("#signUpUsernameError").text(_("The email you have entered appears to be invalid. Go back, re-enter your email address and try again."));
+                $("#signInError").text(_("The email you have entered appears to be invalid. Go back, re-enter your email address and try again."));
             } else if (error.code == "auth/user-not-found") {
-                $("#signUpUsernameError").text(_("There appears to be no user with that email address. Did you mean to sign up instead?"));
+                $("#signInError").text(_("There appears to be no user with that email address. Did you mean to sign up instead?"));
             } else if (error.code == "auth/wrong-password") {
-                $("#signUpUsernameError").text(_("The password that you have entered is wrong and doesn't match this account's password. Try typing it in again."));
+                $("#signInError").text(_("The password that you have entered is wrong and doesn't match this account's password. Try typing it in again."));
             } else {
-                $("#signUpUsernameError").text(_("We ran into a problem when signing into your account. Please check your internet connection and try again."));
+                $("#signInError").text(_("We ran into a problem when signing into your account. Please check your internet connection and try again."));
             }
 
             $("#signInButton").prop("disabled", false);
         });
     } else {
-        $("#signUpError").text(_("Please enter your email address and password to sign in."));
+        $("#signInError").text(_("Please enter your email address and password to sign in."));
     }
 }
 
@@ -195,7 +195,10 @@ $(function() {
 
             if (accountRequiresSettingUp) {
                 firebase.firestore().collection("users").doc(currentUser.uid).set({
-                    username: $("#signUpUsername").val()
+                    username: $("#signUpUsername").val(),
+                    joined: firebase.firestore.FieldValue.serverTimestamp(),
+                    postPoints: 0,
+                    commentPoints: 0
                 }).then(function() {
                     firebase.firestore().collection("usernames").doc($("#signUpUsername").val().toLowerCase()).set({
                         uid: currentUser.uid
