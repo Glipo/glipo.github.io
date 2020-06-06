@@ -48,8 +48,8 @@ function renderMarkdown(markdown) {
     html = html.replace(/(?<!<code)\^([^\s]*)(?!([\w\s])*<\/code>)/g, "<sup>$1</sup>"); // Non-bracketed
 
     // Mentions
-    html = html.replace(/(?<!<code)g\/(([a-zA-Z0-9])*)(?!([\w\s])*<\/code>)/g, "<a href='https://glipo.cf/g/$1'>g/$1</a>"); // Groups
-    html = html.replace(/(?<!<code)u\/(([a-zA-Z0-9])*)(?!([\w\s])*<\/code>)/g, "<a href='https://glipo.cf/u/$1'>u/$1</a>"); // Groups
+    html = html.replace(/(?<!<code)(^|\s)g\/(([a-zA-Z0-9])*)($|\s)(?!([\w\s])*<\/code>)/g, " <a href='https://glipo.cf/g/$2'>g/$2</a> "); // Groups
+    html = html.replace(/(?<!<code)(^|\s)u\/(([a-zA-Z0-9])*)($|\s)(?!([\w\s])*<\/code>)/g, " <a href='https://glipo.cf/u/$2'>u/$2</a> "); // Groups
 
     return html;
 }
