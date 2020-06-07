@@ -617,6 +617,27 @@ blockquote {
     border-radius: 2px;
 }
 
+.skipTo {
+    position: absolute;
+    top: 0;
+    left: -200px;
+    margin: 10px;
+    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-decoration: none;
+    background-color: var(--blue);
+    color: var(--blueText);
+    border-radius: 10px;
+    z-index: 2;
+    outline: none;
+    transition: 0.2s;
+}
+
+.skipTo:focus, .skipTo:active {
+    left: 0;
+}
+
 .menuButtonBig {
     display: unset;
 }
