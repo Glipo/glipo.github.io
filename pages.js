@@ -8,6 +8,10 @@
 
 var currentPage = "/";
 
+function trimPage(page) {
+    return page.split("?")[0].split("#")[0];
+}
+
 if (core.getURLParameter("page") != null) {
     currentPage = core.getURLParameter("page").replace(/^(?:\/\/|[^/]+)*\//, "");
 
@@ -15,13 +19,13 @@ if (core.getURLParameter("page") != null) {
 }
 
 $(function() {
-    if (currentPage.split("?")[0] == "/") {
+    if (trimPage(currentPage) == "/") {
         $(".currentLocation").text(_("Feed"));
     } else if (currentPage.startsWith("g/")) {
-        $(".currentLocation").text("g/" + currentPage.split("/")[1].split("?")[0]);
+        $(".currentLocation").text("g/" + trimPage(currentPage.split("/")[1]));
     } else if (currentPage.startsWith("u/")) {
-        $(".currentLocation").text("u/" + currentPage.split("/")[1].split("?")[0]);
-    } else if (currentPage.split("?")[0] == "submit") {
+        $(".currentLocation").text("u/" + trimPage(currentPage.split("/")[1]));
+    } else if (trimPage(currentPage) == "submit") {
         $(".currentLocation").text("Submit post");
     } else {
         $(".currentLocation").text(_("Error 404"));
