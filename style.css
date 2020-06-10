@@ -779,6 +779,60 @@ blockquote {
     padding: 10px;
 }
 
+.upload {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: var(--shade1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.upload input[type="file"] {
+    display: none;
+}
+
+.upload label span {
+    display: block;
+    width: unset;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.upload .uploaded {
+    display: none;
+}
+
+.upload .uploaded .info {
+    text-align: start;
+}
+
+.upload .uploaded span {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+[dir="rtl"] .upload .uploaded span {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+.upload .uploaded button {
+    float: right;
+}
+
+[dir="rtl"] .upload .uploaded button {
+    float: left;
+}
+
+.upload .uploaded img.result {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
 .postContent {
     word-break: break-all;
 }

@@ -11,6 +11,7 @@ lang.load("en_GB", {
     nameShort: "English",
     textDirection: "ltr",
     strings: {
-        "{0} - Selected": "{0} - Selected"
+        "{0} - Selected": "{0} - Selected",
+        "Image selected: {0} ({1} KB)": "Image selected: {0} ({1} KB)"
     }
 });
