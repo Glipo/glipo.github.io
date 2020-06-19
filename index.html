@@ -162,7 +162,7 @@
                     </div>
                 </card>
             </section>
-            <section class="posts" data-location="^submit.*$"> <!-- Post submitting page -->
+            <section class="posts" data-location="^submit$"> <!-- Post submitting page -->
                 <div class="signedIn">
                     <h1>@Submit your post</h1>
                     <input placeholder="@Enter a group to post to" class="grow">
@@ -237,7 +237,7 @@
             </section>
             <aside id="sidebar">
                 <div class="signedOut">
-                    <card>
+                    <card data-location="^g\/.*|\/$">
                         <h1>@Welcome to Glipo</h1>
                         <p>@Glipo is a social network where you can discover your community through our groups.</p>
                         <button onclick="showSignUpDialog();" class="big blue">Sign up</button>
@@ -266,7 +266,7 @@
                         </p>
                     </card>
                 </span>
-                <card data-location="^submit.*$">
+                <card data-location="^submit$">
                     <h2>Community guidelines</h2>
                     <details>
                         <summary>@1. Think before you post</summary>
