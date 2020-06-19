@@ -25,6 +25,8 @@ $(function() {
         $(".currentLocation").text("g/" + trimPage(currentPage.split("/")[1]));
     } else if (currentPage.startsWith("u/")) {
         $(".currentLocation").text("u/" + trimPage(currentPage.split("/")[1]));
+
+        $(".userUsername").text("u/" + trimPage(currentPage.split("/")[1]));
     } else if (trimPage(currentPage) == "submit") {
         $(".currentLocation").text("Submit post");
     } else {

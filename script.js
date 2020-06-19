@@ -198,7 +198,8 @@ $(function() {
                     username: $("#signUpUsername").val(),
                     joined: firebase.firestore.FieldValue.serverTimestamp(),
                     postPoints: 0,
-                    commentPoints: 0
+                    commentPoints: 0,
+                    postCount: 0
                 }).then(function() {
                     firebase.firestore().collection("usernames").doc($("#signUpUsername").val().toLowerCase()).set({
                         uid: currentUser.uid
@@ -239,6 +240,9 @@ $(function() {
 
             $(".currentUsername").text("");
             localStorage.removeItem("signedInUsername");
+
+            $(".userIsMe").hide();
+            $(".userIsNotMe").show();
         }
     });
 
@@ -291,4 +295,45 @@ $(function() {
             signUp();
         }
     });
+
+    if (currentPage.startsWith("u/")) {
+        var userProfileUsername = trimPage(currentPage.split("/")[1]).toLowerCase().trim();
+        var userProfileUid = null;
+
+        firebase.firestore().collection("usernames").doc(userProfileUsername).get().then(function(usernameDocument) {
+            if (usernameDocument.exists) {
+                userProfileUid = usernameDocument.data().uid;
+
+                firebase.firestore().collection("users").doc(userProfileUid).get().then(function(userDocument) {
+                    $(".userUsername").text("u/" + userDocument.data().username);
+                    $(".userJoinDate").text(_("Joined {0}", [lang.format(userDocument.data().joined.toDate(), lang.language, {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
+                    })]));
+                    $(".userPoints").text(_("{0} points", [userDocument.data().postPoints + userDocument.data().commentPoints]));
+                    $(".userPostCount").text(_("{0} posts", [userDocument.data().postCount]));
+
+                    if (currentUser.uid == userProfileUid) {
+                        $(".userIsNotMe").hide();
+                        $(".userIsMe").show();
+                    } else {
+                        $(".userIsMe").hide();
+                        $(".userIsNotMe").show();
+                    }
+
+                    if (userDocument.data().postCount > 0) {
+                        // TODO: Retrieve posts
+                    } else {
+                        $(".loadingPosts").hide();
+                        $(".loadedPosts").hide();
+                        $(".noPosts").show();
+                    }
+                });
+            } else {
+                $(".pageExistent").hide();
+                $(".pageNonExistent").show();
+            }
+        });
+    }
 });

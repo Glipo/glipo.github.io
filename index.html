@@ -80,7 +80,7 @@
         </div>
         <main id="content">
             <span class="error404">
-                <section class="posts middle">
+                <section class="posts pageMessage middle">
                     <h1>@A bit lost?</h1>
                     <p>@The page that you requested was not found.</p>
                     <button onclick="window.location.href = '/';" class="blue">@Go home</button>
@@ -193,10 +193,41 @@
                     </div>
                 </div>
                 <div class="signedOut middle">
-                    <div>
+                    <div class="pageMessage">
                         <h1>@Make your mark</h1>
                         <p>@Sign in to submit your brand new post. If you don't have an account, sign up!</p>
                         <button onclick="showSignInDialog();" class="blue">@Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts userProfile" data-location="^u\/.*$"> <!-- User page -->
+                <span class="mobile">
+                    <span class="pageExistent">
+                        <card data-location="^u\/.*$">
+                            <h2 class="userUsername"></h2>
+                            <p class="userJoinDate">@Joined {0}|---</p>
+                            <p>
+                                <strong class="userPoints">@{0} points|---</strong>
+                                <span>·</span>
+                                <span class="userPostCount">@{0} posts|---</span>
+                            </p>
+                        </card>
+                    </span>
+                </span>
+                <div class="loadingPosts">
+                    <div class="loadingSpinner"></div>
+                </div>
+                <div class="loadedPosts"></div>
+                <div class="noPosts pageMessage middle">
+                    <div class="userIsMe">
+                        <h1>@Nothing to show off yet!</h1>
+                        <p>@The world's waiting to see what you can make! Write a post or comment in a group that you're part of and it'll show here too.</p>
+                        <button onclick="visitSubmitPost();" class="blue">@Write a post</button>
+                    </div>
+                    <div class="userIsNotMe">
+                        <h1>@What a mystery...</h1>
+                        <p>@This user hasn't posted or commented on anything yet! Come back later when they've made something to share.</p>
+                        <button onclick="window.location.href = '/';" class="blue">@Go home</button>
                     </div>
                 </div>
             </section>
@@ -216,6 +247,17 @@
                     <div>g/technology</div>
                     <div>g/glipo</div>
                 </card>
+                <span class="pageExistent">
+                    <card data-location="^u\/.*$">
+                        <h2 class="userUsername"></h2>
+                        <p class="userJoinDate">@Joined {0}|---</p>
+                        <p>
+                            <strong class="userPoints">@{0} points|---</strong>
+                            <span>·</span>
+                            <span class="userPostCount">@{0} posts|---</span>
+                        </p>
+                    </card>
+                </span>
                 <card data-location="^submit.*$">
                     <h2>Community guidelines</h2>
                     <details>

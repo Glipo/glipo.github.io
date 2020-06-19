@@ -617,6 +617,43 @@ blockquote {
     border-radius: 2px;
 }
 
+.loadingSpinner {
+    position: relative;
+    display: none;
+    background-color: transparent;
+    margin: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 10px;
+    transform: translateZ(0);
+}
+
+.loadingSpinner, .loadingSpinner::before, .loadingSpinner::after {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border-radius: 10px;
+    animation: loadingSpinner 2s infinite ease-in-out;
+    animation-fill-mode: both;
+}
+
+.loadingSpinner::before, .loadingSpinner::after {
+    position: absolute;
+    top: 0;
+    content: "";
+}
+
+.loadingSpinner::before {
+    left: -30px;
+    animation-delay: -0.5s;
+}
+
+.loadingSpinner::after {
+    left: 30px;
+    animation-delay: 0.5s;
+}
+
 .skipTo {
     position: absolute;
     top: 0;
@@ -844,6 +881,11 @@ blockquote {
     margin-right: auto;
 }
 
+.pageMessage {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
 .spoiler {
     background-color: var(--foreground);
     color: var(--foreground);
@@ -870,6 +912,10 @@ blockquote {
 }
 
 [data-location] {
+    display: none;
+}
+
+.loadedPosts, .noPosts, .pageNonExistent {
     display: none;
 }
 
@@ -988,5 +1034,15 @@ blockquote {
 @-moz-document url-prefix() {
     .contentEditor {
         padding-bottom: 5px;
+    }
+}
+
+@keyframes loadingSpinner {
+    0%, 80%, 100% {
+        box-shadow: 0 20px 0 -10px var(--yellow);
+    }
+
+    40% {
+        box-shadow: 0 20px 0 0 var(--yellow);
     }
 }
