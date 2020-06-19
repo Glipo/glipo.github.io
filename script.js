@@ -313,7 +313,7 @@ $(function() {
                         year: "numeric"
                     })]));
                     $(".userPoints").text(_("{0} points", [userDocument.data().postPoints + userDocument.data().commentPoints]));
-                    $(".userPoints").attr("title", _("Post points: {0} | Comment points: {1}", [userDocument.data().postPoints, userDocument.data().commentPoints]));
+                    $(".userPoints").attr("title", _("{0} post pts + {1} comment pts", [userDocument.data().postPoints, userDocument.data().commentPoints]));
                     $(".userPostCount").text(_("{0} posts", [userDocument.data().postCount]));
                     $(".userCommentCount").text(_("{0} comments", [userDocument.data().commentCount]));
                     $(".userBio").text(userDocument.data().bio || "");
