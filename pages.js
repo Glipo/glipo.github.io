@@ -38,7 +38,7 @@ $(function() {
         var targetElement = $("[data-location]").eq(i);
         var targetLocation = targetElement.attr("data-location");
 
-        if (new RegExp(targetLocation).test(currentPage)) {
+        if (new RegExp(targetLocation).test(trimPage(currentPage))) {
             targetElement.show();
         } else {
             targetElement.hide();
