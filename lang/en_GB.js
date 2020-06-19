@@ -21,6 +21,11 @@ lang.load("en_GB", {
         "{0} posts": {
             "{0} == 1": "{0} post",
             "{0} != 1": "{0} posts"
-        }
+        },
+        "{0} comments": {
+            "{0} == 1": "{0} comment",
+            "{0} != 1": "{0} comments"
+        },
+        "Post points: {0} | Comment points: {1}": "Post points: {0} | Comment points: {1}"
     }
 });

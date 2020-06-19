@@ -919,6 +919,23 @@ blockquote {
     display: none;
 }
 
+.staffBadge {
+    padding-right: 25px;
+    background-image: url("/media/small.png");
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    color: var(--yellow);
+}
+
+h1 .staffBadge, h2 .staffBadge {
+    padding-right: 40px;
+}
+
+h3 .staffBadge {
+    padding-right: 30px;
+}
+
 @media (max-width: 1000px) {
     nav .location {
         width: calc(30vw - 28px);

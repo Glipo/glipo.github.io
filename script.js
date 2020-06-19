@@ -199,7 +199,8 @@ $(function() {
                     joined: firebase.firestore.FieldValue.serverTimestamp(),
                     postPoints: 0,
                     commentPoints: 0,
-                    postCount: 0
+                    postCount: 0,
+                    commentCount: 0
                 }).then(function() {
                     firebase.firestore().collection("usernames").doc($("#signUpUsername").val().toLowerCase()).set({
                         uid: currentUser.uid
@@ -312,7 +313,25 @@ $(function() {
                         year: "numeric"
                     })]));
                     $(".userPoints").text(_("{0} points", [userDocument.data().postPoints + userDocument.data().commentPoints]));
+                    $(".userPoints").attr("title", _("Post points: {0} | Comment points: {1}", [userDocument.data().postPoints, userDocument.data().commentPoints]));
                     $(".userPostCount").text(_("{0} posts", [userDocument.data().postCount]));
+                    $(".userCommentCount").text(_("{0} comments", [userDocument.data().commentCount]));
+                    $(".userBio").text(userDocument.data().bio || "");
+
+                    if (userDocument.data().staff) {
+                        $(".userUsername").addClass("staffBadge");
+                        $(".userUsername").attr("title", _("This user is a staff member of Glipo."));
+
+                        if (userDocument.data().staffTitle != null) {
+                            $(".userStaffTitle").text(userDocument.data().staffTitle);
+                        } else {
+                            $(".userStaffTitle").text(_("Staff member of Glipo"));
+                        }
+                    } else {
+                        $(".userUsername").removeClass("staffBadge");
+                        $(".userUsername").attr("title", "");
+                        $(".userStaffTitle").html("");
+                    }
 
                     if (currentUser.uid == userProfileUid) {
                         $(".userIsNotMe").hide();
