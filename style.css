@@ -67,7 +67,7 @@ nav .search input {
 }
 
 [dir="rtl"] nav .search input {
-    padding-left: 20px;
+    padding-left: 10px;
     padding-right: 40px;
 }
 
@@ -77,6 +77,11 @@ nav .search icon {
     left: 12px;
     font-size: 20px;
     pointer-events: none;
+}
+
+[dir="rtl"] nav .search icon {
+    left: unset;
+    right: 12px;
 }
 
 nav .location {
@@ -683,8 +688,18 @@ blockquote {
     transition: 0.2s;
 }
 
+[dir="rtl"] .skipTo {
+    left: unset;
+    right: -200px;
+}
+
 .skipTo:focus, .skipTo:active {
     left: 0;
+}
+
+[dir="rtl"] .skipTo:focus, [dir="rtl"] .skipTo:active {
+    left: unset;
+    right: 0;
 }
 
 .menuButtonBig {
