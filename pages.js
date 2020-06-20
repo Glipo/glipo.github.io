@@ -19,10 +19,14 @@ if (core.getURLParameter("page") != null) {
 }
 
 $(function() {
+    $("main").removeClass("afterHeader");
+
     if (trimPage(currentPage) == "/") {
         $(".currentLocation").text(_("Feed"));
     } else if (currentPage.startsWith("g/")) {
         $(".currentLocation").text("g/" + trimPage(currentPage.split("/")[1]));
+
+        $("main").addClass("afterHeader");
     } else if (currentPage.startsWith("u/")) {
         $(".currentLocation").text("u/" + trimPage(currentPage.split("/")[1]));
 

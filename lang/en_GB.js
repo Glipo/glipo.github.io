@@ -14,6 +14,10 @@ lang.load("en_GB", {
         "{0} - Selected": "{0} - Selected",
         "Image selected: {0} ({1} KB)": "Image selected: {0} ({1} KB)",
         "Joined {0}": "Joined {0}",
+        "{0} members": {
+            "{0} == 1": "{0} member",
+            "{0} != 1": "{0} members"
+        },
         "{0} points": {
             "{0} == 1": "{0} point",
             "{0} != 1": "{0} points"

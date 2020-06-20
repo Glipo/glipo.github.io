@@ -139,6 +139,14 @@ nav .menuButtonSmall icon {
     font-size: 24px;
 }
 
+header {
+    margin-top: 60px;
+    padding: 20px;
+    padding-left: calc(10vw + 5px);
+    padding-right: calc(10vw + 5px);
+    background-color: var(--shade2);
+}
+
 main {
     margin-top: 60px;
     padding-top: 20px;
@@ -149,6 +157,10 @@ main {
 [dir="rtl"] main {
     padding-left: 0;
     padding-right: calc(10vw + 5px);
+}
+
+main.afterHeader {
+    margin-top: 0;
 }
 
 main section.posts {
@@ -977,6 +989,11 @@ h3 .staffBadge {
 
     nav .menuButtonSmall {
         display: unset;
+    }
+
+    header {
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
     main, [dir="rtl"] main {

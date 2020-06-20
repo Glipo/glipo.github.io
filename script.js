@@ -297,8 +297,26 @@ $(function() {
         }
     });
 
-    if (currentPage.startsWith("u/")) {
-        var userProfileUsername = trimPage(currentPage.split("/")[1]).toLowerCase().trim();
+    if (currentPage.startsWith("g/")) {
+        var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+        $(".groupName").text("g/" + groupName);
+
+        firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
+            if (groupDocument.exists) {
+                $(".groupName").text("g/" + groupDocument.data().name);
+                $(".groupDescription").text(groupDocument.data().description || "");
+
+                $(".groupMemberCount").text(_("{0} members", [groupDocument.data().memberCount]));
+                $(".groupPostCount").text(_("{0} posts", [groupDocument.data().postCount]));
+                $(".groupCommentCount").text(_("{0} comments", [groupDocument.data().commentCount]));
+            } else {
+                $(".pageExistent").hide();
+                $(".pageNonExistent").show();
+            }
+        });
+    } else if (currentPage.startsWith("u/")) {
+        var userProfileUsername = trimPage(currentPage).split("/")[1].toLowerCase().trim();
         var userProfileUid = null;
 
         firebase.firestore().collection("usernames").doc(userProfileUsername).get().then(function(usernameDocument) {
@@ -350,6 +368,7 @@ $(function() {
                     }
                 });
             } else {
+                $(".loadingPosts").hide();
                 $(".pageExistent").hide();
                 $(".pageNonExistent").show();
             }
