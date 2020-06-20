@@ -152,6 +152,21 @@ header {
     background-color: var(--shade2);
 }
 
+header button {
+    background-color: var(--shade1);
+}
+
+header details {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+header details summary span {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 main {
     margin-top: 60px;
     padding-top: 20px;

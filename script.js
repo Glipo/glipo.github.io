@@ -179,6 +179,60 @@ function visitSubmitPost() {
     }
 }
 
+function leaveGroup() {
+    if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
+        if (currentUser.uid != null) {
+            var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+            api.leaveGroup({group: groupName});
+
+            $(".groupJoinButton").text(_("Join"));
+            $(".groupJoinButton").addClass("blue");
+
+            firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
+                $(".groupMemberCount").text(_("{0} members", [groupDocument.data().memberCount - 1]));
+            });
+        } else {
+            throw "Not authenticated";
+        }
+    } else {
+        throw "Not on group page";
+    }
+
+    closeDialogs();
+}
+
+function showLeaveGroupDialog() {
+    $(".leaveGroupDialog")[0].showModal();
+}
+
+function toggleGroupMembership() {
+    if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
+        if (currentUser.uid != null) {
+            var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+            firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").doc(groupName).get().then(function(userMembershipDocument) {
+                if (userMembershipDocument.exists) {
+                    showLeaveGroupDialog();
+                } else {
+                    api.joinGroup({group: groupName});
+
+                    $(".groupJoinButton").text(_("Leave"));
+                    $(".groupJoinButton").removeClass("blue");
+
+                    firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
+                        $(".groupMemberCount").text(_("{0} members", [groupDocument.data().memberCount + 1]));
+                    });
+                }
+            });
+        } else {
+            showSignUpDialog();
+        }
+    } else {
+        throw "Not on group page";
+    }
+}
+
 $(function() {
     if (localStorage.getItem("signedInUsername") != null) {
         currentUser.username = localStorage.getItem("signedInUsername");
@@ -228,6 +282,17 @@ $(function() {
                     $(".currentUsername").text(currentUser.username);
                     localStorage.setItem("signedInUsername", currentUser.username);
                 });
+
+                if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
+                    var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+                    firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").doc(groupName).get().then(function(userMembershipDocument) {
+                        if (userMembershipDocument.exists) {
+                            $(".groupJoinButton").text(_("Leave"));
+                            $(".groupJoinButton").removeClass("blue");
+                        }
+                    });
+                }
             }
 
             $(".signedOut").hide();
@@ -244,6 +309,9 @@ $(function() {
 
             $(".userIsMe").hide();
             $(".userIsNotMe").show();
+
+            $(".groupJoinButton").text(_("Join"));
+            $(".groupJoinButton").addClass("blue");
         }
     });
 
@@ -297,7 +365,7 @@ $(function() {
         }
     });
 
-    if (currentPage.startsWith("g/")) {
+    if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
         var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
 
         $(".groupName").text("g/" + groupName);
@@ -310,6 +378,13 @@ $(function() {
                 $(".groupMemberCount").text(_("{0} members", [groupDocument.data().memberCount]));
                 $(".groupPostCount").text(_("{0} posts", [groupDocument.data().postCount]));
                 $(".groupCommentCount").text(_("{0} comments", [groupDocument.data().commentCount]));
+
+                firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").doc(groupName).get().then(function(userMembershipDocument) {
+                    if (userMembershipDocument.exists) {
+                        $(".groupJoinButton").text(_("Leave"));
+                        $(".groupJoinButton").removeClass("blue");
+                    }
+                });
             } else {
                 $(".pageExistent").hide();
                 $(".pageNonExistent").show();

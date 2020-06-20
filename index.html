@@ -31,6 +31,7 @@
         <script src="/ce.js"></script>
         <script src="/upload.js"></script>
         <script src="/script.js"></script>
+        <script src="/api.js"></script>
         <script src="/lang/en_GB.js"></script>
     </head>
     <body>
@@ -81,6 +82,20 @@
         <header data-location="^g\/.*$">
             <h1 class="groupName"></h1>
             <p class="groupDescription"></p>
+            <span class="mobile">
+                <span class="pageExistent">
+                    <details>
+                        <summary><span>@Group info</span> <button onclick="toggleGroupMembership();" class="floatEnd blue groupJoinButton">@Join</button></summary>
+                        <p><strong class="groupMemberCount">@{0} members|---</strong></p>
+                        <p class="groupPostCount">@{0} posts|---</p>
+                        <p class="groupCommentCount">@{0} comments|---</p>
+                        <button class="big">@View group rules</button>
+                        <span class="signedIn">
+                            <button class="big">@Message moderators</button>
+                        </span>
+                    </details>
+                </span>
+            </span>
         </header>
         <main id="content">
             <span class="error404">
@@ -274,17 +289,17 @@
                     <div>g/technology</div>
                     <div>g/glipo</div>
                 </card>
-                <card data-location="^g\/.*$">
-                    <h2>@About community</h2>
-                    <p><strong class="groupMemberCount">@{0} members|---</strong></p>
-                    <p class="groupPostCount">@{0} posts|---</p>
-                    <p class="groupCommentCount">@{0} comments|---</p>
-                    <span class="signedIn">
-                        <button class="big blue">@Join</button>
-                        <button class="big">@Message moderators</button>
-                    </span>
-                </card>
                 <span class="pageExistent">
+                    <card data-location="^g\/.*$">
+                        <h2>@About this group</h2>
+                        <p><strong class="groupMemberCount">@{0} members|---</strong></p>
+                        <p class="groupPostCount">@{0} posts|---</p>
+                        <p class="groupCommentCount">@{0} comments|---</p>
+                        <button onclick="toggleGroupMembership();" class="big blue groupJoinButton">@Join</button>
+                        <span class="signedIn">
+                            <button class="big">@Message moderators</button>
+                        </span>
+                    </card>
                     <card data-location="^u\/.*$">
                         <h2><strong class="userUsername"></strong></h2>
                         <p><strong class="userStaffTitle"></strong></p>
@@ -382,7 +397,7 @@
         </dialog>
         <dialog class="signInDialog hasInputs">
             <div class="title">
-                <span>Sign in</span>
+                <span>@Sign in</span>
                 <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
             </div>
             <div class="content">
@@ -407,7 +422,7 @@
         </dialog>
         <dialog class="signUpDialog hasInputs">
             <div class="title">
-                <span>Sign up</span>
+                <span>@Sign up</span>
                 <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
             </div>
             <div class="content">
@@ -431,7 +446,7 @@
         </dialog>
         <dialog class="signUpUsernameDialog hasInputs">
             <div class="title">
-                <span>Sign up</span>
+                <span>@Sign up</span>
                 <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
             </div>
             <div class="content">
@@ -451,7 +466,7 @@
         </dialog>
         <dialog class="ceInsertLinkDialog hasInputs">
             <div class="title">
-                <span>Insert link</span>
+                <span>@Insert link</span>
                 <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
             </div>
             <div class="content">
@@ -473,7 +488,7 @@
         </dialog>
         <dialog class="ceInsertCheckboxDialog hasInputs">
             <div class="title">
-                <span>Insert checkbox</span>
+                <span>@Insert checkbox</span>
                 <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
             </div>
             <div class="content">
@@ -490,7 +505,7 @@
         </dialog>
         <dialog class="ceInsertTableDialog hasInputs">
             <div class="title">
-                <span>Insert table</span>
+                <span>@Insert table</span>
                 <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
             </div>
             <div class="content">
@@ -512,7 +527,7 @@
         </dialog>
         <dialog class="ceInsertMediaDialog hasInputs">
             <div class="title">
-                <span>Insert media</span>
+                <span>@Insert media</span>
                 <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
             </div>
             <div class="content">
@@ -533,6 +548,20 @@
                 <div class="end buttonRow">
                     <button onclick="ceInsertMedia();" class="blue">@Insert</button>
                     <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="leaveGroupDialog">
+            <div class="title">
+                <span>@Leave group?</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p>@Do you really want to leave this group? You can join again later if you change your mind.</p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="leaveGroup();" class="blue">@Yes</button>
+                    <button onclick="closeDialogs();">@No</button>
                 </div>
             </div>
         </dialog>
