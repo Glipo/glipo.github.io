@@ -475,6 +475,8 @@ $(function() {
             $(".currentUsername").text("");
             localStorage.removeItem("signedInUsername");
 
+            $(".joinedGroups").html("");
+
             $(".userIsMe").hide();
             $(".userIsNotMe").show();
 
