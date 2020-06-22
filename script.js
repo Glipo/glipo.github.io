@@ -434,6 +434,23 @@ $(function() {
                     localStorage.setItem("signedInUsername", currentUser.username);
                 });
 
+                firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").get().then(function(groupReferenceDocuments) {
+                    $(".joinedGroups").html("");
+
+                    if (groupReferenceDocuments.docs.length > 0) {
+                        $(".joinedGroups").append($("<hr>"));
+                    }
+
+                    groupReferenceDocuments.forEach(function(groupReferenceDocument) {
+                        $(".joinedGroups").append($("<button>")
+                            .text("g/" + groupReferenceDocument.id)
+                            .click(function() {
+                                window.location.href = "/g/" + groupReferenceDocument.id;
+                            })
+                        );
+                    });
+                });
+
                 if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
                     var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
 
