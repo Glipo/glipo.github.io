@@ -30,13 +30,17 @@ function getGroupPosts(groupName) {
                                 .text("g/" + groupName)
                             ,
                             $("<span>").text(" · "),
-                            $("<span>").html(_("Posted by {0}", [
-                                $("<div>").append(
-                                    $("<a>")
-                                        .attr("href", "/u/" + userDocument.data().username)
-                                        .text("u/" + userDocument.data().username)
-                                ).html()
-                            ])),
+                            (
+                                !userDocument.exists ?
+                                $("<span>").text(_("Posted by a deleted user")) :
+                                $("<span>").html(_("Posted by {0}", [
+                                    $("<div>").append(
+                                        $("<a>")
+                                            .attr("href", "/u/" + userDocument.data().username)
+                                            .text("u/" + userDocument.data().username)
+                                    ).html()
+                                ]))
+                            ),
                             $("<span>").text(" · "),
                             $("<span>")
                                 .attr("title",
