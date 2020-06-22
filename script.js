@@ -122,7 +122,7 @@ function switchToSignUpUsernameDialog() {
 }
 
 function signUp() {
-    if ($("#signUpUsername").val().match(/^[a-zA-Z0-9]{1,20}$/) && $("#signUpPassword").val().length >= 6) {
+    if ($("#signUpUsername").val().match(/^[a-zA-Z0-9]{3,20}$/) && $("#signUpPassword").val().length >= 6) {
         $("#signUpUsernameButton").prop("disabled", true);
 
         firebase.firestore().collection("usernames").doc($("#signUpUsername").val().toLowerCase()).get().then(function(document) {
@@ -133,7 +133,7 @@ function signUp() {
                     accountRequiresSettingUp = false;
 
                     if (error.code == "auth/email-already-in-use") {
-                        $("#signUpUsernameError").text(_("There already appears to be an account with that email address. Please try again with a different one."));
+                        $("#signUpUsernameError").text(_("There already appears to be an account with that email address. Did you mean to sign in instead?"));
                     } else if (error.code == "auth/invalid-email") {
                         $("#signUpUsernameError").text(_("The email you have entered appears to be invalid. Go back, re-enter your email address and try again."));
                     } else {
@@ -153,7 +153,7 @@ function signUp() {
     } else if ($("#signUpEmail").val().trim() == "" || $("#signUpPassword").val().length < 6) {
         $("#signUpUsernameError").text(_("Please go back and check that your email and password is correct before signing up."));
     } else {
-        $("#signUpUsernameError").text(_("Your username must only contain letters and numbers, and cannot exceed 20 characters."));
+        $("#signUpUsernameError").text(_("Your username must only contain letters and numbers, and must be between 3-20 characters long."));
     }
 }
 
@@ -404,12 +404,14 @@ $(function() {
                 $(".groupPostCount").text(_("{0} posts", [groupDocument.data().postCount]));
                 $(".groupCommentCount").text(_("{0} comments", [groupDocument.data().commentCount]));
 
-                firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").doc(groupName).get().then(function(userMembershipDocument) {
-                    if (userMembershipDocument.exists) {
-                        $(".groupJoinButton").text(_("Leave"));
-                        $(".groupJoinButton").removeClass("blue");
-                    }
-                });
+                if (currentUser.uid != null) {
+                    firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").doc(groupName).get().then(function(userMembershipDocument) {
+                        if (userMembershipDocument.exists) {
+                            $(".groupJoinButton").text(_("Leave"));
+                            $(".groupJoinButton").removeClass("blue");
+                        }
+                    });
+                }
             } else {
                 $(".pageExistent").hide();
                 $(".pageNonExistent").show();
