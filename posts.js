@@ -38,7 +38,16 @@ function getGroupPosts(groupName) {
                                 ).html()
                             ])),
                             $("<span>").text(" · "),
-                            $("<span>").text("2 hours ago")
+                            $("<span>")
+                                .attr("title",
+                                    lang.format(postDocument.data().posted.toDate(), lang.language, {
+                                        day: "numeric",
+                                        month: "long",
+                                        year: "numeric"
+                                    }) + " " +
+                                    postDocument.data().posted.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
+                                )
+                                .text(timeDifferenceToHumanReadable(new Date().getTime() - postDocument.data().posted.toDate().getTime()))
                         ]),
                         $("<h2 class='title'>").append(
                             $("<a>")

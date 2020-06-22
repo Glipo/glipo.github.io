@@ -33,6 +33,31 @@ var currentUser = {
 
 var accountRequiresSettingUp = false;
 
+function timeDifferenceToHumanReadable(milliseconds) {
+    var seconds = Math.floor(milliseconds / 1000);
+    var minutes = Math.floor(seconds / 60);
+    var hours = Math.floor(minutes / 60);
+    var days = Math.floor(hours / 24);
+    var weeks = Math.floor(days / 7);
+    var years = Math.floor(days / 365);
+
+    if (years > 0) {
+        return _("{0} years ago", [years]);
+    } else if (weeks > 0) {
+        return _("{0} weeks ago", [weeks]);
+    } else if (days > 0) {
+        return _("{0} days ago", [days]);
+    } else if (hours > 0) {
+        return _("{0} hours ago", [hours]);
+    } else if (minutes > 0) {
+        return _("{0} minutes ago", [minutes]);
+    } else if (seconds > 0) {
+        return _("{0} seconds ago", [seconds]);
+    } else {
+        return _("Literally just now");
+    }
+}
+
 function showMenu() {
     $(".menu").show();
     $(".locationDropdownIndicator").text("arrow_drop_up");

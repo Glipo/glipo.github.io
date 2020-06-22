@@ -35,6 +35,31 @@ lang.load("en_GB", {
         "Upvote - {0}": "Upvote - {0}",
         "Downvote - {0}": "Downvote - {0}",
         "Comment - {0}": "Comment - {0}",
-        "Crosspost - {0}": "Crosspost - {0}"
+        "Crosspost - {0}": "Crosspost - {0}",
+        "{0} years ago": {
+            "{0} == 1": "{0} year ago",
+            "{0} != 1": "{0} years ago"
+        },
+        "{0} weeks ago": {
+            "{0} == 1": "{0} week ago",
+            "{0} != 1": "{0} weeks ago"
+        },
+        "{0} days ago": {
+            "{0} == 1": "{0} day ago",
+            "{0} != 1": "{0} days ago"
+        },
+        "{0} hours ago": {
+            "{0} == 1": "{0} hour ago",
+            "{0} != 1": "{0} hours ago"
+        },
+        "{0} minutes ago": {
+            "{0} == 1": "{0} minute ago",
+            "{0} != 1": "{0} minutes ago"
+        },
+        "{0} seconds ago": {
+            "{0} == 1": "{0} second ago",
+            "{0} != 1": "{0} seconds ago"
+        },
+        "Literally just now": "Literally just now"
     }
 });
