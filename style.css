@@ -916,7 +916,12 @@ blockquote {
     word-break: break-all;
 }
 
-.postContent img {
+.postContent.link img {
+    display: block;
+    max-width: 100%;
+}
+
+.postContent:not(.link) img {
     display: block;
     max-width: 80%;
     margin-left: auto;

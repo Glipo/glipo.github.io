@@ -6,14 +6,33 @@
     https://glipo.cf
 */
 
-var posts = {};
 var sortMethod = "popular";
+
+function renderLink(url) {
+    var result = $("<div>");
+
+    if (RE_IMAGE.test(url)) {
+        result.append($("<img>")
+            .attr("src", url)
+            .attr("alt", _("Image from {0}", [url]))
+        );
+    } else {
+        result.append($("<a>")
+            .attr("href", url)
+            .attr("target", "_blank")
+            .attr("title", _("External link"))
+            .text(url.length > 100 ? url.substring(0, 100) + _("...") : url)
+        );
+    }
+
+    return result.html();
+}
 
 function getGroupPosts(groupName) {
     var postReference = firebase.firestore().collection("groups").doc(groupName.toLowerCase()).collection("posts");
 
-    postReference.orderBy("popularity", "desc");
-    postReference.limit(10);
+    postReference = postReference.orderBy("popularity", "desc");
+    postReference = postReference.limit(10);
 
     postReference.get().then(function(postDocuments) {
         $(".loadingPosts").hide();
@@ -23,6 +42,14 @@ function getGroupPosts(groupName) {
             firebase.firestore().collection("users").doc(postDocument.data().author).get().then(function(userDocument) {
                 firebase.firestore().collection("groups").doc(groupName.toLowerCase()).collection("posts").doc(postDocument.id).collection("upvoters").doc(currentUser.uid || "__NOUSER").get().then(function(upvoterDocument) {
                     firebase.firestore().collection("groups").doc(groupName.toLowerCase()).collection("posts").doc(postDocument.id).collection("downvoters").doc(currentUser.uid || "__NOUSER").get().then(function(downvoterDocument) {
+                        var postContent = "";
+
+                        if (postDocument.data().type == "writeup") {
+                            postContent = renderMarkdown(postDocument.data().content);
+                        } else if (postDocument.data().type == "link") {
+                            postContent = renderLink(postDocument.data().content);
+                        }
+                        
                         $(".loadedPosts").append(
                             $("<card class='post'>").append([
                                 $("<div class='info'>").append([
@@ -60,7 +87,10 @@ function getGroupPosts(groupName) {
                                         .attr("target", "_blank")
                                         .text(postDocument.data().title)
                                 ),
-                                $("<div>").html(renderMarkdown(postDocument.data().content)),
+                                $("<div class='postContent'>")
+                                    .addClass(postDocument.data().type)
+                                    .html(postContent)
+                                ,
                                 $("<div class='actions'>").append([
                                     $("<div>").append([
                                         $("<button class='upvoteButton'>")

@@ -11,6 +11,7 @@ lang.load("en_GB", {
     nameShort: "English",
     textDirection: "ltr",
     strings: {
+        "...": "...",
         "{0} - Selected": "{0} - Selected",
         "Image selected: {0} ({1} KB)": "Image selected: {0} ({1} KB)",
         "Joined {0}": "Joined {0}",
@@ -60,6 +61,7 @@ lang.load("en_GB", {
             "{0} == 1": "{0} second ago",
             "{0} != 1": "{0} seconds ago"
         },
-        "Literally just now": "Literally just now"
+        "Literally just now": "Literally just now",
+        "Image from {0}": "Image from {0}"
     }
 });

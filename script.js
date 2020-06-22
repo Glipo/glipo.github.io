@@ -198,7 +198,13 @@ function visitUserProfile() {
 
 function visitSubmitPost() {
     if (currentUser.uid != null) {
-        window.location.href = "/submit";
+        if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
+            var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+            window.location.href = "/submit?group=" + encodeURIComponent(groupName);
+        } else {
+            window.location.href = "/submit";
+        }
     } else {
         showSignUpDialog();
     }
@@ -256,6 +262,126 @@ function toggleGroupMembership() {
     } else {
         throw "Not on group page";
     }
+}
+
+function submitPost() {
+    var submitGroup = $("#submitGroup").val().trim().toLowerCase();
+    var submitTitle = "";
+    var submitType = "";
+    var submitContent = "";
+
+    if (submitGroup == "") {
+        $("#submitError").text(_("Please enter the name of the group to post to."));
+        
+        return;
+    }
+
+    if (submitGroup.startsWith("g/")) {
+        submitGroup = submitGroup.split("/")[1].trim();
+    }
+
+    firebase.firestore().collection("groups").doc(submitGroup).get().then(function(groupDocument) {
+        if (groupDocument.exists) {
+            if (!submitGroup.match(/^[a-zA-Z0-9]{3,20}$/)) {
+                $("#submitError").text(_("Please check to see if the group name is correct before posting."));
+                
+                return;
+            }
+        
+            if ($("#submitType [data-tab='writeup']").is(":visible")) {
+                submitTitle = $("#submitWriteupTitle").val().trim();
+                submitType = "writeup";
+                submitContent = $("#submitWriteupContent textarea").val();
+            } else if ($("#submitType [data-tab='media']").is(":visible")) {
+                submitTitle = $("#submitMediaTitle").val().trim();
+                submitType = "media";
+            } else if ($("#submitType [data-tab='link']").is(":visible")) {
+                submitTitle = $("#submitLinkTitle").val().trim();
+                submitType = "link";
+                submitContent = $("#submitLinkUrl").val();
+            }
+        
+            if (submitTitle.trim() == "") {
+                $("#submitError").text(_("Please enter the post title."));
+        
+                return;
+            }
+        
+            if (submitTitle.length > 200) {
+                $("#submitError").text(_("Your post title is too long! Please shorten it so that it's at most 200 characters long."));
+        
+                return;
+            }
+        
+            if (submitType == "writeup") {
+                if (submitContent.length > 20000) {
+                    $("#submitError").text(_("Your post is too long! Please shorten it so that it's at most 20,000 characters long. You may want to split your post up into multiple parts."));
+        
+                    return;
+                }
+        
+                $(".submitButton").prop("disabled", true);
+                $(".submitButton").text(_("Submitting..."));
+        
+                api.submitPost({
+                    group: submitGroup,
+                    title: submitTitle.trim(),
+                    content: submitContent,
+                    type: "writeup"
+                }).then(function(postId) {
+                    window.location.href = "/g/" + submitGroup + "/posts/" + postId.data;
+                }).catch(function(error) {
+                    console.error("Glipo backend error:", error);
+        
+                    $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again."));
+                    $(".submitButton").prop("disabled", false);
+                    $(".submitButton").text(_("Submit"));
+                });
+            } else if (submitType == "media") {
+                $("#submitError").text(_("The ability to upload media to post it is coming soon! Maybe at the end of this week or something."));
+        
+                return;
+            } else if (submitType == "link") {
+                if (submitContent.trim() == "") {
+                    $("#submitError").text(_("Please insert your link to submit this post."));
+        
+                    return;
+                }
+        
+                if (submitContent.length > 2000) {
+                    $("#submitError").text(_("Your link is too long! Shorten your link so it's at most 2,000 characters long. You can use a link shortening service to do this."));
+        
+                    return;
+                }
+        
+                if (!(submitContent.trim().startsWith("http://") || submitContent.trim().startsWith("https://"))) {
+                    $("#submitError").text(_("Make sure that the URL starts with http:// or https:// to submit this post."));
+        
+                    return;
+                }
+        
+                $(".submitButton").prop("disabled", true);
+                $(".submitButton").text(_("Submitting..."));
+        
+                api.submitPost({
+                    group: submitGroup,
+                    title: submitTitle.trim(),
+                    content: submitContent.trim(),
+                    type: "link"
+                }).then(function(postId) {
+                    window.location.href = "/g/" + submitGroup + "/posts/" + postId.data;
+                }).catch(function(error) {
+                    console.error("Glipo backend error:", error);
+        
+                    $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again."));
+                    $(".submitButton").prop("disabled", false);
+                    $(".submitButton").text(_("Submit"));
+                });
+            }
+        } else {
+            $("#submitError").text(_("The group you entered doesn't exist! Check the group name and try again."));
+        }
+    });
 }
 
 $(function() {
@@ -475,5 +601,9 @@ $(function() {
                 $(".pageNonExistent").show();
             }
         });
+    } else if (trimPage(currentPage) == "submit") {
+        if (core.getURLParameter("group") != null) {
+            $("#submitGroup").val("g/" + core.getURLParameter("group").trim());
+        }
     }
 });

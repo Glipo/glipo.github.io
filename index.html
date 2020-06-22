@@ -130,32 +130,33 @@
             <section class="posts" data-location="^submit$"> <!-- Post submitting page -->
                 <div class="signedIn">
                     <h1>@Submit your post</h1>
-                    <input placeholder="@Enter a group to post to" class="grow">
+                    <input placeholder="@Enter a group to post to" class="grow" id="submitGroup">
                     <div class="tabs">
                         <div class="tabstrip">
                             <button class="selected" data-tab="writeup">@Writeup</button>
                             <button data-tab="media">@Media</button>
                             <button data-tab="link">@Link</button>
                         </div>
-                        <div class="tabcontents">
+                        <div class="tabcontents" id="submitType">
                             <div data-tab="writeup">
-                                <input placeholder="@Post title" class="big">
-                                <div class="contentEditor"></div>
+                                <input placeholder="@Post title" class="big" id="submitWriteupTitle">
+                                <div class="contentEditor" id="submitWriteupContent"></div>
                             </div>
                             <div data-tab="media">
-                                <input placeholder="@Post title" class="big">
+                                <input placeholder="@Post title" class="big" id="submitMediaTitle">
                                 <div class="upload"></div>
                             </div>
                             <div data-tab="link">
-                                <input placeholder="@Post title" class="big">
-                                <input placeholder="@URL to content" class="big">
+                                <input placeholder="@Post title" class="big" id="submitLinkTitle">
+                                <input placeholder="@URL to content" class="big" id="submitLinkUrl">
                             </div>
                         </div>
                     </div>
                     <div class="buttonRow">
-                        <button class="blue">@Submit</button>
+                        <button onclick="submitPost();" class="blue submitButton">@Submit</button>
                         <button onclick="window.history.back();">@Cancel</button>
                     </div>
+                    <p class="errorMessage" id="submitError"></p>
                 </div>
                 <div class="signedOut middle">
                     <div class="pageMessage">
