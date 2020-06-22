@@ -919,6 +919,9 @@ blockquote {
 .postContent.link img {
     display: block;
     max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
 }
 
 .postContent:not(.link) img {
