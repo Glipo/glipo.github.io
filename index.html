@@ -32,6 +32,7 @@
         <script src="/upload.js"></script>
         <script src="/script.js"></script>
         <script src="/api.js"></script>
+        <script src="/posts.js"></script>
         <script src="/lang/en_GB.js"></script>
     </head>
     <body>
@@ -115,72 +116,10 @@
                         <button aria-label="@Newest" class="sort"><icon aria-hidden="true">new_releases</icon> <span>@Newest</span></button>
                         <button onclick="visitSubmitPost();" class="newPost yellow floatEnd"><icon aria-hidden="true">add</icon> <span>@New post</span></button>
                     </card>
-                    <card class="post">
-                        <div class="info">
-                            <a href="/g/technology" class="group">g/technology</a>
-                            <span>·</span>
-                            <span>Posted by u/James</span>
-                            <span>·</span>
-                            <span>2 hours ago</span>
-                        </div>
-                        <h2 class="title"><a href="/g/technology/posts/123">This is a test post</a></h2>
-                        <p>This is a test post</p>
-                        <div class="actions">
-                            <div>
-                                <button title="@Upvote" aria-label="@Upvote - 1083" class="yellow"><icon>arrow_upward</icon> <span>1083</span></button>
-                                <button title="@Downvote" aria-label="@Downvote - 7"><icon>arrow_downward</icon> <span>7</span></button>
-                            </div>
-                            <div class="desktop">
-                                <button title="@Comment" aria-label="@Comment - 15"><icon>comment</icon> <span>15</span></button>
-                                <button title="@Crosspost" aria-label="@Crosspost - 3"><icon>share</icon> <span>3</span></button>
-                                <button title="@Report" aria-label="@Report this post"><icon>flag</icon></button>
-                            </div>
-                        </div>
-                    </card>
-                    <card class="post">
-                        <div class="info">
-                            <a href="/g/technology" class="group">g/technology</a>
-                            <span>·</span>
-                            <span>Posted by u/James</span>
-                            <span>·</span>
-                            <span>2 hours ago</span>
-                        </div>
-                        <h2 class="title"><a href="/g/technology/posts/123">This is another test post</a></h2>
-                        <p>Yes, I know that this is another test post</p>
-                        <div class="actions">
-                            <div>
-                                <button title="@Upvote" aria-label="@Upvote - 1083"><icon>arrow_upward</icon> <span>1083</span></button>
-                                <button title="@Downvote" aria-label="@Downvote - 7"><icon>arrow_downward</icon> <span>7</span></button>
-                            </div>
-                            <div class="desktop">
-                                <button title="@Comment" aria-label="@Comment - 15"><icon>comment</icon> <span>15</span></button>
-                                <button title="@Crosspost" aria-label="@Crosspost - 3"><icon>share</icon> <span>3</span></button>
-                                <button title="@Report" aria-label="@Report this post"><icon>flag</icon></button>
-                            </div>
-                        </div>
-                    </card>
-                    <card class="post">
-                        <div class="info">
-                            <a href="/g/technology" class="group">g/technology</a>
-                            <span>·</span>
-                            <span>Posted by u/James</span>
-                            <span>·</span>
-                            <span>2 hours ago</span>
-                        </div>
-                        <h2 class="title"><a href="/g/technology/posts/123">This is a third test post</a></h2>
-                        <p>This is again a test post</p>
-                        <div class="actions">
-                            <div>
-                                <button title="@Upvote" aria-label="@Upvote - 1083"><icon>arrow_upward</icon> <span>1083</span></button>
-                                <button title="@Downvote" aria-label="@Downvote - 7" class="blue"><icon>arrow_downward</icon> <span>7</span></button>
-                            </div>
-                            <div class="desktop">
-                                <button title="@Comment" aria-label="@Comment - 15"><icon>comment</icon> <span>15</span></button>
-                                <button title="@Crosspost" aria-label="@Crosspost - 3"><icon>share</icon> <span>3</span></button>
-                                <button title="@Report" aria-label="@Report this post"><icon>flag</icon></button>
-                            </div>
-                        </div>
-                    </card>
+                    <div class="loadingPosts">
+                        <div class="loadingSpinner"></div>
+                    </div>
+                    <div class="loadedPosts"></div>
                 </div>
                 <div class="pageNonExistent pageMessage middle">
                     <h1>@This group doesn't exist!</h1>

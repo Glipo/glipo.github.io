@@ -30,6 +30,11 @@ lang.load("en_GB", {
             "{0} == 1": "{0} comment",
             "{0} != 1": "{0} comments"
         },
-        "{0} post pts + {1} comment pts": "{0} post pts + {1} comment pts"
+        "{0} post pts + {1} comment pts": "{0} post pts + {1} comment pts",
+        "Posted by {0}": "Posted by {0}",
+        "Upvote - {0}": "Upvote - {0}",
+        "Downvote - {0}": "Downvote - {0}",
+        "Comment - {0}": "Comment - {0}",
+        "Crosspost - {0}": "Crosspost - {0}"
     }
 });
