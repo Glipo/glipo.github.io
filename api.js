@@ -8,5 +8,7 @@
 
 var api = {
     joinGroup: firebase.functions().httpsCallable("joinGroup"),
-    leaveGroup: firebase.functions().httpsCallable("leaveGroup")
+    leaveGroup: firebase.functions().httpsCallable("leaveGroup"),
+    toggleUpvotePost: firebase.functions().httpsCallable("toggleUpvotePost"),
+    toggleDownvotePost: firebase.functions().httpsCallable("toggleDownvotePost")
 };
