@@ -913,7 +913,7 @@ blockquote {
 }
 
 .postContent {
-    word-break: break-all;
+    word-break: break-word;
 }
 
 .postContent.link img {
