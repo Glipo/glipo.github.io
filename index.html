@@ -33,6 +33,7 @@
         <script src="/script.js"></script>
         <script src="/api.js"></script>
         <script src="/posts.js"></script>
+        <script src="/profilePosts.js"></script>
         <script src="/lang/en_GB.js"></script>
     </head>
     <body>
@@ -188,7 +189,12 @@
                 <div class="loadingPosts">
                     <div class="loadingSpinner"></div>
                 </div>
-                <div class="loadedPosts"></div>
+                <div class="loadedPosts">
+                    <card class="sorts">
+                        <button onclick="sortPostsBy('newest');" aria-label="@Newest" class="sort sortNewest"><icon aria-hidden="true">new_releases</icon> <span>@Newest</span></button>
+                        <button onclick="sortPostsBy('best');" aria-label="@Best" class="sort sortBest"><icon aria-hidden="true">bar_chart</icon> <span>@Best</span></button>
+                    </card>
+                </div>
                 <div class="noPosts pageMessage middle">
                     <div class="userIsMe">
                         <h1>@Nothing to show off yet!</h1>

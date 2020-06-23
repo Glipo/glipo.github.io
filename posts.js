@@ -315,18 +315,20 @@ function sortPostsBy(sort = "popular") {
 }
 
 $(function() {
-    if (["popular", "best", "newest"].includes(core.getURLParameter("sort"))) {
-        sortMethod = core.getURLParameter("sort");
-    }
+    if (currentPage.startsWith("g/") || trimPage(currentPage) == "/") {
+        if (["popular", "best", "newest"].includes(core.getURLParameter("sort"))) {
+            sortMethod = core.getURLParameter("sort");
+        }
 
-    $(".sort").removeClass("blue");
+        $(".sort").removeClass("blue");
 
-    if (sortMethod == "best") {
-        $(".sortBest").addClass("blue");
-    } else if (sortMethod == "newest") {
-        $(".sortNewest").addClass("blue");
-    } else {
-        $(".sortPopular").addClass("blue");
+        if (sortMethod == "best") {
+            $(".sortBest").addClass("blue");
+        } else if (sortMethod == "newest") {
+            $(".sortNewest").addClass("blue");
+        } else {
+            $(".sortPopular").addClass("blue");
+        }
     }
 
     firebase.auth().onAuthStateChanged(function(user) {
