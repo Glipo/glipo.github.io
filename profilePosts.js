@@ -98,7 +98,7 @@ function getProfileHistory() {
                                                 $("<div class='actions'>").append([
                                                     $("<div>").append([
                                                         $("<button class='upvoteButton'>")
-                                                            .attr("title", _("Votes cannot be cast viewing user profiles"))
+                                                            .attr("title", _("Votes cannot be cast when viewing user profiles"))
                                                             .attr("aria-label", _("Upvote - {0}", [profileHistory[i].upvotes]))
                                                             .prop("disabled", true)
                                                             .addClass(profileHistory[i].upvoted ? "yellow" : "")
