@@ -66,6 +66,8 @@ function getGroupPosts(groupName) {
                                                 $("<a>")
                                                     .attr("href", "/u/" + userDocument.data().username)
                                                     .text("u/" + userDocument.data().username)
+                                                    .addClass(userDocument.data().staff ? "staffBadge" : "")
+                                                    .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
                                             ).html()
                                         ]))
                                     ),
