@@ -6,7 +6,12 @@
     https://glipo.cf
 */
 
+var groupPool = ["glipo", "memes"];
+var groupPoolLastPosts = {};
 var sortMethod = "popular";
+var recurseTimeout = 10;
+var recurseTimeoutMessageShown = false;
+var postsToLoad = 0;
 
 function renderLink(url) {
     var result = $("<div>");
@@ -28,17 +33,34 @@ function renderLink(url) {
     return result.html();
 }
 
-function getGroupPosts(groupName) {
+function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAfterwards = false, recurse = 0) {
     var postReference = firebase.firestore().collection("groups").doc(groupName.toLowerCase()).collection("posts");
 
     postReference = postReference.orderBy("popularity", "desc");
-    postReference = postReference.limit(10);
+
+    if (!!startAfter) {
+        postReference = postReference.startAfter(startAfter);
+    }
+
+    postReference = postReference.limit(limit);
 
     postReference.get().then(function(postDocuments) {
         $(".loadingPosts").hide();
         $(".loadedPosts").show();
+
+        if (postDocuments.docs.length == 0) {
+            if (recurse > 0) {
+                getFeedPosts(recurse);
+
+                recurseTimeout--;
+            }
+        }
+
+        postsToLoad = postDocuments.docs.length;
         
         postDocuments.forEach(function(postDocument) {
+            recurseTimeout = 10;
+
             firebase.firestore().collection("users").doc(postDocument.data().author).get().then(function(userDocument) {
                 firebase.firestore().collection("groups").doc(groupName.toLowerCase()).collection("posts").doc(postDocument.id).collection("upvoters").doc(currentUser.uid || "__NOUSER").get().then(function(upvoterDocument) {
                     firebase.firestore().collection("groups").doc(groupName.toLowerCase()).collection("posts").doc(postDocument.id).collection("downvoters").doc(currentUser.uid || "__NOUSER").get().then(function(downvoterDocument) {
@@ -221,16 +243,69 @@ function getGroupPosts(groupName) {
                                 ])
                             ])
                         );
+
+                        if (postsToLoad > 0) {
+                            postsToLoad--;
+                        }
                     });
                 });
             });
+
+            if (setGroupPoolAfterwards) {
+                groupPoolLastPosts[groupName] = postDocument;
+                console.log(groupPoolLastPosts);
+
+                if (recurse > 0) {
+                    getFeedPosts(recurse - 1);
+                }
+            }
         });
     });
 }
 
+function getFeedPosts(limit = 10) {
+    if (recurseTimeout > 0) {
+        var pickedGroup = groupPool[Math.floor(Math.random() * groupPool.length)];
+
+        getGroupPosts(pickedGroup, 1, groupPoolLastPosts[pickedGroup], true, limit);
+    } else if (!recurseTimeoutMessageShown) {
+        $(".loadedPosts").append(
+            $("<p class='middle'>").text(_("Looks like you've reached the end of Glipo! Try joining other groups to get more content on your feed."))
+        );
+
+        recurseTimeoutMessageShown = true;
+    }
+}
+
 $(function() {
     firebase.auth().onAuthStateChanged(function() {
-        if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
+        if (trimPage(currentPage) == "/") {
+            firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").get().then(function(groupReferenceDocuments) {
+                for (var i = 0; i < groupReferenceDocuments.docs.length; i++) {
+                    groupPool[i] = groupReferenceDocuments.docs[i].id;
+                }
+
+                // Remove duplicates
+
+                var tempGroupPool = [];
+
+                $.each(groupPool, function(i, element) {
+                    if ($.inArray(element, tempGroupPool) == -1) {
+                        tempGroupPool.push(element);
+                    }
+                });
+
+                groupPool = tempGroupPool;
+
+                getFeedPosts();
+
+                window.onscroll = function() {
+                    if (window.innerHeight + window.scrollY >= document.body.offsetHeight && postsToLoad == 0) {
+                        getFeedPosts();
+                    }
+                }
+            });
+        } else if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
             var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
     
             firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
