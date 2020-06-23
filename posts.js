@@ -270,9 +270,15 @@ function getFeedPosts(limit = 10) {
 
         getGroupPosts(pickedGroup, 1, groupPoolLastPosts[pickedGroup], true, limit);
     } else if (!recurseTimeoutMessageShown) {
-        $(".loadedPosts").append(
-            $("<p class='middle'>").text(_("Looks like you've reached the end of Glipo! Try joining other groups to get more content on your feed."))
-        );
+        if (trimPage(currentPage) == "/") {
+            $(".loadedPosts").append(
+                $("<p class='middle'>").text(_("Looks like you've reached the end of Glipo! Try joining other groups to get more content on your feed."))
+            );
+        } else {
+            $(".loadedPosts").append(
+                $("<p class='middle'>").text(_("Looks like you've reached the end of this group's posts! Maybe it's time to make that post you dreamt of..."))
+            );
+        }
 
         recurseTimeoutMessageShown = true;
     }
@@ -286,6 +292,8 @@ function initFeedPosts() {
 
     groupPoolLastPosts = {};
     recurseTimeout = 10;
+    recurseTimeoutMessageShown = false;
+    postsToLoad = 10;
 
     getFeedPosts();
 
@@ -327,12 +335,9 @@ $(function() {
     
             firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
                 if (groupDocument.exists) {
-                    $(".loadedPosts").hide();
-                    $(".loadingPosts").show();
+                    groupPool = [groupName];
 
-                    $(".loadedPosts").html("");
-
-                    getGroupPosts(groupDocument.data().name);
+                    initFeedPosts();
                 }
             });
         }
