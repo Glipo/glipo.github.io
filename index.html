@@ -112,9 +112,9 @@
             <section class="posts" data-location="^g\/.*|\/$"> <!-- Feed and group page -->
                 <div class="pageExistent">
                     <card class="sorts">
-                        <button aria-label="@{0} - Selected|@Popular" class="sort blue"><icon aria-hidden="true">whatshot</icon> <span>@Popular</span></button>
-                        <button aria-label="@Best" class="sort"><icon aria-hidden="true">bar_chart</icon> <span>@Best</span></button>
-                        <button aria-label="@Newest" class="sort"><icon aria-hidden="true">new_releases</icon> <span>@Newest</span></button>
+                        <button onclick="sortPostsBy('popular');" aria-label="@{0} - Selected|@Popular" class="sort sortPopular"><icon aria-hidden="true">whatshot</icon> <span>@Popular</span></button>
+                        <button onclick="sortPostsBy('best');" aria-label="@Best" class="sort sortBest"><icon aria-hidden="true">bar_chart</icon> <span>@Best</span></button>
+                        <button onclick="sortPostsBy('newest');" aria-label="@Newest" class="sort sortNewest"><icon aria-hidden="true">new_releases</icon> <span>@Newest</span></button>
                         <button onclick="visitSubmitPost();" class="newPost yellow floatEnd"><icon aria-hidden="true">add</icon> <span>@New post</span></button>
                     </card>
                     <div class="loadingPosts">

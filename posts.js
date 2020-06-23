@@ -36,7 +36,13 @@ function renderLink(url) {
 function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAfterwards = false, recurse = 0) {
     var postReference = firebase.firestore().collection("groups").doc(groupName.toLowerCase()).collection("posts");
 
-    postReference = postReference.orderBy("popularity", "desc");
+    if (sortMethod == "best") {
+        postReference = postReference.orderBy("upvotes", "desc");
+    } else if (sortMethod == "newest") {
+        postReference = postReference.orderBy("posted", "desc");
+    } else {
+        postReference = postReference.orderBy("popularity", "desc");
+    }
 
     if (!!startAfter) {
         postReference = postReference.startAfter(startAfter);
@@ -304,7 +310,25 @@ function initFeedPosts() {
     }
 }
 
+function sortPostsBy(sort = "popular") {
+    window.location.href = window.location.href.split("?")[0] + "?sort=" + encodeURIComponent(sort);
+}
+
 $(function() {
+    if (["popular", "best", "newest"].includes(core.getURLParameter("sort"))) {
+        sortMethod = core.getURLParameter("sort");
+    }
+
+    $(".sort").removeClass("blue");
+
+    if (sortMethod == "best") {
+        $(".sortBest").addClass("blue");
+    } else if (sortMethod == "newest") {
+        $(".sortNewest").addClass("blue");
+    } else {
+        $(".sortPopular").addClass("blue");
+    }
+
     firebase.auth().onAuthStateChanged(function(user) {
         if (trimPage(currentPage) == "/") {
             if (user) {
