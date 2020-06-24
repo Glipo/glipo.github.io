@@ -992,7 +992,7 @@ blockquote {
     background-size: contain;
     background-position: right;
     background-repeat: no-repeat;
-    color: var(--yellow);
+    color: var(--yellow)!important;
 }
 
 h1 .staffBadge, h2 .staffBadge {

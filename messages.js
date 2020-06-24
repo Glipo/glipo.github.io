@@ -28,6 +28,8 @@ function getNotifications(type = "unread") {
                                     $("<a class='group'>")
                                         .attr("href", "/u/" + senderDocument.data().username)
                                         .text("u/" + senderDocument.data().username)
+                                        .addClass(senderDocument.data().staff ? "staffBadge" : "")
+                                        .attr("title", senderDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
                                 ),
                                 $("<span>").text(" · "),
                                 $("<span>")
@@ -121,6 +123,8 @@ function getMessages() {
                                             _("Deleted user") :
                                             "u/" + contactDocument.data().username
                                         )
+                                        .addClass(contactDocument.exists ? (contactDocument.data().staff ? "staffBadge" : "") : "")
+                                        .attr("title", contactDocument.exists ? (contactDocument.data().staff ? _("This user is a staff member of Glipo.") : null) : null)
                                     ,
                                     $("<div>").append([
                                         $("<span>").text(dmDocument.data().lastMessage.length > 100 ? dmDocument.data().lastMessage.substring(0, 100) + _("...") : dmDocument.data().lastMessage),
@@ -200,6 +204,8 @@ function getDmMessages(user) {
                                                             "u/" + userDocument.data().username :
                                                             "u/" + recipientDocument.data().username
                                                         )
+                                                        .addClass((messageDocument.data().me ? userDocument.data().staff : recipientDocument.data().staff) ? "staffBadge" : "")
+                                                        .attr("title", (messageDocument.data().me ? userDocument.data().staff : recipientDocument.data().staff) ? _("This user is a staff member of Glipo.") : null)
                                                     :
                                                     $("<span>").text(_("Deleted user"))
                                                 ),
