@@ -430,6 +430,14 @@ function submitPost() {
     });
 }
 
+function visitUserMessages() {
+    if (currentPage.startsWith("u/") && trimPage(currentPage).split("/").length > 1) {
+        var userProfileUsername = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+        window.location.href = "/dm?user=" + encodeURIComponent(userProfileUsername);
+    }
+}
+
 $(function() {
     if (localStorage.getItem("signedInUsername") != null) {
         currentUser.username = localStorage.getItem("signedInUsername");
@@ -608,7 +616,7 @@ $(function() {
                 $(".pageNonExistent").show();
             }
         });
-    } else if (currentPage.startsWith("u/")) {
+    } else if (currentPage.startsWith("u/") && trimPage(currentPage).split("/").length > 1) {
         var userProfileUsername = trimPage(currentPage).split("/")[1].toLowerCase().trim();
         var userProfileUid = null;
 

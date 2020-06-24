@@ -34,6 +34,7 @@
         <script src="/api.js"></script>
         <script src="/posts.js"></script>
         <script src="/profilePosts.js"></script>
+        <script src="/messages.js"></script>
         <script src="/lang/en_GB.js"></script>
     </head>
     <body>
@@ -53,7 +54,7 @@
                 <icon aria-hidden="true" class="locationDropdownIndicator">arrow_drop_down</icon>
             </button>
             <span class="signedIn">
-                <button title="@Notifications" class="menuButton menuButtonHalf"><icon aria-label="@Notifications">notifications</icon></button>
+                <button title="@Notifications" onclick="window.location.href = '/notifications';" class="menuButton menuButtonHalf notificationsButton"><icon aria-label="@Notifications">notifications</icon></button>
                 <button title="@Sign out" onclick="signOut();" class="menuButton menuButtonHalf"><icon aria-label="@Sign out" class="flippable">exit_to_app</icon></button>
             </span>
             <span class="signedOut">
@@ -64,7 +65,7 @@
         <div class="menu">
             <div class="forMenuButtonSmall">
                 <div class="signedIn">
-                    <button>@Notifications</button>
+                    <button onclick="window.location.href = '/notifications';">@Notifications</button>
                     <button onclick="signOut();">@Sign out</button>
                 </div>
                 <div class="signedOut">
@@ -183,6 +184,9 @@
                                 <span>·</span>
                                 <span class="userCommentCount">@{0} comments|---</span>
                             </p>
+                            <div class="userIsNotMe">
+                                <button onclick="visitUserMessages();" class="big blue">@Send message</button>
+                            </div>
                         </card>
                     </span>
                 </span>
@@ -217,6 +221,73 @@
                         <h1>@Who is this?!</h1>
                         <p>@No-one exists with this username. If you like the username, feel free to create an account with it!</p>
                         <button onclick="showSignUpDialog();" class="blue">@Sign up</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^notifications$"> <!-- Notifications page -->
+                <div class="signedIn">
+                    <div class="tabs">
+                        <div class="tabstrip">
+                            <button class="selected" data-tab="unread">@Unread</button>
+                            <button data-tab="archive">@Archive</button>
+                            <button data-tab="messages">@Messages</button>
+                        </div>
+                        <div class="tabcontents giveMarginTop" id="submitType">
+                            <div data-tab="unread" id="unreadNotificationsTab">
+                                <div class="loadingSpinner"></div>
+                                <div class="unreadNotifications"></div>
+                            </div>
+                            <div data-tab="archive" id="archivedNotificationsTab">
+                                <div class="loadingSpinner"></div>
+                                <div class="archivedNotifications"></div>
+                            </div>
+                            <div data-tab="messages" id="messagesTab">
+                                <div class="loadingSpinner"></div>
+                                <div class="messageDms"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="signedOut middle">
+                    <div class="pageMessage">
+                        <h1>@Sign in to see your notifications</h1>
+                        <p>@To catch up with all of your messages and replies, please sign in.</p>
+                        <button onclick="showSignInDialog();" class="blue">@Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^dm$"> <!-- DM page -->
+                <div class="signedIn">
+                    <div class="loadingDm">
+                        <div class="loadingSpinner"></div>
+                    </div>
+                    <div class="loadedDm">
+                        <div class="pageExistent">
+                            <h1 class="dmHeader"></h1>
+                            <div class="dmMessages"></div>
+                            <div class="dmReplyContainer">
+                                <div class="contentEditor" id="dmMessageReply"></div>
+                                <div class="buttonRow">
+                                    <button onclick="sendDmMessage();" class="blue">@Send</button>
+                                    <button onclick="window.history.back();">@Cancel</button>
+                                </div>
+                                <p class="errorMessage" id="sendDmMessageError"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pageNonExistent">
+                        <div class="pageMessage middle">
+                            <h1>@This user does not exist...</h1>
+                            <p>@Check to see if you entered the right username in the URL.</p>
+                            <button onclick="window.location.href = '/notifications';" class="blue">@View notifications</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="signedOut middle">
+                    <div class="pageMessage">
+                        <h1>@Sign in to send and receive messages</h1>
+                        <p>@You need a Glipo account in order to privately message users.</p>
+                        <button onclick="showSignInDialog();" class="blue">@Sign in</button>
                     </div>
                 </div>
             </section>
@@ -259,6 +330,9 @@
                             <span>·</span>
                             <span class="userCommentCount">@{0} comments|---</span>
                         </p>
+                        <div class="userIsNotMe">
+                            <button onclick="visitUserMessages();" class="big blue">@Send message</button>
+                        </div>
                     </card>
                 </span>
                 <card data-location="^submit$">

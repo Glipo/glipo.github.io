@@ -274,6 +274,19 @@ card.post .actions div button {
     padding-bottom: 5px;
 }
 
+card.dm {
+    cursor: pointer;
+}
+
+card.dm a {
+    color: var(--foreground);
+    font-weight: bold;
+}
+
+card.dm span {
+    color: var(--shade3);
+}
+
 dialog {
     position: fixed;
     top: 50%;
@@ -807,6 +820,10 @@ blockquote {
     margin-top: 5px;
 }
 
+.tabs .tabcontents.giveMarginTop {
+    margin-top: 10px;
+}
+
 .tabs .tabcontents > *:not(:first-of-type) {
     display: none;
 }
@@ -965,7 +982,7 @@ blockquote {
     display: none;
 }
 
-.loadedPosts, .noPosts, .pageNonExistent {
+.loadedPosts, .noPosts, .pageNonExistent, .loadedDm {
     display: none;
 }
 

@@ -63,6 +63,8 @@ lang.load("en_GB", {
         },
         "Literally just now": "Literally just now",
         "Image from Glipo": "Image from Glipo",
-        "Image from {0}": "Image from {0}"
+        "Image from {0}": "Image from {0}",
+        "Notifications ({0})": "Notifications ({0})",
+        "Messages with u/{0}": "Messages with u/{0}"
     }
 });

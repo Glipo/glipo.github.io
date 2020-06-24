@@ -11,5 +11,6 @@ var api = {
     leaveGroup: firebase.functions().httpsCallable("leaveGroup"),
     toggleUpvotePost: firebase.functions().httpsCallable("toggleUpvotePost"),
     toggleDownvotePost: firebase.functions().httpsCallable("toggleDownvotePost"),
-    submitPost: firebase.functions().httpsCallable("submitPost")
+    submitPost: firebase.functions().httpsCallable("submitPost"),
+    sendMessage: firebase.functions().httpsCallable("sendMessage")
 };

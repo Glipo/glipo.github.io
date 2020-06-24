@@ -32,7 +32,11 @@ $(function() {
 
         $(".userUsername").text("u/" + trimPage(currentPage.split("/")[1]));
     } else if (trimPage(currentPage) == "submit") {
-        $(".currentLocation").text("Submit post");
+        $(".currentLocation").text(_("Submit post"));
+    } else if (trimPage(currentPage) == "notifications") {
+        $(".currentLocation").text(_("Notifications"));
+    } else if (trimPage(currentPage) == "dm") {
+        $(".currentLocation").text(_("Messages"));
     } else {
         $(".currentLocation").text(_("Error 404"));
         $(".error404").show();
