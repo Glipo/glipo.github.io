@@ -153,29 +153,6 @@ function getProfileHistory() {
                                         );
                                     }
                                 }
-
-                                // <card class="post">
-                                //     <div class="info">
-                                //         <a href="/g/technology" class="group">g/technology</a>
-                                //         <span>·</span>
-                                //         <span>Posted by u/James</span>
-                                //         <span>·</span>
-                                //         <span>2 hours ago</span>
-                                //     </div>
-                                //     <h2 class="title"><a href="/g/technology/posts/123">This is a test post</a></h2>
-                                //     <p>This is a test post</p>
-                                //     <div class="actions">
-                                //         <div>
-                                //             <button title="@Upvote" aria-label="@Upvote - 1083" class="yellow"><icon>arrow_upward</icon> <span>1083</span></button>
-                                //             <button title="@Downvote" aria-label="@Downvote - 7"><icon>arrow_downward</icon> <span>7</span></button>
-                                //         </div>
-                                //         <div class="desktop">
-                                //             <button title="@Comment" aria-label="@Comment - 15"><icon>comment</icon> <span>15</span></button>
-                                //             <button title="@Crosspost" aria-label="@Crosspost - 3"><icon>share</icon> <span>3</span></button>
-                                //             <button title="@Report" aria-label="@Report this post"><icon>flag</icon></button>
-                                //         </div>
-                                //     </div>
-                                //</card>
                             });
                         });
                     });
