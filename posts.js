@@ -312,6 +312,8 @@ function initFeedPosts() {
 
     window.onscroll = function() {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight && postsToLoad == 0) {
+            postsToLoad = 1;
+
             getFeedPosts();
         }
     }
