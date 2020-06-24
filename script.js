@@ -338,7 +338,7 @@ function submitPost() {
                     $(".submitButton").text(_("Submit"));
                 });
             } else if (submitType == "media") {
-                if ($("#submitMediaUpload input[type='file']").val() == null) {
+                if ($("#submitMediaUpload input[type='file']").val() == null || $("#submitMediaUpload input[type='file']").val() == "") {
                     $("#submitError").text(_("Please upload the media you wish to submit."));
         
                     return;
