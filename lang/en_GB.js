@@ -13,7 +13,7 @@ lang.load("en_GB", {
     strings: {
         "...": "...",
         "{0} - Selected": "{0} - Selected",
-        "Image selected: {0} ({1} KB)": "Image selected: {0} ({1} KB)",
+        "Media selected: {0} ({1} KB)": "Media selected: {0} ({1} KB)",
         "Joined {0}": "Joined {0}",
         "{0} members": {
             "{0} == 1": "{0} member",
@@ -62,6 +62,7 @@ lang.load("en_GB", {
             "{0} != 1": "{0} seconds ago"
         },
         "Literally just now": "Literally just now",
+        "Image from Glipo": "Image from Glipo",
         "Image from {0}": "Image from {0}"
     }
 });

@@ -338,9 +338,55 @@ function submitPost() {
                     $(".submitButton").text(_("Submit"));
                 });
             } else if (submitType == "media") {
-                $("#submitError").text(_("The ability to upload media to post it is coming soon! Maybe at the end of this week or something."));
+                if ($("#submitMediaUpload input[type='file']").val() == null) {
+                    $("#submitError").text(_("Please upload the media you wish to submit."));
         
-                return;
+                    return;
+                }
+
+                if (!RE_IMAGE.test($("#submitMediaUpload input[type='file']").val())) {
+                    $("#submitError").text(_("Sorry, we don't support the media type that you have uploaded."));
+                }
+
+                if ($("#submitMediaUpload input[type='file']")[0].files[0].size > 5 * 1024 * 1024) {
+                    $("#submitError").text(_("Sorry, media must be at most 5 MB in size. Try compressing your media and reuploading it."));
+                }
+
+                $(".submitButton").prop("disabled", true);
+                $(".submitButton").text(_("Uploading..."));
+
+                firebase.storage().ref(
+                    "media/" +
+                    core.generateKey(32) +
+                    "." +
+                    $("#submitMediaUpload input[type='file']").val().split(".")[$("#submitMediaUpload input[type='file']"
+                ).val().split(".").length - 1].trim()).put($("#submitMediaUpload input[type='file']")[0].files[0]).then(function(snapshot) {
+                    snapshot.ref.getDownloadURL().then(function(url) {
+                        $(".submitButton").prop("disabled", true);
+                        $(".submitButton").text(_("Submitting..."));
+                        
+                        api.submitPost({
+                            group: submitGroup,
+                            title: submitTitle.trim(),
+                            content: url,
+                            type: "link"
+                        }).then(function(postId) {
+                            window.location.href = "/g/" + submitGroup + "/posts/" + postId.data;
+                        }).catch(function(error) {
+                            console.error("Glipo backend error:", error);
+        
+                            $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again."));
+                            $(".submitButton").prop("disabled", false);
+                            $(".submitButton").text(_("Submit"));
+                        });
+                    }).catch(function(error) {
+                        console.error("Glipo backend error:", error);
+    
+                        $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again."));
+                        $(".submitButton").prop("disabled", false);
+                        $(".submitButton").text(_("Submit"));
+                    });
+                })
             } else if (submitType == "link") {
                 if (submitContent.trim() == "") {
                     $("#submitError").text(_("Please insert your link to submit this post."));

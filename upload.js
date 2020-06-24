@@ -14,7 +14,7 @@ function setUploadAreaFile(context, file, filename) {
         var fileReader = new FileReader();
         var thisScope = context;
 
-        $(context).closest(".upload").find(".uploaded .info span").text(_("Image selected: {0} ({1} KB)", [
+        $(context).closest(".upload").find(".uploaded .info span").text(_("Media selected: {0} ({1} KB)", [
             filename.length > 20 ? filename.substring(0, 20) + _("...") : filename,
             Math.round(file.size / 1000)
         ]));

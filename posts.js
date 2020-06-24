@@ -16,11 +16,18 @@ var postsToLoad = 0;
 function renderLink(url) {
     var result = $("<div>");
 
-    if (RE_IMAGE.test(url)) {
-        result.append($("<img>")
-            .attr("src", url)
-            .attr("alt", _("Image from {0}", [url]))
-        );
+    if (RE_IMAGE.test(url.split("?")[0].split("#")[0])) {
+        if (url.startsWith("https://firebasestorage.googleapis.com/v0/b/glipo-net.appspot.com/o/")) {
+            result.append($("<img>")
+                .attr("src", url)
+                .attr("alt", _("Image from Glipo"))
+            );
+        } else {
+            result.append($("<img>")
+                .attr("src", url)
+                .attr("alt", _("Image from {0}", [url]))
+            );
+        }
     } else {
         result.append($("<a>")
             .attr("href", url)
