@@ -6,7 +6,7 @@
     https://glipo.cf
 */
 
-const RE_IMAGE = /.*(\.png|\.jpg|\.jpeg|\.gif)/;
+const RE_IMAGE = /.*(\.png|\.jpg|\.jpeg|\.gif|\.PNG|\.JPG|\.JPEG|\.GIF)/;
 const RE_IMGUR = /https:\/\/imgur.com\/gallery\/(.*)/;
 const RE_YOUTUBE = /(https:\/\/www\.youtube\.com\/watch\?v=|https:\/\/youtu\.be\/)([a-zA-Z0-9_-]{1,64})/;
 const RE_GIPHY = /https:\/\/giphy.com\/gifs\/(.*)/;
