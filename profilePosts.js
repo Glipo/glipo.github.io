@@ -62,7 +62,7 @@ function getProfileHistory() {
 
                                         if (profileHistory[i].type == "writeup") {
                                             postContent = renderMarkdown(profileHistory[i].content);
-                                        } else if (postDocument.data().type == "link") {
+                                        } else if (profileHistory[i].type == "link") {
                                             postContent = renderLink(profileHistory[i].content);
                                         }
 
