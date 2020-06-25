@@ -12,7 +12,7 @@ function getNotifications(type = "unread") {
 
     $("." + type + "Notifications").html("");
 
-    firebase.firestore().collection("users").doc(currentUser.uid).collection("" + type + "Notifications").orderBy("sent", "desc").get().then(function(notificationDocuments) {
+    firebase.firestore().collection("users").doc(currentUser.uid).collection(type + "Notifications").orderBy("sent", "desc").get().then(function(notificationDocuments) {
         $("#" + type + "NotificationsTab .loadingSpinner").hide();
         $("." + type + "Notifications").show();
 
