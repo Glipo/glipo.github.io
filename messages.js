@@ -266,6 +266,8 @@ function sendDmMessage() {
                     $("<a class='group'>")
                         .attr("href", "/u/" + userDocument.data().username)
                         .text("u/" + userDocument.data().username)
+                        .addClass(userDocument.data().staff ? "staffBadge" : "")
+                        .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
                     ,
                     $("<span>").text(" · "),
                     $("<span>").text(_("Literally just now"))
