@@ -189,40 +189,42 @@ function getDmMessages(user) {
                             firebase.firestore().collection("users").doc(currentUser.uid).get().then(function(userDocument) {
                                 messageDocuments.forEach(function(messageDocument) {
                                     $(".dmMessages").append(
-                                        $("<card class='post'>").append([
-                                            $("<div class='info'>").append([
-                                                (
-                                                    (messageDocument.data().me || recipientDocument.exists) ?
-                                                    $("<a class='group'>")
-                                                        .attr("href",
-                                                            messageDocument.data().me ?
-                                                            "/u/" + userDocument.data().username :
-                                                            "/u/" + recipientDocument.data().username
+                                        $("<card class='post'>")
+                                            .addClass(messageDocument.data().me ? "myMessage" : "")
+                                            .append([
+                                                $("<div class='info'>").append([
+                                                    (
+                                                        (messageDocument.data().me || recipientDocument.exists) ?
+                                                        $("<a class='group'>")
+                                                            .attr("href",
+                                                                messageDocument.data().me ?
+                                                                "/u/" + userDocument.data().username :
+                                                                "/u/" + recipientDocument.data().username
+                                                            )
+                                                            .text(
+                                                                messageDocument.data().me ?
+                                                                "u/" + userDocument.data().username :
+                                                                "u/" + recipientDocument.data().username
+                                                            )
+                                                            .addClass((messageDocument.data().me ? userDocument.data().staff : recipientDocument.data().staff) ? "staffBadge" : "")
+                                                            .attr("title", (messageDocument.data().me ? userDocument.data().staff : recipientDocument.data().staff) ? _("This user is a staff member of Glipo.") : null)
+                                                        :
+                                                        $("<span>").text(_("Deleted user"))
+                                                    ),
+                                                    $("<span>").text(" · "),
+                                                    $("<span>")
+                                                        .attr("title",
+                                                            lang.format(messageDocument.data().sent.toDate(), lang.language, {
+                                                                day: "numeric",
+                                                                month: "long",
+                                                                year: "numeric"
+                                                            }) + " " +
+                                                            messageDocument.data().sent.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
                                                         )
-                                                        .text(
-                                                            messageDocument.data().me ?
-                                                            "u/" + userDocument.data().username :
-                                                            "u/" + recipientDocument.data().username
-                                                        )
-                                                        .addClass((messageDocument.data().me ? userDocument.data().staff : recipientDocument.data().staff) ? "staffBadge" : "")
-                                                        .attr("title", (messageDocument.data().me ? userDocument.data().staff : recipientDocument.data().staff) ? _("This user is a staff member of Glipo.") : null)
-                                                    :
-                                                    $("<span>").text(_("Deleted user"))
-                                                ),
-                                                $("<span>").text(" · "),
-                                                $("<span>")
-                                                    .attr("title",
-                                                        lang.format(messageDocument.data().sent.toDate(), lang.language, {
-                                                            day: "numeric",
-                                                            month: "long",
-                                                            year: "numeric"
-                                                        }) + " " +
-                                                        messageDocument.data().sent.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
-                                                    )
-                                                    .text(timeDifferenceToHumanReadable(new Date().getTime() - messageDocument.data().sent.toDate().getTime()))
-                                            ]),
-                                            $("<div class='postContent'>").html(renderMarkdown(messageDocument.data().content))
-                                        ])
+                                                        .text(timeDifferenceToHumanReadable(new Date().getTime() - messageDocument.data().sent.toDate().getTime()))
+                                                ]),
+                                                $("<div class='postContent'>").html(renderMarkdown(messageDocument.data().content))
+                                            ])
                                     );
 
                                     window.scrollTo(0, document.body.scrollHeight);
@@ -261,7 +263,7 @@ function sendDmMessage() {
 
     firebase.firestore().collection("users").doc(currentUser.uid).get().then(function(userDocument) {
         $(".dmMessages").append(
-            $("<card class='post'>").append([
+            $("<card class='post myMessage'>").append([
                 $("<div class='info'>").append([
                     $("<a class='group'>")
                         .attr("href", "/u/" + userDocument.data().username)
@@ -270,7 +272,7 @@ function sendDmMessage() {
                         .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
                     ,
                     $("<span>").text(" · "),
-                    $("<span>").text(_("Literally just now"))
+                    $("<span>").text(_("Sending..."))
                 ]),
                 $("<div class='postContent'>").html(renderMarkdown(messageContent))
             ])
@@ -287,6 +289,26 @@ function sendDmMessage() {
 
         $("#sendDmMessageError").text(_("Sorry, an internal error has occurred and your last message couldn't be delivered to the sender."));
     });
+}
+
+function enablePushNotifications() {
+    if ("Notification" in window) {
+        $(".notificationsNotEnabled").hide();
+
+        Notification.requestPermission().then(function(result) {
+            if (result == "granted") {
+                cloudMessaging.getToken().then(function(token) {
+                    firebase.firestore().collection("users").doc(currentUser.uid).collection("notificationTokens").doc(token).set({
+                        added: firebase.firestore.FieldValue.serverTimestamp()
+                    }).then(function() {
+                        new Notification(_("Notifications are enabled!"), {
+                            body: _("You're all set to receive notifications from Glipo! 🎉")
+                        });
+                    });
+                });
+            }
+        });
+    }
 }
 
 $(function() {
@@ -329,6 +351,10 @@ $(function() {
                     ;
                 }
             });
+
+            if ("Notification" in window && Notification.permission != "granted") {
+                $(".notificationsNotEnabled").show();
+            }
         }
     });
 });

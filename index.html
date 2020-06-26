@@ -29,6 +29,7 @@
         <script src="/lib/firebase-firestore.js"></script>
         <script src="/lib/firebase-functions.js"></script>
         <script src="/lib/firebase-storage.js"></script>
+        <script src="/lib/firebase-messaging.js"></script>
         <script src="/core.js"></script>
         <script src="/lang.js"></script>
         <script src="/pages.js"></script>
@@ -241,6 +242,15 @@
                             <div data-tab="unread" id="unreadNotificationsTab">
                                 <div class="loadingSpinner"></div>
                                 <div class="unreadNotifications"></div>
+                                <div class="notificationsNotEnabled">
+                                    <card>
+                                        <h2>@Never miss a message</h2>
+                                        <p>@Enable push notifications to keep updated when you're not on the site</p>
+                                        <div class="buttonRow">
+                                            <button onclick="enablePushNotifications();" class="blue">@Enable</button>
+                                        </div>
+                                    </card>
+                                </div>
                             </div>
                             <div data-tab="archive" id="archivedNotificationsTab">
                                 <div class="loadingSpinner"></div>

@@ -61,6 +61,7 @@ lang.load("en_GB", {
             "{0} == 1": "{0} second ago",
             "{0} != 1": "{0} seconds ago"
         },
+        "Sending...": "Sending...",
         "Literally just now": "Literally just now",
         "Image from Glipo": "Image from Glipo",
         "Image from {0}": "Image from {0}",

@@ -26,6 +26,10 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+var cloudMessaging = firebase.messaging();
+
+cloudMessaging.usePublicVapidKey("BCnBejAKa0014JB3f0ySA7zcvQ4TJ7sm3rWjIUiTf3haviaOAZD5lj_BXfB7uSp-R5KXLHc5Snvz1GU8zp6kZPE");
+
 var currentUser = {
     uid: null,
     username: null

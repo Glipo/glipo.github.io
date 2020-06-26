@@ -982,7 +982,7 @@ blockquote {
     display: none;
 }
 
-.loadedPosts, .noPosts, .pageNonExistent, .loadedDm {
+.loadedPosts, .noPosts, .pageNonExistent, .loadedDm, .notificationsNotEnabled {
     display: none;
 }
 
@@ -1001,6 +1001,10 @@ h1 .staffBadge, h2 .staffBadge {
 
 h3 .staffBadge {
     padding-right: 30px;
+}
+
+.myMessage {
+    background-color: var(--shade2);
 }
 
 @media (max-width: 1000px) {
