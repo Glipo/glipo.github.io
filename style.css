@@ -1,0 +1,1141 @@
+/*
+    Glipo
+
+    Copyright (C) Glipo Technologies. All Rights Reserved.
+
+    https://glipo.cf
+*/
+
+:root {
+    --background: #202c3b;
+    --foreground: white;
+    --shade1: #2e4057;
+    --shade2: #3d5370;
+    --shade3: #89b5ee;
+    --blue: #3089ff;
+    --blueText: white;
+    --yellow: #fff726;
+    --yellowText: black;
+    --blur: rgba(0, 0, 0, 0.5);
+}
+
+* {
+    font-family: "Nunito", sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: calc(100% - 20px);
+    height: 40px;
+    padding: 10px;
+    background-color: var(--shade1);
+    z-index: 1;
+}
+
+nav > * {
+    vertical-align: middle;
+}
+
+nav .logo {
+    display: inline-block;
+    height: 100%;
+}
+
+nav .logo img {
+    width: calc(10vw - 10px);
+    height: 100%;
+    object-fit: contain;
+}
+
+nav .search {
+    display: inline-block;
+    position: relative;
+}
+
+nav .search input {
+    width: calc(50vw - 50px);
+    padding-left: 40px;
+}
+
+[dir="rtl"] nav .search input {
+    padding-left: 10px;
+    padding-right: 40px;
+}
+
+nav .search icon {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    font-size: 20px;
+    pointer-events: none;
+}
+
+[dir="rtl"] nav .search icon {
+    left: unset;
+    right: 12px;
+}
+
+nav .location {
+    position: relative;
+    width: calc(20vw - 33px);
+    margin-left: 15px;
+    padding-right: 40px;
+    text-align: start;
+}
+
+[dir="rtl"] nav .location {
+    margin-left: 0;
+    margin-right: 15px;
+    padding-left: 40px;
+    padding-right: 20px;
+}
+
+nav .location icon {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 20px;
+}
+
+[dir="rtl"] nav .location icon {
+    left: 12px;
+    right: unset;
+}
+
+nav .menuButton {
+    width: calc(10vw - 5px);
+    margin-left: 5px;
+}
+
+[dir="rtl"] nav .menuButton {
+    margin-left: unset;
+    margin-right: 5px;
+}
+
+nav .menuButtonBig {
+    width: calc(10vw - 7px);
+}
+
+nav .menuButtonHalf {
+    width: calc(5vw - 8px);
+    padding-left: 0;
+    padding-right: 0;
+}
+
+nav .menuButtonSmall {
+    position: relative;
+    height: 100%;
+}
+
+nav .menuButtonSmall icon {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    right: 0;
+    font-size: 24px;
+}
+
+header {
+    margin-top: 60px;
+    padding: 20px;
+    padding-left: calc(10vw + 5px);
+    padding-right: calc(10vw + 5px);
+    background-color: var(--shade2);
+}
+
+header button {
+    background-color: var(--shade1);
+}
+
+header details {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+header details summary span {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+main {
+    margin-top: 60px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: calc(10vw + 5px);
+}
+
+[dir="rtl"] main {
+    padding-left: 0;
+    padding-right: calc(10vw + 5px);
+}
+
+main.afterHeader {
+    margin-top: 0;
+}
+
+main section.posts {
+    display: inline-block;
+    width: 50vw;
+    vertical-align: top;
+}
+
+main section.posts h1:first-of-type {
+    margin-top: 0;
+}
+
+main aside {
+    display: inline-block;
+    width: calc(30vw - 30px);
+    margin-left: 15px;
+    vertical-align: top;
+}
+
+[dir="rtl"] main aside {
+    margin-left: 0;
+    margin-right: 15px;
+}
+
+card {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: var(--shade1);
+    border-radius: 10px;
+}
+
+card h1, card h2, card h3, card h4, card h5, card h6 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+card p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+card.sorts button {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+card.post .info {
+    margin-bottom: 10px;
+    color: var(--shade3);
+}
+
+card.post .info a.group {
+    font-weight: bold;
+}
+
+card.post h2.title a {
+    color: var(--foreground);
+    text-decoration: none;
+}
+
+card.post .actions {
+    height: 32px;
+    margin-top: 15px;
+}
+
+card.post .actions div:first-of-type {
+    float: left;
+    width: 50%;
+    text-align: start;
+}
+
+[dir="rtl"] card.post .actions div:first-of-type {
+    float: right;
+}
+
+card.post .actions div:last-of-type {
+    float: right;
+    width: 50%;
+    text-align: end;
+}
+
+[dir="rtl"] card.post .actions div:last-of-type {
+    float: left;
+}
+
+card.post .actions div button {
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+card.dm {
+    cursor: pointer;
+}
+
+card.dm a {
+    color: var(--foreground);
+    font-weight: bold;
+}
+
+card.dm span {
+    color: var(--shade3);
+}
+
+dialog {
+    position: fixed;
+    top: 50%;
+    max-width: calc(100vw - 20px);
+    padding: 0;
+    background-color: var(--background);
+    color: var(--foreground);
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transform: translate(0, -50%);
+}
+
+dialog::backdrop, dialog + .backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: 1s opacity;
+}
+
+dialog .title {
+    background-color: var(--shade1);
+    padding: 10px;
+}
+
+dialog .title span {
+    display: inline-block;
+    width: calc(100% - 35px);
+    font-size: 20px;
+}
+
+dialog .title button {
+    width: 30px;
+    padding: 5px;
+}
+
+dialog .content {
+    max-height: calc(100vh - 100px);
+    padding: 10px;
+    overflow: auto;
+}
+
+dialog .content h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+label {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+label > span:first-of-type {
+    display: inline-block;
+    width: 150px;
+}
+
+button {
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: var(--shade2);
+    color: var(--foreground);
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.5s opacity;
+}
+
+button:hover {
+    opacity: 0.7;
+}
+
+button:active {
+    opacity: 0.5;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+button.big {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button.blue {
+    background-color: var(--blue);
+    color: var(--blueText);
+}
+
+button.yellow {
+    background-color: var(--yellow);
+    color: var(--yellowText);
+}
+
+input, select {
+    width: 200px;
+    padding: 10px;
+    background-color: var(--shade2);
+    color: var(--foreground);
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+}
+
+select {
+    width: 220px;
+    padding-right: 30px;
+    background-image: url("/media/graphics/dropdownWhite.png");
+    background-size: 20px;
+    background-position: right 10px top 10px;
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+[dir="rtl"] select {
+    padding-left: 30px;
+    padding-right: 10px;
+    background-position: left 10px top 10px;
+}
+
+input::placeholder {
+    color: var(--shade3);
+}
+
+input:disabled, select:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+input.big {
+    display: block;
+    width: calc(100% - 20px);
+    margin-top: 10px;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    position: relative;
+    display: inline-block;
+    top: 8px;
+    width: unset;
+    -webkit-appearance: none;
+    padding: 10px;
+    background-color: var(--shade2);
+    border-radius: 5px;
+    transition: 0.5s background-color;
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--blue);
+    background-image: url("/media/graphics/checkWhite.png");
+    background-size: contain;
+}
+
+input[type="checkbox"]:indeterminate {
+    background-color: var(--blue);
+    background-image: url("/media/graphics/indeterminateWhite.png");
+    background-size: contain;
+}
+
+input[type="radio"] {
+    border-radius: 10px;
+}
+
+input[type="radio"]:checked {
+    background-color: var(--blue);
+    background-image: url("/media/graphics/radioWhite.png");
+    background-size: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+textarea {
+    width: calc(100% - 20px);
+    min-height: 100px;
+    padding: 10px;
+    background-color: var(--shade2);
+    color: var(--foreground);
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    resize: vertical;
+}
+
+textarea::placeholder {
+    color: var(--shade3);
+}
+
+a {
+    color: var(--shade3);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+hr {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+}
+
+details {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+summary {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: 0.5s opacity;
+    cursor: pointer;
+}
+
+summary:hover {
+    opacity: 0.8;
+}
+
+summary::-webkit-details-marker {
+    position: relative;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    background: url("/media/graphics/expandWhite.png") center no-repeat;
+    background-size: contain;
+    color: transparent;
+    transform: rotate(0deg);
+    transition: 0.5s transform;
+}
+
+details[open] summary::-webkit-details-marker {
+    transform: rotate(-180deg);
+}
+
+pre {
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    font-family: monospace;
+    overflow-x: auto;
+}
+
+pre > code {
+    padding: 0;
+    background-color: transparent;
+}
+
+code {
+    padding: 3px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    font-family: monospace;
+}
+
+table {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--shade2);
+    border-radius: 10px;
+    border-spacing: 0;
+}
+
+th, td {
+    padding: 5px;
+    border: 1px solid var(--shade2);
+}
+
+table tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+
+table tr:first-child th:last-child {
+    border-top-right-radius: 10px;
+}
+
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+blockquote {
+    margin: 0;
+    padding-left: 10px;
+    border-left: 5px solid var(--blue);
+    border-radius: 5px;
+}
+
+[dir="rtl"] blockquote {
+    padding-left: 0;
+    padding-right: 10px;
+    border-left: none;
+    border-right: 5px solid var(--blue);
+}
+
+.start {
+    text-align: start;
+}
+
+.middle {
+    text-align: center;
+}
+
+.end {
+    text-align: end;
+}
+
+.desktop {
+    display: unset;
+}
+
+.mobile {
+    display: none;
+}
+
+.signedIn {
+    display: none;
+}
+
+.signedOut {
+    display: unset;
+}
+
+[dir="rtl"] .flippable {
+    transform: rotateY(180deg);
+}
+
+.floatStart {
+    float: left;
+}
+
+[dir="rtl"] .floatStart {
+    float: right;
+}
+
+.floatEnd {
+    float: right;
+}
+
+[dir="rtl"] .floatEnd {
+    float: left;
+}
+
+.spacer {
+    height: 10px;
+}
+
+.cutOff {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.overflowX {
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
+.split {
+    margin-left: 5px;
+    margin-right: 5px;
+    border-left: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+}
+
+.loadingSpinner {
+    position: relative;
+    display: none;
+    background-color: transparent;
+    margin: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 10px;
+    transform: translateZ(0);
+}
+
+.loadingSpinner, .loadingSpinner::before, .loadingSpinner::after {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border-radius: 10px;
+    animation: loadingSpinner 2s infinite ease-in-out;
+    animation-fill-mode: both;
+}
+
+.loadingSpinner::before, .loadingSpinner::after {
+    position: absolute;
+    top: 0;
+    content: "";
+}
+
+.loadingSpinner::before {
+    left: -30px;
+    animation-delay: -0.5s;
+}
+
+.loadingSpinner::after {
+    left: 30px;
+    animation-delay: 0.5s;
+}
+
+.skipTo {
+    position: absolute;
+    top: 0;
+    left: -200px;
+    margin: 10px;
+    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-decoration: none;
+    background-color: var(--blue);
+    color: var(--blueText);
+    border-radius: 10px;
+    z-index: 2;
+    outline: none;
+    transition: 0.2s;
+}
+
+[dir="rtl"] .skipTo {
+    left: unset;
+    right: -200px;
+}
+
+.skipTo:focus, .skipTo:active {
+    left: 0;
+}
+
+[dir="rtl"] .skipTo:focus, [dir="rtl"] .skipTo:active {
+    left: unset;
+    right: 0;
+}
+
+.menuButtonBig {
+    display: unset;
+}
+
+.menuButtonSmall {
+    display: none;
+}
+
+.menu {
+    position: fixed;
+    display: none;
+    top: 70px;
+    left: calc(60vw + 24px);
+    width: calc(30vw - 30px);
+    max-height: calc(100vh - 100px);
+    background-color: var(--shade2);
+    border-radius: 10px;
+    overflow: auto;
+    z-index: 1;
+}
+
+[dir="rtl"] .menu {
+    left: unset;
+    right: calc(60vw + 24px);
+}
+
+.menu button {
+    width: 100%;
+    border-radius: 0;
+    text-align: start;
+    overflow: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: 0.5s background-color, 0.5s opacity;
+}
+
+.menu button:hover {
+    background-color: var(--shade1);
+}
+
+.forMenuButtonSmall {
+    display: none;
+}
+
+.labelDescription {
+    max-width: 375px;
+}
+
+.buttonRow {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.buttonRow button {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.buttonRow button:first-of-type {
+    margin-right: 0;
+}
+
+.tabs {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.tabs .tabstrip {
+    border-bottom: 5px solid rgba(245, 167, 167, 0.2);
+    border-radius: 5px;
+}
+
+.tabs .tabstrip button {
+    margin-bottom: -5px;
+    background-color: transparent;
+    color: inherit;
+    border-bottom: 5px solid transparent;
+    border-radius: 5px;
+    transition: 0.5s color, 0.5s border-bottom;
+}
+
+.tabs .tabstrip button.selected {
+    color: var(--blue);
+    border-bottom: 5px solid var(--blue);
+}
+
+.tabs .tabcontents {
+    margin-top: 5px;
+}
+
+.tabs .tabcontents.giveMarginTop {
+    margin-top: 10px;
+}
+
+.tabs .tabcontents > *:not(:first-of-type) {
+    display: none;
+}
+
+.contentEditor {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+    padding-bottom: 0;
+    background-color: var(--shade1);
+    color: var(--foreground);
+    border-radius: 10px;
+}
+
+.contentEditor .toolbar {
+    min-height: 33px;
+    margin-bottom: 5px;
+}
+
+.contentEditor .toolbar.previewing {
+    display: none;
+}
+
+.contentEditor .toolbar button {
+    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: transparent;
+    color: inherit;
+    transition: 0.5s background-color;
+}
+
+.contentEditor .toolbar button:hover {
+    background-color: var(--shade2);
+}
+
+.contentEditor .toolbar button.special {
+    background-color: var(--blue);
+    color: var(--blueText);
+    transition: 0.5s opacity;
+}
+
+.contentEditor .toolbar button.special:hover {
+    opacity: 0.8;
+}
+
+.contentEditor .preview {
+    display: none;
+    padding: 10px;
+}
+
+.upload {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: var(--shade1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.upload input[type="file"] {
+    display: none;
+}
+
+.upload label span {
+    display: block;
+    width: unset;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.upload .uploaded {
+    display: none;
+}
+
+.upload .uploaded .info {
+    text-align: start;
+}
+
+.upload .uploaded span {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+[dir="rtl"] .upload .uploaded span {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+.upload .uploaded button {
+    float: right;
+}
+
+[dir="rtl"] .upload .uploaded button {
+    float: left;
+}
+
+.upload .uploaded img.result {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.postContent {
+    word-break: break-word;
+}
+
+.postContent.link img {
+    display: block;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+}
+
+.postContent:not(.link) img {
+    display: block;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pageMessage {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.spoiler {
+    background-color: var(--foreground);
+    color: var(--foreground);
+    border-radius: 3px;
+    transition: 1s background-color;
+    cursor: pointer;
+}
+
+.spoiler.open {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.errorMessage {
+    color: var(--yellow);
+}
+
+.error404 {
+    display: none;
+}
+
+.task-list-item input[type="checkbox"] {
+    position: relative;
+    top: 1px;
+}
+
+[data-location] {
+    display: none;
+}
+
+.loadedPosts, .noPosts, .pageNonExistent, .loadedDm, .notificationsNotEnabled {
+    display: none;
+}
+
+.staffBadge {
+    padding-right: 25px;
+    background-image: url("/media/small.png");
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    color: var(--yellow)!important;
+}
+
+h1 .staffBadge, h2 .staffBadge {
+    padding-right: 40px;
+}
+
+h3 .staffBadge {
+    padding-right: 30px;
+}
+
+.myMessage {
+    background-color: var(--shade2);
+}
+
+@media (max-width: 1000px) {
+    nav .location {
+        width: calc(30vw - 28px);
+    }
+
+    nav .menuButtonBig, nav .menuButtonHalf {
+        display: none;
+    }
+
+    .forMenuButtonSmall {
+        display: unset;
+    }
+
+    card.sorts button.sort span {
+        display: none;
+    }
+
+    card.sorts button.sort.blue span {
+        display: unset;
+    }
+}
+
+@media (max-width: 700px) {
+    nav {
+        width: calc(100% - 40px);
+        padding-left: 20px;
+        padding-right: 20px;
+        text-align: center;
+    }
+
+    nav .logo img {
+        width: 50px;
+        margin-right: 10px;
+    }
+
+    nav .search input {
+        width: calc(100vw - 210px);
+    }
+
+    nav .menuButtonSmall {
+        display: unset;
+    }
+
+    header {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    main, [dir="rtl"] main {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    main section.posts {
+        width: 100%;
+    }
+
+    main aside {
+        display: none;
+    }
+
+    dialog.hasInputs {
+        top: 10px;
+        transform: none;
+    }
+
+    button.grow {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    input.grow {
+        display: block;
+        width: calc(100% - 20px);
+        margin-top: 10px;
+    }
+
+    card.post .info {
+        font-size: 12px;
+    }
+
+    card.post .actions div:first-of-type {
+        width: 100%;
+    }
+
+    .desktop {
+        display: none;
+    }
+
+    .mobile {
+        display: unset;
+    }
+
+    .menu {
+        left: 10px;
+        right: 10px;
+        width: calc(100% - 20px);
+    }
+}
+
+@media (max-width: 400px) {
+    label span:first-of-type {
+        display: block;
+    }
+
+    label input {
+        width: calc(100% - 20px);
+    }
+}
+
+@media (max-width: 360px) {
+    card.sorts button.newPost span {
+        display: none;
+    }
+}
+
+@-moz-document url-prefix() {
+    .contentEditor {
+        padding-bottom: 5px;
+    }
+}
+
+@keyframes loadingSpinner {
+    0%, 80%, 100% {
+        box-shadow: 0 20px 0 -10px var(--yellow);
+    }
+
+    40% {
+        box-shadow: 0 20px 0 0 var(--yellow);
+    }
+}

@@ -1,0 +1,605 @@
+<!--
+    Glipo
+
+    Copyright (C) Glipo Technologies. All Rights Reserved.
+
+    https://glipo.cf
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>@Glipo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=3">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Glipo">
+        <link rel="apple-touch-icon" sizes="180x180" href="/media/icons/apple-touch-icon.png">
+        <link rel="shortcut icon" href="/media/small.png">
+        <link rel="manifest" href="/manifest.json">
+        <link rel="stylesheet" href="/lib/dialog-polyfill.css">
+        <link rel="stylesheet" href="/lib/font.css">
+        <link rel="stylesheet" href="/style.css">
+        <script src="/lib/dialog-polyfill.js"></script>
+        <script src="/lib/jquery.min.js"></script>
+        <script src="/lib/showdown.min.js"></script>
+        <script src="/lib/firebase-app.js"></script>
+        <script src="/lib/firebase-analytics.js"></script>
+        <script src="/lib/firebase-auth.js"></script>
+        <script src="/lib/firebase-firestore.js"></script>
+        <script src="/lib/firebase-functions.js"></script>
+        <script src="/lib/firebase-storage.js"></script>
+        <script src="/lib/firebase-messaging.js"></script>
+        <script src="/core.js"></script>
+        <script src="/lang.js"></script>
+        <script src="/pages.js"></script>
+        <script src="/mdRenderer.js"></script>
+        <script src="/ce.js"></script>
+        <script src="/upload.js"></script>
+        <script src="/script.js"></script>
+        <script src="/api.js"></script>
+        <script src="/posts.js"></script>
+        <script src="/profilePosts.js"></script>
+        <script src="/messages.js"></script>
+        <script src="/lang/en_GB.js"></script>
+    </head>
+    <body>
+        <a class="skipTo" href="#content">@Skip to content</a>
+        <a class="skipTo" href="#sidebar">@Skip to sidebar</a>
+        <nav>
+            <a href="/" class="logo">
+                <img src="/media/largeWhite.png" alt="@Glipo" class="desktop" />
+                <img src="/media/small.png" alt="@Glipo" class="mobile" />
+            </a>
+            <div class="search">
+                <input placeholder="@Search">
+                <icon aria-hidden="true">search</icon>
+            </div>
+            <button onclick="toggleMenu();" class="location desktop">
+                <span class="currentLocation">@Feed</span>
+                <icon aria-hidden="true" class="locationDropdownIndicator">arrow_drop_down</icon>
+            </button>
+            <span class="signedIn">
+                <button title="@Notifications" onclick="window.location.href = '/notifications';" class="menuButton menuButtonHalf notificationsButton"><icon aria-label="@Notifications">notifications</icon></button>
+                <button title="@Sign out" onclick="signOut();" class="menuButton menuButtonHalf"><icon aria-label="@Sign out" class="flippable">exit_to_app</icon></button>
+            </span>
+            <span class="signedOut">
+                <button onclick="showSignInDialog();" class="menuButton menuButtonBig blue">@Sign in</button>
+            </span>
+            <button onclick="toggleMenu();" class="menuButton menuButtonSmall"><icon aria-label="@Open/close menu">menu</icon></button>
+        </nav>
+        <div class="menu">
+            <div class="forMenuButtonSmall">
+                <div class="signedIn">
+                    <button onclick="window.location.href = '/notifications';">@Notifications</button>
+                    <button onclick="signOut();">@Sign out</button>
+                </div>
+                <div class="signedOut">
+                    <button onclick="showSignInDialog();">@Sign in</button>
+                    <button onclick="showSignUpDialog();">@Sign up</button>
+                </div>
+            </div>
+            <div class="signedIn">
+                <button onclick="window.location.href = '/settings';">@Settings</button>
+                <hr>
+            </div>
+            <button onclick="window.location.href = '/';">@Feed</button>
+            <div class="signedIn">
+                <button onclick="visitUserProfile();">u/<span class="currentUsername"></span></button>
+            </div>
+            <div class="joinedGroups"></div>
+        </div>
+        <header data-location="^g\/.*$">
+            <h1 class="groupName"></h1>
+            <p class="groupDescription"></p>
+            <span class="mobile">
+                <span class="pageExistent">
+                    <details>
+                        <summary><span>@Group info</span> <button onclick="toggleGroupMembership();" class="floatEnd blue groupJoinButton">@Join</button></summary>
+                        <p><strong class="groupMemberCount">@{0} members|---</strong></p>
+                        <p class="groupPostCount">@{0} posts|---</p>
+                        <p class="groupCommentCount">@{0} comments|---</p>
+                        <button class="big">@View group rules</button>
+                        <span class="signedIn">
+                            <button class="big">@Message moderators</button>
+                        </span>
+                    </details>
+                </span>
+            </span>
+        </header>
+        <main id="content">
+            <span class="error404">
+                <section class="posts pageMessage middle">
+                    <h1>@A bit lost?</h1>
+                    <p>@The page that you requested was not found.</p>
+                    <button onclick="window.location.href = '/';" class="blue">@Go home</button>
+                    <div class="spacer"></div>
+                    <small>404</small>
+                </section>
+            </span>
+            <section class="posts" data-location="^g\/.*|\/$"> <!-- Feed and group page -->
+                <div class="pageExistent">
+                    <card class="sorts">
+                        <button onclick="sortPostsBy('popular');" aria-label="@{0} - Selected|@Popular" class="sort sortPopular"><icon aria-hidden="true">whatshot</icon> <span>@Popular</span></button>
+                        <button onclick="sortPostsBy('best');" aria-label="@Best" class="sort sortBest"><icon aria-hidden="true">bar_chart</icon> <span>@Best</span></button>
+                        <button onclick="sortPostsBy('newest');" aria-label="@Newest" class="sort sortNewest"><icon aria-hidden="true">new_releases</icon> <span>@Newest</span></button>
+                        <button onclick="visitSubmitPost();" class="newPost yellow floatEnd"><icon aria-hidden="true">add</icon> <span>@New post</span></button>
+                    </card>
+                    <div class="loadingPosts">
+                        <div class="loadingSpinner"></div>
+                    </div>
+                    <div class="loadedPosts"></div>
+                </div>
+                <div class="pageNonExistent pageMessage middle">
+                    <h1>@This group doesn't exist!</h1>
+                    <p>@Check to see if you entered the group name correctly. If you want to make a group with this name, go ahead!</p>
+                    <button class="blue">@Make a group</button>
+                </div>
+            </section>
+            <section class="posts" data-location="^submit$"> <!-- Post submitting page -->
+                <div class="signedIn">
+                    <h1>@Submit your post</h1>
+                    <input placeholder="@Enter a group to post to" class="grow" id="submitGroup">
+                    <div class="tabs">
+                        <div class="tabstrip">
+                            <button class="selected" data-tab="writeup">@Writeup</button>
+                            <button data-tab="media">@Media</button>
+                            <button data-tab="link">@Link</button>
+                        </div>
+                        <div class="tabcontents" id="submitType">
+                            <div data-tab="writeup">
+                                <input placeholder="@Post title" class="big" id="submitWriteupTitle">
+                                <div class="contentEditor" id="submitWriteupContent"></div>
+                            </div>
+                            <div data-tab="media">
+                                <input placeholder="@Post title" class="big" id="submitMediaTitle">
+                                <div class="upload" id="submitMediaUpload"></div>
+                            </div>
+                            <div data-tab="link">
+                                <input placeholder="@Post title" class="big" id="submitLinkTitle">
+                                <input placeholder="@URL to content" class="big" id="submitLinkUrl">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttonRow">
+                        <button onclick="submitPost();" class="blue submitButton">@Submit</button>
+                        <button onclick="window.history.back();">@Cancel</button>
+                    </div>
+                    <p class="errorMessage" id="submitError"></p>
+                </div>
+                <div class="signedOut middle">
+                    <div class="pageMessage">
+                        <h1>@Make your mark</h1>
+                        <p>@Sign in to submit your brand new post. If you don't have an account, sign up!</p>
+                        <button onclick="showSignInDialog();" class="blue">@Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts userProfile" data-location="^u\/.*$"> <!-- User page -->
+                <span class="mobile">
+                    <span class="pageExistent">
+                        <card data-location="^u\/.*$">
+                            <h2><strong class="userUsername"></strong></h2>
+                            <p><strong class="userStaffTitle"></strong></p>
+                            <p class="userBio"></p>
+                            <p class="userJoinDate">@Joined {0}|---</p>
+                            <p>
+                                <strong class="userPoints">@{0} points|---</strong>
+                                <span>·</span>
+                                <span class="userPostCount">@{0} posts|---</span>
+                                <span>·</span>
+                                <span class="userCommentCount">@{0} comments|---</span>
+                            </p>
+                            <div class="userIsNotMe">
+                                <button onclick="visitUserMessages();" class="big blue">@Send message</button>
+                            </div>
+                        </card>
+                    </span>
+                </span>
+                <div class="loadingPosts">
+                    <div class="loadingSpinner"></div>
+                </div>
+                <div class="loadedPosts">
+                    <card class="sorts">
+                        <button onclick="sortPostsBy('newest');" aria-label="@Newest" class="sort sortNewest"><icon aria-hidden="true">new_releases</icon> <span>@Newest</span></button>
+                        <button onclick="sortPostsBy('best');" aria-label="@Best" class="sort sortBest"><icon aria-hidden="true">bar_chart</icon> <span>@Best</span></button>
+                    </card>
+                </div>
+                <div class="noPosts pageMessage middle">
+                    <div class="userIsMe">
+                        <h1>@Nothing to show off yet!</h1>
+                        <p>@The world's waiting to see what you can make! Write a post or comment in a group that you're part of and it'll show here too.</p>
+                        <button onclick="visitSubmitPost();" class="blue">@Write a post</button>
+                    </div>
+                    <div class="userIsNotMe">
+                        <h1>@What a mystery...</h1>
+                        <p>@This user hasn't posted or commented on anything yet! Come back later when they've made something to share.</p>
+                        <button onclick="window.location.href = '/';" class="blue">@Go home</button>
+                    </div>
+                </div>
+                <div class="pageNonExistent pageMessage middle">
+                    <div class="signedIn">
+                        <h1>@Who is this?!</h1>
+                        <p>@No-one exists with this username. If you're looking for someone in particular, make sure that you typed in the username correctly!</p>
+                        <button onclick="window.location.href = '/';" class="blue">@Go home</button>
+                    </div>
+                    <div class="signedOut">
+                        <h1>@Who is this?!</h1>
+                        <p>@No-one exists with this username. If you like the username, feel free to create an account with it!</p>
+                        <button onclick="showSignUpDialog();" class="blue">@Sign up</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^notifications$"> <!-- Notifications page -->
+                <div class="signedIn">
+                    <div class="tabs">
+                        <div class="tabstrip">
+                            <button class="selected" data-tab="unread">@Unread</button>
+                            <button data-tab="archive">@Archive</button>
+                            <button data-tab="messages">@Messages</button>
+                        </div>
+                        <div class="tabcontents giveMarginTop" id="submitType">
+                            <div data-tab="unread" id="unreadNotificationsTab">
+                                <div class="loadingSpinner"></div>
+                                <div class="unreadNotifications"></div>
+                                <div class="notificationsNotEnabled">
+                                    <card>
+                                        <h2>@Never miss a message</h2>
+                                        <p>@Enable push notifications to keep updated when you're not on the site</p>
+                                        <div class="buttonRow">
+                                            <button onclick="enablePushNotifications();" class="blue">@Enable</button>
+                                        </div>
+                                    </card>
+                                </div>
+                            </div>
+                            <div data-tab="archive" id="archivedNotificationsTab">
+                                <div class="loadingSpinner"></div>
+                                <div class="archivedNotifications"></div>
+                            </div>
+                            <div data-tab="messages" id="messagesTab">
+                                <div class="loadingSpinner"></div>
+                                <div class="messageDms"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="signedOut middle">
+                    <div class="pageMessage">
+                        <h1>@Sign in to see your notifications</h1>
+                        <p>@To catch up with all of your messages and replies, please sign in.</p>
+                        <button onclick="showSignInDialog();" class="blue">@Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^dm$"> <!-- DM page -->
+                <div class="signedIn">
+                    <div class="loadingDm">
+                        <div class="loadingSpinner"></div>
+                    </div>
+                    <div class="loadedDm">
+                        <div class="pageExistent">
+                            <h1 class="dmHeader"></h1>
+                            <div class="dmMessages"></div>
+                            <div class="dmReplyContainer">
+                                <div class="contentEditor" id="dmMessageReply"></div>
+                                <div class="buttonRow">
+                                    <button onclick="sendDmMessage();" class="blue">@Send</button>
+                                    <button onclick="window.history.back();">@Cancel</button>
+                                </div>
+                                <p class="errorMessage" id="sendDmMessageError"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pageNonExistent">
+                        <div class="pageMessage middle">
+                            <h1>@This user does not exist...</h1>
+                            <p>@Check to see if you entered the right username in the URL.</p>
+                            <button onclick="window.location.href = '/notifications';" class="blue">@View notifications</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="signedOut middle">
+                    <div class="pageMessage">
+                        <h1>@Sign in to send and receive messages</h1>
+                        <p>@You need a Glipo account in order to privately message users.</p>
+                        <button onclick="showSignInDialog();" class="blue">@Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <aside id="sidebar">
+                <div class="signedOut">
+                    <card data-location="^g\/.*|\/$">
+                        <h1>@Welcome to Glipo</h1>
+                        <p>@Glipo is a social network where you can discover your community through our groups.</p>
+                        <button onclick="showSignUpDialog();" class="big blue">Sign up</button>
+                    </card>
+                </div>
+                <card data-location="^\/$">
+                    <h2>@Trending groups</h2>
+                    <div>g/helloworld</div>
+                    <div>g/memes</div>
+                    <div>g/interesting</div>
+                    <div>g/technology</div>
+                    <div>g/glipo</div>
+                </card>
+                <span class="pageExistent">
+                    <card data-location="^g\/.*$">
+                        <h2>@About this group</h2>
+                        <p><strong class="groupMemberCount">@{0} members|---</strong></p>
+                        <p class="groupPostCount">@{0} posts|---</p>
+                        <p class="groupCommentCount">@{0} comments|---</p>
+                        <button onclick="toggleGroupMembership();" class="big blue groupJoinButton">@Join</button>
+                        <span class="signedIn">
+                            <button class="big">@Message moderators</button>
+                        </span>
+                    </card>
+                    <card data-location="^u\/.*$">
+                        <h2><strong class="userUsername"></strong></h2>
+                        <p><strong class="userStaffTitle"></strong></p>
+                        <p class="userBio"></p>
+                        <p class="userJoinDate">@Joined {0}|---</p>
+                        <p>
+                            <strong class="userPoints">@{0} points|---</strong>
+                            <span>·</span>
+                            <span class="userPostCount">@{0} posts|---</span>
+                            <span>·</span>
+                            <span class="userCommentCount">@{0} comments|---</span>
+                        </p>
+                        <div class="userIsNotMe">
+                            <button onclick="visitUserMessages();" class="big blue">@Send message</button>
+                        </div>
+                    </card>
+                </span>
+                <card data-location="^submit$">
+                    <h2>Community guidelines</h2>
+                    <details>
+                        <summary>@1. Think before you post</summary>
+                        <p>
+                            @Before pressing the submit button, give yourself a
+                            few seconds to think whether the actions you're
+                            taking will be beneficial and useful to others on
+                            Glipo.
+                        </p>
+                    </details>
+                    <details>
+                        <summary>@2. There's a human at the other end</summary>
+                        <p>
+                            @Remember that real, living people are going to read
+                            your posts and comments. Be polite and don't offend
+                            anyone ─ words can hurt. If you're criticising
+                            someone's opinion, do so politely and
+                            constructively.
+                        </p>
+                    </details>
+                    <details>
+                        <summary>@3. Do as you would in real life</summary>
+                        <p>
+                            @Behave as you would do when you're offline. Pretend
+                            that a member of your family is reading your posts ─
+                            it's a good check to see if the content that you're
+                            posting is fit for discussion!
+                        </p>
+                    </details>
+                    <details>
+                        <summary>@4. Help keep groups neat and tidy</summary>
+                        <p>
+                            @Don't repost something that's already posted on the
+                            group (unless it's <em>really</em> old) ─ people
+                            don't want to see the same post again once or twice!
+                            In addition to this, make sure that you properly
+                            attribute others (this can be done by crossposting
+                            if you're re-sharing a Glipo post on a different
+                            group) and that you also format your posts correctly
+                            (use the preview option to check your post's
+                            formatting before submitting it)!
+                        </p>
+                    </details>
+                    <details>
+                        <summary>@5. Abide by the rules</summary>
+                        <p>
+                            @Make sure that your post complies with the rules of
+                            the group that you're posting to. As well as this,
+                            ensure that your post won't violate our Terms of
+                            Service and Content Policy. Failure to do so could
+                            result in a group-wide ban, or even a site-wide ban.
+                        </p>
+                        <!-- TODO: Add links to Terms of Service and Content Policy -->
+                    </details>
+                </card>
+                <card>
+                    <p>
+                        Pretend that this is a footer with lots of clicky links
+                        that go to places
+                    </p>
+                    <p>
+                        Copyright &copy; Glipo Technologies. All Rights
+                        Reserved.
+                    </p>
+                </card>
+            </aside>
+        </main>
+        <dialog class="alertDialog">
+            <div class="title">
+                <span class="alertTitle"></span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="alertContent"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="closeDialogs();" class="blue">@OK</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="signInDialog hasInputs">
+            <div class="title">
+                <span>@Sign in</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <h2>@Welcome back</h2>
+                <p class="labelDescription">@Enter your email address and password to sign into your Glipo account.</p>
+                <p><span>Don't have an account yet?</span> <a href="javascript:switchToSignUpDialog();">@Sign up instead</a></p>
+                <label>
+                    <span>@Email address</span>
+                    <input type="email" id="signInEmail">
+                </label>
+                <label>
+                    <span>@Password</span>
+                    <input type="password" id="signInPassword">
+                </label>
+                <p class="errorMessage labelDescription" id="signInError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="signIn();" class="blue" id="signInButton">@Sign in</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="signUpDialog hasInputs">
+            <div class="title">
+                <span>@Sign up</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <h2>@Join the conversation</h2>
+                <p class="labelDescription"><span>@Enter your email address and password below to sign up to Glipo and discover your community.</span> <a href="javascript:switchToSignInDialog();">@Sign in instead</a></p>
+                <label>
+                    <span>@Email address</span>
+                    <input type="email" id="signUpEmail">
+                </label>
+                <label>
+                    <span>@Password</span>
+                    <input type="password" id="signUpPassword">
+                </label>
+                <p class="errorMessage labelDescription" id="signUpError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="switchToSignUpUsernameDialog();" class="blue">@Next</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="signUpUsernameDialog hasInputs">
+            <div class="title">
+                <span>@Sign up</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <h2>@Nearly there</h2>
+                <p class="labelDescription"><span>@Choose a username for your account. Your username will be visible to everyone when you post or comment on Glipo.</span></p>
+                <label>
+                    <span>@Username</span>
+                    <input id="signUpUsername">
+                </label>
+                <p class="errorMessage labelDescription" id="signUpUsernameError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="signUp();" class="blue" id="signUpUsernameButton">@Sign up</button>
+                    <button onclick="switchToSignUpDialog();">@Back</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="ceInsertLinkDialog hasInputs">
+            <div class="title">
+                <span>@Insert link</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <label>
+                    <span>@Link text</span>
+                    <input id="ceInsertLinkText">
+                </label>
+                <label>
+                    <span>@URL to content</span>
+                    <input id="ceInsertLinkUrl">
+                </label>
+                <p class="errorMessage labelDescription" id="ceInsertLinkError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="ceInsertLink();" class="blue">@Insert</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="ceInsertCheckboxDialog hasInputs">
+            <div class="title">
+                <span>@Insert checkbox</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <label>
+                    <span>@Checkbox state</span>
+                    <input type="checkbox" id="ceInsertCheckboxState">
+                </label>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="ceInsertCheckbox();" class="blue">@Insert</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="ceInsertTableDialog hasInputs">
+            <div class="title">
+                <span>@Insert table</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <label>
+                    <span>@Columns</span>
+                    <input type="number" min="1" max="20" step="1" value="3" id="ceInsertTableColumns">
+                </label>
+                <label>
+                    <span>@Rows</span>
+                    <input type="number" min="1" max="100" step="1" value="3" id="ceInsertTableRows">
+                </label>
+                <p class="errorMessage labelDescription" id="ceInsertTableError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="ceInsertTable();" class="blue">@Insert</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="ceInsertMediaDialog hasInputs">
+            <div class="title">
+                <span>@Insert media</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="labelDescription">
+                    @PNG, JPEG and GIF photos are supported, as well as Imgur,
+                    YouTube, GIPHY and Gfycat links.
+                </p>
+                <label>
+                    <span>@URL to media</span>
+                    <input id="ceInsertMediaUrl">
+                </label>
+                <label>
+                    <span>@Brief description</span>
+                    <input placeholder="@eg. Photo of dancing lizard" id="ceInsertMediaDescription">
+                </label>
+                <p class="errorMessage labelDescription" id="ceInsertMediaError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="ceInsertMedia();" class="blue">@Insert</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="leaveGroupDialog">
+            <div class="title">
+                <span>@Leave group?</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p>@Do you really want to leave this group? You can join again later if you change your mind.</p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="leaveGroup();" class="blue">@Yes</button>
+                    <button onclick="closeDialogs();">@No</button>
+                </div>
+            </div>
+        </dialog>
+    </body>
+</html>
