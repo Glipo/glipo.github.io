@@ -982,7 +982,7 @@ blockquote {
     display: none;
 }
 
-.loadedPosts, .noPosts, .pageNonExistent, .loadedDm, .notificationsNotEnabled {
+.loadedPosts, .noPosts, .pageNonExistent, .loadedDm, .selfMessaging, .notificationsNotEnabled {
     display: none;
 }
 

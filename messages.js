@@ -166,79 +166,88 @@ function getDmMessages(user) {
         firebase.firestore().collection("users").doc(recipientUsernameDocument.exists ? recipientUsernameDocument.data().uid : "__NOUSER").get().then(function(recipientDocument) {
             firebase.firestore().collection("users").doc(currentUser.uid).collection("dms").doc(user).get().then(function(dmDocument) {                
                 if (recipientDocument.exists || dmDocument.exists) {
-                    if (recipientDocument.exists) {
-                        $(".dmHeader").text(_("Messages with u/{0}", [recipientDocument.data().username]));
-                    } else {
-                        $(".dmHeader").text(_("Messages with a deleted user"));
-                        $(".dmReplyContainer").html("").append(
-                            $("<card class='middle'>").text(_("You cannot reply to a deleted user"))
-                        );
-                    }
-
-                    $("#dmMessageReply textarea").attr("placeholder", _("Write your message here..."));
-                
-                    $(".pageNonExistent").hide();
-                    $(".pageExistent").show();
-                    $(".loadingDm").hide();
-                    $(".loadedDm").show();
-
-                    firebase.firestore().collection("users").doc(currentUser.uid).collection("dms").doc(user).collection("messages").orderBy("sent", "asc").onSnapshot(function(messageDocuments) {
-                        $(".dmMessages").html("");
-
-                        if (messageDocuments.docs.length > 0) {
-                            firebase.firestore().collection("users").doc(currentUser.uid).get().then(function(userDocument) {
-                                messageDocuments.forEach(function(messageDocument) {
-                                    $(".dmMessages").append(
-                                        $("<card class='post'>")
-                                            .addClass(messageDocument.data().me ? "myMessage" : "")
-                                            .append([
-                                                $("<div class='info'>").append([
-                                                    (
-                                                        (messageDocument.data().me || recipientDocument.exists) ?
-                                                        $("<a class='group'>")
-                                                            .attr("href",
-                                                                messageDocument.data().me ?
-                                                                "/u/" + userDocument.data().username :
-                                                                "/u/" + recipientDocument.data().username
-                                                            )
-                                                            .text(
-                                                                messageDocument.data().me ?
-                                                                "u/" + userDocument.data().username :
-                                                                "u/" + recipientDocument.data().username
-                                                            )
-                                                            .addClass((messageDocument.data().me ? userDocument.data().staff : recipientDocument.data().staff) ? "staffBadge" : "")
-                                                            .attr("title", (messageDocument.data().me ? userDocument.data().staff : recipientDocument.data().staff) ? _("This user is a staff member of Glipo.") : null)
-                                                        :
-                                                        $("<span>").text(_("Deleted user"))
-                                                    ),
-                                                    $("<span>").text(" · "),
-                                                    $("<span>")
-                                                        .attr("title",
-                                                            lang.format(messageDocument.data().sent.toDate(), lang.language, {
-                                                                day: "numeric",
-                                                                month: "long",
-                                                                year: "numeric"
-                                                            }) + " " +
-                                                            messageDocument.data().sent.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
-                                                        )
-                                                        .text(timeDifferenceToHumanReadable(new Date().getTime() - messageDocument.data().sent.toDate().getTime()))
-                                                ]),
-                                                $("<div class='postContent'>").html(renderMarkdown(messageDocument.data().content))
-                                            ])
-                                    );
-
-                                    window.scrollTo(0, document.body.scrollHeight);
-                                });
-                            });
+                    if (!recipientUsernameDocument.exists || recipientUsernameDocument.data().uid != currentUser.uid) {
+                        if (recipientDocument.exists) {
+                            $(".dmHeader").text(_("Messages with u/{0}", [recipientDocument.data().username]));
                         } else {
-                            $(".dmMessages").append(
-                                $("<p>").text(_("This is the beginning of something good... Write a message below to send it!"))
+                            $(".dmHeader").text(_("Messages with a deleted user"));
+                            $(".dmReplyContainer").html("").append(
+                                $("<card class='middle'>").text(_("You cannot reply to a deleted user"))
                             );
                         }
-                    });
+    
+                        $("#dmMessageReply textarea").attr("placeholder", _("Write your message here..."));
+                    
+                        $(".pageNonExistent").hide();
+                        $(".selfMessaging").hide();
+                        $(".pageExistent").show();
+                        $(".loadingDm").hide();
+                        $(".loadedDm").show();
+    
+                        firebase.firestore().collection("users").doc(currentUser.uid).collection("dms").doc(user).collection("messages").orderBy("sent", "asc").onSnapshot(function(messageDocuments) {
+                            $(".dmMessages").html("");
+    
+                            if (messageDocuments.docs.length > 0) {
+                                firebase.firestore().collection("users").doc(currentUser.uid).get().then(function(userDocument) {
+                                    messageDocuments.forEach(function(messageDocument) {
+                                        $(".dmMessages").append(
+                                            $("<card class='post'>")
+                                                .addClass(messageDocument.data().me ? "myMessage" : "")
+                                                .append([
+                                                    $("<div class='info'>").append([
+                                                        (
+                                                            (messageDocument.data().me || recipientDocument.exists) ?
+                                                            $("<a class='group'>")
+                                                                .attr("href",
+                                                                    messageDocument.data().me ?
+                                                                    "/u/" + userDocument.data().username :
+                                                                    "/u/" + recipientDocument.data().username
+                                                                )
+                                                                .text(
+                                                                    messageDocument.data().me ?
+                                                                    "u/" + userDocument.data().username :
+                                                                    "u/" + recipientDocument.data().username
+                                                                )
+                                                                .addClass((messageDocument.data().me ? userDocument.data().staff : recipientDocument.data().staff) ? "staffBadge" : "")
+                                                                .attr("title", (messageDocument.data().me ? userDocument.data().staff : recipientDocument.data().staff) ? _("This user is a staff member of Glipo.") : null)
+                                                            :
+                                                            $("<span>").text(_("Deleted user"))
+                                                        ),
+                                                        $("<span>").text(" · "),
+                                                        $("<span>")
+                                                            .attr("title",
+                                                                lang.format(messageDocument.data().sent.toDate(), lang.language, {
+                                                                    day: "numeric",
+                                                                    month: "long",
+                                                                    year: "numeric"
+                                                                }) + " " +
+                                                                messageDocument.data().sent.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
+                                                            )
+                                                            .text(timeDifferenceToHumanReadable(new Date().getTime() - messageDocument.data().sent.toDate().getTime()))
+                                                    ]),
+                                                    $("<div class='postContent'>").html(renderMarkdown(messageDocument.data().content))
+                                                ])
+                                        );
+    
+                                        window.scrollTo(0, document.body.scrollHeight);
+                                    });
+                                });
+                            } else {
+                                $(".dmMessages").append(
+                                    $("<p>").text(_("This is the beginning of something good... Write a message below to send it!"))
+                                );
+                            }
+                        });
+                    } else {
+                        $(".loadingDm").hide();
+                        $(".pageExistent").hide();
+                        $(".pageNonExistent").hide();
+                        $(".selfMessaging").show();
+                    }
                 } else {
                     $(".loadingDm").hide();
                     $(".pageExistent").hide();
+                    $(".selfMessaging").hide();
                     $(".pageNonExistent").show();
                 }
             });
