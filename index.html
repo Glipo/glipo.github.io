@@ -41,6 +41,7 @@
         <script src="/posts.js"></script>
         <script src="/profilePosts.js"></script>
         <script src="/messages.js"></script>
+        <script src="/staff.js"></script>
         <script src="/lang/en_GB.js"></script>
     </head>
     <body>
@@ -81,6 +82,9 @@
             </div>
             <div class="signedIn">
                 <button onclick="window.location.href = '/settings';">@Settings</button>
+                <div class="isStaff">
+                    <button onclick="window.location.href = '/staff';">@Staff area</button>
+                </div>
                 <hr>
             </div>
             <button onclick="window.location.href = '/';">@Feed</button>
@@ -309,6 +313,39 @@
                     <div class="pageMessage">
                         <h1>@Sign in to send and receive messages</h1>
                         <p>@You need a Glipo account in order to privately message users.</p>
+                        <button onclick="showSignInDialog();" class="blue">@Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^staff$"> <!-- Staff page -->
+                <div class="signedIn">
+                    <div class="isStaff">
+                        <div class="tabs">
+                            <div class="tabstrip">
+                                <button class="selected" data-tab="modqueue">@Modqueue</button>
+                                <button data-tab="staff">@Staff members</button>
+                            </div>
+                            <div class="tabcontents giveMarginTop">
+                                <div data-tab="modqueue" id="staffModqueue">
+                                    <div class="loadingSpinner"></div>
+                                    <div class="modqueueItems"></div>
+                                </div>
+                                <div data-tab="staff"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="isNotStaff">
+                        <div class="pageMessage middle">
+                            <h1>@You must be a member of staff at Glipo to access the staff area</h1>
+                            <p>@Only staff members can access the staff area.</p>
+                            <button onclick="window.location.href = '/';" class="blue">@Go home</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="signedOut">
+                    <div class="pageMessage middle">
+                        <h1>@Sign in to access the staff area</h1>
+                        <p>@If you are a member of staff, please sign in with your staff account.</p>
                         <button onclick="showSignInDialog();" class="blue">@Sign in</button>
                     </div>
                 </div>
@@ -574,10 +611,7 @@
                 <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
             </div>
             <div class="content">
-                <p class="labelDescription">
-                    @PNG, JPEG and GIF photos are supported, as well as Imgur,
-                    YouTube, GIPHY and Gfycat links.
-                </p>
+                <p class="labelDescription">@PNG, JPEG and GIF photos are supported, as well as Imgur, YouTube, GIPHY and Gfycat links.</p>
                 <label>
                     <span>@URL to media</span>
                     <input id="ceInsertMediaUrl">
@@ -605,6 +639,25 @@
                 <div class="end buttonRow">
                     <button onclick="leaveGroup();" class="blue">@Yes</button>
                     <button onclick="closeDialogs();">@No</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="staffRemovePostModDialog hasInputs">
+            <div class="title">
+                <span>@Remove a post</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="labelDescription">@Enter the reason as to why this post was removed. The post author will see this reason.</p>
+                <label>
+                    <span>@Reason</span>
+                    <input id="staffRemovePostModReason">
+                </label>
+                <p class="errorMessage labelDescription" id="staffRemovePostModError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="staffRemovePost();" class="blue">@Remove</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
                 </div>
             </div>
         </dialog>

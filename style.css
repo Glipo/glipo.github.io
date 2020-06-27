@@ -620,6 +620,14 @@ blockquote {
     display: unset;
 }
 
+.isStaff {
+    display: none;
+}
+
+.isNotStaff {
+    display: none;
+}
+
 [dir="rtl"] .flippable {
     transform: rotateY(180deg);
 }

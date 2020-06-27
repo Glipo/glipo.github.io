@@ -37,6 +37,8 @@ $(function() {
         $(".currentLocation").text(_("Notifications"));
     } else if (trimPage(currentPage) == "dm") {
         $(".currentLocation").text(_("Messages"));
+    } else if (trimPage(currentPage) == "staff") {
+        $(".currentLocation").text(_("Staff area"));
     } else {
         $(".currentLocation").text(_("Error 404"));
         $(".error404").show();

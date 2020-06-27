@@ -490,6 +490,14 @@ $(function() {
 
                     $(".currentUsername").text(currentUser.username);
                     localStorage.setItem("signedInUsername", currentUser.username);
+
+                    if (document.data().staff) {
+                        $(".isNotStaff").hide();
+                        $(".isStaff").show();
+                    } else {
+                        $(".isStaff").hide();
+                        $(".isNotStaff").show();
+                    }
                 });
 
                 firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").get().then(function(groupReferenceDocuments) {
@@ -532,6 +540,9 @@ $(function() {
 
             $(".currentUsername").text("");
             localStorage.removeItem("signedInUsername");
+
+            $(".isStaff").hide();
+            $(".isNotStaff").show();
 
             $(".joinedGroups").html("");
 
