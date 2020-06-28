@@ -67,89 +67,95 @@ function getProfileHistory() {
                                         }
 
                                         $(".loadedPosts").append(
-                                            $("<card class='post'>").append(
-                                                $("<div class='info'>").append([
-                                                    $("<a class='group'>")
-                                                        .attr("href", "/g/" + profileHistory[i].group)
-                                                        .text("g/" + profileHistory[i].group)
-                                                    ,
-                                                    $("<span>").text(" · "),
-                                                    $("<span>")
-                                                        .attr("title",
-                                                            lang.format(profileHistory[i].posted.toDate(), lang.language, {
-                                                                day: "numeric",
-                                                                month: "long",
-                                                                year: "numeric"
-                                                            }) + " " +
-                                                            profileHistory[i].posted.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
-                                                        )
-                                                        .text(timeDifferenceToHumanReadable(new Date().getTime() - profileHistory[i].posted.toDate().getTime()))
-                                                ]),
-                                                $("<h2 class='title'>").append(
-                                                    $("<a>")
-                                                        .attr("href", "/g/" + profileHistory[i].group + "/posts/" + profileHistory[i].post)
-                                                        .attr("target", "_blank")
-                                                        .text(profileHistory[i].title)
-                                                ),
-                                                $("<div class='postContent'>")
-                                                    .addClass(profileHistory[i].type)
-                                                    .html(postContent)
-                                                ,
-                                                $("<div class='actions'>").append([
-                                                    $("<div>").append([
-                                                        $("<button class='upvoteButton'>")
-                                                            .attr("title", _("Votes cannot be cast when viewing user profiles"))
-                                                            .attr("aria-label", _("Upvote - {0}", [profileHistory[i].upvotes]))
-                                                            .prop("disabled", true)
-                                                            .addClass(profileHistory[i].upvoted ? "yellow" : "")
-                                                            .append([
-                                                                $("<icon>").text("arrow_upward"),
-                                                                document.createTextNode(" "),
-                                                                $("<span>").text(profileHistory[i].upvotes)
-                                                            ])
+                                            $("<card class='post clickable'>")
+                                                .append(
+                                                    $("<div class='info'>").append([
+                                                        $("<a class='group'>")
+                                                            .attr("href", "/g/" + profileHistory[i].group)
+                                                            .text("g/" + profileHistory[i].group)
                                                         ,
-                                                        document.createTextNode(" "),
-                                                        $("<button class='downvoteButton'>")
-                                                            .attr("title", _("Votes cannot be cast when viewing user profiles"))
-                                                            .attr("aria-label", _("Downvote - {0}", [profileHistory[i].downvotes]))
-                                                            .prop("disabled", true)
-                                                            .addClass(profileHistory[i].downvoted ? "blue" : "")
-                                                            .append([
-                                                                $("<icon>").text("arrow_downward"),
-                                                                document.createTextNode(" "),
-                                                                $("<span>").text(profileHistory[i].downvotes)
-                                                            ])
-                                                    ]),
-                                                    $("<div class='desktop'>").append([
-                                                        $("<button>")
-                                                            .attr("title", _("Comment"))
-                                                            .attr("aria-label", _("Comment - {0}"))
-                                                            .append([
-                                                                $("<icon>").text("comment"),
-                                                                document.createTextNode(" "),
-                                                                $("<span>").text(0)
-                                                            ])
-                                                        ,
-                                                        document.createTextNode(" "),
-                                                        $("<button>")
-                                                            .attr("title", _("Crosspost"))
-                                                            .attr("aria-label", _("Crosspost - {0}"))
-                                                            .append([
-                                                                $("<icon>").text("share"),
-                                                                document.createTextNode(" "),
-                                                                $("<span>").text(0)
-                                                            ])
-                                                        ,
-                                                        document.createTextNode(" "),
-                                                        $("<button>")
-                                                            .attr("title", _("Report"))
-                                                            .attr("aria-label", _("Report this post"))
-                                                            .append(
-                                                                $("<icon>").text("flag")
+                                                        $("<span>").text(" · "),
+                                                        $("<span>")
+                                                            .attr("title",
+                                                                lang.format(profileHistory[i].posted.toDate(), lang.language, {
+                                                                    day: "numeric",
+                                                                    month: "long",
+                                                                    year: "numeric"
+                                                                }) + " " +
+                                                                profileHistory[i].posted.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
                                                             )
+                                                            .text(timeDifferenceToHumanReadable(new Date().getTime() - profileHistory[i].posted.toDate().getTime()))
+                                                    ]),
+                                                    $("<h2 class='title'>").append(
+                                                        $("<a>")
+                                                            .attr("href", "/g/" + profileHistory[i].group + "/posts/" + profileHistory[i].post)
+                                                            .attr("target", "_blank")
+                                                            .text(profileHistory[i].title)
+                                                    ),
+                                                    $("<div class='postContent'>")
+                                                        .addClass(profileHistory[i].type)
+                                                        .html(postContent)
+                                                    ,
+                                                    $("<div class='actions'>").append([
+                                                        $("<div>").append([
+                                                            $("<button class='upvoteButton'>")
+                                                                .attr("title", _("Votes cannot be cast when viewing user profiles"))
+                                                                .attr("aria-label", _("Upvote - {0}", [profileHistory[i].upvotes]))
+                                                                .prop("disabled", true)
+                                                                .addClass(profileHistory[i].upvoted ? "yellow" : "")
+                                                                .append([
+                                                                    $("<icon>").text("arrow_upward"),
+                                                                    document.createTextNode(" "),
+                                                                    $("<span>").text(profileHistory[i].upvotes)
+                                                                ])
+                                                            ,
+                                                            document.createTextNode(" "),
+                                                            $("<button class='downvoteButton'>")
+                                                                .attr("title", _("Votes cannot be cast when viewing user profiles"))
+                                                                .attr("aria-label", _("Downvote - {0}", [profileHistory[i].downvotes]))
+                                                                .prop("disabled", true)
+                                                                .addClass(profileHistory[i].downvoted ? "blue" : "")
+                                                                .append([
+                                                                    $("<icon>").text("arrow_downward"),
+                                                                    document.createTextNode(" "),
+                                                                    $("<span>").text(profileHistory[i].downvotes)
+                                                                ])
+                                                        ]),
+                                                        $("<div class='desktop'>").append([
+                                                            $("<button>")
+                                                                .attr("title", _("Comment"))
+                                                                .attr("aria-label", _("Comment - {0}"))
+                                                                .append([
+                                                                    $("<icon>").text("comment"),
+                                                                    document.createTextNode(" "),
+                                                                    $("<span>").text(0)
+                                                                ])
+                                                            ,
+                                                            document.createTextNode(" "),
+                                                            $("<button>")
+                                                                .attr("title", _("Crosspost"))
+                                                                .attr("aria-label", _("Crosspost - {0}"))
+                                                                .append([
+                                                                    $("<icon>").text("share"),
+                                                                    document.createTextNode(" "),
+                                                                    $("<span>").text(0)
+                                                                ])
+                                                            ,
+                                                            document.createTextNode(" "),
+                                                            $("<button>")
+                                                                .attr("title", _("Report"))
+                                                                .attr("aria-label", _("Report this post"))
+                                                                .append(
+                                                                    $("<icon>").text("flag")
+                                                                )
+                                                        ])
                                                     ])
-                                                ])
-                                            )
+                                                )
+                                                .click(function(event) {
+                                                    if (!$(event.target).closest("button, a, spoiler, card.post").is("button, a, .spoiler")) {
+                                                        window.open("/g/" + thisProfileHistory.group + "/posts/" + thisProfileHistory.post + "?np=true");
+                                                    }
+                                                })
                                         );
                                     }
                                 }

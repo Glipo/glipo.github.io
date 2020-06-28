@@ -670,6 +670,14 @@ blockquote {
     border-radius: 2px;
 }
 
+.bold {
+    font-weight: bold;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
 .loadingSpinner {
     position: relative;
     display: none;
