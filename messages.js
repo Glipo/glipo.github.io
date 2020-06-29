@@ -63,7 +63,7 @@ function getNotifications(type = "unread") {
                                 $("<div class='desktop'>").append([
                                     $("<button>")
                                         .attr("title", _("Report"))
-                                        .attr("aria-label", _("Report this notification"))
+                                        .attr("aria-label", _("Report"))
                                         .append(
                                             $("<icon>").text("flag")
                                         )

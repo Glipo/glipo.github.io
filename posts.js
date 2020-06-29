@@ -251,7 +251,7 @@ function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAft
                                                     document.createTextNode(" "),
                                                     $("<button>")
                                                         .attr("title", _("Report"))
-                                                        .attr("aria-label", _("Report this post"))
+                                                        .attr("aria-label", _("Report"))
                                                         .append(
                                                             $("<icon>").text("flag")
                                                         )
