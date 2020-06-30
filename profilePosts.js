@@ -178,12 +178,21 @@ $(function() {
             sortMethod = "newest";
         }
 
-        $(".sort").removeClass("blue");
+        $(".sort")
+            .removeClass("blue")
+            .attr("aria-label", null)
+        ;
 
-        if (sortMethod == "newest") {
-            $(".sortNewest").addClass("blue");
+        if (sortMethod == "best") {
+            $(".sortBest")
+                .addClass("blue")
+                .attr("aria-label", _("{0} - Selected", [_("Best")]))
+            ;
         } else {
-            $(".sortBest").addClass("blue");
+            $(".sortNewest")
+                .addClass("blue")
+                .attr("aria-label", _("{0} - Selected", [_("Newest")]))
+            ;
         }
 
         getProfileHistory();

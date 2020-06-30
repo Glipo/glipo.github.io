@@ -125,7 +125,7 @@
             <section class="posts" data-location="^g\/[^\/]+$|^\/$"> <!-- Feed and group page -->
                 <div class="pageExistent">
                     <card class="sorts">
-                        <button onclick="sortPostsBy('popular');" aria-label="@{0} - Selected|@Popular" class="sort sortPopular"><icon aria-hidden="true">whatshot</icon> <span>@Popular</span></button>
+                        <button onclick="sortPostsBy('popular');" aria-label="@Popular" class="sort sortPopular"><icon aria-hidden="true">whatshot</icon> <span>@Popular</span></button>
                         <button onclick="sortPostsBy('best');" aria-label="@Best" class="sort sortBest"><icon aria-hidden="true">bar_chart</icon> <span>@Best</span></button>
                         <button onclick="sortPostsBy('newest');" aria-label="@Newest" class="sort sortNewest"><icon aria-hidden="true">new_releases</icon> <span>@Newest</span></button>
                         <button onclick="visitSubmitPost();" class="newPost yellow floatEnd"><icon aria-hidden="true">add</icon> <span>@New post</span></button>
@@ -184,9 +184,28 @@
                             </div>
                         </div>
                     </card>
+                    <card class="transparent noPadding">
+                        <button onclick="ceSummon();" aria-label="@New comment" class="ceSummoner">@Write a comment...</button>
+                        <div class="ceUnsummoned">
+                            <div class="contentEditor"></div>
+                            <div class="buttonRow">
+                                <button class="blue">@Send</button>
+                                <button onclick="ceUnsummon();">@Cancel</button>
+                            </div>
+                        </div>
+                    </card>
+                    <card class="sorts">
+                        <button onclick="sortPostsBy('best');" aria-label="@Best" class="sort sortBest blue"><icon aria-hidden="true">bar_chart</icon> <span>@Best</span></button>
+                        <button onclick="sortPostsBy('newest');" aria-label="@Newest" class="sort sortNewest"><icon aria-hidden="true">new_releases</icon> <span>@Newest</span></button>
+                    </card>
+                    <p class="middle">@Comments are coming very soon!</p>
                 </div>
-                <div class="pageNonExistent">
-
+                <div class="pageNonExistent middle">
+                    <div class="pageMessage">
+                        <h1>@Which post were you talking about?!</h1>
+                        <p>@It seems that no post exists with this link; check to see if the address is correct.</p>
+                        <button onclick="window.location.href = '/';" class="blue">@Go home</button>
+                    </div>
                 </div>
             </section>
             <section class="posts" data-location="^submit$"> <!-- Post submitting page -->

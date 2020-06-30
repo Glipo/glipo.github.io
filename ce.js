@@ -353,6 +353,20 @@ function ceInsertMedia() {
     }
 }
 
+function ceSummon() {
+    $(".ceSummoner").hide();
+    $(".ceUnsummoned").show();
+
+    $(".ceUnsummoned .contentEditor textarea").focus();
+}
+
+function ceUnsummon() {
+    $(".ceUnsummoned").hide();
+    $(".ceSummoner").show();
+
+    $(".ceUnsummoned .contentEditor textarea").val("");
+}
+
 $(function() {
     loadContentEditors();
 
@@ -381,4 +395,7 @@ $(function() {
             ceInsertMedia();
         }
     });
+
+    $(".ceUnsummoned").hide();
+    $(".ceSummoner").show();
 });

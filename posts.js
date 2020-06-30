@@ -337,14 +337,26 @@ $(function() {
             sortMethod = core.getURLParameter("sort");
         }
 
-        $(".sort").removeClass("blue");
+        $(".sort")
+            .removeClass("blue")
+            .attr("aria-label", null)
+        ;
 
         if (sortMethod == "best") {
-            $(".sortBest").addClass("blue");
+            $(".sortBest")
+                .addClass("blue")
+                .attr("aria-label", _("{0} - Selected", [_("Best")]))
+            ;
         } else if (sortMethod == "newest") {
-            $(".sortNewest").addClass("blue");
+            $(".sortNewest")
+                .addClass("blue")
+                .attr("aria-label", _("{0} - Selected", [_("Newest")]))
+            ;
         } else {
-            $(".sortPopular").addClass("blue");
+            $(".sortPopular")
+                .addClass("blue")
+                .attr("aria-label", _("{0} - Selected", [_("Popular")]))
+            ;
         }
     }
 

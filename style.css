@@ -1054,6 +1054,21 @@ h3 .staffBadge {
     background-color: var(--shade2);
 }
 
+.ceSummoner {
+    display: none;
+    width: 100%;
+    padding: 10px;
+    padding-bottom: 40px;
+    background-color: var(--shade2);
+    color: var(--shade3);
+    text-align: start;
+    cursor: text;
+}
+
+.ceSummoner:hover {
+    opacity: 1;
+}
+
 @media (max-width: 1000px) {
     nav .location {
         width: calc(30vw - 28px);
