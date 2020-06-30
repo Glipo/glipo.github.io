@@ -40,6 +40,7 @@
         <script src="/api.js"></script>
         <script src="/posts.js"></script>
         <script src="/profilePosts.js"></script>
+        <script src="/post.js"></script>
         <script src="/messages.js"></script>
         <script src="/staff.js"></script>
         <script src="/lang/en_GB.js"></script>
@@ -93,7 +94,7 @@
             </div>
             <div class="joinedGroups"></div>
         </div>
-        <header data-location="^g\/.*$">
+        <header data-location="^g\/[^\/]+$">
             <h1 class="groupName"></h1>
             <p class="groupDescription"></p>
             <span class="mobile">
@@ -121,7 +122,7 @@
                     <small>404</small>
                 </section>
             </span>
-            <section class="posts" data-location="^g\/.*|\/$"> <!-- Feed and group page -->
+            <section class="posts" data-location="^g\/[^\/]+$|^\/$"> <!-- Feed and group page -->
                 <div class="pageExistent">
                     <card class="sorts">
                         <button onclick="sortPostsBy('popular');" aria-label="@{0} - Selected|@Popular" class="sort sortPopular"><icon aria-hidden="true">whatshot</icon> <span>@Popular</span></button>
@@ -138,6 +139,54 @@
                     <h1>@This group doesn't exist!</h1>
                     <p>@Check to see if you entered the group name correctly. If you want to make a group with this name, go ahead!</p>
                     <button class="blue">@Make a group</button>
+                </div>
+            </section>
+            <section class="posts" data-location="^g\/[^\/]+\/posts\/[^\/]+$"> <!-- Opened post page -->
+                <div class="loadingPosts">
+                    <div class="loadingSpinner"></div>
+                </div>
+                <div class="loadedPosts">
+                    <card class="transparent noPadding">
+                        <button onclick="window.close(); window.history.back();" class="transparent">
+                            <icon aria-hidden="true" class="flippable">arrow_back</icon>
+                            <span>@Back</span>
+                        </button>
+                    </card>
+                    <card class="post">
+                        <div class="info">
+                            <a class="group postGroup"></a>
+                            <span>·</span>
+                            <span class="postAuthor"></span>
+                            <span>·</span>
+                            <span class="postTimestamp"></span>
+                        </div>
+                        <h1 class="postTitle"></h1>
+                        <div class="postContent fullContent"></div>
+                        <div class="actions">
+                            <div>
+                                <button title="@Upvote" aria-label="@Upvote" class="upvoteButton postUpvoteButton">
+                                    <icon>arrow_upward</icon>
+                                    <span class="postUpvotes">@Up</span>
+                                </button>
+                                <button title="@Downvote" aria-label="@Downvote" class="downvoteButton postDownvoteButton">
+                                    <icon>arrow_upward</icon>
+                                    <span class="postDownvotes">@Down</span>
+                                </button>
+                            </div>
+                            <div>
+                                <button title="@Crosspost" aria-label="@Crosspost">
+                                    <icon>share</icon>
+                                    <span>0</span>
+                                </button>
+                                <button title="@Crosspost" aria-label="@Report">
+                                    <icon>flag</icon>
+                                </button>
+                            </div>
+                        </div>
+                    </card>
+                </div>
+                <div class="pageNonExistent">
+
                 </div>
             </section>
             <section class="posts" data-location="^submit$"> <!-- Post submitting page -->
@@ -355,7 +404,7 @@
             </section>
             <aside id="sidebar">
                 <div class="signedOut">
-                    <card data-location="^g\/.*|\/$">
+                    <card data-location="^g\/[^\/]+$|^\/$">
                         <h1>@Welcome to Glipo</h1>
                         <p>@Glipo is a social network where you can discover your community through our groups.</p>
                         <button onclick="showSignUpDialog();" class="big blue">Sign up</button>
@@ -370,7 +419,7 @@
                     <div>g/glipo</div>
                 </card>
                 <span class="pageExistent">
-                    <card data-location="^g\/.*$">
+                    <card data-location="^g\/[^\/]+$">
                         <h2>@About this group</h2>
                         <p><strong class="groupMemberCount">@{0} members|---</strong></p>
                         <p class="groupPostCount">@{0} posts|---</p>
@@ -379,6 +428,12 @@
                         <span class="signedIn">
                             <button class="big">@Message moderators</button>
                         </span>
+                    </card>
+                    <card data-location="^g\/[^\/]+\/posts\/[^\/]+$">
+                        <h2 class="postGroupHeader"></h2>
+                        <p class="postGroupDescription"></p>
+                        <button onclick="toggleGroupMembership();" class="big blue groupJoinButton">@Join</button>
+                        <button onclick="visitGroup();" class="big">@Visit group</button>
                     </card>
                     <card data-location="^u\/.*$">
                         <h2><strong class="userUsername"></strong></h2>

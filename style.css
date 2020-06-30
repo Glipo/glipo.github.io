@@ -112,7 +112,7 @@ nav .location icon {
 }
 
 nav .menuButton {
-    width: calc(10vw - 5px);
+    width: calc(7vw - 5px);
     margin-left: 5px;
 }
 
@@ -221,6 +221,11 @@ card h1, card h2, card h3, card h4, card h5, card h6 {
 card p {
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+card.transparent {
+    background-color: inherit;
+    color: inherit;
 }
 
 card.sorts button {
@@ -383,6 +388,15 @@ button.blue {
 button.yellow {
     background-color: var(--yellow);
     color: var(--yellowText);
+}
+
+button.transparent {
+    background-color: inherit;
+    color: inherit;
+}
+
+button.transparent:hover {
+    background-color: var(--shade2);
 }
 
 input, select {
@@ -678,6 +692,14 @@ blockquote {
     cursor: pointer;
 }
 
+.noMargin {
+    margin: 0;
+}
+
+.noPadding {
+    padding: 0;
+}
+
 .loadingSpinner {
     position: relative;
     display: none;
@@ -949,12 +971,21 @@ blockquote {
     word-break: break-word;
 }
 
+.postContent:not(.fullContent) {
+    overflow: hidden;
+    max-height: 60vh;
+}
+
 .postContent.link img {
     display: block;
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
+}
+
+.postContent:not(.fullContent).link img {
+    max-height: 60vh;
 }
 
 .postContent:not(.link) img {
@@ -1103,10 +1134,6 @@ h3 .staffBadge {
 
     card.post .info {
         font-size: 12px;
-    }
-
-    card.post .actions div:first-of-type {
-        width: 100%;
     }
 
     .desktop {

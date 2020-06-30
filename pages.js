@@ -23,10 +23,12 @@ $(function() {
 
     if (trimPage(currentPage) == "/") {
         $(".currentLocation").text(_("Feed"));
-    } else if (currentPage.startsWith("g/")) {
+    } else if (trimPage(currentPage).match(/^g\/[^\/]+$/)) {
         $(".currentLocation").text("g/" + trimPage(currentPage.split("/")[1]));
 
         $("main").addClass("afterHeader");
+    } else if (trimPage(currentPage).match(/^g\/[^\/]+\/posts\/[^\/]+$/)) {
+        // Do nothing
     } else if (currentPage.startsWith("u/")) {
         $(".currentLocation").text("u/" + trimPage(currentPage.split("/")[1]));
 

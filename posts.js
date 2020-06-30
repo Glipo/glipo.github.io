@@ -373,7 +373,7 @@ $(function() {
             } else {
                 initFeedPosts();
             }
-        } else if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
+        } else if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length == 2) {
             var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
     
             firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
