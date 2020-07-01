@@ -279,6 +279,15 @@ card.post .actions div button {
     padding-bottom: 5px;
 }
 
+card.informational {
+    background-color: var(--yellow);
+    color: var(--yellowText);
+}
+
+card.informational > strong, card.informational > span {
+    display: block;
+}
+
 card.dm {
     cursor: pointer;
 }
@@ -1026,6 +1035,10 @@ blockquote {
 }
 
 [data-location] {
+    display: none;
+}
+
+.hidden {
     display: none;
 }
 

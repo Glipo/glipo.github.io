@@ -159,6 +159,12 @@ function getPost(groupName, postId) {
                                 ;
                             }
 
+                            if (postDocument.data().staffRemoved) {
+                                $(".postStaffRemoved").show();
+                            } else if (postDocument.data().moderatorRemoved) {
+                                $(".postModeratorRemoved").show();
+                            }
+
                             $(".loadingPosts").hide();
                             $(".pageNonExistent").hide();
                             $(".loadedPosts").show();
