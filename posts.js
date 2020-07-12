@@ -353,10 +353,18 @@ $(function() {
                 .attr("aria-label", _("{0} - Selected", [_("Newest")]))
             ;
         } else {
-            $(".sortPopular")
-                .addClass("blue")
-                .attr("aria-label", _("{0} - Selected", [_("Popular")]))
-            ;
+            // Sort by best on a post page, but sort by popular on feeds
+            if (trimPage(currentPage).match(/^g\/[^\/]+\/posts\/[^\/]+$/)) {
+                $(".sortBest")
+                    .addClass("blue")
+                    .attr("aria-label", _("{0} - Selected", [_("Best")]))
+                ;
+            } else {
+                $(".sortPopular")
+                    .addClass("blue")
+                    .attr("aria-label", _("{0} - Selected", [_("Popular")]))
+                ;
+            }
         }
     }
 
