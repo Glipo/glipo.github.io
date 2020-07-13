@@ -351,14 +351,6 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                                             $(this).prop("disabled", true);
                                                             $(this).text(_("Sending..."));
 
-                                                            console.log({
-                                                                group: groupName,
-                                                                post: postId,
-                                                                parent: $(this).closest(".comment").closest(".comment").attr("data-id"),
-                                                                parentType: depth == 0 ? "root" : "reply",
-                                                                content: commentContent
-                                                            });
-
                                                             var thisScope = this;
 
                                                             api.replyComment({
@@ -371,6 +363,11 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                                                 $(thisScope).prop("disabled", false);
                                                                 $(thisScope).text(_("Send"));
                                                                 commentElement.find("> .replyArea textarea").val("");
+
+                                                                firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("replyComments").doc(commentId.data).get().then(function(newCommentDocument) {
+                                                                    addComment(commentElement.find("> .replies"), newCommentDocument, depth + 1, true);
+                                                                    $(".comment .replyArea").html("");
+                                                                });
                                                             }).catch(function(error) {
                                                                 console.error("Glipo backend error:", error);
 
@@ -378,8 +375,6 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                                                 $(thisScope).prop("disabled", false);
                                                                 $(thisScope).text(_("Send"));
                                                             });
-
-                                                            console.log(commentElement.find("> .replyArea textarea").val());
                                                         })
                                                     ,
                                                     $("<button>")
@@ -427,6 +422,7 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                 for (var i = 0; i < commentDocument.data().replies.length; i++) {
                     firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("replyComments").doc(commentDocument.data().replies[i]).get().then(function(replyCommentDocument) {
                         addComment(commentElement.find("> .replies"), replyCommentDocument, depth + 1);
+                        ceUnsummon();
                     });
                 }
             });
@@ -490,6 +486,10 @@ function writeComment() {
         $("#writeCommentButton").prop("disabled", false);
         $("#writeCommentButton").text(_("Post"));
         $(".writeComment textarea").val("");
+
+        firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("rootComments").doc(commentId.data).get().then(function(newCommentDocument) {
+            addComment($(".postComments"), newCommentDocument, 0, true);
+        });
     }).catch(function(error) {
         console.error("Glipo backend error:", error);
 
