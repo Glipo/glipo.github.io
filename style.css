@@ -1082,6 +1082,71 @@ h3 .staffBadge {
     opacity: 1;
 }
 
+.comment {
+    padding-left: 10px;
+    border-left: 5px solid var(--shade1);
+    border-radius: 5px;
+}
+
+[dir="rtl"] .comment {
+    padding-left: unset;
+    padding-right: 10px;
+    border-left: none;
+    border-right: 5px solid var(--shade1);
+}
+
+.comment .info {
+    margin-bottom: 10px;
+    color: var(--shade3);
+}
+
+.comment .info a.user {
+    font-weight: bold;
+}
+
+.comment .postContent > p:first-of-type {
+    margin-top: 0;
+}
+
+.comment .postContent > p:last-of-type {
+    margin-bottom: 0;
+}
+
+.comment .actions {
+    height: 32px;
+    margin-top: 15px;
+}
+
+.comment .actions div:first-of-type {
+    float: left;
+    width: 50%;
+    text-align: start;
+}
+
+[dir="rtl"] .comment .actions div:first-of-type {
+    float: right;
+}
+
+.comment .actions div:last-of-type {
+    float: right;
+    width: 50%;
+    text-align: end;
+}
+
+[dir="rtl"] .comment .actions div:last-of-type {
+    float: left;
+}
+
+.comment .actions div button {
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.comment .replies {
+    margin-top: 20px;
+}
+
 @media (max-width: 1000px) {
     nav .location {
         width: calc(30vw - 28px);
@@ -1176,6 +1241,18 @@ h3 .staffBadge {
         left: 10px;
         right: 10px;
         width: calc(100% - 20px);
+    }
+
+    .comment .info {
+        font-size: 12px;
+    }
+
+    .comment .actions div:first-of-type {
+        width: calc(100% - 80px);
+    }
+    
+    .comment .actions div:last-of-type {
+        width: 80px;
     }
 }
 

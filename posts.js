@@ -231,17 +231,17 @@ function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAft
                                                 $("<div class='desktop'>").append([
                                                     $("<button>")
                                                         .attr("title", _("Comment"))
-                                                        .attr("aria-label", _("Comment - {0}"))
+                                                        .attr("aria-label", _("Comment - {0}", [postDocument.data().comments]))
                                                         .append([
                                                             $("<icon>").text("comment"),
                                                             document.createTextNode(" "),
-                                                            $("<span>").text(0)
+                                                            $("<span>").text(postDocument.data().comments)
                                                         ])
                                                     ,
                                                     document.createTextNode(" "),
                                                     $("<button>")
                                                         .attr("title", _("Crosspost"))
-                                                        .attr("aria-label", _("Crosspost - {0}"))
+                                                        .attr("aria-label", _("Crosspost - {0}", [0]))
                                                         .append([
                                                             $("<icon>").text("share"),
                                                             document.createTextNode(" "),

@@ -169,7 +169,7 @@
                                     <span class="postUpvotes">@Up</span>
                                 </button>
                                 <button title="@Downvote" aria-label="@Downvote" class="downvoteButton postDownvoteButton">
-                                    <icon>arrow_upward</icon>
+                                    <icon>arrow_downward</icon>
                                     <span class="postDownvotes">@Down</span>
                                 </button>
                             </div>
@@ -178,7 +178,7 @@
                                     <icon>share</icon>
                                     <span>0</span>
                                 </button>
-                                <button title="@Crosspost" aria-label="@Report">
+                                <button title="@Report" aria-label="@Report">
                                     <icon>flag</icon>
                                 </button>
                             </div>
@@ -196,11 +196,12 @@
                         <div class="signedIn">
                             <button onclick="ceSummon();" aria-label="@New comment" class="ceSummoner">@Write a comment...</button>
                             <div class="ceUnsummoned">
-                                <div class="contentEditor"></div>
+                                <div class="writeComment contentEditor"></div>
                                 <div class="buttonRow">
-                                    <button class="blue">@Send</button>
+                                    <button onclick="writeComment();" class="blue" id="writeCommentButton">@Post</button>
                                     <button onclick="ceUnsummon();">@Cancel</button>
                                 </div>
+                                <p class="errorMessage" id="writeCommentError"></p>
                             </div>
                         </div>
                         <div class="signedOut">
@@ -211,7 +212,7 @@
                         <button onclick="sortPostsBy('best');" aria-label="@Best" class="sort sortBest blue"><icon aria-hidden="true">bar_chart</icon> <span>@Best</span></button>
                         <button onclick="sortPostsBy('newest');" aria-label="@Newest" class="sort sortNewest"><icon aria-hidden="true">new_releases</icon> <span>@Newest</span></button>
                     </card>
-                    <p class="middle">@Comments are coming very soon!</p>
+                    <div class="postComments"></div>
                 </div>
                 <div class="pageNonExistent middle">
                     <div class="pageMessage">
