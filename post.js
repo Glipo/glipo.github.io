@@ -154,8 +154,8 @@ function getPost(groupName, postId) {
 
                             if (core.getURLParameter("np") == "true") {
                                 $(".postUpvoteButton, .postDownvoteButton")
-                                .attr("title", _("Votes cannot be cast due to no-participation policies"))
-                                .prop("disabled", true)
+                                    .attr("title", _("Votes cannot be cast due to no-participation policies"))
+                                    .prop("disabled", true)
                                 ;
                             }
 
@@ -410,6 +410,13 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                         $("<div class='replies'>")
                     ])
                 ;
+
+                if (core.getURLParameter("np") == "true") {
+                    commentElement.find(".upvoteButton, .downvoteButton")
+                        .attr("title", _("Votes cannot be cast due to no-participation policies"))
+                        .prop("disabled", true)
+                    ;
+                }
                 
                 if (isNew) {
                     parent.prepend(commentElement);

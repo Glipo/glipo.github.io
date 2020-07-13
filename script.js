@@ -675,9 +675,8 @@ $(function() {
                         $(".userIsNotMe").show();
                     }
 
-                    if (userDocument.data().postCount > 0) {
-                        // TODO: Retrieve posts
-                    } else {
+                    console.log(userDocument.data());
+                    if (userDocument.data().postCount == 0 && userDocument.data().commentCount == 0) {
                         $(".loadingPosts").hide();
                         $(".loadedPosts").hide();
                         $(".noPosts").show();
