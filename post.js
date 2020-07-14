@@ -337,13 +337,13 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                                             var commentContent = commentElement.find("> .replyArea textarea").val();
 
                                                             if (commentContent.trim() == "") {
-                                                                $(this).parent().find(".errorMessage").text(_("Please enter the comment you wish to reply with."));
+                                                                $(this).parent().parent().find(".errorMessage").text(_("Please enter the comment you wish to reply with."));
 
                                                                 return;
                                                             }
 
                                                             if (commentContent.length > 10000) {
-                                                                $(this).parent().find(".errorMessage").text(_("Your comment is too long! Please shorten it so it's at most 10,000 characters long. You may want to split your comment up into multiple parts."));
+                                                                $(this).parent().parent().find(".errorMessage").text(_("Your comment is too long! Please shorten it so it's at most 10,000 characters long. You may want to split your comment up into multiple parts."));
 
                                                                 return;
                                                             }
@@ -371,7 +371,7 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                                             }).catch(function(error) {
                                                                 console.error("Glipo backend error:", error);
 
-                                                                $(thisScope).parent().find(".errorMessage").text(_("Sorry, an internal error has occurred."));
+                                                                $(thisScope).parent().parent().find(".errorMessage").text(_("Sorry, an internal error has occurred."));
                                                                 $(thisScope).prop("disabled", false);
                                                                 $(thisScope).text(_("Send"));
                                                             });
