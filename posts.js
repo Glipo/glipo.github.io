@@ -231,11 +231,11 @@ function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAft
                                                 $("<div class='desktop'>").append([
                                                     $("<button>")
                                                         .attr("title", _("Comment"))
-                                                        .attr("aria-label", _("Comment - {0}", [postDocument.data().comments]))
+                                                        .attr("aria-label", _("Comment - {0}", [postDocument.data().comments || 0]))
                                                         .append([
                                                             $("<icon>").text("comment"),
                                                             document.createTextNode(" "),
-                                                            $("<span>").text(postDocument.data().comments)
+                                                            $("<span>").text(postDocument.data().comments || 0)
                                                         ])
                                                     ,
                                                     document.createTextNode(" "),
