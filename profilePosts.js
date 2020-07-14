@@ -24,7 +24,7 @@ function finaliseProfileHistory() {
 
     for (var i = 0; i < profileHistory.length; i++) {
         (function(i) {
-            if (profileHistory[i].type == "post") {
+            if (profileHistory[i].historyType == "post") {
                 var postContent = "";
     
                 if (profileHistory[i].type == "writeup") {
@@ -124,7 +124,7 @@ function finaliseProfileHistory() {
                             }
                         })
                 );
-            } else if (profileHistory[i].type == "comment") {
+            } else if (profileHistory[i].historyType == "comment") {
                 $(".loadedPosts").append(
                     $("<card class='post clickable'>")
                         .append(
@@ -216,7 +216,7 @@ function getProfileHistory() {
                             firebase.firestore().collection("groups").doc(historyDocument.data().group).get().then(function(groupDocument) {
                                 var thisProfileHistory = postDocument.data();
 
-                                thisProfileHistory.type = "post";
+                                thisProfileHistory.historyType = "post";
                                 thisProfileHistory.group = groupDocument.data().name;
                                 thisProfileHistory.post = historyDocument.data().post;
                                 thisProfileHistory.upvoted = upvoterDocument.exists;
@@ -260,7 +260,7 @@ function getProfileHistory() {
                             firebase.firestore().collection("groups").doc(historyDocument.data().group).get().then(function(groupDocument) {
                                 var thisProfileHistory = commentDocument.data();
 
-                                thisProfileHistory.type = "comment";
+                                thisProfileHistory.historyType = "comment";
                                 thisProfileHistory.group = groupDocument.data().name;
                                 thisProfileHistory.post = historyDocument.data().post;
                                 thisProfileHistory.comment = historyDocument.data().comment;
