@@ -11,6 +11,10 @@ const RE_IMGUR = /https:\/\/imgur.com\/gallery\/(.*)/;
 const RE_YOUTUBE = /(https:\/\/www\.youtube\.com\/watch\?v=|https:\/\/youtu\.be\/)([a-zA-Z0-9_-]{1,64})/;
 const RE_GIPHY = /https:\/\/giphy.com\/gifs\/(.*)/;
 const RE_GFYCAT = /https:\/\/gfycat.com\/(.*)/;
+const HIDDEN_COMMENT_REVEAL_FIRST = 10;
+const HIDDEN_COMMENT_REVEAL_INTERVAL = 10;
+const HIDDEN_REPLY_REVEAL_FIRST = 5;
+const HIDDEN_REPLY_REVEAL_DEPTH = 2;
 
 var firebaseConfig = {
     apiKey: "AIzaSyBxs_F52qiFI85ZbFQ7ysIrvBhKDEvutuw",

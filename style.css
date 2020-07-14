@@ -1083,6 +1083,7 @@ h3 .staffBadge {
 }
 
 .comment {
+    margin-bottom: 20px;
     padding-left: 10px;
     border-left: 5px solid var(--shade1);
     border-radius: 5px;
@@ -1143,7 +1144,15 @@ h3 .staffBadge {
     padding-bottom: 5px;
 }
 
-.comment .replies {
+.comment .replies:not(:empty) {
+    margin-top: 20px;
+}
+
+.showMoreComments, .showAllReplies, .continueThread {
+    display: none;
+}
+
+.showAllReplies, .continueThread {
     margin-top: 20px;
 }
 

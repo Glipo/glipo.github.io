@@ -6,6 +6,10 @@
     https://glipo.cf
 */
 
+var totalRootComments = 0;
+var hiddenRootCommentsRemaining = null;
+var hiddenRootCommentsStartAfter = null;
+
 function getPost(groupName, postId) {
     firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).get().then(function(postDocument) {
         if (postDocument.exists) {
@@ -402,7 +406,40 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                             ])
                         ]),
                         $("<div class='replyArea'>"),
-                        $("<div class='replies'>")
+                        $("<div class='replies'>"),
+                        $("<button class='showAllReplies'>")
+                            .text(_("Show all replies ({0} remaining)", [commentDocument.data().replies.length - HIDDEN_REPLY_REVEAL_FIRST]))
+                            .click(function() {
+                                $(this).prop("disabled", true);
+                                $(this).text(_("Loading..."));
+
+                                var thisScope = this;
+
+                                for (var i = HIDDEN_REPLY_REVEAL_FIRST; i < commentDocument.data().replies.length; i++) {
+                                    firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("replyComments").doc(commentDocument.data().replies[i]).get().then(function(replyCommentDocument) {
+                                        addComment(commentElement.find("> .replies"), replyCommentDocument, depth + 1);
+
+                                        $(thisScope).hide();
+                                    });
+                                }
+                            })
+                        ,
+                        $("<button class='continueThread'>")
+                            .text(_("Continue this thread"))
+                            .click(function() {
+                                $(this).prop("disabled", true);
+                                $(this).text(_("Loading..."));
+
+                                var thisScope = this;
+
+                                for (var i = 0; i < commentDocument.data().replies.length; i++) {
+                                    firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("replyComments").doc(commentDocument.data().replies[i]).get().then(function(replyCommentDocument) {
+                                        addComment(commentElement.find("> .replies"), replyCommentDocument, depth + 1);
+
+                                        $(thisScope).hide();
+                                    });
+                                }
+                            })
                     ])
                 ;
 
@@ -419,11 +456,19 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                     parent.append(commentElement);
                 }
 
-                for (var i = 0; i < commentDocument.data().replies.length; i++) {
-                    firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("replyComments").doc(commentDocument.data().replies[i]).get().then(function(replyCommentDocument) {
-                        addComment(commentElement.find("> .replies"), replyCommentDocument, depth + 1);
-                        ceUnsummon();
-                    });
+                if (depth != 0 && depth % HIDDEN_REPLY_REVEAL_DEPTH == 0 && commentDocument.data().replies.length > 0) {
+                    commentElement.find("> .continueThread").show();
+                    console.log(depth);
+                } else {
+                    if (commentDocument.data().replies.length > HIDDEN_REPLY_REVEAL_FIRST) {
+                        commentElement.find("> .showAllReplies").show();
+                    }
+
+                    for (var i = 0; i < Math.min(commentDocument.data().replies.length, HIDDEN_REPLY_REVEAL_FIRST); i++) {
+                        firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("replyComments").doc(commentDocument.data().replies[i]).get().then(function(replyCommentDocument) {
+                            addComment(commentElement.find("> .replies"), replyCommentDocument, depth + 1);
+                        });
+                    }
                 }
             });
         });
@@ -441,14 +486,37 @@ function getComments(groupName, postId) {
                 commentReference = commentReference.orderBy("upvotes", "desc");
             }
 
-            commentReference.get().then(function(rootCommentDocuments) {
-                $(".postComments").html("");
+            if (hiddenRootCommentsRemaining == null) {
+                hiddenRootCommentsRemaining = totalRootComments;
+            }
 
-                if (rootCommentDocuments.docs.length > 0) {
+            if (hiddenRootCommentsStartAfter != null) {
+                commentReference = commentReference.startAfter(hiddenRootCommentsStartAfter);
+                commentReference = commentReference.limit(HIDDEN_COMMENT_REVEAL_INTERVAL);
+            } else {
+                commentReference = commentReference.limit(HIDDEN_COMMENT_REVEAL_FIRST);
+            }
+
+            commentReference.get().then(function(rootCommentDocuments) {
+                if (totalRootComments > 0) {
                     rootCommentDocuments.forEach(function(rootCommentDocument) {
                         addComment($(".postComments"), rootCommentDocument);
+
+                        hiddenRootCommentsRemaining--;
+                        hiddenRootCommentsStartAfter = rootCommentDocument;
+
+                        $(".showMoreComments").prop("disabled", false);
+
+                        if (hiddenRootCommentsRemaining > 0) {
+                            $(".showMoreComments").text(_("Show more comments ({0} remaining)", [hiddenRootCommentsRemaining]));
+                            $(".showMoreComments").show();
+                        } else {
+                            $(".showMoreComments").hide();
+                        }
                     });
                 } else {
+                    $(".postComments").html("");
+
                     $(".postComments").append(
                         $("<p class='middle'>").text(_("It's looking empty here! Be the first to write a comment."))
                     );
@@ -456,6 +524,16 @@ function getComments(groupName, postId) {
             });
         }
     });
+}
+
+function showMoreComments() {
+    var groupName = trimPage(currentPage).match(/^g\/([^\/]+)\/posts\/([^\/]+)$/)[1].toLowerCase();
+    var postId = trimPage(currentPage).match(/^g\/([^\/]+)\/posts\/([^\/]+)$/)[2];
+
+    $(".showMoreComments").prop("disabled", true);
+    $(".showMoreComments").text(_("Loading..."));
+
+    getComments(groupName, postId);
 }
 
 function writeComment() {
@@ -517,6 +595,11 @@ $(function() {
         $(".loadingPosts").show();
 
         getPost(groupName, postId);
-        getComments(groupName, postId);
+
+        firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("rootComments").get().then(function(rootCommentDocuments) {
+            totalRootComments = rootCommentDocuments.docs.length;
+            
+            getComments(groupName, postId);
+        });
     }
 });
