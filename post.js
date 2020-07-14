@@ -518,7 +518,7 @@ function getComments(groupName, postId) {
                     $(".postComments").html("");
 
                     $(".postComments").append(
-                        $("<p class='middle'>").text(_("It's looking empty here! Be the first to write a comment."))
+                        $("<p class='middle noComments'>").text(_("It's looking empty here! Be the first to write a comment."))
                     );
                 }
             });
@@ -566,6 +566,9 @@ function writeComment() {
         $(".writeComment textarea").val("");
 
         firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("rootComments").doc(commentId.data).get().then(function(newCommentDocument) {
+            $(".noComments").hide();
+            ceUnsummon();
+            
             addComment($(".postComments"), newCommentDocument, 0, true);
         });
     }).catch(function(error) {
