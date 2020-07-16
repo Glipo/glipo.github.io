@@ -43,8 +43,7 @@ function getNotifications(type = "unread") {
                                     )
                                     .text(timeDifferenceToHumanReadable(new Date().getTime() - notificationDocument.data().sent.toDate().getTime()))
                             ]),
-                            $("<div class='postContent'>").html(renderMarkdown(notificationDocument.data().content))
-                            ,
+                            $("<div class='postContent'>").html(renderMarkdown(notificationDocument.data().content)),
                             $("<div class='actions'>").append([
                                 $("<div>").append([
                                     $("<button>")
@@ -57,6 +56,10 @@ function getNotifications(type = "unread") {
                                         .click(function() {
                                             if (notificationDocument.data().type == "message") {
                                                 window.location.href = "/dm?user=" + encodeURIComponent(senderDocument.data().username);
+                                            } else if (notificationDocument.data().type == "comment") {
+                                                window.location.href = "/g/" + encodeURIComponent(notificationDocument.data().group) + "/posts/" + encodeURIComponent(notificationDocument.data().post) + "?comment=" + encodeURIComponent(notificationDocument.data().comment) + "&commentType=root";
+                                            } else if (notificationDocument.data().type == "reply") {
+                                                window.location.href = "/g/" + encodeURIComponent(notificationDocument.data().group) + "/posts/" + encodeURIComponent(notificationDocument.data().post) + "?comment=" + encodeURIComponent(notificationDocument.data().comment) + "&commentType=reply";
                                             }
                                         })
                                 ]),
