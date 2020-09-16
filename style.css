@@ -516,7 +516,7 @@ hr {
     margin-bottom: 2px;
     margin-left: 10px;
     margin-right: 10px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2.3px solid rgba(255, 255, 255, 0.2); /* Fixes new rendering bug in Chrome */
     border-radius: 2px;
 }
 
