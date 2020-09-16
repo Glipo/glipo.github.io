@@ -403,7 +403,15 @@ $(function() {
                 if (groupDocument.exists) {
                     groupPool = [groupName];
 
-                    initFeedPosts();
+                    firebase.firestore().collection("groups").doc(groupName).collection("posts").get().then(function(postDocuments) {
+                        if (postDocuments.docs.length > 0) {
+                            initFeedPosts();
+                        } else {
+                            $(".loadingPosts").hide();
+                            $(".sorts").hide();
+                            $(".noPosts").show();
+                        }
+                    });
                 }
             });
         }
