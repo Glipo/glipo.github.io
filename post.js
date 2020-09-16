@@ -17,6 +17,11 @@ function getPost(groupName, postId) {
                 firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
                     firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("upvoters").doc(currentUser.uid || "__NOUSER").get().then(function(upvoterDocument) {
                         firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("downvoters").doc(currentUser.uid || "__NOUSER").get().then(function(downvoterDocument) {
+                            if (postDocument.data().author == currentUser.uid) {
+                                $(".postNotAuthoredByMe").hide();
+                                $(".postAuthoredByMe").show();
+                            }
+
                             if (postDocument.data().type == "writeup") {
                                 postContent = renderMarkdown(postDocument.data().content);
                             } else if (postDocument.data().type == "link") {
@@ -163,10 +168,57 @@ function getPost(groupName, postId) {
                                 ;
                             }
 
+                            $(".editPostButton").click(function() {
+                                $("#editPostTitle").val(postDocument.data().title);
+
+                                if (postDocument.data().type == "writeup") {
+                                    $(".editPostWriteup .contentEditor textarea").val(postDocument.data().content);
+
+                                    $(".editPostWriteup").show();
+                                } else {
+                                    $(".editPostOther").show();
+                                }
+                                
+                                $(".post").hide();
+                                $(".editPost").show();
+                            });
+
+                            $(".editPostCancelButton").click(function() {
+                                $(".editPost").hide();
+                                $(".post").show();
+                            });
+
+                            $(".editPostDeleteButton").click(function() {
+                                $(".deletePostDialog")[0].showModal();
+                            });
+
+                            $(".deletePostButton").click(function() {
+                                $(".deletePostButton").prop("disabled", true);
+                                $(".deletePostButton").text(_("Deleting..."));
+                                
+                                api.deletePost({
+                                    group: groupName,
+                                    post: postDocument.id
+                                }).then(function() {
+                                    window.location.href = "/";
+                                }).catch(function(error) {
+                                    console.error("Glipo backend error:", error);
+
+                                    $("#deletePostError").text(_("Sorry, an internal error has occurred. Please check to see if you're still signed in and try again."));
+                                    $(".deletePostButton").prop("disabled", false);
+                                    $(".deletePostButton").text(_("Delete"));
+                                });
+                            });
+
                             if (postDocument.data().staffRemoved) {
                                 $(".postStaffRemoved").show();
                             } else if (postDocument.data().moderatorRemoved) {
                                 $(".postModeratorRemoved").show();
+                            }
+
+                            if (postDocument.data().deleted) {
+                                $("card.post").hide();
+                                $(".postDeleted").show();
                             }
 
                             $(".loadingPosts").hide();

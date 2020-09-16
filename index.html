@@ -163,6 +163,20 @@
                             <span>@Back</span>
                         </button>
                     </card>
+                    <div class="editPost">
+                        <input placeholder="@Post title" class="big" id="editPostTitle">
+                        <div class="editPostWriteup">
+                            <div class="contentEditor"></div>
+                        </div>
+                        <div class="editPostOther">
+                            <p class="middle">@The contents of this post cannot be changed as this post is not a writeup.</p>
+                        </div>
+                        <div class="buttonRow paddingBottom">
+                            <button class="blue editPostSubmitButton">@Edit</button>
+                            <button class="editPostCancelButton">@Cancel</button>
+                            <button class="editPostDeleteButton">@Delete post</button>
+                        </div>
+                    </div>
                     <card class="post">
                         <div class="info">
                             <a class="group postGroup"></a>
@@ -189,11 +203,22 @@
                                     <icon>share</icon>
                                     <span>0</span>
                                 </button>
-                                <button title="@Report" aria-label="@Report">
-                                    <icon>flag</icon>
-                                </button>
+                                <span class="postAuthoredByMe">
+                                    <button title="@Edit or delete" aria-label="@Edit or delete" class="editPostButton">
+                                        <icon>edit</icon>
+                                    </button>
+                                </span>
+                                <span class="postNotAuthoredByMe">
+                                    <button title="@Report" aria-label="@Report">
+                                        <icon>flag</icon>
+                                    </button>
+                                </span>
                             </div>
                         </div>
+                    </card>
+                    <card class="informational hidden postDeleted">
+                        <strong>@This post has been deleted by its author.</strong>
+                        <span>@The comments on this post have been kept for informational purposes.</span>
                     </card>
                     <card class="informational hidden postStaffRemoved">
                         <strong>@This post has been removed by staff because it violates the rules of Glipo's Content Policy.</strong>
@@ -760,6 +785,21 @@
                 <div class="spacer"></div>
                 <div class="end buttonRow">
                     <button onclick="staffRemovePost();" class="blue">@Remove</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="deletePostDialog">
+            <div class="title">
+                <span>@Delete post</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p>@Do you really want to delete this post? This action cannot be undone.</p>
+                <p class="errorMessage" id="deletePostError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button class="blue deletePostButton">@Delete</button>
                     <button onclick="closeDialogs();">@Cancel</button>
                 </div>
             </div>

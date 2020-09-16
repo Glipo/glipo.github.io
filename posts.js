@@ -80,13 +80,13 @@ function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAft
                         firebase.firestore().collection("groups").doc(groupName.toLowerCase()).collection("posts").doc(postDocument.id).collection("downvoters").doc(currentUser.uid || "__NOUSER").get().then(function(downvoterDocument) {
                             var postContent = "";
 
-                            if (!postDocument.data().removed) {
+                            if (!postDocument.data().removed && !postDocument.data().deleted) {
                                 if (postDocument.data().type == "writeup") {
                                     postContent = renderMarkdown(postDocument.data().content);
                                 } else if (postDocument.data().type == "link") {
                                     postContent = renderLink(postDocument.data().content);
                                 }
-                                
+
                                 $(".loadedPosts").append(
                                     $("<card class='post clickable'>")
                                         .append([

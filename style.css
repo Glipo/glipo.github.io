@@ -807,7 +807,7 @@ blockquote {
     width: 100%;
     border-radius: 0;
     text-align: start;
-    overflow: none;
+    overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     transition: 0.5s background-color, 0.5s opacity;
@@ -837,6 +837,10 @@ blockquote {
 
 .buttonRow button:first-of-type {
     margin-right: 0;
+}
+
+.buttonRow.paddingBottom {
+    padding-bottom: 10px;
 }
 
 .tabs {
@@ -1148,7 +1152,11 @@ h3 .staffBadge {
     margin-top: 20px;
 }
 
-.showMoreComments, .showAllReplies, .continueThread {
+.editPost, .editPostWriteup, .editPostOther {
+    display: none;
+}
+
+.showMoreComments, .showAllReplies, .continueThread, .postAuthorIsMe {
     display: none;
 }
 

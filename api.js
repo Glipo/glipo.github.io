@@ -15,6 +15,7 @@ var api = {
     sendMessage: firebase.functions().httpsCallable("sendMessage"),
     approvePost: firebase.functions().httpsCallable("approvePost"),
     removePost: firebase.functions().httpsCallable("removePost"),
+    deletePost: firebase.functions().httpsCallable("deletePost"),
     postComment: firebase.functions().httpsCallable("postComment"),
     replyComment: firebase.functions().httpsCallable("replyComment"),
     toggleUpvoteComment: firebase.functions().httpsCallable("toggleUpvoteComment"),

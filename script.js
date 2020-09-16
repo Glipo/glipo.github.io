@@ -555,6 +555,9 @@ $(function() {
 
             $(".groupJoinButton").text(_("Join"));
             $(".groupJoinButton").addClass("blue");
+
+            $(".postAuthoredByMe").hide();
+            $(".postNotAuthoredByMe").show();
         }
     });
 

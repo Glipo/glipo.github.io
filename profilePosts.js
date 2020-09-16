@@ -222,22 +222,24 @@ function getProfileHistory() {
                                 thisProfileHistory.upvoted = upvoterDocument.exists;
                                 thisProfileHistory.downvoted = downvoterDocument.exists;
 
-                                if (profileHistory.length > 0) {
-                                    for (var i = 0; i < profileHistory.length; i++) {
-                                        if (getSortFactor(thisProfileHistory) > getSortFactor(profileHistory[i])) {
-                                            profileHistory.splice(i, 0, thisProfileHistory);
-                
-                                            break;
-                                        } else if (i + 1 == profileHistory.length) {
-                                            profileHistory.push(thisProfileHistory);
+                                if (!thisProfileHistory.deleted) {
+                                    if (profileHistory.length > 0) {
+                                        for (var i = 0; i < profileHistory.length; i++) {
+                                            if (getSortFactor(thisProfileHistory) > getSortFactor(profileHistory[i])) {
+                                                profileHistory.splice(i, 0, thisProfileHistory);
+                    
+                                                break;
+                                            } else if (i + 1 == profileHistory.length) {
+                                                profileHistory.push(thisProfileHistory);
 
-                                            break;
+                                                break;
+                                            }
                                         }
+                                    } else {
+                                        profileHistory.push(thisProfileHistory);
                                     }
-                                } else {
-                                    profileHistory.push(thisProfileHistory);
                                 }
-                
+
                                 profileHistoryToProcess--;
 
                                 if (profileHistoryToProcess == 0) {
