@@ -237,6 +237,9 @@ function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAft
                                                             document.createTextNode(" "),
                                                             $("<span>").text(postDocument.data().comments || 0)
                                                         ])
+                                                        .click(function() {
+                                                            window.open("/g/" + groupName + "/posts/" + postDocument.id);
+                                                        })
                                                     ,
                                                     document.createTextNode(" "),
                                                     $("<button>")
