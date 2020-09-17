@@ -188,6 +188,51 @@ function getPost(groupName, postId) {
                                 $(".post").show();
                             });
 
+                            $(".editPostSubmitButton").click(function() {
+                                var titleArgument = $("#editPostTitle").val();
+                                var contentArgument = undefined;
+
+                                if (titleArgument.trim() == "") {
+                                    $("#editPostError").text(_("Please enter the post title."));
+                            
+                                    return;
+                                }
+
+                                if (titleArgument.length > 200) {
+                                    $("#editPostError").text(_("Your post title is too long! Please shorten it so that it's at most 200 characters long."));
+                            
+                                    return;
+                                }
+                                
+                                if (postDocument.data().type == "writeup") {
+                                    contentArgument = $(".editPostWriteup .contentEditor textarea").val();
+
+                                    if (contentArgument.length > 20000) {
+                                        $("#editPostError").text(_("Your post is too long! Please shorten it so that it's at most 20,000 characters long. You may want to split your post up into multiple parts."));
+                            
+                                        return;
+                                    }
+                                }
+
+                                $(".editPostSubmitButton").prop("disabled", true);
+                                $(".editPostSubmitButton").text(_("Editing..."));
+
+                                api.editPost({
+                                    group: groupName,
+                                    post: postDocument.id,
+                                    title: titleArgument,
+                                    content: contentArgument
+                                }).then(function() {
+                                    window.location.reload();
+                                }).catch(function(error) {
+                                    console.error("Glipo backend error:", error);
+
+                                    $("#editPostError").text(_("Sorry, an internal error has occurred. Please try editing your post again later."));
+                                    $(".editPostSubmitButton").prop("disabled", false);
+                                    $(".editPostSubmitButton").text(_("Edit"));
+                                });
+                            });
+
                             $(".editPostDeleteButton").click(function() {
                                 $(".deletePostDialog")[0].showModal();
                             });

@@ -49,7 +49,7 @@ function getStaffModqueue() {
             modqueueDocuments.forEach(function(modqueueDocument) {
                 firebase.firestore().collection("groups").doc(modqueueDocument.data().group).collection("posts").doc(modqueueDocument.data().post).get().then(function(postDocument) {
                     if (postDocument.exists) {
-                        firebase.firestore().collection("users").doc(postDocument.data().author).get().then(function(userDocument) {
+                        firebase.firestore().collection("users").doc(postDocument.data().author || "__NOUSER").get().then(function(userDocument) {
                             firebase.firestore().collection("groups").doc(modqueueDocument.data().group).get().then(function(groupDocument) {
                                 var postContent = "";
 

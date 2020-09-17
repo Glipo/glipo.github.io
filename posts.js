@@ -74,7 +74,7 @@ function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAft
         postDocuments.forEach(function(postDocument) {
             recurseTimeout = 10;
 
-            firebase.firestore().collection("users").doc(postDocument.data().author).get().then(function(userDocument) {
+            firebase.firestore().collection("users").doc(postDocument.data().author || "__NOUSER").get().then(function(userDocument) {
                 firebase.firestore().collection("groups").doc(groupName.toLowerCase()).get().then(function(groupDocument) {
                     firebase.firestore().collection("groups").doc(groupName.toLowerCase()).collection("posts").doc(postDocument.id).collection("upvoters").doc(currentUser.uid || "__NOUSER").get().then(function(upvoterDocument) {
                         firebase.firestore().collection("groups").doc(groupName.toLowerCase()).collection("posts").doc(postDocument.id).collection("downvoters").doc(currentUser.uid || "__NOUSER").get().then(function(downvoterDocument) {
