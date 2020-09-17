@@ -1156,7 +1156,7 @@ h3 .staffBadge {
     display: none;
 }
 
-.showMoreComments, .showAllReplies, .continueThread, .postAuthorIsMe {
+.showMoreComments, .showAllReplies, .continueThread, .postAuthoredByMe {
     display: none;
 }
 
