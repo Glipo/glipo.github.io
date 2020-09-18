@@ -494,12 +494,50 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                     })
                                 ,
                                 document.createTextNode(" "),
-                                $("<button>")
-                                    .attr("title", _("Report"))
-                                    .attr("aria-label", _("Report"))
-                                    .append(
-                                        $("<icon>").text("flag")
-                                    )
+                                (
+                                    commentDocument.data().author == currentUser.uid ?
+                                    $("<button class='editCommentButton'>")
+                                        .attr("title", _("Edit or delete"))
+                                        .attr("aria-label", _("Edit or delete"))
+                                        .append(
+                                            $("<icon>").text("edit")
+                                        )
+                                        .click(function() {
+                                            $(".comment .replyArea").html("");
+
+                                            $(".editCommentButton").prop("disabled", true);
+
+                                            $(this).closest(".comment").find("> .postContent")
+                                                .html("")
+                                                .append(
+                                                    $("<div class='contentEditor'>"),
+                                                    $("<div class='buttonRow'>").append([
+                                                        $("<button class='blue'>")
+                                                            .text(_("Edit"))
+                                                        ,
+                                                        $("<button>")
+                                                            .text(_("Cancel"))
+                                                            .click(function() {
+                                                                $(this).closest(".comment").find("> .postContent").html(renderMarkdown(commentDocument.data().content));
+
+                                                                $(".editCommentButton").prop("disabled", false);
+                                                            })
+                                                    ])
+                                                )
+                                            ;
+
+                                            loadContentEditors();
+
+                                            $(this).closest(".comment").find("> .postContent .contentEditor textarea").val(commentDocument.data().content);
+                                        })
+                                    :
+                                    $("<button>")
+                                        .attr("title", _("Report"))
+                                        .attr("aria-label", _("Report"))
+                                        .append(
+                                            $("<icon>").text("flag")
+                                        )
+                                )
                             ])
                         ]),
                         $("<div class='replyArea'>"),
