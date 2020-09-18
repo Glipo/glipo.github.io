@@ -522,6 +522,16 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
 
                                                                 $(".editCommentButton").prop("disabled", false);
                                                             })
+                                                        ,
+                                                        $("<button class='desktop'>")
+                                                            .text(_("Delete comment"))
+                                                        ,
+                                                        $("<button class='mobile'>")
+                                                            .attr("title", _("Delete comment"))
+                                                            .attr("aria-label", _("Delete comment"))
+                                                            .append(
+                                                                $("<icon>").text("delete")
+                                                            )
                                                     ])
                                                 )
                                             ;
