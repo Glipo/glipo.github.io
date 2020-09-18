@@ -186,6 +186,8 @@ function getPost(groupName, postId) {
                             $(".editPostCancelButton").click(function() {
                                 $(".editPost").hide();
                                 $(".post").show();
+
+                                $("#editPostError").text("");
                             });
 
                             $(".editPostSubmitButton").click(function() {
