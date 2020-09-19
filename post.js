@@ -13,7 +13,7 @@ var hiddenRootCommentsStartAfter = null;
 function getPost(groupName, postId) {
     firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).get().then(function(postDocument) {
         if (postDocument.exists) {
-            firebase.firestore().collection("users").doc(postDocument.data().author).get().then(function(userDocument) {
+            firebase.firestore().collection("users").doc(postDocument.data().author || "__NOUSER").get().then(function(userDocument) {
                 firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
                     firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("upvoters").doc(currentUser.uid || "__NOUSER").get().then(function(upvoterDocument) {
                         firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("downvoters").doc(currentUser.uid || "__NOUSER").get().then(function(downvoterDocument) {

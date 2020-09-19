@@ -91,17 +91,20 @@ function finaliseProfileHistory() {
                                 $("<div class='desktop'>").append([
                                     $("<button>")
                                         .attr("title", _("Comment"))
-                                        .attr("aria-label", _("Comment - {0}"))
+                                        .attr("aria-label", _("Comment - {0}", [profileHistory[i].comments || 0]))
                                         .append([
                                             $("<icon>").text("comment"),
                                             document.createTextNode(" "),
-                                            $("<span>").text(0)
+                                            $("<span>").text(profileHistory[i].comments || 0)
                                         ])
+                                        .click(function() {
+                                            window.open("/g/" + profileHistory[i].group + "/posts/" + profileHistory[i].post + "?np=true");
+                                        })
                                     ,
                                     document.createTextNode(" "),
                                     $("<button>")
                                         .attr("title", _("Crosspost"))
-                                        .attr("aria-label", _("Crosspost - {0}"))
+                                        .attr("aria-label", _("Crosspost - {0}", [0]))
                                         .append([
                                             $("<icon>").text("share"),
                                             document.createTextNode(" "),
@@ -270,20 +273,22 @@ function getProfileHistory() {
                                 thisProfileHistory.upvoted = upvoterDocument.exists;
                                 thisProfileHistory.downvoted = downvoterDocument.exists;
 
-                                if (profileHistory.length > 0) {
-                                    for (var i = 0; i < profileHistory.length; i++) {
-                                        if (getSortFactor(thisProfileHistory) > getSortFactor(profileHistory[i])) {
-                                            profileHistory.splice(i, 0, thisProfileHistory);
-                
-                                            break;
-                                        } else if (i + 1 == profileHistory.length) {
-                                            profileHistory.push(thisProfileHistory);
+                                if (!thisProfileHistory.deleted) {
+                                    if (profileHistory.length > 0) {
+                                        for (var i = 0; i < profileHistory.length; i++) {
+                                            if (getSortFactor(thisProfileHistory) > getSortFactor(profileHistory[i])) {
+                                                profileHistory.splice(i, 0, thisProfileHistory);
+                    
+                                                break;
+                                            } else if (i + 1 == profileHistory.length) {
+                                                profileHistory.push(thisProfileHistory);
 
-                                            break;
+                                                break;
+                                            }
                                         }
+                                    } else {
+                                        profileHistory.push(thisProfileHistory);
                                     }
-                                } else {
-                                    profileHistory.push(thisProfileHistory);
                                 }
                 
                                 profileHistoryToProcess--;

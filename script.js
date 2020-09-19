@@ -682,7 +682,6 @@ $(function() {
                         $(".userIsNotMe").show();
                     }
 
-                    console.log(userDocument.data());
                     if (userDocument.data().postCount == 0 && userDocument.data().commentCount == 0) {
                         $(".loadingPosts").hide();
                         $(".loadedPosts").hide();
