@@ -1,4 +1,3 @@
- 
 importScripts("https://glipo.cf/lib/firebase-app.js");
 importScripts("https://glipo.cf/lib/firebase-messaging.js");
 
