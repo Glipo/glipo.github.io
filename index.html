@@ -811,5 +811,20 @@
                 </div>
             </div>
         </dialog>
+        <dialog class="deleteCommentDialog">
+            <div class="title">
+                <span>@Delete comment</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p>@Do you really want to delete this comment? This action cannot be undone.</p>
+                <p class="errorMessage" id="deleteCommentError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button class="blue deleteCommentButton">@Delete</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
     </body>
 </html>

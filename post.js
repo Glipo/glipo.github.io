@@ -287,10 +287,34 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
     var groupName = trimPage(currentPage).match(/^g\/([^\/]+)\/posts\/([^\/]+)$/)[1].toLowerCase();
     var postId = trimPage(currentPage).match(/^g\/([^\/]+)\/posts\/([^\/]+)$/)[2];
     
-    firebase.firestore().collection("users").doc(commentDocument.data().author).get().then(function(userDocument) {
+    firebase.firestore().collection("users").doc(commentDocument.data().author || "__NOUSER").get().then(function(userDocument) {
         firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection(depth == 0 ? "rootComments" : "replyComments").doc(commentDocument.id).collection("upvoters").doc(currentUser.uid || "__NOUSER").get().then(function(upvoterDocument) {
             firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection(depth == 0 ? "rootComments" : "replyComments").doc(commentDocument.id).collection("downvoters").doc(currentUser.uid || "__NOUSER").get().then(function(downvoterDocument) {
                 var commentContent = commentDocument.data().content;
+
+                function showDeleteCommentDialog() {
+                    $(".deleteCommentDialog")[0].showModal();
+
+                    $(".deleteCommentButton").off().click(function() {
+                        $(".deleteCommentButton").prop("disabled", true);
+                        $(".deleteCommentButton").text(_("Deleting..."));
+                        
+                        api.deleteComment({
+                            group: groupName,
+                            post: postId,
+                            comment: commentDocument.id,
+                            commentType: depth == 0 ? "root" : "reply"
+                        }).then(function() {
+                            window.location.reload();
+                        }).catch(function(error) {
+                            console.error("Glipo backend error:", error);
+
+                            $("#deleteCommentError").text(_("Sorry, an internal error has occurred. Please check to see if you're still signed in and try again."));
+                            $(".deleteCommentButton").prop("disabled", false);
+                            $(".deleteCommentButton").text(_("Delete"));
+                        });
+                    });
+                }
                 
                 var commentElement = $("<div class='comment'>")
                     .attr("data-id", commentDocument.id)
@@ -580,6 +604,7 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                                             ,
                                                             $("<button class='desktop'>")
                                                                 .text(_("Delete comment"))
+                                                                .click(showDeleteCommentDialog)
                                                             ,
                                                             $("<button class='mobile'>")
                                                                 .attr("title", _("Delete comment"))
@@ -587,6 +612,7 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                                                 .append(
                                                                     $("<icon>").text("delete")
                                                                 )
+                                                                .click(showDeleteCommentDialog)
                                                         ])
                                                     )
                                                 ;
