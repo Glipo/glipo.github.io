@@ -1109,6 +1109,10 @@ h3 .staffBadge {
     font-weight: bold;
 }
 
+.comment .deletedMessage {
+    color: var(--yellow);
+}
+
 .comment .postContent > p:first-of-type {
     margin-top: 0;
 }

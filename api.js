@@ -19,6 +19,8 @@ var api = {
     deletePost: firebase.functions().httpsCallable("deletePost"),
     postComment: firebase.functions().httpsCallable("postComment"),
     replyComment: firebase.functions().httpsCallable("replyComment"),
+    editComment: firebase.functions().httpsCallable("editComment"),
+    deleteComment: firebase.functions().httpsCallable("deleteComment"),
     toggleUpvoteComment: firebase.functions().httpsCallable("toggleUpvoteComment"),
     toggleDownvoteComment: firebase.functions().httpsCallable("toggleDownvoteComment")
 };

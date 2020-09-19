@@ -290,32 +290,44 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
     firebase.firestore().collection("users").doc(commentDocument.data().author).get().then(function(userDocument) {
         firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection(depth == 0 ? "rootComments" : "replyComments").doc(commentDocument.id).collection("upvoters").doc(currentUser.uid || "__NOUSER").get().then(function(upvoterDocument) {
             firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection(depth == 0 ? "rootComments" : "replyComments").doc(commentDocument.id).collection("downvoters").doc(currentUser.uid || "__NOUSER").get().then(function(downvoterDocument) {
+                var commentContent = commentDocument.data().content;
+                
                 var commentElement = $("<div class='comment'>")
                     .attr("data-id", commentDocument.id)
                     .append([
-                        $("<div class='info'>").append([
-                            (
-                                !userDocument.exists ?
-                                $("<span>").text(_("Deleted user")) :
-                                $("<a class='user'>")
-                                    .attr("href", "/u/" + userDocument.data().username)
-                                    .text("u/" + userDocument.data().username)
-                                    .addClass(userDocument.data().staff ? "staffBadge" : "")
-                                    .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
+                        $("<div>")
+                            .addClass(!commentDocument.data().deleted ? "info" : "deletedMessage")
+                            .append(
+                                !commentDocument.data().deleted ?
+                                [
+                                    (
+                                        !userDocument.exists ?
+                                        $("<span>").text(_("Deleted user")) :
+                                        $("<a class='user'>")
+                                            .attr("href", "/u/" + userDocument.data().username)
+                                            .text("u/" + userDocument.data().username)
+                                            .addClass(userDocument.data().staff ? "staffBadge" : "")
+                                            .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
+                                    ),
+                                    $("<span>").text(" · "),
+                                    $("<span>")
+                                        .attr("title",
+                                            lang.format(commentDocument.data().posted.toDate(), lang.language, {
+                                                day: "numeric",
+                                                month: "long",
+                                                year: "numeric"
+                                            }) + " " +
+                                            commentDocument.data().posted.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
+                                        )
+                                        .text(timeDifferenceToHumanReadable(new Date().getTime() - commentDocument.data().posted.toDate().getTime()))
+                                ]
+                                :
+                                [
+                                    $("<span>").text(_("Comment deleted by author"))
+                                ]
                             ),
-                            $("<span>").text(" · "),
-                            $("<span>")
-                                .attr("title",
-                                    lang.format(commentDocument.data().posted.toDate(), lang.language, {
-                                        day: "numeric",
-                                        month: "long",
-                                        year: "numeric"
-                                    }) + " " +
-                                    commentDocument.data().posted.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
-                                )
-                                .text(timeDifferenceToHumanReadable(new Date().getTime() - commentDocument.data().posted.toDate().getTime()))
-                        ]),
-                        $("<div class='postContent'>").html(renderMarkdown(commentDocument.data().content)),
+
+                        $("<div class='postContent'>").html(!commentDocument.data().deleted ? renderMarkdown(commentContent) : ""),
                         $("<div class='actions'>").append([
                             $("<div>").append([
                                 $("<button class='upvoteButton'>")
@@ -497,58 +509,101 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                 ,
                                 document.createTextNode(" "),
                                 (
-                                    commentDocument.data().author == currentUser.uid ?
-                                    $("<button class='editCommentButton'>")
-                                        .attr("title", _("Edit or delete"))
-                                        .attr("aria-label", _("Edit or delete"))
-                                        .append(
-                                            $("<icon>").text("edit")
-                                        )
-                                        .click(function() {
-                                            $(".comment .replyArea").html("");
+                                    !commentDocument.data().deleted ?
+                                    (
+                                        commentDocument.data().author == currentUser.uid ?
+                                        $("<button class='editCommentButton'>")
+                                            .attr("title", _("Edit or delete"))
+                                            .attr("aria-label", _("Edit or delete"))
+                                            .append(
+                                                $("<icon>").text("edit")
+                                            )
+                                            .click(function() {
+                                                $(".comment .replyArea").html("");
+    
+                                                $(".editCommentButton").prop("disabled", true);
+    
+                                                $(this).closest(".comment").find("> .postContent")
+                                                    .html("")
+                                                    .append(
+                                                        $("<div class='contentEditor'>"),
+                                                        $("<p class='errorMessage editCommentError'>"),
+                                                        $("<div class='buttonRow'>").append([
+                                                            $("<button class='blue'>")
+                                                                .text(_("Edit"))
+                                                                .click(function(event) {
+                                                                    var newCommentContent = $(this).closest(".comment").find("> .postContent .contentEditor textarea").val();
 
-                                            $(".editCommentButton").prop("disabled", true);
+                                                                    if (newCommentContent.trim() == "") {
+                                                                        $(this).parent().find("> .editCommentError").text(_("Please enter the new comment contents."));
+                                                                
+                                                                        return;
+                                                                    }
 
-                                            $(this).closest(".comment").find("> .postContent")
-                                                .html("")
-                                                .append(
-                                                    $("<div class='contentEditor'>"),
-                                                    $("<div class='buttonRow'>").append([
-                                                        $("<button class='blue'>")
-                                                            .text(_("Edit"))
-                                                        ,
-                                                        $("<button>")
-                                                            .text(_("Cancel"))
-                                                            .click(function() {
-                                                                $(this).closest(".comment").find("> .postContent").html(renderMarkdown(commentDocument.data().content));
+                                                                    if (newCommentContent.length > 10000) {
+                                                                        $(this).parent().find("> .editCommentError").text(_("Your comment is too long! Please shorten it so that it's at most 10,000 characters long. You may want to split your comment up into multiple parts."));
+                                                            
+                                                                        return;
+                                                                    }
 
-                                                                $(".editCommentButton").prop("disabled", false);
-                                                            })
-                                                        ,
-                                                        $("<button class='desktop'>")
-                                                            .text(_("Delete comment"))
-                                                        ,
-                                                        $("<button class='mobile'>")
-                                                            .attr("title", _("Delete comment"))
-                                                            .attr("aria-label", _("Delete comment"))
-                                                            .append(
-                                                                $("<icon>").text("delete")
-                                                            )
-                                                    ])
-                                                )
-                                            ;
+                                                                    commentContent = newCommentContent;
 
-                                            loadContentEditors();
+                                                                    $(this).closest(".comment").find("> .postContent").html(renderMarkdown(commentContent));
 
-                                            $(this).closest(".comment").find("> .postContent .contentEditor textarea").val(commentDocument.data().content);
-                                        })
-                                    :
-                                    $("<button>")
-                                        .attr("title", _("Report"))
-                                        .attr("aria-label", _("Report"))
-                                        .append(
-                                            $("<icon>").text("flag")
-                                        )
+                                                                    $(".editCommentButton").prop("disabled", false);
+
+                                                                    var commentElement = $(".comment");
+                                    
+                                                                    api.editComment({
+                                                                        group: groupName,
+                                                                        post: postId,
+                                                                        comment: commentDocument.id,
+                                                                        commentType: depth == 0 ? "root" : "reply",
+                                                                        content: newCommentContent
+                                                                    }).catch(function(error) {
+                                                                        console.error("Glipo backend error:", error);
+                                    
+                                                                        commentElement.find("> .postContent").prepend(
+                                                                            $("<p class='errorMessage'>").text(_("Sorry, an internal error has occurred and your new comment contents were not saved. Please try editing your comment again later. Your proposed edited comment is below:"))
+                                                                        );
+                                                                    });
+                                                                })
+                                                            ,
+                                                            $("<button>")
+                                                                .text(_("Cancel"))
+                                                                .click(function() {
+
+                                                                    $(this).closest(".comment").find("> .postContent").html(renderMarkdown(commentContent));
+    
+                                                                    $(".editCommentButton").prop("disabled", false);
+                                                                })
+                                                            ,
+                                                            $("<button class='desktop'>")
+                                                                .text(_("Delete comment"))
+                                                            ,
+                                                            $("<button class='mobile'>")
+                                                                .attr("title", _("Delete comment"))
+                                                                .attr("aria-label", _("Delete comment"))
+                                                                .append(
+                                                                    $("<icon>").text("delete")
+                                                                )
+                                                        ])
+                                                    )
+                                                ;
+    
+                                                loadContentEditors();
+    
+                                                $(this).closest(".comment").find("> .postContent .contentEditor textarea").val(commentContent);
+                                            })
+                                        :
+                                        $("<button>")
+                                            .attr("title", _("Report"))
+                                            .attr("aria-label", _("Report"))
+                                            .append(
+                                                $("<icon>").text("flag")
+                                            )
+                                    ) :
+                                    null
                                 )
                             ])
                         ]),
