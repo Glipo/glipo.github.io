@@ -247,7 +247,7 @@ function loadContentEditors() {
                 })
         ]),
         $("<textarea>").attr("placeholder", _("Write your thoughts here...")),
-        $("<div class='preview postContent'>")
+        $("<div class='preview postContent fullContent'>")
     ]);
 }
 
