@@ -6,7 +6,7 @@
     https://glipo.cf
 */
 
-var groupPool = ["glipo", "memes"];
+var groupPool = ["glipo", "memes", "technology"];
 var groupPoolLastPosts = {};
 var sortMethod = "popular";
 var recurseTimeout = 10;
