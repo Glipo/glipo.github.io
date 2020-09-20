@@ -28,7 +28,7 @@ $(function() {
 
         $("main").addClass("afterHeader");
     } else if (trimPage(currentPage).match(/^g\/[^\/]+\/posts\/[^\/]+$/)) {
-        // Do nothing
+        $(".currentLocation").text(_("Viewing post"));
     } else if (currentPage.startsWith("u/")) {
         $(".currentLocation").text("u/" + trimPage(currentPage.split("/")[1]));
 
