@@ -502,6 +502,10 @@ textarea::placeholder {
     color: var(--shade3);
 }
 
+h2.step {
+    font-size: 1.2em;
+}
+
 a {
     color: var(--shade3);
     text-decoration: none;
@@ -516,7 +520,7 @@ hr {
     margin-bottom: 2px;
     margin-left: 10px;
     margin-right: 10px;
-    border: 2.3px solid rgba(255, 255, 255, 0.2); /* Fixes new rendering bug in Chrome */
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 2px;
 }
 
@@ -648,6 +652,14 @@ blockquote {
 }
 
 .isNotStaff {
+    display: none;
+}
+
+.canCreateGroups {
+    display: none;
+}
+
+.cannotCreateGroups {
     display: none;
 }
 
@@ -1046,7 +1058,7 @@ blockquote {
     display: none;
 }
 
-.loadedPosts, .noPosts, .pageNonExistent, .loadedDm, .selfMessaging, .notificationsNotEnabled {
+.loadedPosts, .noPosts, .pageNonExistent, .loadedDm, .selfMessaging, .notificationsNotEnabled, .searchSiteWidePrompt, .noResults {
     display: none;
 }
 
@@ -1166,6 +1178,17 @@ h3 .staffBadge {
 
 .showAllReplies, .continueThread {
     margin-top: 20px;
+}
+
+.createGroupName span {
+    display: inline-block;
+    width: 30px;
+    font-size: 25px;
+}
+
+.createGroupName input {
+    font-size: 28px;
+    width: calc(100% - 55px);
 }
 
 @media (max-width: 1000px) {

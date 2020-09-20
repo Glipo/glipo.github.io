@@ -41,6 +41,8 @@ var currentUser = {
 
 var accountRequiresSettingUp = false;
 
+var groupNameSettleTimeout;
+
 function timeDifferenceToHumanReadable(milliseconds) {
     var seconds = Math.floor(milliseconds / 1000);
     var minutes = Math.floor(seconds / 60);
@@ -446,6 +448,77 @@ function visitUserMessages() {
     }
 }
 
+function checkCreateGroupDetails() {
+    var newGroupName = $("#createGroupNameInput").val().trim();
+
+    clearTimeout(groupNameSettleTimeout);
+
+    if (!newGroupName.match(/^[a-zA-Z0-9]*$/)) {
+        $(".createGroupNamePrompt").addClass("errorMessage");
+        $(".createGroupNamePrompt").text(_("The group name must only contain lowercase and uppercase letters as well as numbers."));
+    } else if (newGroupName.length < 3) {
+        $(".createGroupNamePrompt").removeClass("errorMessage");
+        $(".createGroupNamePrompt").text(_("The group name must be between 3-20 characters long, and must only contain lowercase and uppercase letters as well as numbers."));
+    } else if (newGroupName.length > 20) {
+        $(".createGroupNamePrompt").addClass("errorMessage");
+        $(".createGroupNamePrompt").text(_("The group name cannot be longer than 20 characters."));
+    } else {
+        $(".createGroupNamePrompt").removeClass("errorMessage");
+        $(".createGroupNamePrompt").html(_("Checking to see if that group name is taken..."));
+
+
+        groupNameSettleTimeout = setTimeout(function() {
+            firebase.firestore().collection("groups").doc(newGroupName).get().then(function(groupDocument) {
+                if (!groupDocument.exists) {
+                    $(".createGroupNamePrompt").removeClass("errorMessage");
+                    $(".createGroupNamePrompt").html(_("Good name! Others will be able to join your group by visiting {0}.", [newGroupName]));
+                } else {
+                    $(".createGroupNamePrompt").addClass("errorMessage");
+                    $(".createGroupNamePrompt").text(_("Sorry, a group with that name already exists. Try a different name!"));
+                }
+            });
+        }, 1000);
+    }
+}
+
+function createGroup() {
+    var newGroupName = $("#createGroupNameInput").val().trim();
+    var newGroupDescription = $("#createGroupDescriptionInput").val().trim();
+
+    if (newGroupName.match(/^[a-zA-Z0-9]{3,20}$/) && newGroupDescription != "" && newGroupDescription.length <= 200) {
+        $("#createGroupButton").prop("disabled", true);
+        $("#createGroupButton").text(_("Creating group..."));
+            
+        firebase.firestore().collection("groups").doc(newGroupName).get().then(function(groupDocument) {
+            if (!groupDocument.exists) {
+                api.createGroup({
+                    groupName: newGroupName,
+                    groupDescription: newGroupDescription
+                }).then(function() {
+                    window.location.href = "/g/" + newGroupName;
+                }).catch(function(error) {
+                    console.error("Glipo backend error:", error);
+                
+                    $(".createGroupError").text(_("Sorry, an internal error has occurred. Please try again later."));
+
+                    $("#createGroupButton").prop("disabled", false);
+                    $("#createGroupButton").text(_("Create group"));
+                });
+            } else {
+                $(".createGroupNamePrompt").addClass("errorMessage");
+                $(".createGroupNamePrompt").text(_("Sorry, a group with that name already exists. Try a different name!"));
+
+                $(".createGroupError").text(_("Please check that you have fulfilled the requirements of the fields above, then try again."));
+
+                $("#createGroupButton").prop("disabled", false);
+                $("#createGroupButton").text(_("Create group"));
+            }
+        });
+    } else {
+        $(".createGroupError").text(_("Please check that you have fulfilled the requirements of the fields above, then try again."));
+    }
+}
+
 $(function() {
     if (localStorage.getItem("signedInUsername") != null) {
         currentUser.username = localStorage.getItem("signedInUsername");
@@ -492,6 +565,8 @@ $(function() {
                 firebase.firestore().collection("users").doc(currentUser.uid).get().then(function(document) {
                     currentUser.username = document.data().username;
 
+                    $(".loadingUserDetails").hide();
+
                     $(".currentUsername").text(currentUser.username);
                     localStorage.setItem("signedInUsername", currentUser.username);
 
@@ -501,6 +576,14 @@ $(function() {
                     } else {
                         $(".isStaff").hide();
                         $(".isNotStaff").show();
+                    }
+
+                    if (document.data().postPoints + document.data().commentPoints >= 100 || document.data().staff) {
+                        $(".cannotCreateGroups").hide();
+                        $(".canCreateGroups").show();
+                    } else {
+                        $(".canCreateGroups").hide();
+                        $(".cannotCreateGroups").show();
                     }
                 });
 
@@ -548,6 +631,9 @@ $(function() {
             $(".isStaff").hide();
             $(".isNotStaff").show();
 
+            $(".canCreateGroups").hide();
+            $(".cannotCreateGroups").show();
+
             $(".joinedGroups").html("");
 
             $(".userIsMe").hide();
@@ -587,11 +673,21 @@ $(function() {
         $(this).toggleClass("open");
     });
 
-    $("html").on("keypress", ".spoiler", function() {
+    $("html").on("keypress", ".spoiler", function(event) {
         if (event.keyCode == 13) {
             $(this).toggleClass("open");
         }
     });
+
+    $("nav .search input").keypress(function(event) {
+        if (event.keyCode == 13) {
+            if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
+                window.location.href = "/g/" + trimPage(currentPage).split("/")[1].toLowerCase().trim() + "?q=" + encodeURIComponent($("nav .search input").val().trim());
+            } else {
+                window.location.href = "/?q=" + encodeURIComponent($("nav .search input").val().trim());
+            }
+        }
+    })
 
     $("#signInPassword").keypress(function(event) {
         if (event.keyCode == 13) {
@@ -610,6 +706,10 @@ $(function() {
             signUp();
         }
     });
+
+    if (core.getURLParameter("q") != null) {
+        $("nav .search input").val(core.getURLParameter("q"));
+    }
 
     if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
         var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
@@ -698,5 +798,7 @@ $(function() {
         if (core.getURLParameter("group") != null) {
             $("#submitGroup").val("g/" + core.getURLParameter("group").trim());
         }
+    } else if (trimPage(currentPage) == "creategroup") {
+        $("#createGroupNameInput").on("keyup change", checkCreateGroupDetails);
     }
 });

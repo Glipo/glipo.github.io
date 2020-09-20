@@ -22,7 +22,11 @@ $(function() {
     $("main").removeClass("afterHeader");
 
     if (trimPage(currentPage) == "/") {
-        $(".currentLocation").text(_("Feed"));
+        if (core.getURLParameter("q") == null) {
+            $(".currentLocation").text(_("Feed"));
+        } else {
+            $(".currentLocation").text(_("Search results"));
+        }
     } else if (trimPage(currentPage).match(/^g\/[^\/]+$/)) {
         $(".currentLocation").text("g/" + trimPage(currentPage.split("/")[1]));
 
@@ -41,6 +45,8 @@ $(function() {
         $(".currentLocation").text(_("Messages"));
     } else if (trimPage(currentPage) == "staff") {
         $(".currentLocation").text(_("Staff area"));
+    } else if (trimPage(currentPage) == "creategroup") {
+        $(".currentLocation").text(_("Create a group"));
     } else {
         $(".currentLocation").text(_("Error 404"));
         $(".error404").show();

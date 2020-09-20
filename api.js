@@ -17,10 +17,11 @@ var api = {
     removePost: firebase.functions().httpsCallable("removePost"),
     editPost: firebase.functions().httpsCallable("editPost"),
     deletePost: firebase.functions().httpsCallable("deletePost"),
+    toggleUpvoteComment: firebase.functions().httpsCallable("toggleUpvoteComment"),
+    toggleDownvoteComment: firebase.functions().httpsCallable("toggleDownvoteComment"),
     postComment: firebase.functions().httpsCallable("postComment"),
     replyComment: firebase.functions().httpsCallable("replyComment"),
     editComment: firebase.functions().httpsCallable("editComment"),
     deleteComment: firebase.functions().httpsCallable("deleteComment"),
-    toggleUpvoteComment: firebase.functions().httpsCallable("toggleUpvoteComment"),
-    toggleDownvoteComment: firebase.functions().httpsCallable("toggleDownvoteComment")
+    createGroup: firebase.functions().httpsCallable("createGroup")
 };

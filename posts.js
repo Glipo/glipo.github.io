@@ -12,6 +12,7 @@ var sortMethod = "popular";
 var recurseTimeout = 10;
 var recurseTimeoutMessageShown = false;
 var postsToLoad = 0;
+var searchLastPost;
 
 function renderLink(url) {
     var result = $("<div>");
@@ -40,22 +41,52 @@ function renderLink(url) {
     return result.html();
 }
 
-function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAfterwards = false, recurse = 0) {
+function makeSearchTerm(title) {
+    title = title.trim().toLowerCase().replace(/[^\w\s]/g, "");
+    
+    var splitTitle = title.split(" ");
+    var filteredTitle = [];
+
+    for (var i = 0; i < splitTitle.length; i++) {
+        // Skip over common words
+        if (["the", "a", "an", "this", "that", "then", "to", "for", "and", "or", "but", "i", "you", "he", "she", "it", "we", "they", "is", "its"].includes(splitTitle[i])) {
+            continue;
+        }
+
+        filteredTitle.push(splitTitle[i]);
+    }
+
+    if (filteredTitle.length == 0) {
+        filteredTitle = splitTitle;
+    }
+
+    if (filteredTitle.length == 1 && filteredTitle[0] == "") {
+        filteredTitle = ["unicorn"];
+    }
+
+    return filteredTitle.join(" ");
+}
+
+function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAfterwards = false, recurse = 0, specificId = null) {
     var postReference = firebase.firestore().collection("groups").doc(groupName.toLowerCase()).collection("posts");
 
-    if (sortMethod == "best") {
-        postReference = postReference.orderBy("upvotes", "desc");
-    } else if (sortMethod == "newest") {
-        postReference = postReference.orderBy("posted", "desc");
+    if (specificId != null) {
+        postReference = postReference.where(firebase.firestore.FieldPath.documentId(), "==", specificId);
     } else {
-        postReference = postReference.orderBy("popularity", "desc");
-    }
+        if (sortMethod == "best") {
+            postReference = postReference.orderBy("upvotes", "desc");
+        } else if (sortMethod == "newest") {
+            postReference = postReference.orderBy("posted", "desc");
+        } else {
+            postReference = postReference.orderBy("popularity", "desc");
+        }
+    
+        if (!!startAfter) {
+            postReference = postReference.startAfter(startAfter);
+        }
 
-    if (!!startAfter) {
-        postReference = postReference.startAfter(startAfter);
+        postReference = postReference.limit(limit);
     }
-
-    postReference = postReference.limit(limit);
 
     postReference.get().then(function(postDocuments) {
         $(".loadingPosts").hide();
@@ -334,7 +365,80 @@ function sortPostsBy(sort = "popular") {
     window.location.href = window.location.href.split("?")[0] + "?sort=" + encodeURIComponent(sort);
 }
 
+function getSearchPosts() {
+    if (recurseTimeout > 0) {
+        var searchQuery = makeSearchTerm(core.getURLParameter("q").toLowerCase());
+        var searchStartPart = searchQuery.slice(0, searchQuery.length - 1);
+        var searchEndPart = searchQuery.slice(searchQuery.length - 1, searchQuery.length);
+        var searchEndBound = searchStartPart + String.fromCharCode(searchEndPart.charCodeAt(0) + 1);
+
+        var searchRef = firebase.firestore().collection("search");
+        
+        searchRef = searchRef.where("term", ">=", searchQuery).where("term", "<", searchEndBound);
+
+        if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length == 2) {
+            searchRef = searchRef.where("group", "==", trimPage(currentPage).split("/")[1].toLowerCase().trim());
+        }
+
+        searchRef = searchRef.limit(10);
+
+        if (!!searchLastPost) {
+            searchRef = searchRef.startAfter(searchLastPost);
+        }
+        
+        searchRef.get().then(function(searchDocuments) {
+            if (searchDocuments.docs.length > 0) {
+                searchDocuments.forEach(function(searchDocument) {
+                    getGroupPosts(searchDocument.data().group, 1, null, false, 0, searchDocument.data().post);
+
+                    searchLastPost = searchDocument;
+                });
+
+                if (searchDocuments.docs.length < 10) {
+                    if (!recurseTimeoutMessageShown) {
+                        setTimeout(function() {
+                            $(".loadedPosts").append(
+                                $("<p class='middle'>").text(_("That's all we could find for your search term! If you still can't find what you're looking for, try entering a different search term instead."))
+                            );
+                        }, 1000);
+
+                        recurseTimeoutMessageShown = true;
+                    }
+                }
+            } else if (!recurseTimeoutMessageShown) {
+                $(".loadingPosts").hide();
+                $(".noResults").show();
+            }
+        });
+    }
+}
+
+function initSearchPosts() {
+    $(".loadedPosts").hide();
+    $(".loadingPosts").show();
+
+    $(".loadedPosts").html("");
+
+    getSearchPosts();
+
+    window.onscroll = function() {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight && postsToLoad == 0) {
+            postsToLoad = 1;
+
+            getSearchPosts();
+        }
+    }
+}
+
+function searchSiteWide() {
+    window.location.href = "/?q=" + encodeURIComponent(core.getURLParameter("q"));
+}
+
 $(function() {
+    if (core.getURLParameter("q") != null) {
+        $(".sorts").hide();
+    }
+
     if (currentPage.startsWith("g/") || trimPage(currentPage) == "/") {
         if (["popular", "best", "newest"].includes(core.getURLParameter("sort"))) {
             sortMethod = core.getURLParameter("sort");
@@ -373,45 +477,55 @@ $(function() {
 
     firebase.auth().onAuthStateChanged(function(user) {
         if (trimPage(currentPage) == "/") {
-            if (user) {
-                firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").get().then(function(groupReferenceDocuments) {
-                    for (var i = 0; i < groupReferenceDocuments.docs.length; i++) {
-                        groupPool[i] = groupReferenceDocuments.docs[i].id;
-                    }
-
-                    // Remove duplicates
-
-                    var tempGroupPool = [];
-
-                    $.each(groupPool, function(i, element) {
-                        if ($.inArray(element, tempGroupPool) == -1) {
-                            tempGroupPool.push(element);
+            if (core.getURLParameter("q") == null) {
+                if (user) {
+                    firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").get().then(function(groupReferenceDocuments) {
+                        for (var i = 0; i < groupReferenceDocuments.docs.length; i++) {
+                            groupPool[i] = groupReferenceDocuments.docs[i].id;
                         }
+
+                        // Remove duplicates
+
+                        var tempGroupPool = [];
+
+                        $.each(groupPool, function(i, element) {
+                            if ($.inArray(element, tempGroupPool) == -1) {
+                                tempGroupPool.push(element);
+                            }
+                        });
+
+                        groupPool = tempGroupPool;
+
+                        initFeedPosts();
                     });
-
-                    groupPool = tempGroupPool;
-
+                } else {
                     initFeedPosts();
-                });
+                }
             } else {
-                initFeedPosts();
+                initSearchPosts();
             }
         } else if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length == 2) {
             var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
     
             firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
                 if (groupDocument.exists) {
-                    groupPool = [groupName];
+                    if (core.getURLParameter("q") == null) {
+                        groupPool = [groupName];
 
-                    firebase.firestore().collection("groups").doc(groupName).collection("posts").get().then(function(postDocuments) {
-                        if (postDocuments.docs.length > 0) {
-                            initFeedPosts();
-                        } else {
-                            $(".loadingPosts").hide();
-                            $(".sorts").hide();
-                            $(".noPosts").show();
-                        }
-                    });
+                        firebase.firestore().collection("groups").doc(groupName).collection("posts").get().then(function(postDocuments) {
+                            if (postDocuments.docs.length > 0) {
+                                initFeedPosts();
+                            } else {
+                                $(".loadingPosts").hide();
+                                $(".sorts").hide();
+                                $(".noPosts").show();
+                            }
+                        });
+                    } else {
+                        $(".searchSiteWidePrompt").show();
+
+                        initSearchPosts();
+                    }
                 }
             });
         }

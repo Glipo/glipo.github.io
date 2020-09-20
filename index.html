@@ -141,6 +141,12 @@
                         <button onclick="sortPostsBy('newest');" aria-label="@Newest" class="sort sortNewest"><icon aria-hidden="true">new_releases</icon> <span>@Newest</span></button>
                         <button onclick="visitSubmitPost();" class="newPost yellow floatEnd"><icon aria-hidden="true">add</icon> <span>@New post</span></button>
                     </card>
+                    <card class="searchSiteWidePrompt">
+                        <p>@Looking for something that's a bit less specific? We can search for posts that are outside of this group, too!</p>
+                        <div class="buttonRow">
+                            <button onclick="searchSiteWide();" class="blue">@Search the whole site</button>
+                        </div>
+                    </card>
                     <div class="loadingPosts">
                         <div class="loadingSpinner"></div>
                     </div>
@@ -149,6 +155,11 @@
                         <h1>@Give this group its very first post</h1>
                         <p>@Get started by writing this group's first ever post. It'll be monumental!</p>
                         <button onclick="visitSubmitPost();" class="blue">@Write a post</button>
+                    </div>
+                    <div class="noResults pageMessage middle">
+                        <h1>@We can't find what you're looking for</h1>
+                        <p>@There doesn't seem to be any posts that match your search term. Maybe try searching for something different!</p>
+                        <button onclick="window.location.href = '/';" class="blue">@Go home</button>
                     </div>
                 </div>
                 <div class="pageNonExistent pageMessage middle">
@@ -479,14 +490,52 @@
                     </div>
                 </div>
             </section>
-            <aside id="sidebar">
+            <section class="posts" data-location="^creategroup$"> <!-- Create a group page -->
+                <div class="signedIn">
+                    <div class="loadingUserDetails">
+                        <div class="loadingSpinner"></div>
+                    </div>
+                    <div class="canCreateGroups">
+                        <h1>@Create a group</h1>
+                        <h2 class="step">@1. Choose a group name</h2>
+                        <card class="createGroupName">
+                            <span>g/</span>
+                            <input placeholder="groupname" id="createGroupNameInput">
+                        </card>
+                        <p class="createGroupNamePrompt">@The group name must be between 3-20 characters long, and must only contain lowercase and uppercase letters as well as numbers.</p>
+                        <h2 class="step">@2. Write a brief description of your group</h2>
+                        <textarea id="createGroupDescriptionInput" placeholder="@Write something here that will entice people to your group..." maxlength="200"></textarea>
+                        <p>@The group description will appear just below the group name and can only be a maximum of 200 characters long.</p>
+                        <h3 class="step">@3. Do the honours</h3>
+                        <p>@It's time for you to press the magic button! Check that everything above is correct, then press the button below to create your group.</p>
+                        <button onclick="createGroup();" class="blue" id="createGroupButton">@Create group</button>
+                        <p class="errorMessage createGroupError"></p>
+                    </div>
+                    <div class="cannotCreateGroups">
+                        <div class="pageMessage middle">
+                            <h1>@You'll need at least 100 points to create a group</h1>
+                            <p>@We require our users to have a sufficient amount of points in order to create a group. This is to prevent spam and ensure that users are fit to moderate their own groups.</p>
+                            <p>@Want to get more points? Try writing a post!</p>
+                            <button onclick="visitSubmitPost();" class="blue">@Write a post</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="signedOut">
+                    <div class="pageMessage middle">
+                        <h1>@Sign in to create your own group</h1>
+                        <p>@You need a Glipo account with at least 100 points in order to create a group.</p>
+                        <button onclick="showSignInDialog();" class="blue">@Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <aside id="sidebar">
+                <span class="signedOut">
                     <card data-location="^g\/[^\/]+$|^\/$">
                         <h1>@Welcome to Glipo</h1>
                         <p>@Glipo is a social network where you can discover your community through our groups.</p>
                         <button onclick="showSignUpDialog();" class="big blue">Sign up</button>
                     </card>
-                </div>
+                </span>
                 <card data-location="^\/$">
                     <h2>@Trending groups</h2>
                     <div>g/helloworld</div>
@@ -495,6 +544,13 @@
                     <div>g/technology</div>
                     <div>g/glipo</div>
                 </card>
+                <span class="canCreateGroups">
+                    <card data-location="^\/$">
+                        <h1>@Want a group of your own?</h1>
+                        <p>@You're now eligible to start your own groups! Let people discover your very own community.</p>
+                        <button onclick="window.location.href = '/creategroup';" class="big blue">@Create a group</button>
+                    </card>
+                </span>
                 <span class="pageExistent">
                     <card data-location="^g\/[^\/]+$">
                         <h2>@About this group</h2>
