@@ -1058,7 +1058,7 @@ blockquote {
     display: none;
 }
 
-.loadedPosts, .noPosts, .pageNonExistent, .loadedDm, .selfMessaging, .notificationsNotEnabled, .searchSiteWidePrompt, .noResults {
+.loadedPosts, .noPosts, .pageNonExistent, .loadedDm, .selfMessaging, .notificationsNotEnabled, .searchSiteWidePrompt, .noResults, .postIsEdited {
     display: none;
 }
 

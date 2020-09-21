@@ -64,6 +64,19 @@ function getPost(groupName, postId) {
                                 .text(timeDifferenceToHumanReadable(new Date().getTime() - postDocument.data().posted.toDate().getTime()))
                             ;
 
+                            if (postDocument.data().edited) {
+                                $(".postEditTime").attr("title",
+                                    lang.format(postDocument.data().edited.toDate(), lang.language, {
+                                        day: "numeric",
+                                        month: "long",
+                                        year: "numeric"
+                                    }) + " " +
+                                    postDocument.data().edited.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
+                                );
+
+                                $(".postIsEdited").show();
+                            }
+
                             $(".postTitle").text(postDocument.data().title);
                             $(".postContent.fullContent").html(postContent);
 
@@ -344,6 +357,16 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                             commentDocument.data().posted.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
                                         )
                                         .text(timeDifferenceToHumanReadable(new Date().getTime() - commentDocument.data().posted.toDate().getTime()))
+                                    ,
+                                    commentDocument.data().edited ? $("<span>").text(" · ") : null,
+                                    commentDocument.data().edited ? $("<span>").text(" Edited ").attr("title",
+                                        lang.format(commentDocument.data().edited.toDate(), lang.language, {
+                                            day: "numeric",
+                                            month: "long",
+                                            year: "numeric"
+                                        }) + " " +
+                                        commentDocument.data().edited.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
+                                    ) : null,
                                 ]
                                 :
                                 [
@@ -571,6 +594,39 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                                                     }
 
                                                                     commentContent = newCommentContent;
+
+                                                                    $(this).closest(".comment").find("> .info").html("").append([
+                                                                        (
+                                                                            !userDocument.exists ?
+                                                                            $("<span>").text(_("Deleted user")) :
+                                                                            $("<a class='user'>")
+                                                                                .attr("href", "/u/" + userDocument.data().username)
+                                                                                .text("u/" + userDocument.data().username)
+                                                                                .addClass(userDocument.data().staff ? "staffBadge" : "")
+                                                                                .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
+                                                                        ),
+                                                                        $("<span>").text(" · "),
+                                                                        $("<span>")
+                                                                            .attr("title",
+                                                                                lang.format(commentDocument.data().posted.toDate(), lang.language, {
+                                                                                    day: "numeric",
+                                                                                    month: "long",
+                                                                                    year: "numeric"
+                                                                                }) + " " +
+                                                                                commentDocument.data().posted.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
+                                                                            )
+                                                                            .text(timeDifferenceToHumanReadable(new Date().getTime() - commentDocument.data().posted.toDate().getTime()))
+                                                                        ,
+                                                                        $("<span>").text(" · "),
+                                                                        $("<span>").text(" Edited ").attr("title",
+                                                                            lang.format(new Date(), lang.language, {
+                                                                                day: "numeric",
+                                                                                month: "long",
+                                                                                year: "numeric"
+                                                                            }) + " " +
+                                                                            new Date().toLocaleTimeString(lang.language.replace(/_/g, "-"))
+                                                                        )
+                                                                    ]);
 
                                                                     $(this).closest(".comment").find("> .postContent").html(renderMarkdown(commentContent));
 
