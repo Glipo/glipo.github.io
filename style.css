@@ -273,6 +273,10 @@ card.post .actions div:last-of-type {
     float: left;
 }
 
+card.post .actions .full {
+    width: 100%!important;
+}
+
 card.post .actions div button {
     padding: 10px;
     padding-top: 5px;

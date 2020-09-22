@@ -104,7 +104,7 @@ function getStaffModqueue() {
                                                 .html(postContent)
                                             ,
                                             $("<div class='actions'>").append([
-                                                $("<div>").append([
+                                                $("<div class='full'>").append([
                                                     $("<button>")
                                                         .attr("aria-label", _("Approve"))
                                                         .append([
