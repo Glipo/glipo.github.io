@@ -1062,7 +1062,7 @@ blockquote {
     display: none;
 }
 
-.loadedPosts, .noPosts, .pageNonExistent, .loadedDm, .selfMessaging, .notificationsNotEnabled, .searchSiteWidePrompt, .noResults, .postIsEdited {
+.loadedGroupResults, .loadedUserResults, .loadedPostsHeader, .loadedPosts, .noPosts, .pageNonExistent, .loadedDm, .selfMessaging, .notificationsNotEnabled, .searchSiteWidePrompt, .noResults, .postIsEdited {
     display: none;
 }
 

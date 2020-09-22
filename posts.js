@@ -406,6 +406,7 @@ function getSearchPosts() {
                     }
                 }
             } else if (!recurseTimeoutMessageShown) {
+                $(".loadedPostsHeader").hide();
                 $(".loadingPosts").hide();
                 $(".noResults").show();
             }
@@ -419,15 +420,98 @@ function initSearchPosts() {
 
     $(".loadedPosts").html("");
 
-    getSearchPosts();
+    var searchQuery = makeSearchTerm(core.getURLParameter("q").replace(/g\//g, "").toLowerCase());
+    var searchStartPart = searchQuery.slice(0, searchQuery.length - 1);
+    var searchEndPart = searchQuery.slice(searchQuery.length - 1, searchQuery.length);
+    var searchEndBound = searchStartPart + String.fromCharCode(searchEndPart.charCodeAt(0) + 1);
 
-    window.onscroll = function() {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight && postsToLoad == 0) {
-            postsToLoad = 1;
+    var groupSearchRef = firebase.firestore().collection("groups");
+    
+    groupSearchRef = groupSearchRef.where(firebase.firestore.FieldPath.documentId(), ">=", searchQuery).where(firebase.firestore.FieldPath.documentId(), "<", searchEndBound);
+    groupSearchRef = groupSearchRef.limit(5);
+
+    groupSearchRef.get().then(function(groupDocuments) {
+        if (trimPage(currentPage) == "/") {
+            groupDocuments.forEach(function(groupDocument) {
+                $(".loadedGroupResults").show().append(
+                    $("<card class='clickable'>")
+                        .append([
+                            $("<a class='bold'>")
+                                .attr("href", "/g/" + groupDocument.data().name)
+                                .text("g/" + groupDocument.data().name)
+                            ,
+                            document.createTextNode(" · "),
+                            $("<span>").text(groupDocument.data().description)
+                        ])
+                        .click(function() {
+                            window.location.href = "/g/" + groupDocument.data().name;
+                        })
+                );
+
+                $(".loadedPostsHeader").show();
+            });
+        }
+
+        var searchQuery = makeSearchTerm(core.getURLParameter("q").replace(/u\//g, "").toLowerCase());
+        var searchStartPart = searchQuery.slice(0, searchQuery.length - 1);
+        var searchEndPart = searchQuery.slice(searchQuery.length - 1, searchQuery.length);
+        var searchEndBound = searchStartPart + String.fromCharCode(searchEndPart.charCodeAt(0) + 1);
+
+        var userSearchRef = firebase.firestore().collection("usernames");
+        
+        userSearchRef = userSearchRef.where(firebase.firestore.FieldPath.documentId(), ">=", searchQuery).where(firebase.firestore.FieldPath.documentId(), "<", searchEndBound);
+        userSearchRef = userSearchRef.limit(5);
+
+        userSearchRef.get().then(function(usernameDocuments) {
+            if (trimPage(currentPage) == "/") {
+                usernameDocuments.forEach(function(usernameDocument) {
+                    $(".loadedUserResults").show().append(
+                        $("<card class='clickable'>")
+                            .attr("data-user", usernameDocument.data().uid)
+                            .append([
+                                $("<a class='bold'>")
+                                    .attr("href", "/u/" + usernameDocument.id)
+                                    .text("u/" + usernameDocument.id)
+                                ,
+                            ])
+                            .click(function() {
+                                window.location.href = "/u/" + usernameDocument.id;
+                            })
+                    );
+
+                    $(".loadedPostsHeader").show();
+
+                    firebase.firestore().collection("users").doc(usernameDocument.data().uid).get().then(function(userDocument) {
+                        $("[data-user='" + usernameDocument.data().uid + "'] > a").text("u/" + userDocument.data().username);
+
+                        if (userDocument.data().staff) {
+                            $("[data-user='" + usernameDocument.data().uid + "'] > a")
+                                .addClass("staffBadge")
+                                .attr("title", _("This user is a staff member of Glipo."))
+                            ;
+                        }
+
+                        if (!!userDocument.data().bio) {
+                            $("[data-user='" + usernameDocument.data().uid + "']").append([
+                                document.createTextNode(" · "),
+                                $("<span>").text(userDocument.data().bio)
+                            ]);
+                        }
+                    });
+                });
+            }
 
             getSearchPosts();
-        }
-    }
+
+            window.onscroll = function() {
+                if (window.innerHeight + window.scrollY >= document.body.offsetHeight && postsToLoad == 0) {
+                    postsToLoad = 1;
+
+                    getSearchPosts();
+                }
+            }
+        });
+    });
 }
 
 function searchSiteWide() {
