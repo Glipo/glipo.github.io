@@ -49,7 +49,7 @@ function renderMarkdown(markdown) {
 
     // Mentions
     html = html.replace(/(?<!<code)(^|>|\s|\/)g\/(([a-zA-Z0-9])*)($|<|\s)(?!([\w\s])*<\/code>)/g, "$1<a href='https://glipo.cf/g/$2'>g/$2</a>$4"); // Groups
-    html = html.replace(/(?<!<code)(^|>|\s|\/)u\/(([a-zA-Z0-9])*)($|<|\s)(?!([\w\s])*<\/code>)/g, "$1<a href='https://glipo.cf/u/$2'>u/$2</a>$4"); // Groups
+    html = html.replace(/(?<!<code)(^|>|\s|\/)u\/(([a-zA-Z0-9])*)($|<|\s)(?!([\w\s])*<\/code>)/g, "$1<a href='https://glipo.cf/u/$2'>u/$2</a>$4"); // Users
 
     return html;
 }
