@@ -118,6 +118,7 @@ function finaliseProfileHistory() {
                                         .append(
                                             $("<icon>").text("flag")
                                         )
+                                        .prop("disabled", profileHistory[i].author == currentUser.uid)
                                 ])
                             ])
                         )
@@ -193,6 +194,7 @@ function finaliseProfileHistory() {
                                         .append(
                                             $("<icon>").text("flag")
                                         )
+                                        .prop("disabled", profileHistory[i].author == currentUser.uid)
                                 ])
                             ])
                         )
