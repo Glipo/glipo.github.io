@@ -514,9 +514,9 @@
                     <div class="canCreateGroups">
                         <h1>@Create a group</h1>
                         <h2 class="step">@1. Choose a group name</h2>
-                        <card class="createGroupName">
+                        <card dir="ltr" class="createGroupName">
                             <span>g/</span>
-                            <input placeholder="groupname" id="createGroupNameInput">
+                            <input placeholder="@groupname" id="createGroupNameInput">
                         </card>
                         <p class="createGroupNamePrompt">@The group name must be between 3-20 characters long, and must only contain lowercase and uppercase letters as well as numbers.</p>
                         <h2 class="step">@2. Write a brief description of your group</h2>
@@ -894,6 +894,25 @@
                 <div class="spacer"></div>
                 <div class="end buttonRow">
                     <button class="blue deleteCommentButton">@Delete</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="reportDialog">
+            <div class="title">
+                <span class="reportTitle">@Report content</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p>@To help us further investigate this issue, help us by choosing the option that best fits this issue.</p>
+                <label><input type="radio"></input><span class="reportGroupRule">@It violates the rules of this group</span></input></label>
+                <label><input type="radio"></input><span>@It is spam or unsolicited advertising</span></label>
+                <label><input type="radio"></input><span>@It is deceptive or misleading, or is otherwise misinformative</span></label>
+                <label><input type="radio"></input><span>@It is abusive or harassing</span></label>
+                <label><input type="radio"></input><span>@It is something else</span></label>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button class="blue">@Next</button>
                     <button onclick="closeDialogs();">@Cancel</button>
                 </div>
             </div>

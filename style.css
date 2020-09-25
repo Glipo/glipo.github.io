@@ -356,7 +356,7 @@ label {
     margin-bottom: 5px;
 }
 
-label > span:first-of-type {
+label > span:first-child {
     display: inline-block;
     width: 150px;
 }
@@ -466,6 +466,15 @@ input[type="checkbox"], input[type="radio"] {
     transition: 0.5s background-color;
 }
 
+input[type="checkbox"]:first-child, input[type="radio"]:first-child {
+    margin-right: 10px;
+}
+
+[dir="rtl"] input[type="checkbox"]:first-child, [dir="rtl"] input[type="radio"]:first-child {
+    margin-left: 10px;
+    margin-right: unset;
+}
+
 input[type="checkbox"]:checked {
     background-color: var(--blue);
     background-image: url("/media/graphics/checkWhite.png");
@@ -479,6 +488,7 @@ input[type="checkbox"]:indeterminate {
 }
 
 input[type="radio"] {
+    top: 4px;
     border-radius: 10px;
 }
 
