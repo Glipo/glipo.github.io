@@ -356,8 +356,16 @@ label {
     margin-bottom: 5px;
 }
 
-label > span:first-child {
+label > span:first-of-type {
     display: inline-block;
+    max-width: calc(100% - 40px);
+}
+
+label > input[type="checkbox"] + span, label > input[type="radio"] + span {
+    vertical-align: top;
+}
+
+label > span:first-child {
     width: 150px;
 }
 
@@ -457,13 +465,17 @@ input.big {
 input[type="checkbox"], input[type="radio"] {
     position: relative;
     display: inline-block;
-    top: 8px;
+    top: -4px;
     width: unset;
     -webkit-appearance: none;
     padding: 10px;
     background-color: var(--shade2);
     border-radius: 5px;
     transition: 0.5s background-color;
+}
+
+span + input[type="checkbox"], span + input[type="radio"] {
+    top: 8px;
 }
 
 input[type="checkbox"]:first-child, input[type="radio"]:first-child {
@@ -488,7 +500,6 @@ input[type="checkbox"]:indeterminate {
 }
 
 input[type="radio"] {
-    top: 4px;
     border-radius: 10px;
 }
 
@@ -1315,10 +1326,6 @@ h3 .staffBadge {
 }
 
 @media (max-width: 400px) {
-    label span:first-of-type {
-        display: block;
-    }
-
     label input {
         width: calc(100% - 20px);
     }
