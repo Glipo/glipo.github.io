@@ -270,6 +270,10 @@ function getPost(groupName, postId) {
                                 });
                             });
 
+                            $(".reportPostButton").click(function() {
+                                reportPost(groupName, postDocument.id);
+                            });
+
                             if (postDocument.data().staffRemoved) {
                                 $(".postStaffRemoved").show();
                             } else if (postDocument.data().moderatorRemoved) {
@@ -684,6 +688,9 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                             .append(
                                                 $("<icon>").text("flag")
                                             )
+                                            .click(function() {
+                                                reportComment(groupName, postId, commentDocument.id, depth == 0 ? "root" : "reply");
+                                            })
                                     ) :
                                     null
                                 )

@@ -119,6 +119,9 @@ function finaliseProfileHistory() {
                                             $("<icon>").text("flag")
                                         )
                                         .prop("disabled", profileHistory[i].author == currentUser.uid)
+                                        .click(function() {
+                                            reportPost(profileHistory[i].group, profileHistory[i].post);
+                                        })
                                 ])
                             ])
                         )
@@ -195,6 +198,9 @@ function finaliseProfileHistory() {
                                             $("<icon>").text("flag")
                                         )
                                         .prop("disabled", profileHistory[i].author == currentUser.uid)
+                                        .click(function() {
+                                            reportComment(profileHistory[i].group, profileHistory[i].post, profileHistory[i].comment, profileHistory[i].commentType);
+                                        })
                                 ])
                             ])
                         )

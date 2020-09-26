@@ -43,6 +43,7 @@
         <script src="/post.js"></script>
         <script src="/messages.js"></script>
         <script src="/staff.js"></script>
+        <script src="/report.js"></script>
         <script src="/lang/en_GB.js"></script>
     </head>
     <body>
@@ -243,7 +244,7 @@
                                     </button>
                                 </span>
                                 <span class="postNotAuthoredByMe">
-                                    <button title="@Report" aria-label="@Report">
+                                    <button title="@Report" aria-label="@Report" class="reportPostButton">
                                         <icon>flag</icon>
                                     </button>
                                 </span>
@@ -898,18 +899,26 @@
                 </div>
             </div>
         </dialog>
+        <dialog class="reportLoaderDialog loader">
+            <div class="title">
+                <span class="reportTitle">@Report content</span>
+            </div>
+            <div class="content">
+                <div class="loadingSpinner"></div>
+            </div>
+        </dialog>
         <dialog class="reportDialog">
             <div class="title">
                 <span class="reportTitle">@Report content</span>
                 <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
             </div>
             <div class="content">
-                <p>@To help us further investigate this issue, help us by choosing the option that best fits this issue.</p>
-                <label><input type="radio"></input><span class="reportGroupRule">@It violates the rules of this group</span></input></label>
-                <label><input type="radio"></input><span>@It is spam or unsolicited advertising</span></label>
-                <label><input type="radio"></input><span>@It is deceptive or misleading, or is otherwise misinformative</span></label>
-                <label><input type="radio"></input><span>@It is abusive or harassing</span></label>
-                <label><input type="radio"></input><span>@It is something else</span></label>
+                <p class="reportDescription">@Tell us why you're reporting this post so that we can further investigate the issue.</p>
+                <label><input type="radio" name="reportType"></input><span class="reportGroupRule">@It violates the rules of this group</span></input></label>
+                <label><input type="radio" name="reportType"></input><span>@It is spam or unsolicited advertising</span></label>
+                <label><input type="radio" name="reportType"></input><span>@It is deceptive or misleading, or is otherwise misinformative</span></label>
+                <label><input type="radio" name="reportType"></input><span>@It is abusive or harassing</span></label>
+                <label><input type="radio" name="reportType"></input><span>@It is something else</span></label>
                 <div class="spacer"></div>
                 <div class="end buttonRow">
                     <button class="blue">@Next</button>

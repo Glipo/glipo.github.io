@@ -69,6 +69,7 @@ lang.load("en_GB", {
         "Messages with u/{0}": "Messages with u/{0}",
         "Show more comments ({0} remaining)": "Show more comments ({0} remaining)",
         "Show all replies ({0} remaining)": "Show all replies ({0} remaining)",
-        "Good name! Others will be able to join your group by visiting {0}.": "Good name! Others will be able to join your group by visiting <strong>glipo.cf/g/{0}</strong>."
+        "Good name! Others will be able to join your group by visiting {0}.": "Good name! Others will be able to join your group by visiting <strong>glipo.cf/g/{0}</strong>.",
+        "It violates the rules of {0}": "It violates the rules of <strong>g/{0}</strong>"
     }
 });

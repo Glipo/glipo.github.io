@@ -290,6 +290,9 @@ function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAft
                                                             $("<icon>").text("flag")
                                                         )
                                                         .prop("disabled", postDocument.data().author == currentUser.uid)
+                                                        .click(function() {
+                                                            reportPost(groupName, postDocument.id);
+                                                        })
                                                 ])
                                             ])
                                         ])
