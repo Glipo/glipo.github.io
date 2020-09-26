@@ -355,6 +355,10 @@ dialog.loader .content {
     height: 150px;
 }
 
+dialog.hasTextarea .content {
+    min-width: 400px;
+}
+
 label {
     display: block;
     margin-top: 5px;
@@ -461,10 +465,14 @@ input:disabled, select:disabled {
     cursor: default;
 }
 
-input.big {
+input.big, select.big {
     display: block;
     width: calc(100% - 20px);
     margin-top: 10px;
+}
+
+select.big {
+    width: 100%;
 }
 
 input[type="checkbox"], input[type="radio"] {
@@ -530,6 +538,10 @@ textarea {
 
 textarea::placeholder {
     color: var(--shade3);
+}
+
+textarea.noResize {
+    resize: none;
 }
 
 h2.step {
@@ -1327,6 +1339,12 @@ h3 .staffBadge {
     
     .comment .actions div:last-of-type {
         width: 80px;
+    }
+}
+
+@media (max-width: 440px) {
+    dialog.hasTextarea .content {
+        min-width: unset;
     }
 }
 

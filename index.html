@@ -914,15 +914,34 @@
             </div>
             <div class="content">
                 <p class="reportDescription">@Tell us why you're reporting this post so that we can further investigate the issue.</p>
-                <label><input type="radio" name="reportType"></input><span class="reportGroupRule">@It violates the rules of this group</span></input></label>
-                <label><input type="radio" name="reportType"></input><span>@It is spam or unsolicited advertising</span></label>
-                <label><input type="radio" name="reportType"></input><span>@It is deceptive or misleading, or is otherwise misinformative</span></label>
-                <label><input type="radio" name="reportType"></input><span>@It is abusive or harassing</span></label>
-                <label><input type="radio" name="reportType"></input><span>@It is something else</span></label>
+                <label class="reportRuleViolationOption"><input type="radio" name="reportType" value="rules"></input><span class="reportGroupRule">@It violates the rules of this group</span></label>
+                <label><input type="radio" name="reportType" value="spam"></input><span>@It is spam or unsolicited advertising</span></label>
+                <label><input type="radio" name="reportType" value="misinformation"></input><span>@It is deceptive or misleading, or is otherwise misinformative</span></label>
+                <label><input type="radio" name="reportType" value="abuse"></input><span>@It is abusive, harassing or offensive</span></label>
+                <label><input type="radio" name="reportType" value="other"></input><span>@It is something else</span></label>
+                <p><a href="#">@Learn more about who receives reports</a></p>
+                <p class="reportError errorMessage"></p>
                 <div class="spacer"></div>
                 <div class="end buttonRow">
-                    <button class="blue">@Next</button>
+                    <button onclick="reportNext();" class="blue">@Next</button>
                     <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="reportNextDialog hasTextarea">
+            <div class="title">
+                <span class="reportTitle">@Report content</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p><strong class="reportSelectedType"></strong></p>
+                <div class="reportSelectedTypeForm"></div>
+                <p>@Is there anything else that you would like to tell us?</p>
+                <textarea placeholder="@(Optional)" class="noResize"></textarea>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button class="blue">@Report</button>
+                    <button onclick="reportBack();">@Back</button>
                 </div>
             </div>
         </dialog>

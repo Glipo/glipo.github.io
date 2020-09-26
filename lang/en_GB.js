@@ -12,6 +12,7 @@ lang.load("en_GB", {
     textDirection: "ltr",
     strings: {
         "...": "...",
+        "{0}. {1}": "{0}. {1}",
         "{0} - Selected": "{0} - Selected",
         "Media selected: {0} ({1} KB)": "Media selected: {0} ({1} KB)",
         "Joined {0}": "Joined {0}",
