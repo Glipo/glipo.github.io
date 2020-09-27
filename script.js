@@ -3,7 +3,7 @@
 
     Copyright (C) Glipo Technologies. All Rights Reserved.
 
-    https://glipo.cf
+    https://glipo.net
 */
 
 const RE_IMAGE = /.*(\.png|\.jpg|\.jpeg|\.gif|\.PNG|\.JPG|\.JPEG|\.GIF)/;

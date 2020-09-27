@@ -3,7 +3,7 @@
 
     Copyright (C) Glipo Technologies. All Rights Reserved.
 
-    https://glipo.cf
+    https://glipo.net
 */
 
 window.location.href = "/?page=" + encodeURIComponent(window.location.href);

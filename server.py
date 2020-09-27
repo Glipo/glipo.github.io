@@ -2,7 +2,7 @@
 #
 # Copyright (C) Glipo Technologies. All Rights Reserved.
 #
-# https://glipo.cf
+# https://glipo.net
 
 import http.server
 import socketserver

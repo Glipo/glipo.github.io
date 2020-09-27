@@ -1,5 +1,5 @@
-importScripts("https://glipo.cf/lib/firebase-app.js");
-importScripts("https://glipo.cf/lib/firebase-messaging.js");
+importScripts("https://glipo.net/lib/firebase-app.js");
+importScripts("https://glipo.net/lib/firebase-messaging.js");
 
 firebase.initializeApp({
     apiKey: "AIzaSyBxs_F52qiFI85ZbFQ7ysIrvBhKDEvutuw",

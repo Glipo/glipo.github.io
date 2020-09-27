@@ -3,7 +3,7 @@
 
     Copyright (C) Glipo Technologies. All Rights Reserved.
 
-    https://glipo.cf
+    https://glipo.net
 */
 
 function renderMarkdown(markdown) {
@@ -48,8 +48,8 @@ function renderMarkdown(markdown) {
     html = html.replace(/(?<!<code)\^([^\s]*)(?!([\w\s])*<\/code>)/g, "<sup>$1</sup>"); // Non-bracketed
 
     // Mentions
-    html = html.replace(/(?<!<code)(^|>|\s|\/)g\/(([a-zA-Z0-9])*)($|<|\s)(?!([\w\s])*<\/code>)/g, "$1<a href='https://glipo.cf/g/$2'>g/$2</a>$4"); // Groups
-    html = html.replace(/(?<!<code)(^|>|\s|\/)u\/(([a-zA-Z0-9])*)($|<|\s)(?!([\w\s])*<\/code>)/g, "$1<a href='https://glipo.cf/u/$2'>u/$2</a>$4"); // Users
+    html = html.replace(/(?<!<code)(^|>|\s|\/)g\/(([a-zA-Z0-9])*)($|<|\s)(?!([\w\s])*<\/code>)/g, "$1<a href='https://glipo.net/g/$2'>g/$2</a>$4"); // Groups
+    html = html.replace(/(?<!<code)(^|>|\s|\/)u\/(([a-zA-Z0-9])*)($|<|\s)(?!([\w\s])*<\/code>)/g, "$1<a href='https://glipo.net/u/$2'>u/$2</a>$4"); // Users
 
     return html;
 }
