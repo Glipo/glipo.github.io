@@ -96,7 +96,8 @@ function reportNext() {
                 $("<p>").text(_("Why is this post spammy?")),
                 $("<select class='big reportSelectedTypeSuboption'>").append(
                     $("<option value='spam'>").text(_("This content has been posted multiple times")),
-                    $("<option value='advertising'>").text(_("It is advertising a product in an irrelevant group")),
+                    $("<option value='irrelevant'>").text(_("It is advertising a product in an irrelevant group")),
+                    $("<option value='advertising'>").text(_("It is advertising a product which could do potential harm to buyers")),
                     $("<option value='lost'>").text(_("It has been posted in the wrong group"))
                 )
             ]);
