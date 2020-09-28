@@ -118,6 +118,7 @@ function reportNext() {
                     $("<option value='violence'>").text(_("It incites violence against others")),
                     $("<option value='intimacy'>").text(_("The author is threatening to post intimate or sexually explicit content of me or someone else")),
                     $("<option value='child'>").text(_("Report a concern for child welfare")),
+                    $("<option value='animal'>").text(_("Report animal abuse or neglect")),
                     $("<option value='reporting'>").text(_("The author is abusing the report functionality of Glipo"))
                 )
             ]);
