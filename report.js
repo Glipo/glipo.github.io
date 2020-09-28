@@ -105,7 +105,8 @@ function reportNext() {
                 $("<p>").text(_("Why is this post misinformative?")),
                 $("<select class='big reportSelectedTypeSuboption'>").append(
                     $("<option value='scam'>").text(_("It appears to be a con or scam operation")),
-                    $("<option value='impersonation'>").text(_("It impersonates me or someone else in a misleading way"))
+                    $("<option value='impersonation'>").text(_("It impersonates me or someone else in a misleading way")),
+                    $("<option value='fake'>").text(_("It contains sensationalist or falsified information"))
                 )
             ]);
         } else if ($("[name='reportType']:checked").val() == "abuse") {
@@ -114,6 +115,7 @@ function reportNext() {
                 $("<select class='big reportSelectedTypeSuboption'>").append(
                     $("<option value='discrimination'>").text(_("It is discrimination, a promotion of hate, prejudicial, sexist or racist")),
                     $("<option value='privacy'>").text(_("It is or incites harassment")),
+                    $("<option value='violence'>").text(_("It incites violence against others")),
                     $("<option value='intimacy'>").text(_("The author is threatening to post intimate or sexually explicit content of me or someone else")),
                     $("<option value='child'>").text(_("Report a concern for child welfare")),
                     $("<option value='reporting'>").text(_("The author is abusing the report functionality of Glipo"))
@@ -128,7 +130,9 @@ function reportNext() {
                     $("<option value='copyright'>").text(_("It infringes my copyright or trademark rights")),
                     $("<option value='illegal'>").text(_("It contains illegal content (such as piracy, illegal transactions or instructions for illegal activities)")),
                     $("<option value='child'>").text(_("Report a concern for child welfare")),
-                    $("<option value='suicide'>").text(_("Somebody is self-harming or considering suicide"))
+                    $("<option value='animal'>").text(_("Report animal abuse or neglect")),
+                    $("<option value='suicide'>").text(_("Somebody is self-harming or considering suicide")),
+                    $("<option value='other'>").text(_("Report an issue not covered on this list"))
                 )
             ]);
         } else {
