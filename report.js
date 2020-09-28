@@ -115,7 +115,7 @@ function reportNext() {
                 $("<p>").text(_("Why is this post abusive?")),
                 $("<select class='big reportSelectedTypeSuboption'>").append(
                     $("<option value='discrimination'>").text(_("It is discrimination, a promotion of hate, prejudicial, sexist or racist")),
-                    $("<option value='privacy'>").text(_("It is or incites harassment")),
+                    $("<option value='harassment'>").text(_("It is or incites harassment")),
                     $("<option value='violence'>").text(_("It incites violence against others")),
                     $("<option value='intimacy'>").text(_("The author is threatening to post intimate or sexually explicit content of me or someone else")),
                     $("<option value='child'>").text(_("Report a concern for child welfare")),
