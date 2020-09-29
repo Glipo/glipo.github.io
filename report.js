@@ -13,6 +13,12 @@ var reportContentComment = null;
 var reportApplicableRules = [];
 
 function reportPost(group, post) {
+    if (currentUser.uid == null) {
+        switchToSignUpDialog();
+
+        return;
+    }
+
     group = group.toLowerCase();
 
     reportContentType = "post";
@@ -20,7 +26,7 @@ function reportPost(group, post) {
     reportContentPost = post;
     reportContentComment = null;
 
-    $(".reportDescription").text(_("Report post"));
+    $(".reportTitle").text(_("Report post"));
     $(".reportDescription").text(_("Tell us why you're reporting this post so that we can further investigate the issue."));
     $(".reportGroupRule").html(_("It violates the rules of {0}", [group]));
 
@@ -52,6 +58,12 @@ function reportPost(group, post) {
 }
 
 function reportComment(group, post, comment, type) {
+    if (currentUser.uid == null) {
+        switchToSignUpDialog();
+
+        return;
+    }
+
     group = group.toLowerCase();
 
     reportContentType = type;
@@ -59,7 +71,7 @@ function reportComment(group, post, comment, type) {
     reportContentPost = post;
     reportContentComment = comment;
 
-    $(".reportDescription").text(_("Report comment"));
+    $(".reportTitle").text(_("Report comment"));
     $(".reportDescription").text(_("Tell us why you're reporting this comment so that we can further investigate the issue."));
     $(".reportGroupRule").html(_("It violates the rules of {0}", [group]));
 
@@ -67,6 +79,27 @@ function reportComment(group, post, comment, type) {
     $(".reportError").html("");
 
     $(".reportLoaderDialog")[0].showModal();
+
+    firebase.firestore().collection("groups").doc(group).get().then(function(groupDocument) {
+        if (groupDocument.exists) {
+            reportApplicableRules = groupDocument.data().rules || [];
+
+            $(".reportGroupRule").html(_("It violates the rules of {0}", [groupDocument.data().name]));
+
+            if (reportApplicableRules.length > 0) {
+                $(".reportRuleViolationOption").show();
+            } else {
+                $(".reportRuleViolationOption").hide();
+            }
+
+            closeDialogs();
+            $(".reportDialog")[0].showModal();
+        } else {
+            console.error("Group not found when trying to report content: g/" + group);
+
+            closeDialogs();
+        }
+    });
 }
 
 function reportBack() {
