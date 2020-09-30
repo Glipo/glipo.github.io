@@ -31,6 +31,7 @@ function reportPost(group, post) {
     $(".reportGroupRule").html(_("It violates the rules of {0}", [group]));
 
     $("[name='reportType']").prop("checked", false);
+    $(".reportExtra").val("");
     $(".reportError").html("");
 
     $(".reportLoaderDialog")[0].showModal();
@@ -76,6 +77,7 @@ function reportComment(group, post, comment, type) {
     $(".reportGroupRule").html(_("It violates the rules of {0}", [group]));
 
     $("[name='reportType']").prop("checked", false);
+    $(".reportExtra").val("");
     $(".reportError").html("");
 
     $(".reportLoaderDialog")[0].showModal();
@@ -121,7 +123,9 @@ function reportNext() {
 
             for (var i = 0; i < reportApplicableRules.length; i++) {
                 $(".reportSelectedTypeForm .reportSelectedTypeSuboption").append(
-                    $("<option value='spam'>").text(_("{0}. {1}", [i + 1, reportApplicableRules[i].title]))
+                    $("<option>")
+                        .attr("value", i)
+                        .text(_("{0}. {1}", [i + 1, reportApplicableRules[i].title]))
                 );
             }
         } else if ($("[name='reportType']:checked").val() == "spam") {
@@ -179,4 +183,39 @@ function reportNext() {
     } else {
         $(".reportError").text(_("Please select an option. If there are multiple issues, pick the most severe."));
     }
+}
+
+function reportSend() {
+    if ($(".reportExtra").val().trim().length > 1000) {
+        $(".reportError").text(_("Your extra report information is too long! Please shorten it so it's at most 2,000 characters long."));
+
+        return;
+    }
+
+    $(".reportSendButton").prop("disabled", true);
+    $(".reportSendButton").text(_("Sending..."));
+
+    console.log();
+
+    api.reportContent({
+        type: reportContentType,
+        group: reportContentGroup,
+        post: reportContentPost,
+        reason: $("[name='reportType']:checked").val() == "rules" ? "rules" : $(".reportSelectedTypeSuboption option:selected").val(),
+        rule: $("[name='reportType']:checked").val() == "rules" ? Number($(".reportSelectedTypeSuboption option:selected").val()) : undefined,
+        comment: reportContentComment != null ? reportContentComment : undefined,
+        extra: $(".reportExtra").val().trim()
+    }).then(function() {
+        $(".reportSendButton").prop("disabled", false);
+        $(".reportSendButton").text(_("Send"));
+
+        closeDialogs();
+        $(".reportThanksDialog")[0].showModal();
+    }).catch(function(error) {
+        console.error("Glipo backend error:", error);
+        
+        $(".reportError").text(_("Sorry, an internal error has occurred. Please try sending your report again later."));
+        $(".reportSendButton").prop("disabled", false);
+        $(".reportSendButton").text(_("Send"));
+    });
 }

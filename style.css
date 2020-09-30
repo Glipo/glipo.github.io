@@ -359,6 +359,10 @@ dialog.hasTextarea .content {
     min-width: 400px;
 }
 
+dialog.hasParagraph .content {
+    max-width: 500px;
+}
+
 label {
     display: block;
     margin-top: 5px;

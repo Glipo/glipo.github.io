@@ -343,7 +343,7 @@ function submitPost() {
                 }).catch(function(error) {
                     console.error("Glipo backend error:", error);
         
-                    $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again."));
+                    $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again later."));
                     $(".submitButton").prop("disabled", false);
                     $(".submitButton").text(_("Submit"));
                 });

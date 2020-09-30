@@ -937,11 +937,28 @@
                 <p><strong class="reportSelectedType"></strong></p>
                 <div class="reportSelectedTypeForm"></div>
                 <p>@Is there anything else that you would like to tell us?</p>
-                <textarea placeholder="@(Optional)" class="noResize"></textarea>
+                <textarea placeholder="@(Optional)" class="reportExtra noResize"></textarea>
+                <p class="reportError errorMessage"></p>
                 <div class="spacer"></div>
                 <div class="end buttonRow">
-                    <button class="blue">@Report</button>
+                    <button onclick="reportSend();" class="blue reportSendButton">@Send</button>
                     <button onclick="reportBack();">@Back</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="reportThanksDialog hasParagraph">
+            <div class="title">
+                <span class="reportTitle">@Report content</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <h2>@Your report has been sent</h2>
+                <p>@Thanks for making the Glipo community safe! Your report will be seen shortly.</p>
+                <p>@Please note that not all reports are responded to straight away due to other reports taking priority, and that some reports that we investigate may not result in an outcome.</p>
+                <p><span>@Depending on the details of your report, your report may either be read by staff or group moderators.</span> <a href="#">@Learn more about who will receive your report</a></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="closeDialogs();" class="blue">@Done</button>
                 </div>
             </div>
         </dialog>
