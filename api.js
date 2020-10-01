@@ -23,5 +23,6 @@ var api = {
     replyComment: firebase.functions().httpsCallable("replyComment"),
     editComment: firebase.functions().httpsCallable("editComment"),
     deleteComment: firebase.functions().httpsCallable("deleteComment"),
-    createGroup: firebase.functions().httpsCallable("createGroup")
+    createGroup: firebase.functions().httpsCallable("createGroup"),
+    reportContent: firebase.functions().httpsCallable("reportContent")
 };
