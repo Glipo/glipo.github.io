@@ -6,6 +6,30 @@
     https://glipo.net
 */
 
+var userToBlock = null;
+
+function blockSelectedUser() {
+    firebase.firestore().collection("users").doc(currentUser.uid).get().then(function(userDocument) {
+        var blockedUsersList = [];
+
+        if (Array.isArray(userDocument.data().blockedUsers)) {
+            blockedUsersList = userDocument.data().blockedUsers;
+        }
+
+        if (blockedUsersList.indexOf(userToBlock) == -1) {
+            blockedUsersList.push(userToBlock);
+
+            firebase.firestore().collection("users").doc(currentUser.uid).set({
+                blockedUsers: blockedUsersList
+            }, {merge: true}).then(function() {
+                window.location.reload();
+            });
+        }
+    });
+
+    closeDialogs();
+}
+
 function getNotifications(type = "unread") {
     $("." + type + "Notifications").hide();
     $("#" + type + "NotificationsTab .loadingSpinner").show();
@@ -65,11 +89,25 @@ function getNotifications(type = "unread") {
                                 ]),
                                 $("<div class='desktop'>").append([
                                     $("<button>")
-                                        .attr("title", _("Report"))
-                                        .attr("aria-label", _("Report"))
+                                        .attr("title", notificationDocument.data().type == "message" ? _("Block") : _("Report"))
+                                        .attr("aria-label", notificationDocument.data().type == "message" ? _("Block") : _("Report"))
                                         .append(
-                                            $("<icon>").text("flag")
+                                            $("<icon>").text(notificationDocument.data().type == "message" ? "block" : "flag")
                                         )
+                                        .click(function() {
+                                            if (notificationDocument.data().type == "message") {
+                                                userToBlock = notificationDocument.data().sender;
+
+                                                $(".blockUsername").html(_("Do you really want to block {0}? You can unblock them later in Glipo's settings.", [senderDocument.data().username]));
+
+                                                closeDialogs();
+                                                $(".blockUserDialog")[0].showModal();
+                                            } else if (notificationDocument.data().type == "comment") {
+                                                reportComment(notificationDocument.data().group, notificationDocument.data().post, notificationDocument.data().comment, "root");
+                                            } else if (notificationDocument.data().type == "reply") {
+                                                reportComment(notificationDocument.data().group, notificationDocument.data().post, notificationDocument.data().comment, "reply");
+                                            }
+                                        })
                                 ])
                             ])
                         ])

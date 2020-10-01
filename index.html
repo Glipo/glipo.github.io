@@ -963,5 +963,19 @@
                 </div>
             </div>
         </dialog>
+        <dialog class="blockUserDialog">
+            <div class="title">
+                <span>@Block user?</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="blockUsername">@Do you really want to block this user? You can unblock them later in Glipo's settings.</p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="blockSelectedUser();" class="blue">@Yes</button>
+                    <button onclick="closeDialogs();">@No</button>
+                </div>
+            </div>
+        </dialog>
     </body>
 </html>

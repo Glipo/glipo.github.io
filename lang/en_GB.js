@@ -71,6 +71,7 @@ lang.load("en_GB", {
         "Show more comments ({0} remaining)": "Show more comments ({0} remaining)",
         "Show all replies ({0} remaining)": "Show all replies ({0} remaining)",
         "Good name! Others will be able to join your group by visiting {0}.": "Good name! Others will be able to join your group by visiting <strong>glipo.net/g/{0}</strong>.",
-        "It violates the rules of {0}": "It violates the rules of <strong>g/{0}</strong>"
+        "It violates the rules of {0}": "It violates the rules of <strong>g/{0}</strong>",
+        "Do you really want to block {0}? You can unblock them later in Glipo's settings.": "Do you really want to block <strong>u/{0}</strong>? You can unblock them later in Glipo's settings."
     }
 });
