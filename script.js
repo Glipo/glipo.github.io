@@ -134,6 +134,7 @@ function switchToSignUpUsernameDialog() {
 function signUp() {
     if ($("#signUpUsername").val().match(/^[a-zA-Z0-9]{3,20}$/) && $("#signUpPassword").val().length >= 6) {
         $("#signUpUsernameButton").prop("disabled", true);
+        $("#signUpUsernameButton").text(_("Signing up..."));
 
         firebase.firestore().collection("usernames").doc($("#signUpUsername").val().toLowerCase()).get().then(function(document) {
             if (!document.exists) {
@@ -151,11 +152,13 @@ function signUp() {
                     }
 
                     $("#signUpUsernameButton").prop("disabled", false);
+                    $("#signUpUsernameButton").text(_("Sign up"));
                 });
             } else {
                 $("#signUpUsernameError").text(_("Sorry, but that username is taken. Try another one!"));
 
                 $("#signUpUsernameButton").prop("disabled", false);
+                $("#signUpUsernameButton").text(_("Sign up"));
             }
         });
     } else if ($("#signUpUsername").val() == "") {
@@ -170,9 +173,11 @@ function signUp() {
 function signIn() {
     if ($("#signInEmail").val().trim() != "" && $("#signInPassword").val() != "") {
         $("#signInButton").prop("disabled", true);
+        $("#signInButton").text(_("Signing in..."));
 
         firebase.auth().signInWithEmailAndPassword($("#signInEmail").val().trim(), $("#signInPassword").val()).then(function() {
             $("#signInButton").prop("disabled", false);
+            $("#signInButton").text(_("Sign in"));
 
             closeDialogs();
 
@@ -190,6 +195,7 @@ function signIn() {
             }
 
             $("#signInButton").prop("disabled", false);
+            $("#signInButton").text(_("Sign in"));
         });
     } else {
         $("#signInError").text(_("Please enter your email address and password to sign in."));
@@ -546,6 +552,7 @@ $(function() {
                         uid: currentUser.uid
                     }).then(function() {
                         $("#signUpUsernameButton").prop("disabled", false);
+                        $("#signUpUsernameButton").text(_("Sign up"));
 
                         closeDialogs();
 
