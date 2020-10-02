@@ -102,7 +102,7 @@ function getNotifications(type = "unread") {
                                                 }
                                             })
                                     ]),
-                                    $("<div class='desktop'>").append([
+                                    $("<div>").append([
                                         $("<button>")
                                             .attr("title", notificationDocument.data().type == "message" ? _("Block") : _("Report"))
                                             .attr("aria-label", notificationDocument.data().type == "message" ? _("Block") : _("Report"))
