@@ -40,103 +40,123 @@ function getNotifications(type = "unread") {
         $("#" + type + "NotificationsTab .loadingSpinner").hide();
         $("." + type + "Notifications").show();
 
-        if (notificationDocuments.docs.length > 0) {
+        var notificationsAdded = 0;
+
+        firebase.firestore().collection("users").doc(currentUser.uid).get().then(function(userDocument) {
+            var blockedUsersList = [];
+
+            if (Array.isArray(userDocument.data().blockedUsers)) {
+                blockedUsersList = userDocument.data().blockedUsers;
+            }
+            
             notificationDocuments.forEach(function(notificationDocument) {
-                firebase.firestore().collection("users").doc(notificationDocument.data().sender).get().then(function(senderDocument) {
-                    $("." + type + "Notifications").append(
-                        $("<card class='post'>").append([
-                            $("<div class='info'>").append([
-                                (
-                                    !senderDocument.exists ?
-                                    $("<span>").text(_("Deleted user")) :
-                                    $("<a class='group'>")
-                                        .attr("href", "/u/" + senderDocument.data().username)
-                                        .text("u/" + senderDocument.data().username)
-                                        .addClass(senderDocument.data().staff ? "staffBadge" : "")
-                                        .attr("title", senderDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
-                                ),
-                                $("<span>").text(" · "),
-                                $("<span>")
-                                    .attr("title",
-                                        lang.format(notificationDocument.data().sent.toDate(), lang.language, {
-                                            day: "numeric",
-                                            month: "long",
-                                            year: "numeric"
-                                        }) + " " +
-                                        notificationDocument.data().sent.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
-                                    )
-                                    .text(timeDifferenceToHumanReadable(new Date().getTime() - notificationDocument.data().sent.toDate().getTime()))
-                            ]),
-                            $("<div class='postContent'>").html(renderMarkdown(notificationDocument.data().content)),
-                            $("<div class='actions'>").append([
-                                $("<div>").append([
-                                    $("<button>")
-                                        .attr("aria-label", _("Reply"))
-                                        .append([
-                                            $("<icon>").text("reply"),
-                                            document.createTextNode(" "),
-                                            $("<span>").text(_("Reply"))
-                                        ])
-                                        .click(function() {
-                                            if (notificationDocument.data().type == "message") {
-                                                window.location.href = "/dm?user=" + encodeURIComponent(senderDocument.data().username);
-                                            } else if (notificationDocument.data().type == "comment") {
-                                                window.location.href = "/g/" + encodeURIComponent(notificationDocument.data().group) + "/posts/" + encodeURIComponent(notificationDocument.data().post) + "?comment=" + encodeURIComponent(notificationDocument.data().comment) + "&commentType=root";
-                                            } else if (notificationDocument.data().type == "reply") {
-                                                window.location.href = "/g/" + encodeURIComponent(notificationDocument.data().group) + "/posts/" + encodeURIComponent(notificationDocument.data().post) + "?comment=" + encodeURIComponent(notificationDocument.data().comment) + "&commentType=reply";
-                                            }
-                                        })
-                                ]),
-                                $("<div class='desktop'>").append([
-                                    $("<button>")
-                                        .attr("title", notificationDocument.data().type == "message" ? _("Block") : _("Report"))
-                                        .attr("aria-label", notificationDocument.data().type == "message" ? _("Block") : _("Report"))
-                                        .append(
-                                            $("<icon>").text(notificationDocument.data().type == "message" ? "block" : "flag")
+                if (blockedUsersList.indexOf(notificationDocument.data().sender) == -1) {
+                    firebase.firestore().collection("users").doc(notificationDocument.data().sender).get().then(function(senderDocument) {
+                        var blockedUsersList = [];
+
+                        if (Array.isArray(userDocument.data().blockedUsers)) {
+                            blockedUsersList = userDocument.data().blockedUsers;
+                        }
+
+                        $("." + type + "Notifications").append(
+                            $("<card class='post'>").append([
+                                $("<div class='info'>").append([
+                                    (
+                                        !senderDocument.exists ?
+                                        $("<span>").text(_("Deleted user")) :
+                                        $("<a class='group'>")
+                                            .attr("href", "/u/" + senderDocument.data().username)
+                                            .text("u/" + senderDocument.data().username)
+                                            .addClass(senderDocument.data().staff ? "staffBadge" : "")
+                                            .attr("title", senderDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
+                                    ),
+                                    $("<span>").text(" · "),
+                                    $("<span>")
+                                        .attr("title",
+                                            lang.format(notificationDocument.data().sent.toDate(), lang.language, {
+                                                day: "numeric",
+                                                month: "long",
+                                                year: "numeric"
+                                            }) + " " +
+                                            notificationDocument.data().sent.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
                                         )
-                                        .click(function() {
-                                            if (notificationDocument.data().type == "message") {
-                                                userToBlock = notificationDocument.data().sender;
+                                        .text(timeDifferenceToHumanReadable(new Date().getTime() - notificationDocument.data().sent.toDate().getTime()))
+                                ]),
+                                $("<div class='postContent'>").html(renderMarkdown(notificationDocument.data().content)),
+                                $("<div class='actions'>").append([
+                                    $("<div>").append([
+                                        $("<button>")
+                                            .attr("aria-label", _("Reply"))
+                                            .append([
+                                                $("<icon>").text("reply"),
+                                                document.createTextNode(" "),
+                                                $("<span>").text(_("Reply"))
+                                            ])
+                                            .click(function() {
+                                                if (notificationDocument.data().type == "message") {
+                                                    window.location.href = "/dm?user=" + encodeURIComponent(senderDocument.data().username);
+                                                } else if (notificationDocument.data().type == "comment") {
+                                                    window.location.href = "/g/" + encodeURIComponent(notificationDocument.data().group) + "/posts/" + encodeURIComponent(notificationDocument.data().post) + "?comment=" + encodeURIComponent(notificationDocument.data().comment) + "&commentType=root";
+                                                } else if (notificationDocument.data().type == "reply") {
+                                                    window.location.href = "/g/" + encodeURIComponent(notificationDocument.data().group) + "/posts/" + encodeURIComponent(notificationDocument.data().post) + "?comment=" + encodeURIComponent(notificationDocument.data().comment) + "&commentType=reply";
+                                                }
+                                            })
+                                    ]),
+                                    $("<div class='desktop'>").append([
+                                        $("<button>")
+                                            .attr("title", notificationDocument.data().type == "message" ? _("Block") : _("Report"))
+                                            .attr("aria-label", notificationDocument.data().type == "message" ? _("Block") : _("Report"))
+                                            .append(
+                                                $("<icon>").text(notificationDocument.data().type == "message" ? "block" : "flag")
+                                            )
+                                            .click(function() {
+                                                if (notificationDocument.data().type == "message") {
+                                                    userToBlock = notificationDocument.data().sender;
 
-                                                $(".blockUsername").html(_("Do you really want to block {0}? You can unblock them later in Glipo's settings.", [senderDocument.data().username]));
+                                                    $(".blockUsername").html(_("Do you really want to block {0}? You can unblock them later in Glipo's settings.", [senderDocument.data().username]));
 
-                                                closeDialogs();
-                                                $(".blockUserDialog")[0].showModal();
-                                            } else if (notificationDocument.data().type == "comment") {
-                                                reportComment(notificationDocument.data().group, notificationDocument.data().post, notificationDocument.data().comment, "root");
-                                            } else if (notificationDocument.data().type == "reply") {
-                                                reportComment(notificationDocument.data().group, notificationDocument.data().post, notificationDocument.data().comment, "reply");
-                                            }
-                                        })
+                                                    closeDialogs();
+                                                    $(".blockUserDialog")[0].showModal();
+                                                } else if (notificationDocument.data().type == "comment") {
+                                                    reportComment(notificationDocument.data().group, notificationDocument.data().post, notificationDocument.data().comment, "root");
+                                                } else if (notificationDocument.data().type == "reply") {
+                                                    reportComment(notificationDocument.data().group, notificationDocument.data().post, notificationDocument.data().comment, "reply");
+                                                }
+                                            })
+                                    ])
                                 ])
                             ])
-                        ])
-                    );
-                });
-
-                if (type == "unread") {
-                    firebase.firestore().collection("users").doc(currentUser.uid).collection("unreadNotifications").doc(notificationDocument.id).delete().then(function() {
-                        firebase.firestore().collection("users").doc(currentUser.uid).collection("archivedNotifications").doc(notificationDocument.id).set(notificationDocument.data());
+                        );
                     });
+
+                    if (type == "unread") {
+                        firebase.firestore().collection("users").doc(currentUser.uid).collection("unreadNotifications").doc(notificationDocument.id).delete().then(function() {
+                            firebase.firestore().collection("users").doc(currentUser.uid).collection("archivedNotifications").doc(notificationDocument.id).set(notificationDocument.data());
+                        });
+                    }
+
+                    notificationsAdded++;
                 }
             });
-        } else {
-            if (type == "unread") {
-                $(".unreadNotifications").append(
-                    $("<div class='pageMessage middle'>").append([
-                        $("<h1>").text(_("All caught up!")),
-                        $("<p>").text(_("Looking for a notification from earlier? Check your archive!"))
-                    ])
-                );
-            } else if (type == "archived") {
-                $(".archivedNotifications").append(
-                    $("<div class='pageMessage middle'>").append([
-                        $("<h1>").text(_("No notifications yet!")),
-                        $("<p>").text(_("You'll receive notifications here that have been previously read."))
-                    ])
-                );
+
+            if (notificationsAdded == 0) {
+                if (type == "unread") {
+                    $(".unreadNotifications").append(
+                        $("<div class='pageMessage middle'>").append([
+                            $("<h1>").text(_("All caught up!")),
+                            $("<p>").text(_("Looking for a notification from earlier? Check your archive!"))
+                        ])
+                    );
+                } else if (type == "archived") {
+                    $(".archivedNotifications").append(
+                        $("<div class='pageMessage middle'>").append([
+                            $("<h1>").text(_("No notifications yet!")),
+                            $("<p>").text(_("You'll receive notifications here that have been previously read."))
+                        ])
+                    );
+                }
             }
-        }
+        });
     });
 }
 
