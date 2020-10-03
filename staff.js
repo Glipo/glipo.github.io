@@ -300,8 +300,8 @@ function getStaffReports() {
         } else {
             $("#staffReports .staffReportItems").append(
                 $("<div class='pageMessage middle'>").append([
-                    $("<h1>").text(_("No posts to moderate right now!")),
-                    $("<p>").text(_("Check back later when the modqueue has posts to review."))
+                    $("<h1>").text(_("No reports to deal with right now!")),
+                    $("<p>").text(_("Check back later when the report list has reports to act upon."))
                 ])
             );
         }
