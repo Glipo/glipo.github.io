@@ -72,6 +72,8 @@ lang.load("en_GB", {
         "Show all replies ({0} remaining)": "Show all replies ({0} remaining)",
         "Good name! Others will be able to join your group by visiting {0}.": "Good name! Others will be able to join your group by visiting <strong>glipo.net/g/{0}</strong>.",
         "It violates the rules of {0}": "It violates the rules of <strong>g/{0}</strong>",
-        "Do you really want to block {0}? You can unblock them later in Glipo's settings.": "Do you really want to block <strong>u/{0}</strong>? You can unblock them later in Glipo's settings."
+        "Do you really want to block {0}? You can unblock them later in Glipo's settings.": "Do you really want to block <strong>u/{0}</strong>? You can unblock them later in Glipo's settings.",
+        "In {0} · Reported by {1} · Against {2}": "In <a href='/g/{0}' target='_blank'>g/{0}</a> · Reported by <a href='/u/{1}' target='_blank'>u/{1}</a> · Against <a href='/u/{2}' target='_blank'>u/{2}</a>",
+        "Post title: {0}": "Post title: {0}"
     }
 });

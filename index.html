@@ -478,12 +478,17 @@
                         <div class="tabs">
                             <div class="tabstrip">
                                 <button class="selected" data-tab="modqueue">@Modqueue</button>
+                                <button data-tab="reports">@Reports</button>
                                 <button data-tab="staff">@Staff members</button>
                             </div>
                             <div class="tabcontents giveMarginTop">
                                 <div data-tab="modqueue" id="staffModqueue">
                                     <div class="loadingSpinner"></div>
                                     <div class="modqueueItems"></div>
+                                </div>
+                                <div data-tab="reports" id="staffReports">
+                                    <div class="loadingSpinner"></div>
+                                    <div class="staffReportItems"></div>
                                 </div>
                                 <div data-tab="staff" id="staffMembers">
                                     <div class="loadingSpinner"></div>
@@ -866,6 +871,27 @@
                 <div class="spacer"></div>
                 <div class="end buttonRow">
                     <button onclick="staffRemovePost();" class="blue">@Remove</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="staffActOnReportModDialog hasTextarea hasMixedInput">
+            <div class="title">
+                <span>@Act upon a report</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="labelDescription">@Please enter the details of the action that you wish to take.</p>
+                <p>@Reason for action:</p>
+                <textarea placeholder="@(Optional)" class="noResize" id="staffActOnReportModReason"></textarea>
+                <div class="spacer"></div>
+                <label><input type="checkbox" checked id="staffActOnReportModNoMessage"></input><span>@Send message to offender via u/modbot as to why this content was removed</span></label>
+                <label><input type="checkbox" id="staffActOnReportModDeleteContent"></input><span>@Delete the content from Glipo's servers</span></label>
+                <label><input type="checkbox" id="staffActOnReportModBanOffender"></input><span>@Ban the offender from Glipo</span></label>
+                <p class="errorMessage labelDescription" id="staffActOnReportModError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button class="blue">@Act</button>
                     <button onclick="closeDialogs();">@Cancel</button>
                 </div>
             </div>

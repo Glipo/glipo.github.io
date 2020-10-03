@@ -305,6 +305,44 @@ card.dm span {
     color: var(--shade3);
 }
 
+card.reportItem {
+    padding-top: 0;
+    padding-bottom: 1px;
+}
+
+card.reportItem details[open] {
+    padding-bottom: 4px;
+}
+
+card.reportItem.cat1 {
+    background-color: var(--yellow);
+    color: var(--yellowText);
+}
+
+card.reportItem.cat2 {
+    background-color: var(--blue);
+    color: var(--blueText);
+}
+
+card.reportItem.cat2 blockquote {
+    border-left: 5px solid var(--yellow);
+}
+
+[dir="rtl"] card.reportItem.cat2 blockquote {
+    border-left: none;
+    border-right: 5px solid var(--yellow);
+}
+
+card.reportItem.cat2 button.blue {
+    background-color: var(--yellow);
+    color: var(--yellowText);
+}
+
+card.reportItem a {
+    color: inherit;
+    font-weight: bold;
+}
+
 dialog {
     position: fixed;
     top: 50%;
@@ -361,6 +399,10 @@ dialog.hasTextarea .content {
 
 dialog.hasParagraph .content {
     max-width: 500px;
+}
+
+dialog.hasMixedInput .content {
+    max-width: 375px;
 }
 
 label {
@@ -600,6 +642,11 @@ summary::-webkit-details-marker {
 
 details[open] summary::-webkit-details-marker {
     transform: rotate(-180deg);
+}
+
+card.reportItem.cat1 summary::-webkit-details-marker {
+    background: url("/media/graphics/expandBlack.png") center no-repeat;
+    background-size: contain;
 }
 
 pre {
