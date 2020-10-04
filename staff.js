@@ -301,7 +301,7 @@ function getStaffReports() {
             $("#staffReports .staffReportItems").append(
                 $("<div class='pageMessage middle'>").append([
                     $("<h1>").text(_("No reports to deal with right now!")),
-                    $("<p>").text(_("Check back later when the report list has reports to act."))
+                    $("<p>").text(_("Check back later when the report list has reports to act upon."))
                 ])
             );
         }
