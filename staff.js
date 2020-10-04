@@ -37,10 +37,10 @@ function getStaffModqueue() {
     var modqueueReference = firebase.firestore().collection("staffModqueue").orderBy("posted", "asc");
 
     if (lastModqueuePost != null) {
-        modqueueReference = modqueueReference.startAfter(lastModqueuePost).limit(1);
-    } else {
-        modqueueReference = modqueueReference.limit(10);
+        modqueueReference = modqueueReference.startAfter(lastModqueuePost);
     }
+
+    modqueueReference = modqueueReference.limit(10);
 
     modqueueReference.get().then(function(modqueueDocuments) {
         $("#staffModqueue .modqueueItems").html("");
@@ -301,7 +301,7 @@ function getStaffReports() {
             $("#staffReports .staffReportItems").append(
                 $("<div class='pageMessage middle'>").append([
                     $("<h1>").text(_("No reports to deal with right now!")),
-                    $("<p>").text(_("Check back later when the report list has reports to act upon."))
+                    $("<p>").text(_("Check back later when the report list has reports to act."))
                 ])
             );
         }
