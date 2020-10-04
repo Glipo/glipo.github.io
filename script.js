@@ -28,7 +28,10 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+
+if ("analytics" in firebase) {
+    firebase.analytics();
+}
 
 var cloudMessaging = firebase.messaging();
 
