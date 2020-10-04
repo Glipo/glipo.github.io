@@ -39,8 +39,6 @@ var currentUser = {
     username: null
 };
 
-var accountRequiresSettingUp = false;
-
 var groupNameSettleTimeout;
 
 function timeDifferenceToHumanReadable(milliseconds) {
@@ -138,11 +136,7 @@ function signUp() {
 
         firebase.firestore().collection("usernames").doc($("#signUpUsername").val().toLowerCase()).get().then(function(document) {
             if (!document.exists) {
-                accountRequiresSettingUp = true;
-
                 firebase.auth().createUserWithEmailAndPassword($("#signUpEmail").val().trim(), $("#signUpPassword").val()).catch(function(error) {
-                    accountRequiresSettingUp = false;
-
                     if (error.code == "auth/email-already-in-use") {
                         $("#signUpUsernameError").text(_("There already appears to be an account with that email address. Did you mean to sign in instead?"));
                     } else if (error.code == "auth/invalid-email") {
@@ -539,45 +533,16 @@ $(function() {
         if (user) {
             currentUser.uid = user.uid;
 
-            if (accountRequiresSettingUp) {
-                firebase.firestore().collection("users").doc(currentUser.uid).set({
-                    username: $("#signUpUsername").val(),
-                    joined: firebase.firestore.FieldValue.serverTimestamp(),
-                    postPoints: 0,
-                    commentPoints: 0,
-                    postCount: 0,
-                    commentCount: 0
-                }).then(function() {
-                    firebase.firestore().collection("usernames").doc($("#signUpUsername").val().toLowerCase()).set({
-                        uid: currentUser.uid
-                    }).then(function() {
-                        $("#signUpUsernameButton").prop("disabled", false);
-                        $("#signUpUsernameButton").text(_("Sign up"));
-
-                        closeDialogs();
-
-                        $("#signUpEmail").val("");
-                        $("#signUpPassword").val("");
-                        $("#signUpUsername").val("");
-                    });
-                });
-
-                currentUser.username = $("#signUpUsername").val();
-
-                $(".currentUsername").text(currentUser.username);
-                localStorage.setItem("signedInUsername", currentUser.username);
-
-                accountRequiresSettingUp = false;
-            } else {
-                firebase.firestore().collection("users").doc(currentUser.uid).get().then(function(document) {
-                    currentUser.username = document.data().username;
+            firebase.firestore().collection("users").doc(currentUser.uid).get().then(function(userDocument) {
+                if (userDocument.exists) {
+                    currentUser.username = userDocument.data().username;
 
                     $(".loadingUserDetails").hide();
 
                     $(".currentUsername").text(currentUser.username);
                     localStorage.setItem("signedInUsername", currentUser.username);
 
-                    if (document.data().staff) {
+                    if (userDocument.data().staff) {
                         $(".isNotStaff").hide();
                         $(".isStaff").show();
                     } else {
@@ -585,43 +550,70 @@ $(function() {
                         $(".isNotStaff").show();
                     }
 
-                    if (document.data().postPoints + document.data().commentPoints >= 100 || document.data().staff) {
+                    if (userDocument.data().postPoints + userDocument.data().commentPoints >= 100 || userDocument.data().staff) {
                         $(".cannotCreateGroups").hide();
                         $(".canCreateGroups").show();
                     } else {
                         $(".canCreateGroups").hide();
                         $(".cannotCreateGroups").show();
                     }
-                });
-
-                firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").get().then(function(groupReferenceDocuments) {
-                    $(".joinedGroups").html("");
-
-                    if (groupReferenceDocuments.docs.length > 0) {
-                        $(".joinedGroups").append($("<hr>"));
-                    }
-
-                    groupReferenceDocuments.forEach(function(groupReferenceDocument) {
-                        $(".joinedGroups").append($("<button>")
-                            .text("g/" + groupReferenceDocument.id)
-                            .click(function() {
-                                window.location.href = "/g/" + groupReferenceDocument.id;
-                            })
-                        );
-                    });
-                });
-
-                if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
-                    var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
-
-                    firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").doc(groupName).get().then(function(userMembershipDocument) {
-                        if (userMembershipDocument.exists) {
-                            $(".groupJoinButton").text(_("Leave"));
-                            $(".groupJoinButton").removeClass("blue");
+    
+                    firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").get().then(function(groupReferenceDocuments) {
+                        $(".joinedGroups").html("");
+    
+                        if (groupReferenceDocuments.docs.length > 0) {
+                            $(".joinedGroups").append($("<hr>"));
                         }
+    
+                        groupReferenceDocuments.forEach(function(groupReferenceDocument) {
+                            $(".joinedGroups").append($("<button>")
+                                .text("g/" + groupReferenceDocument.id)
+                                .click(function() {
+                                    window.location.href = "/g/" + groupReferenceDocument.id;
+                                })
+                            );
+                        });
                     });
+    
+                    if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
+                        var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+    
+                        firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").doc(groupName).get().then(function(userMembershipDocument) {
+                            if (userMembershipDocument.exists) {
+                                $(".groupJoinButton").text(_("Leave"));
+                                $(".groupJoinButton").removeClass("blue");
+                            }
+                        });
+                    }
+                } else {
+                    firebase.firestore().collection("users").doc(currentUser.uid).set({
+                        username: $("#signUpUsername").val(),
+                        joined: firebase.firestore.FieldValue.serverTimestamp(),
+                        postPoints: 0,
+                        commentPoints: 0,
+                        postCount: 0,
+                        commentCount: 0
+                    }).then(function() {
+                        firebase.firestore().collection("usernames").doc($("#signUpUsername").val().toLowerCase()).set({
+                            uid: currentUser.uid
+                        }).then(function() {
+                            $("#signUpUsernameButton").prop("disabled", false);
+                            $("#signUpUsernameButton").text(_("Sign up"));
+    
+                            closeDialogs();
+    
+                            $("#signUpEmail").val("");
+                            $("#signUpPassword").val("");
+                            $("#signUpUsername").val("");
+                        });
+                    });
+    
+                    currentUser.username = $("#signUpUsername").val();
+    
+                    $(".currentUsername").text(currentUser.username);
+                    localStorage.setItem("signedInUsername", currentUser.username);
                 }
-            }
+            });
 
             $(".signedOut").hide();
             $(".signedIn").show();
