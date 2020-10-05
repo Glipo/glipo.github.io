@@ -319,45 +319,47 @@ function getDmMessages(user) {
 function sendDmMessage() {
     var messageContent = $("#dmMessageReply textarea").val();
 
-    if (messageContent.trim() == "") {
-        $("#sendDmMessageError").text(_("Please enter the message you wish to send."));
+    checkBanStatePage(function() {
+        if (messageContent.trim() == "") {
+            $("#sendDmMessageError").text(_("Please enter the message you wish to send."));
 
-        return;
-    }
+            return;
+        }
 
-    if (messageContent.length > 10000) {
-        $("#sendDmMessageError").text(_("Your message is too long! Please shorten it so that it's at most 10,000 characters long. You may want to split your message up into multiple parts."));
+        if (messageContent.length > 10000) {
+            $("#sendDmMessageError").text(_("Your message is too long! Please shorten it so that it's at most 10,000 characters long. You may want to split your message up into multiple parts."));
 
-        return;
-    }
+            return;
+        }
 
-    firebase.firestore().collection("users").doc(currentUser.uid).get().then(function(userDocument) {
-        $(".dmMessages").append(
-            $("<card class='post myMessage'>").append([
-                $("<div class='info'>").append([
-                    $("<a class='group'>")
-                        .attr("href", "/u/" + userDocument.data().username)
-                        .text("u/" + userDocument.data().username)
-                        .addClass(userDocument.data().staff ? "staffBadge" : "")
-                        .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
-                    ,
-                    $("<span>").text(" · "),
-                    $("<span>").text(_("Sending..."))
-                ]),
-                $("<div class='postContent'>").html(renderMarkdown(messageContent))
-            ])
-        );
-    });
+        firebase.firestore().collection("users").doc(currentUser.uid).get().then(function(userDocument) {
+            $(".dmMessages").append(
+                $("<card class='post myMessage'>").append([
+                    $("<div class='info'>").append([
+                        $("<a class='group'>")
+                            .attr("href", "/u/" + userDocument.data().username)
+                            .text("u/" + userDocument.data().username)
+                            .addClass(userDocument.data().staff ? "staffBadge" : "")
+                            .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
+                        ,
+                        $("<span>").text(" · "),
+                        $("<span>").text(_("Sending..."))
+                    ]),
+                    $("<div class='postContent'>").html(renderMarkdown(messageContent))
+                ])
+            );
+        });
 
-    $("#dmMessageReply textarea").val("");
+        $("#dmMessageReply textarea").val("");
 
-    api.sendMessage({
-        recipient: core.getURLParameter("user").trim(),
-        content: messageContent
-    }).catch(function(error) {
-        console.error("Glipo backend error:", error);
+        api.sendMessage({
+            recipient: core.getURLParameter("user").trim(),
+            content: messageContent
+        }).catch(function(error) {
+            console.error("Glipo backend error:", error);
 
-        $("#sendDmMessageError").text(_("Sorry, an internal error has occurred and your last message couldn't be delivered to the sender."));
+            $("#sendDmMessageError").text(_("Sorry, an internal error has occurred and your last message couldn't be delivered to the sender."));
+        });
     });
 }
 

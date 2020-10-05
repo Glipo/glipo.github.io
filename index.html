@@ -266,7 +266,7 @@
                     </card>
                     <card class="transparent noPadding">
                         <div class="signedIn">
-                            <button onclick="ceSummon();" aria-label="@New comment" class="ceSummoner">@Write a comment...</button>
+                            <button onclick="openRootCommentCe();" aria-label="@New comment" class="ceSummoner">@Write a comment...</button>
                             <div class="ceUnsummoned">
                                 <div class="writeComment contentEditor"></div>
                                 <div class="buttonRow">
@@ -549,6 +549,13 @@
                         <p>@You need a Glipo account with at least 100 points in order to create a group.</p>
                         <button onclick="showSignInDialog();" class="blue">@Sign in</button>
                     </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^banned$"> <!-- Ban page -->
+                <div class="pageMessage middle">
+                    <h1>@Sorry, you cannot do that</h1>
+                    <p class="banMessage">@We don't know why you're here! Please try visiting Glipo again later.</p>
+                    <button class="blue">@Appeal ban</button>
                 </div>
             </section>
             <aside id="sidebar">

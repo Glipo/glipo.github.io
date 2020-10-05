@@ -490,69 +490,71 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                     ])
                                     .click(function() {
                                         if (currentUser.uid != null) {
-                                            $(".comment .replyArea").html("");
+                                            checkBanStatePage(function() {
+                                                $(".comment .replyArea").html("");
 
-                                            commentElement.find("> .replyArea").append([
-                                                $("<div class='contentEditor'>"),
-                                                $("<div class='buttonRow'>").append([
-                                                    $("<button class='blue'>")
-                                                        .text(_("Send"))
-                                                        .click(function() {
-                                                            var groupName = trimPage(currentPage).match(/^g\/([^\/]+)\/posts\/([^\/]+)$/)[1].toLowerCase();
-                                                            var postId = trimPage(currentPage).match(/^g\/([^\/]+)\/posts\/([^\/]+)$/)[2];
-                                                            var commentContent = commentElement.find("> .replyArea textarea").val();
+                                                commentElement.find("> .replyArea").append([
+                                                    $("<div class='contentEditor'>"),
+                                                    $("<div class='buttonRow'>").append([
+                                                        $("<button class='blue'>")
+                                                            .text(_("Send"))
+                                                            .click(function() {
+                                                                var groupName = trimPage(currentPage).match(/^g\/([^\/]+)\/posts\/([^\/]+)$/)[1].toLowerCase();
+                                                                var postId = trimPage(currentPage).match(/^g\/([^\/]+)\/posts\/([^\/]+)$/)[2];
+                                                                var commentContent = commentElement.find("> .replyArea textarea").val();
 
-                                                            if (commentContent.trim() == "") {
-                                                                $(this).parent().parent().find(".errorMessage").text(_("Please enter the comment you wish to reply with."));
+                                                                if (commentContent.trim() == "") {
+                                                                    $(this).parent().parent().find(".errorMessage").text(_("Please enter the comment you wish to reply with."));
 
-                                                                return;
-                                                            }
+                                                                    return;
+                                                                }
 
-                                                            if (commentContent.length > 10000) {
-                                                                $(this).parent().parent().find(".errorMessage").text(_("Your comment is too long! Please shorten it so it's at most 10,000 characters long. You may want to split your comment up into multiple parts."));
+                                                                if (commentContent.length > 10000) {
+                                                                    $(this).parent().parent().find(".errorMessage").text(_("Your comment is too long! Please shorten it so it's at most 10,000 characters long. You may want to split your comment up into multiple parts."));
 
-                                                                return;
-                                                            }
+                                                                    return;
+                                                                }
 
-                                                            $(this).prop("disabled", true);
-                                                            $(this).text(_("Sending..."));
+                                                                $(this).prop("disabled", true);
+                                                                $(this).text(_("Sending..."));
 
-                                                            var thisScope = this;
+                                                                var thisScope = this;
 
-                                                            api.replyComment({
-                                                                group: groupName,
-                                                                post: postId,
-                                                                parent: $(this).closest(".comment").closest(".comment").attr("data-id"),
-                                                                parentType: depth == 0 ? "root" : "reply",
-                                                                content: commentContent
-                                                            }).then(function(commentId) {
-                                                                $(thisScope).prop("disabled", false);
-                                                                $(thisScope).text(_("Send"));
-                                                                commentElement.find("> .replyArea textarea").val("");
+                                                                api.replyComment({
+                                                                    group: groupName,
+                                                                    post: postId,
+                                                                    parent: $(this).closest(".comment").closest(".comment").attr("data-id"),
+                                                                    parentType: depth == 0 ? "root" : "reply",
+                                                                    content: commentContent
+                                                                }).then(function(commentId) {
+                                                                    $(thisScope).prop("disabled", false);
+                                                                    $(thisScope).text(_("Send"));
+                                                                    commentElement.find("> .replyArea textarea").val("");
 
-                                                                firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("replyComments").doc(commentId.data).get().then(function(newCommentDocument) {
-                                                                    addComment(commentElement.find("> .replies"), newCommentDocument, depth + 1, true);
-                                                                    $(".comment .replyArea").html("");
+                                                                    firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("replyComments").doc(commentId.data).get().then(function(newCommentDocument) {
+                                                                        addComment(commentElement.find("> .replies"), newCommentDocument, depth + 1, true);
+                                                                        $(".comment .replyArea").html("");
+                                                                    });
+                                                                }).catch(function(error) {
+                                                                    console.error("Glipo backend error:", error);
+
+                                                                    $(thisScope).parent().parent().find(".errorMessage").text(_("Sorry, an internal error has occurred."));
+                                                                    $(thisScope).prop("disabled", false);
+                                                                    $(thisScope).text(_("Send"));
                                                                 });
-                                                            }).catch(function(error) {
-                                                                console.error("Glipo backend error:", error);
+                                                            })
+                                                        ,
+                                                        $("<button>")
+                                                            .text(_("Cancel"))
+                                                            .click(function() {
+                                                                $(".comment .replyArea").html("");
+                                                            })
+                                                    ]),
+                                                    $("<p class='errorMessage'>")
+                                                ]);
 
-                                                                $(thisScope).parent().parent().find(".errorMessage").text(_("Sorry, an internal error has occurred."));
-                                                                $(thisScope).prop("disabled", false);
-                                                                $(thisScope).text(_("Send"));
-                                                            });
-                                                        })
-                                                    ,
-                                                    $("<button>")
-                                                        .text(_("Cancel"))
-                                                        .click(function() {
-                                                            $(".comment .replyArea").html("");
-                                                        })
-                                                ]),
-                                                $("<p class='errorMessage'>")
-                                            ]);
-
-                                            loadContentEditors();
+                                                loadContentEditors();
+                                            });
                                         } else {
                                             showSignUpDialog();
                                         }
@@ -825,6 +827,12 @@ function showMoreComments() {
     $(".showMoreComments").text(_("Loading..."));
 
     getComments(groupName, postId);
+}
+
+function openRootCommentCe() {
+    checkBanStatePage(function() {
+        ceSummon();
+    });
 }
 
 function writeComment() {

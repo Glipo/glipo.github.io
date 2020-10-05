@@ -62,6 +62,30 @@ lang.load("en_GB", {
             "{0} == 1": "{0} second ago",
             "{0} != 1": "{0} seconds ago"
         },
+        "{0} years": {
+            "{0} == 1": "{0} year",
+            "{0} != 1": "{0} years"
+        },
+        "{0} weeks": {
+            "{0} == 1": "{0} week",
+            "{0} != 1": "{0} weeks"
+        },
+        "{0} days": {
+            "{0} == 1": "{0} day",
+            "{0} != 1": "{0} days"
+        },
+        "{0} hours": {
+            "{0} == 1": "{0} hour",
+            "{0} != 1": "{0} hours"
+        },
+        "{0} minutes": {
+            "{0} == 1": "{0} minute",
+            "{0} != 1": "{0} minutes"
+        },
+        "{0} seconds": {
+            "{0} == 1": "{0} second",
+            "{0} != 1": "{0} seconds"
+        },
         "Sending...": "Sending...",
         "Literally just now": "Literally just now",
         "Image from Glipo": "Image from Glipo",
@@ -74,6 +98,7 @@ lang.load("en_GB", {
         "It violates the rules of {0}": "It violates the rules of <strong>g/{0}</strong>",
         "Do you really want to block {0}? You can unblock them later in Glipo's settings.": "Do you really want to block <strong>u/{0}</strong>? You can unblock them later in Glipo's settings.",
         "In {0} · Reported by {1} · Against {2}": "In <a href='/g/{0}' target='_blank'>g/{0}</a> · Reported by <a href='/u/{1}' target='_blank'>u/{1}</a> · Against <a href='/u/{2}' target='_blank'>u/{2}</a>",
-        "Post title: {0}": "Post title: {0}"
+        "Post title: {0}": "Post title: {0}",
+        "You cannot perform this action because you're currently banned from using Glipo. Your ban will be lifted in {0}.": "You cannot perform this action because you're currently banned from using Glipo. Your ban will be lifted in {0}."
     }
 });

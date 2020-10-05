@@ -37,6 +37,29 @@ $(function() {
         $(".currentLocation").text("u/" + trimPage(currentPage.split("/")[1]));
 
         $(".userUsername").text("u/" + trimPage(currentPage.split("/")[1]));
+    } else if (trimPage(currentPage) == "banned") {
+        $(".currentLocation").text(_("Ban information"));
+
+        if (core.getURLParameter("until") != null) {
+            var until = Number(core.getURLParameter("until"));
+
+            var banMessageInterval = setInterval(function() {
+                var timeDifference = until - new Date().getTime();
+
+                if (timeDifference > 1000) {
+                    $(".banMessage").text(_("You cannot perform this action because you're currently banned from using Glipo. Your ban will be lifted in {0}.", [simpleTimeDifferenceToHumanReadable(timeDifference)]));
+                } else {
+                    $(".banMessage").text(_("It looks like you're unbanned now. We hope you've learnt your lesson!"));
+
+                    window.location.replace("/");
+                    clearInterval(banMessageInterval);
+                }
+            });
+        } else if (core.getURLParameter("forever") == "true") {
+            $(".banMessage").text(_("You cannot perform this action because you're permanently banned from using Glipo."));
+        } else {
+            window.location.replace("/");
+        }
     } else if (trimPage(currentPage) == "submit") {
         $(".currentLocation").text(_("Submit post"));
     } else if (trimPage(currentPage) == "notifications") {
