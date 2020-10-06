@@ -15,6 +15,7 @@ var api = {
     sendMessage: firebase.functions().httpsCallable("sendMessage"),
     approvePost: firebase.functions().httpsCallable("approvePost"),
     removePost: firebase.functions().httpsCallable("removePost"),
+    removeComment: firebase.functions().httpsCallable("removeComment"),
     editPost: firebase.functions().httpsCallable("editPost"),
     deletePost: firebase.functions().httpsCallable("deletePost"),
     toggleUpvoteComment: firebase.functions().httpsCallable("toggleUpvoteComment"),
@@ -24,5 +25,7 @@ var api = {
     editComment: firebase.functions().httpsCallable("editComment"),
     deleteComment: firebase.functions().httpsCallable("deleteComment"),
     createGroup: firebase.functions().httpsCallable("createGroup"),
-    reportContent: firebase.functions().httpsCallable("reportContent")
+    reportContent: firebase.functions().httpsCallable("reportContent"),
+    dismissReport: firebase.functions().httpsCallable("dismissReport"),
+    siteWideBanUser: firebase.functions().httpsCallable("siteWideBanUser")
 };

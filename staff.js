@@ -10,6 +10,8 @@ var lastModqueuePost = null;
 var removedModqueueGroup = null;
 var removedModqueuePost = null;
 
+var actingReportId = null;
+
 function staffRemovePost() {
     if ($("#staffRemovePostModReason").val().trim() == "") {
         $("#staffRemovePostModError").text(_("Please enter the reason for removing the post."));
@@ -273,6 +275,8 @@ function getStaffReports() {
                                                                         $("<button class='blue'>")
                                                                             .text(_("Act"))
                                                                             .click(function() {
+                                                                                actingReportId = reportPriorityDocument.id;
+
                                                                                 $("#staffActOnReportModReason").val(reportTypes[reportPriorityDocument.data().reason].removalReason);
                                                                                 $("#staffActOnReportModNoMessage").prop("checked", true);
                                                                                 $("#staffActOnReportModDeleteContent").prop("checked", reportPriorityDocument.data().priority != "meta");
@@ -283,6 +287,16 @@ function getStaffReports() {
                                                                             })
                                                                         ,
                                                                         $("<button>").text(_("Dismiss"))
+                                                                            .click(function(event) {
+                                                                                $(event.target).prop("disabled", true);
+                                                                                $(event.target).text(_("Dismissing..."));
+
+                                                                                api.dismissReport({
+                                                                                    report: reportPriorityDocument.id
+                                                                                }).then(function() {
+                                                                                    getStaffReports();
+                                                                                });
+                                                                            })
                                                                     ])
                                                                 ])
                                                             )
@@ -306,6 +320,109 @@ function getStaffReports() {
             );
         }
     });
+}
+
+function finishActingOnReport() {
+    api.dismissReport({
+        report: actingReportId
+    }).then(function() {
+        closeDialogs();
+
+        $(".staffActOnReportModButton").prop("disabled", false);
+        $(".staffActOnReportModButton").text(_("Act"));
+
+        getStaffReports();
+    });
+}
+
+function actOnReport() {
+    var noMessage = !$("#staffActOnReportModNoMessage").is(":checked");
+    var deleteContent = $("#staffActOnReportModDeleteContent").is(":checked");
+    var banOffender = $("#staffActOnReportModBanOffender").is(":checked");
+
+    $(".staffActOnReportModButton").prop("disabled", true);
+    $(".staffActOnReportModButton").text(_("Acting..."));
+
+    firebase.firestore().collection("reports").doc(actingReportId).get().then(function(reportDocument) {
+        if (reportDocument.exists) { 
+            var reportedContentReference = firebase.firestore().collection("groups").doc(reportDocument.data().group).collection("posts").doc(reportDocument.data().post);
+                                    
+            if (reportDocument.data().type == "root" || reportDocument.data().type == "reply") {
+                reportedContentReference = reportedContentReference.collection(reportDocument.data().type + "Comments").doc(reportDocument.data().comment);
+            }
+
+            reportedContentReference.get().then(function(reportedContentDocument) {
+                if ($("#staffActOnReportModReason").val().trim() == "") {
+                    $(".staffActOnReportModError").text(_("Please enter the reason for acting on this report."));
+
+                    $(".staffActOnReportModButton").prop("disabled", false);
+                    $(".staffActOnReportModButton").text(_("Act"));
+            
+                    return;
+                }
+            
+                if ($("#staffActOnReportModReason").val().length > 5000) {
+                    $(".staffActOnReportModError").text(_("The reason is too long! Please shorten it so that it's at most 5,000 characters long."));
+
+                    $(".staffActOnReportModButton").prop("disabled", false);
+                    $(".staffActOnReportModButton").text(_("Act"));
+            
+                    return;
+                }
+
+                if (reportDocument.data().type == "post") {
+                    api.removePost({
+                        group: reportDocument.data().group,
+                        post: reportDocument.data().post,
+                        reason: $("#staffActOnReportModReason").val(),
+                        hideMessage: noMessage || banOffender,
+                        deleteContent: deleteContent
+                    }).then(finishActingOnReport).catch(function(error) {
+                        console.error("Glipo backend error:", error);
+                
+                        $(".staffActOnReportModError").text(_("Sorry, an internal error has occurred. Please try again later."));
+
+                        $(".staffActOnReportModButton").prop("disabled", false);
+                        $(".staffActOnReportModButton").text(_("Create group"));
+                    });
+                } else {
+                    api.removeComment({
+                        group: reportDocument.data().group,
+                        post: reportDocument.data().post,
+                        comment: reportDocument.data().comment,
+                        reason: $("#staffActOnReportModReason").val(),
+                        type: reportDocument.data().type,
+                        hideMessage: noMessage || banOffender
+                    }).then(finishActingOnReport).catch(function(error) {
+                        console.error("Glipo backend error:", error);
+                
+                        $(".staffActOnReportModError").text(_("Sorry, an internal error has occurred. Please try again later."));
+
+                        $(".staffActOnReportModButton").prop("disabled", false);
+                        $(".staffActOnReportModButton").text(_("Create group"));
+                    });
+                }
+
+                if (reportedContentDocument.exists && banOffender) {
+                    api.siteWideBanUser({
+                        user: reportedContentDocument.data().author,
+                        type: "forever", // TODO: Make this variable
+                        reason: $("#staffActOnReportModReason").val(),
+                        hideMessage: noMessage
+                    }).then(finishActingOnReport).catch(function(error) {
+                        console.error("Glipo backend error:", error);
+                
+                        $(".staffActOnReportModError").text(_("Sorry, an internal error has occurred. Please try again later."));
+
+                        $(".staffActOnReportModButton").prop("disabled", false);
+                        $(".staffActOnReportModButton").text(_("Create group"));
+                    });
+                }
+            });
+        } else {
+            finishActingOnReport();
+        }
+    })
 }
 
 function getStaffList() {

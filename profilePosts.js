@@ -281,7 +281,7 @@ function getProfileHistory() {
                                 thisProfileHistory.upvoted = upvoterDocument.exists;
                                 thisProfileHistory.downvoted = downvoterDocument.exists;
 
-                                if (!thisProfileHistory.deleted) {
+                                if (!(thisProfileHistory.staffRemoved || thisProfileHistory.moderatorRemoved) && !thisProfileHistory.deleted) {
                                     if (profileHistory.length > 0) {
                                         for (var i = 0; i < profileHistory.length; i++) {
                                             if (getSortFactor(thisProfileHistory) > getSortFactor(profileHistory[i])) {

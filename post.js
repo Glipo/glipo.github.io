@@ -337,48 +337,57 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                     .attr("data-id", commentDocument.id)
                     .append([
                         $("<div>")
-                            .addClass(!commentDocument.data().deleted ? "info" : "deletedMessage")
+                            .addClass(!(commentDocument.data().staffRemoved || commentDocument.data().moderatorRemoved) && !commentDocument.data().deleted ? "info" : "deletedMessage")
                             .append(
                                 !commentDocument.data().deleted ?
-                                [
+                                (
+                                    (commentDocument.data().staffRemoved || commentDocument.data().moderatorRemoved) ?
                                     (
-                                        !userDocument.exists ?
-                                        $("<span>").text(_("Deleted user")) :
-                                        $("<a class='user'>")
-                                            .attr("href", "/u/" + userDocument.data().username)
-                                            .text("u/" + userDocument.data().username)
-                                            .addClass(userDocument.data().staff ? "staffBadge" : "")
-                                            .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
-                                    ),
-                                    $("<span>").text(" · "),
-                                    $("<span>")
-                                        .attr("title",
-                                            lang.format(commentDocument.data().posted.toDate(), lang.language, {
+                                        commentDocument.data().staffRemoved ?
+                                        $("<span>").text(_("Comment removed by Glipo staff")) :
+                                        $("<span>").text(_("Comment deleted by group moderator"))
+                                    )
+                                    :
+                                    [
+                                        (
+                                            !userDocument.exists ?
+                                            $("<span>").text(_("Deleted user")) :
+                                            $("<a class='user'>")
+                                                .attr("href", "/u/" + userDocument.data().username)
+                                                .text("u/" + userDocument.data().username)
+                                                .addClass(userDocument.data().staff ? "staffBadge" : "")
+                                                .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
+                                        ),
+                                        $("<span>").text(" · "),
+                                        $("<span>")
+                                            .attr("title",
+                                                lang.format(commentDocument.data().posted.toDate(), lang.language, {
+                                                    day: "numeric",
+                                                    month: "long",
+                                                    year: "numeric"
+                                                }) + " " +
+                                                commentDocument.data().posted.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
+                                            )
+                                            .text(timeDifferenceToHumanReadable(new Date().getTime() - commentDocument.data().posted.toDate().getTime()))
+                                        ,
+                                        commentDocument.data().edited ? $("<span>").text(" · ") : null,
+                                        commentDocument.data().edited ? $("<span>").text(" Edited ").attr("title",
+                                            lang.format(commentDocument.data().edited.toDate(), lang.language, {
                                                 day: "numeric",
                                                 month: "long",
                                                 year: "numeric"
                                             }) + " " +
-                                            commentDocument.data().posted.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
-                                        )
-                                        .text(timeDifferenceToHumanReadable(new Date().getTime() - commentDocument.data().posted.toDate().getTime()))
-                                    ,
-                                    commentDocument.data().edited ? $("<span>").text(" · ") : null,
-                                    commentDocument.data().edited ? $("<span>").text(" Edited ").attr("title",
-                                        lang.format(commentDocument.data().edited.toDate(), lang.language, {
-                                            day: "numeric",
-                                            month: "long",
-                                            year: "numeric"
-                                        }) + " " +
-                                        commentDocument.data().edited.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
-                                    ) : null,
-                                ]
+                                            commentDocument.data().edited.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
+                                        ) : null,
+                                    ]
+                                )
                                 :
                                 [
                                     $("<span>").text(_("Comment deleted by author"))
                                 ]
                             ),
 
-                        $("<div class='postContent'>").html(!commentDocument.data().deleted ? renderMarkdown(commentContent) : ""),
+                        $("<div class='postContent'>").html(!(commentDocument.data().staffRemoved || commentDocument.data().moderatorRemoved) && !commentDocument.data().deleted ? renderMarkdown(commentContent) : ""),
                         $("<div class='actions'>").append([
                             $("<div>").append([
                                 $("<button class='upvoteButton'>")
@@ -562,7 +571,7 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                 ,
                                 document.createTextNode(" "),
                                 (
-                                    !commentDocument.data().deleted ?
+                                    !(commentDocument.data().staffRemoved || commentDocument.data().moderatorRemoved) && !commentDocument.data().deleted ?
                                     (
                                         commentDocument.data().author == currentUser.uid ?
                                         $("<button class='editCommentButton'>")

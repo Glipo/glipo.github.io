@@ -309,6 +309,7 @@ function reportNext() {
                     $("<option value='privacy'>").text(reportTypes.privacy.userDescription),
                     $("<option value='intimacy'>").text(reportTypes.intimacy.alternativeUserDescriptions[0]),
                     $("<option value='copyright'>").text(reportTypes.copyright.userDescription),
+                    $("<option value='lost'>").text(reportTypes.lost.userDescription),
                     $("<option value='illegal'>").text(reportTypes.illegal.userDescription),
                     $("<option value='child'>").text(reportTypes.child.userDescription),
                     $("<option value='animal'>").text(reportTypes.animal.userDescription),
