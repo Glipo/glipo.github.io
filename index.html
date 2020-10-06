@@ -555,7 +555,7 @@
                 <div class="pageMessage middle">
                     <h1>@Sorry, you cannot do that</h1>
                     <p class="banMessage">@We don't know why you're here! Please try visiting Glipo again later.</p>
-                    <button class="blue">@Appeal ban</button>
+                    <button class="blue">@Appeal ban</button> <!-- TODO: Add click functionality -->
                 </div>
             </section>
             <aside id="sidebar">
@@ -930,6 +930,21 @@
                 <div class="end buttonRow">
                     <button class="blue deleteCommentButton">@Delete</button>
                     <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="reportBlockedDialog">
+            <div class="title">
+                <span>@Reporting is blocked</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p>@You cannot send reports because you are currently banned from using Glipo for offences related to reports abuse.</p>
+                <p><span>@Need to urgently contact us? Email us:</span> <a href="mailto:abuse@glipo.net">abuse@glipo.net</a></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="closeDialogs();" class="blue">@OK</button>
+                    <button>@Appeal ban</button> <!-- TODO: Add link -->
                 </div>
             </div>
         </dialog>

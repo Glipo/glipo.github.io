@@ -12,6 +12,8 @@ var reportContentPost = null;
 var reportContentComment = null;
 var reportApplicableRules = [];
 
+var reportingIsBlocked = false;
+
 var reportTypes = {
     suicide: {
         priority: "cat1",
@@ -136,9 +138,19 @@ var reportTypes = {
     }
 };
 
+function showReportingBlockedDialog() {
+    $(".reportBlockedDialog")[0].showModal();
+}
+
 function reportPost(group, post) {
     if (currentUser.uid == null) {
         switchToSignUpDialog();
+
+        return;
+    }
+
+    if (reportingIsBlocked) {
+        showReportingBlockedDialog();
 
         return;
     }
@@ -185,6 +197,12 @@ function reportPost(group, post) {
 function reportComment(group, post, comment, type) {
     if (currentUser.uid == null) {
         switchToSignUpDialog();
+
+        return;
+    }
+
+    if (reportingIsBlocked) {
+        showReportingBlockedDialog();
 
         return;
     }
@@ -343,3 +361,23 @@ function reportSend() {
         $(".reportSendButton").text(_("Send"));
     });
 }
+
+$(function() {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            firebase.firestore().collection("users").doc(currentUser.uid).collection("auth").doc("banInfo").get().then(function(banInfoDocument) {
+                if (!banInfoDocument.exists) {
+                    return;
+                }
+        
+                if (!!banInfoDocument.data().cannotSendReports) {
+                    if (!!banInfoDocument.data().bannedForever || (typeof(banInfoDocument.data().bannedUntil) == "number" && new Date().getTime() < banInfoDocument.data().bannedUntil.toDate().getTime())) {
+                        reportingIsBlocked = true;
+                    }
+                }
+        
+                return;
+            });
+        }
+    });
+});
