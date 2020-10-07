@@ -55,6 +55,15 @@ function getStaffModqueue() {
                             firebase.firestore().collection("groups").doc(modqueueDocument.data().group).get().then(function(groupDocument) {
                                 var postContent = "";
 
+                                if (postDocument.data().deleted) {
+                                    api.approvePost({
+                                        group: modqueueDocument.data().group,
+                                        post: modqueueDocument.data().post
+                                    });
+                                    
+                                    return;
+                                }
+
                                 if (postDocument.data().type == "writeup") {
                                     postContent = renderMarkdown(postDocument.data().content);
                                 } else if (postDocument.data().type == "link") {
