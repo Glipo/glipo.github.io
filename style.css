@@ -748,6 +748,14 @@ blockquote {
     display: none;
 }
 
+.isModerator {
+    display: none;
+}
+
+.isNotModerator {
+    display: none;
+}
+
 .canCreateGroups {
     display: none;
 }
@@ -1170,6 +1178,15 @@ h1 .staffBadge, h2 .staffBadge {
 
 h3 .staffBadge {
     padding-right: 30px;
+}
+
+.moderatorBadge {
+    padding-right: 25px;
+    background-image: url("/media/moderatorBadge.svg");
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    color: var(--blue)!important;
 }
 
 .myMessage {

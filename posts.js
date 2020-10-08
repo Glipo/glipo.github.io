@@ -135,8 +135,8 @@ function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAft
                                                             $("<a>")
                                                                 .attr("href", "/u/" + userDocument.data().username)
                                                                 .text("u/" + userDocument.data().username)
-                                                                .addClass(userDocument.data().staff ? "staffBadge" : "")
-                                                                .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
+                                                                .addClass(userDocument.data().staff ? "staffBadge" : (groupModerators.indexOf(postDocument.data().author) > -1 ? "moderatorBadge" : ""))
+                                                                .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : (groupModerators.indexOf(postDocument.data().author) > -1 ? _("This user is a moderator of this group") : null))
                                                         ).html()
                                                     ]))
                                                 ),
@@ -492,6 +492,11 @@ function initSearchPosts() {
                             $("[data-user='" + usernameDocument.data().uid + "'] > a")
                                 .addClass("staffBadge")
                                 .attr("title", _("This user is a staff member of Glipo."))
+                            ;
+                        } else if (groupModerators.indexOf(postDocument.data().author)) {
+                            $("[data-user='" + usernameDocument.data().uid + "'] > a")
+                                .addClass("moderatorBadge")
+                                .attr("title", _("This user is a moderator of this group"))
                             ;
                         }
 

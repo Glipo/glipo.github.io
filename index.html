@@ -44,6 +44,7 @@
         <script src="/post.js"></script>
         <script src="/messages.js"></script>
         <script src="/staff.js"></script>
+        <script src="/moderators.js"></script>
         <script src="/report.js"></script>
         <script src="/lang/en_GB.js"></script>
     </head>
@@ -589,7 +590,12 @@
                         <p class="groupCommentCount">@{0} comments|---</p>
                         <button onclick="toggleGroupMembership();" class="big blue groupJoinButton">@Join</button>
                         <span class="signedIn">
-                            <button class="big">@Message moderators</button>
+                            <span class="isModerator">
+                                <button class="big">@Moderator tools</button> <!-- TODO: Make this work -->
+                            </span>
+                            <span class="isNotModerator">
+                                <button class="big">@Message moderators</button> <!-- TODO: Make this work -->
+                            </span>
                         </span>
                     </card>
                     <card data-location="^g\/[^\/]+\/posts\/[^\/]+$">
