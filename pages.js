@@ -33,6 +33,8 @@ $(function() {
         $("main").addClass("afterHeader");
     } else if (trimPage(currentPage).match(/^g\/[^\/]+\/posts\/[^\/]+$/)) {
         $(".currentLocation").text(_("Viewing post"));
+    } else if (trimPage(currentPage).match(/^g\/[^\/]+\/modtools$/)) {
+        $(".currentLocation").text(_("Moderator tools"));
     } else if (currentPage.startsWith("u/")) {
         $(".currentLocation").text("u/" + trimPage(currentPage.split("/")[1]));
 

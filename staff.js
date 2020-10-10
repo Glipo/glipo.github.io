@@ -461,20 +461,22 @@ function getStaffList() {
 }
 
 $(function() {
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            firebase.firestore().collection("users").doc(user.uid).get().then(function(userDocument) {
-                if (userDocument.data().staff) {
-                    $("#staffModqueue .loadingSpinner").hide();
-                    $("#staffReports .loadingSpinner").hide();
-                    $("#staffModqueue .modqueueItems").show();
-                    $("#staffReports .staffReportItems").show();
+    if (trimPage(currentPage) == "staff") {
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                firebase.firestore().collection("users").doc(user.uid).get().then(function(userDocument) {
+                    if (userDocument.data().staff) {
+                        $("#staffModqueue .loadingSpinner").hide();
+                        $("#staffReports .loadingSpinner").hide();
+                        $("#staffModqueue .modqueueItems").show();
+                        $("#staffReports .staffReportItems").show();
 
-                    getStaffModqueue();
-                    getStaffReports();
-                    getStaffList();
-                }
-            });
-        }
-    });
+                        getStaffModqueue();
+                        getStaffReports();
+                        getStaffList();
+                    }
+                });
+            }
+        });
+    }
 });

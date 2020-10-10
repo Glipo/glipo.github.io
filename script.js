@@ -573,6 +573,12 @@ function createGroup() {
     }
 }
 
+function visitModeratorTools() {
+    var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+    window.location.href = "/g/" + groupName + "/modtools";
+}
+
 $(function() {
     if (localStorage.getItem("signedInUsername") != null) {
         currentUser.username = localStorage.getItem("signedInUsername");
@@ -768,11 +774,14 @@ $(function() {
         var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
 
         $(".groupName").text("g/" + groupName);
+        $(".groupLink").attr("href", "/g/" + groupName);
+        $(".groupNameModRequirement").text(_("You must be a moderator of g/{0} to access moderator tools for this group", [groupName]));
 
         firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
             if (groupDocument.exists) {
                 $(".groupName").text("g/" + groupDocument.data().name);
                 $(".groupDescription").text(groupDocument.data().description || "");
+                $(".groupNameModRequirement").text(_("You must be a moderator of g/{0} to access moderator tools for this group", [groupDocument.data().name]));
 
                 $(".groupMemberCount").text(_("{0} members", [groupDocument.data().memberCount]));
                 $(".groupPostCount").text(_("{0} posts", [groupDocument.data().postCount]));

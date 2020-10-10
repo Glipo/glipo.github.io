@@ -603,6 +603,10 @@ a:hover {
     text-decoration: underline;
 }
 
+a.noColour {
+    color: inherit;
+}
+
 hr {
     margin-top: 2px;
     margin-bottom: 2px;
