@@ -13,6 +13,7 @@ lang.load("en_GB", {
     strings: {
         "...": "...",
         "{0}. {1}": "{0}. {1}",
+        "> {0}": "> {0}",
         "{0} - Selected": "{0} - Selected",
         "Media selected: {0} ({1} KB)": "Media selected: {0} ({1} KB)",
         "Joined {0}": "Joined {0}",
@@ -86,6 +87,7 @@ lang.load("en_GB", {
             "{0} == 1": "{0} second",
             "{0} != 1": "{0} seconds"
         },
+        "This comment is {0} deep.": "This comment is {0} deep.",
         "Sending...": "Sending...",
         "Literally just now": "Literally just now",
         "Image from Glipo": "Image from Glipo",

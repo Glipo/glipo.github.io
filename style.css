@@ -1282,6 +1282,27 @@ h3 .staffBadge {
     margin-top: 20px;
 }
 
+.comment.plus {
+    padding-left: 0;
+    padding-right: 0;
+    border-left: none;
+    border-right: none;
+}
+
+.plusValue {
+    background-color: var(--shade2);
+    color: var(--foreground);
+    margin-right: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 10px;
+}
+
+[dir="rtl"] .plusValue {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
 .editPost, .editPostWriteup, .editPostOther {
     display: none;
 }

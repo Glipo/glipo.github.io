@@ -6,9 +6,18 @@
     https://glipo.net
 */
 
+const COMMENT_SIDE_WIDTH = 15;
+const MIN_COMMENT_WIDTH = 250;
+
 var totalRootComments = 0;
 var hiddenRootCommentsRemaining = null;
 var hiddenRootCommentsStartAfter = null;
+
+var commentsAreaWidth = 0;
+
+function commentRenderTooDeep(depth) {
+    return depth != 0 && commentsAreaWidth - (COMMENT_SIDE_WIDTH * depth) < MIN_COMMENT_WIDTH;
+}
 
 function getPost(groupName, postId) {
     firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).get().then(function(postDocument) {
@@ -335,10 +344,19 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                 
                 var commentElement = $("<div class='comment'>")
                     .attr("data-id", commentDocument.id)
+                    .addClass(commentRenderTooDeep(depth) ? "plus" : "")
                     .append([
                         $("<div>")
                             .addClass(!(commentDocument.data().staffRemoved || commentDocument.data().moderatorRemoved) && !commentDocument.data().deleted ? "info" : "deletedMessage")
                             .append(
+                                (
+                                    commentRenderTooDeep(depth) ?
+                                    $("<span class='plusValue'>")
+                                        .text(_("> {0}", [depth]))
+                                        .attr("title", _("This comment is {0} deep.", [depth]))
+                                    :
+                                    null
+                                ),
                                 !commentDocument.data().deleted ?
                                 (
                                     (commentDocument.data().staffRemoved || commentDocument.data().moderatorRemoved) ?
@@ -760,7 +778,6 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
 
                 if (depth != 0 && depth % HIDDEN_REPLY_REVEAL_DEPTH == 0 && commentDocument.data().replies.length > 0) {
                     commentElement.find("> .continueThread").show();
-                    console.log(depth);
                 } else {
                     if (commentDocument.data().replies.length > HIDDEN_REPLY_REVEAL_FIRST) {
                         commentElement.find("> .showAllReplies").show();
@@ -898,6 +915,8 @@ $(function() {
     if (trimPage(currentPage).match(/^g\/[^\/]+\/posts\/[^\/]+$/)) {
         var groupName = trimPage(currentPage).match(/^g\/([^\/]+)\/posts\/([^\/]+)$/)[1].toLowerCase();
         var postId = trimPage(currentPage).match(/^g\/([^\/]+)\/posts\/([^\/]+)$/)[2];
+
+        commentsAreaWidth = $("section.posts:visible").width();
 
         $(".postGroupHeader").text("g/" + groupName.trim());
 
