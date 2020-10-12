@@ -25,7 +25,7 @@
 
 body {
     background-color: var(--background);
-    color: white;
+    color: var(--foreground);
     margin: 0;
     padding: 0;
 }
