@@ -959,7 +959,7 @@
                 </div>
             </div>
         </dialog>
-        <dialog class="staffActOnReportModDialog hasTextarea hasMixedInput">
+        <dialog class="actOnReportModDialog hasTextarea hasMixedInput">
             <div class="title">
                 <span>@Act upon a report</span>
                 <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
@@ -967,15 +967,17 @@
             <div class="content">
                 <p class="labelDescription">@Please enter the details of the action that you wish to take.</p>
                 <p>@Reason for action:</p>
-                <textarea placeholder="@(Optional)" class="noResize" id="staffActOnReportModReason"></textarea>
+                <textarea placeholder="@(Optional)" class="noResize" id="actOnReportModReason"></textarea>
                 <div class="spacer"></div>
-                <label><input type="checkbox" checked id="staffActOnReportModNoMessage"></input><span>@Send message to offender via u/modbot as to why this content was removed</span></label>
-                <label><input type="checkbox" id="staffActOnReportModDeleteContent"></input><span>@Delete the content from Glipo's servers</span></label>
-                <label><input type="checkbox" id="staffActOnReportModBanOffender"></input><span>@Ban the offender from Glipo</span></label>
-                <p class="errorMessage labelDescription" id="staffActOnReportModError"></p>
+                <label><input type="checkbox" checked id="actOnReportModNoMessage"></input><span>@Send message to offender via u/modbot as to why this content was removed</span></label>
+                <span class="isStaff">
+                    <label><input type="checkbox" id="actOnReportModDeleteContent"></input><span>@Delete the content from Glipo's servers</span></label>
+                    <label><input type="checkbox" id="actOnReportModBanOffender"></input><span>@Ban the offender from Glipo</span></label>
+                </span>
+                <p class="errorMessage labelDescription" id="actOnReportModError"></p>
                 <div class="spacer"></div>
                 <div class="end buttonRow">
-                    <button onclick="actOnReport();" class="blue staffActOnReportModButton">@Act</button>
+                    <button onclick="actOnReport();" class="blue actOnReportModButton">@Act</button>
                     <button onclick="closeDialogs();">@Cancel</button>
                 </div>
             </div>
