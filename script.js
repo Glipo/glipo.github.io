@@ -27,20 +27,24 @@ var firebaseConfig = {
     measurementId: "G-MGPY4PE9JH"
 };
 
+var currentUser = {
+    uid: null,
+    username: null
+};
+
 firebase.initializeApp(firebaseConfig);
 
 if ("analytics" in firebase) {
     firebase.analytics();
 }
 
-var cloudMessaging = firebase.messaging();
+var cloudMessaging;
 
-cloudMessaging.usePublicVapidKey("BCnBejAKa0014JB3f0ySA7zcvQ4TJ7sm3rWjIUiTf3haviaOAZD5lj_BXfB7uSp-R5KXLHc5Snvz1GU8zp6kZPE");
+try {
+    cloudMessagin = firebase.messaging();
 
-var currentUser = {
-    uid: null,
-    username: null
-};
+    cloudMessaging.usePublicVapidKey("BCnBejAKa0014JB3f0ySA7zcvQ4TJ7sm3rWjIUiTf3haviaOAZD5lj_BXfB7uSp-R5KXLHc5Snvz1GU8zp6kZPE");
+} catch (e) {}
 
 var groupNameSettleTimeout;
 

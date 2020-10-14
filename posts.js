@@ -404,7 +404,7 @@ function getSearchPosts() {
                             $(".loadedPosts").append(
                                 $("<p class='middle'>").text(_("That's all we could find for your search term! If you still can't find what you're looking for, try entering a different search term instead."))
                             );
-                        }, 1000);
+                        }, 3000);
 
                         recurseTimeoutMessageShown = true;
                     }

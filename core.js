@@ -19,6 +19,17 @@ var core = {
         }
 
         return key;
+    },
+
+    browserSupport: {
+        isChromium: window.chrome,
+        isOpera: typeof window.opr !== "undefined",
+        isEdge: navigator.userAgent.indexOf("Edge") > -1,
+        isIosChrome: navigator.userAgent.match("CriOS"),
+        isSafari: navigator.userAgent.indexOf("Safari") > -1,
+        isFirefox: navigator.userAgent.search("Firefox") > -1,
+        isSamsungBrowser: navigator.userAgent.search("samsungBrowser") > -1,
+        isWebkit: navigator.userAgent.search("AppleWebKit") > -1
     }
 };
 
