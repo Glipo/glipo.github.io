@@ -250,6 +250,22 @@ function visitSubmitPost() {
     }
 }
 
+function visitCreateGroup() {
+    if (currentUser.uid != null) {
+        checkBanStatePage(function() {
+            if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
+                var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+    
+                window.location.href = "/creategroup?group=" + encodeURIComponent(groupName);
+            } else {
+                window.location.href = "/creategroup";
+            }
+        });
+    } else {
+        showSignUpDialog();
+    }
+}
+
 function leaveGroup() {
     if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
         if (currentUser.uid != null) {
@@ -861,6 +877,12 @@ $(function() {
             $("#submitGroup").val("g/" + core.getURLParameter("group").trim());
         }
     } else if (trimPage(currentPage) == "creategroup") {
+        if (core.getURLParameter("group") != null) {
+            $("#createGroupNameInput").val(core.getURLParameter("group"));
+
+            checkCreateGroupDetails();
+        }
+
         $("#createGroupNameInput").on("keyup change", checkCreateGroupDetails);
     }
 });

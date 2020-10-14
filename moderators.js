@@ -207,12 +207,28 @@ function modVisitGroup() {
     window.location.href = "/g/" + groupName;
 }
 
+function visitModmailSender() {
+    if (currentUser.uid != null) {
+        checkBanStatePage(function() {
+            var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+            window.location.href = "/g/" + groupName + "/modmail";
+        });
+    } else {
+        showSignUpDialog();
+    }
+}
+
 $(function() {
     if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
         var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
 
+        $(".modmailHeading").text(_("Message moderators of {0}", [groupName]));
+
         firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
             if (groupDocument.exists) {
+                $(".modmailHeading").text(_("Message moderators of {0}", [groupDocument.data().name]));
+
                 firebase.auth().onAuthStateChanged(function(user) {
                     if (user) {
                         firebase.firestore().collection("groups").doc(groupName).collection("members").doc(currentUser.uid).get().then(function(memberDocument) {
@@ -240,7 +256,7 @@ $(function() {
                         groupModerators.push(moderatorDocument.id);
                     });
                 });
-            } else {
+            } else if (trimPage(currentPage).split("/").length > 2 && (trimPage(currentPage).split("/")[2] == "modtools" || trimPage(currentPage).split("/")[2] == "modmail")) {
                 window.location.replace("/404.html");
             }
         });

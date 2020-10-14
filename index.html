@@ -179,8 +179,8 @@
                 </div>
                 <div class="pageNonExistent pageMessage middle">
                     <h1>@This group doesn't exist!</h1>
-                    <p>@Check to see if you entered the group name correctly. If you want to make a group with this name, go ahead!</p>
-                    <button class="blue">@Make a group</button>
+                    <p>@Check to see if you entered the group name correctly. If you want to create a group with this name, go ahead!</p>
+                    <button onclick="visitCreateGroup();" class="blue">@Create a group</button>
                 </div>
             </section>
             <section class="posts" data-location="^g\/[^\/]+\/posts\/[^\/]+$"> <!-- Opened post page -->
@@ -339,6 +339,24 @@
                     <div class="pageMessage middle">
                         <h1>@Sign in to access moderator tools</h1>
                         <p>@You must be a moderator of this group to access moderator tools.</p>
+                        <button onclick="showSignInDialog();" class="blue">@Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^g\/[^\/]+\/modmail$"> <!-- Modmail sender page -->
+                <div class="signedIn">
+                    <h1 class="modmailHeading">@Message moderators</h1>
+                    <p><strong>@Enter the message that you would like to send to the moderators of this group. A member of this group should reply shortly.</strong></p>
+                    <div class="contentEditor"></div>
+                    <div class="buttonRow">
+                        <button class="blue">@Send</button>
+                        <button>@Cancel</button>
+                    </div>
+                </div>
+                <div class="signedOut">
+                    <div class="pageMessage middle">
+                        <h1>@Sign in to access send messages to moderators</h1>
+                        <p>@To send a message to the moderators of this group, please sign in.</p>
                         <button onclick="showSignInDialog();" class="blue">@Sign in</button>
                     </div>
                 </div>
@@ -641,7 +659,7 @@
                                 <button onclick="visitModeratorTools();" class="big">@Moderator tools</button>
                             </span>
                             <span class="isNotModerator">
-                                <button class="big">@Message moderators</button> <!-- TODO: Make this work -->
+                                <button onclick="visitModmailSender();" class="big">@Message moderators</button>
                             </span>
                         </span>
                     </card>
