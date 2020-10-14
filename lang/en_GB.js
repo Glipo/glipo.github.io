@@ -100,7 +100,9 @@ lang.load("en_GB", {
         "It violates the rules of {0}": "It violates the rules of <strong>g/{0}</strong>",
         "Do you really want to block {0}? You can unblock them later in Glipo's settings.": "Do you really want to block <strong>u/{0}</strong>? You can unblock them later in Glipo's settings.",
         "In {0} · Reported by {1} · Against {2}": "In <a href='/g/{0}' target='_blank'>g/{0}</a> · Reported by <a href='/u/{1}' target='_blank'>u/{1}</a> · Against <a href='/u/{2}' target='_blank'>u/{2}</a>",
+        "Reported by {0} · Against {1}": "Reported by <a href='/u/{1}' target='_blank'>u/{0}</a> · Against <a href='/u/{2}' target='_blank'>u/{1}</a>",
         "Post title: {0}": "Post title: {0}",
+        "Group rule violated: {0}": "Group rule violated: {0}",
         "You cannot perform this action because you're currently banned from using Glipo. Your ban will be lifted in {0}.": "You cannot perform this action because you're currently banned from using Glipo. Your ban will be lifted in {0}.",
         "You must be a moderator of g/{0} to access moderator tools for this group": "You must be a moderator of g/{0} to access moderator tools for this group",
         "Message moderators of {0}": "Message moderators of g/{0}"

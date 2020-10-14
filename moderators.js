@@ -34,7 +34,6 @@ function modRemovePost() {
 
 function getModModqueue() {
     var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
-
     var modqueueReference = firebase.firestore().collection("groups").doc(groupName).collection("posts").where("moderatorApproved", "==", false).where("moderatorRemoved", "==", false).orderBy("posted", "asc");
 
     if (lastModqueuePost != null) {
@@ -172,6 +171,138 @@ function getModModqueue() {
     });
 }
 
+function getModReports() {
+    var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+    var reportsReference = firebase.firestore().collection("groups").doc(groupName).collection("reports").orderBy("sent", "asc").limit(10);
+
+    reportsReference.get().then(function(reportsDocuments) {
+        $("#modReports .modReportItems").html("");
+
+        if (reportsDocuments.docs.length > 0) {
+            reportsDocuments.forEach(function(reportDocument) {
+                var reportedContentReference = firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(reportDocument.data().post);
+                
+                if (reportDocument.data().type == "root" || reportDocument.data().type == "reply") {
+                    reportedContentReference = reportedContentReference.collection(reportDocument.data().type + "Comments").doc(reportDocument.data().comment);
+                }
+
+                reportedContentReference.get().then(function(reportedContentDocument) {
+                    firebase.firestore().collection("users").doc(reportDocument.data().reporter).get().then(function(reporterDocument) {
+                        firebase.firestore().collection("users").doc(reportedContentDocument.exists ? reportedContentDocument.data().author : "__NOUSER").get().then(function(offenderDocument) {
+                            var excerpt = [];
+                            var extraDetails = [];
+                            var groupRuleViolation = [];
+
+                            if (reportedContentDocument.exists) {
+                                if (reportDocument.data().type == "post") {
+                                    excerpt = [
+                                        $("<p>").append(
+                                            $("<a target='_blank'>")
+                                                .attr("href", "/g/" + groupName + "/posts/" + reportDocument.data().post)
+                                                .text(_("Post title: {0}", [reportedContentDocument.data().title]))
+                                        ),
+                                        $("<blockquote>").html(
+                                            renderMarkdown(reportedContentDocument.data().content.substring(0, 300))
+                                        )
+                                    ];
+                                } else if (reportDocument.data().type == "root" || reportDocument.data().type == "reply") {
+                                    excerpt = [
+                                        $("<p>").append(
+                                            $("<a target='_blank'>")
+                                                .attr("href", "/g/" + groupName + "/posts/" + reportDocument.data().post)
+                                                .text(_("Comment exceprt:"))
+                                        ),
+                                        $("<blockquote>").html(
+                                            renderMarkdown(reportedContentDocument.data().content.substring(0, 300))
+                                        )
+                                    ];
+                                }
+                            }
+
+                            if (reportDocument.data().reason == "rules") {
+                                groupRuleViolation = [
+                                    $("<p>").text(_("Group rule violated: {0}", [reportDocument.data().ruleTitle])),
+                                    $("<blockquote>").html(
+                                        renderMarkdown(reportDocument.data().ruleTitle)
+                                    )
+                                ];
+                            }
+
+                            if (!!reportDocument.data().extra) {
+                                extraDetails = [
+                                    $("<p>").text(_("Extra report details:")),
+                                    $("<blockquote>").text(reportDocument.data().extra)
+                                ];
+                            }
+
+                            $("#modReports .modReportItems").append(
+                                $("<card class='reportItem'>")
+                                    .append(
+                                        $("<details>").append([
+                                            $("<summary>").text(reportTypes[reportDocument.data().reason].moderatorDescription),
+                                            (
+                                                reportedContentDocument.exists ?
+                                                $("<p>").html(_("Reported by {0} · Against {1}", [reporterDocument.data().username, offenderDocument.data().username])) :
+                                                $("<p>").text(_("Certain report information is unavailable."))
+                                            ),
+                                            $("<p>").text(
+                                                lang.format(reportDocument.data().sent.toDate(), lang.language, {
+                                                    day: "numeric",
+                                                    month: "long",
+                                                    year: "numeric"
+                                                }) + " " +
+                                                reportDocument.data().sent.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
+                                            ),
+                                            ...excerpt,
+                                            ...groupRuleViolation,
+                                            ...extraDetails,
+                                            $("<div class='buttonRow'>").append([
+                                                $("<button class='blue'>")
+                                                    .text(_("Act"))
+                                                    .click(function() {
+                                                        actingReportId = reportDocument.id;
+                                                        actingOnStaffReport = false;
+
+                                                        $("#actOnReportModReason").val(reportTypes[reportDocument.data().reason].removalReason);
+                                                        $("#actOnReportModNoMessage").prop("checked", true);
+                                                        $("#actOnReportModDeleteContent").prop("checked", false);
+                                                        $("#actOnReportModBanOffender").prop("checked", false);
+
+                                                        $(".actOnReportModDialog")[0].showModal();
+                                                        $("#actOnReportModReason").focus();
+                                                    })
+                                                ,
+                                                $("<button>").text(_("Dismiss"))
+                                                    .click(function(event) {
+                                                        $(event.target).prop("disabled", true);
+                                                        $(event.target).text(_("Dismissing..."));
+
+                                                        api.dismissReport({
+                                                            group: groupName,
+                                                            report: reportDocument.id
+                                                        }).then(function() {
+                                                            getModReports();
+                                                        });
+                                                    })
+                                            ])
+                                        ])
+                                    )
+                            );
+                        });
+                    });
+                });
+            });
+        } else {
+            $("#modReports .modReportItems").append(
+                $("<div class='pageMessage middle'>").append([
+                    $("<h1>").text(_("No reports to deal with right now!")),
+                    $("<p>").text(_("Check back later when the report list has reports to act upon."))
+                ])
+            );
+        }
+    });
+}
+
 function getModeratorList() {
     var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
 
@@ -237,8 +368,10 @@ $(function() {
                                 $(".isModerator").show();
 
                                 $("#modModqueue .loadingSpinner").hide();
+                                $("#modReports .loadingSpinner").hide();
 
                                 getModModqueue();
+                                getModReports();
                                 getModeratorList();
                             } else {
                                 $(".isModerator").hide();
