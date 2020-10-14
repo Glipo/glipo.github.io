@@ -359,6 +359,7 @@ $(function() {
         firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
             if (groupDocument.exists) {
                 $(".modmailHeading").text(_("Message moderators of {0}", [groupDocument.data().name]));
+                $(".modmailMessage").html(renderMarkdown(groupDocument.data().modmailMessage || ""));
 
                 firebase.auth().onAuthStateChanged(function(user) {
                     if (user) {
