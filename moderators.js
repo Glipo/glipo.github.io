@@ -354,11 +354,11 @@ $(function() {
     if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
         var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
 
-        $(".modmailHeading").text(_("Message moderators of {0}", [groupName]));
+        $(".modmailHeading").text(_("Message the moderators of {0}", [groupName]));
 
         firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
             if (groupDocument.exists) {
-                $(".modmailHeading").text(_("Message moderators of {0}", [groupDocument.data().name]));
+                $(".modmailHeading").text(_("Message the moderators of {0}", [groupDocument.data().name]));
                 $(".modmailMessage").html(renderMarkdown(groupDocument.data().modmailMessage || ""));
 
                 firebase.auth().onAuthStateChanged(function(user) {

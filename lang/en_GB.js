@@ -105,6 +105,6 @@ lang.load("en_GB", {
         "Group rule violated: {0}": "Group rule violated: {0}",
         "You cannot perform this action because you're currently banned from using Glipo. Your ban will be lifted in {0}.": "You cannot perform this action because you're currently banned from using Glipo. Your ban will be lifted in {0}.",
         "You must be a moderator of g/{0} to access moderator tools for this group": "You must be a moderator of g/{0} to access moderator tools for this group",
-        "Message moderators of {0}": "Message moderators of g/{0}"
+        "Message the moderators of {0}": "Message the moderators of g/{0}"
     }
 });
