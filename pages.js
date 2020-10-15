@@ -37,7 +37,7 @@ $(function() {
         $(".currentLocation").text(_("Moderator tools"));
     } else if (trimPage(currentPage).match(/^g\/[^\/]+\/modmail$/)) {
         $(".currentLocation").text(_("Message moderators"));
-    } else if (currentPage.startsWith("u/")) {
+    } else if (trimPage(currentPage).match(/^u\/[^\/]+$/)) {
         $(".currentLocation").text("u/" + trimPage(currentPage.split("/")[1]));
 
         $(".userUsername").text("u/" + trimPage(currentPage.split("/")[1]));
