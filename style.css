@@ -1428,11 +1428,11 @@ h3 .staffBadge {
     }
 
     .comment .actions div:first-of-type {
-        width: calc(100% - 80px);
+        width: calc(100% - 100px);
     }
     
     .comment .actions div:last-of-type {
-        width: 80px;
+        width: 100px;
     }
 }
 
