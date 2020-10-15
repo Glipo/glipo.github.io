@@ -41,7 +41,7 @@ if ("analytics" in firebase) {
 var cloudMessaging;
 
 try {
-    cloudMessagin = firebase.messaging();
+    cloudMessaging = firebase.messaging();
 
     cloudMessaging.usePublicVapidKey("BCnBejAKa0014JB3f0ySA7zcvQ4TJ7sm3rWjIUiTf3haviaOAZD5lj_BXfB7uSp-R5KXLHc5Snvz1GU8zp6kZPE");
 } catch (e) {}
