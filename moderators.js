@@ -332,6 +332,128 @@ function getModeratorList() {
     });
 }
 
+function getModModmail() {
+    var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+    firebase.firestore().collection("groups").doc(groupName).collection("modmail").get().then(function(modmailDocuments) {
+        $("#modmail .modModmailList").html("");
+        $("#modmail .modModmailList").append([
+            $("<h2 class='unreadHeader'>").text(_("Unread")).hide(),
+            $("<div class='unread'>"),
+            $("<h2 class='archivedHeader'>").text(_("Archived")).hide(),
+            $("<div class='archived'>")
+        ]);
+
+        if (modmailDocuments.docs.length > 0) {
+            modmailDocuments.forEach(function(modmailDocument) {
+                firebase.firestore().collection("users").doc(modmailDocument.data().sender).get().then(function(userDocument) {
+                    if (modmailDocument.data().archived) {
+                        $("#modmail .modModmailList .archivedHeader").show();
+                    } else {
+                        $("#modmail .modModmailList .unreadHeader").show();
+                    }
+
+                    $(modmailDocument.data().archived ? "#modmail .modModmailList .archived" : "#modmail .modModmailList .unread").append(
+                        $("<card class='post'>")
+                            .append([
+                                $("<div class='info'>").append([
+                                    (
+                                        !userDocument.exists ?
+                                        $("<span>").text(_("Posted by a deleted user")) :
+                                        $("<span>").html(_("Posted by {0}", [
+                                            $("<div>").append(
+                                                $("<a>")
+                                                    .attr("href", "/u/" + userDocument.data().username)
+                                                    .text("u/" + userDocument.data().username)
+                                                    .addClass(userDocument.data().staff ? "staffBadge" : "")
+                                                    .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
+                                            ).html()
+                                        ]))
+                                    ),
+                                    $("<span>").text(" · "),
+                                    $("<span>")
+                                        .attr("title",
+                                            lang.format(modmailDocument.data().sent.toDate(), lang.language, {
+                                                day: "numeric",
+                                                month: "long",
+                                                year: "numeric"
+                                            }) + " " +
+                                            modmailDocument.data().sent.toDate().toLocaleTimeString(lang.language.replace(/_/g, "-"))
+                                        )
+                                        .text(timeDifferenceToHumanReadable(new Date().getTime() - modmailDocument.data().sent.toDate().getTime()))
+                                ]),
+                                $("<div class='postContent'>")
+                                    .html(renderMarkdown(modmailDocument.data().content))
+                                ,
+                                $("<div class='actions'>").append([
+                                    $("<div class='full'>").append([
+                                        $("<button>")
+                                            .attr("aria-label", _("Reply"))
+                                            .prop("disabled", !userDocument.exists)
+                                            .append([
+                                                $("<icon>").text("reply"),
+                                                document.createTextNode(" "),
+                                                $("<span>").text(_("Reply"))
+                                            ])
+                                            .click(function() {
+                                                window.open("/dm?user=" + encodeURIComponent(userDocument.data().username));
+
+                                                if (!modmailDocument.data().archived) {
+                                                    api.archiveModmail({
+                                                        group: groupName,
+                                                        modmail: modmailDocument.id
+                                                    });
+
+                                                    $(this).parent().find(".modmailArchiveButton").prop("disabled", true);
+                                                    $(this).parent().find(".modmailArchiveButton span").text(_("Archived!"));
+                                                }
+                                            })
+                                        ,
+                                        ...(
+                                            !modmailDocument.data().archived ?
+                                            [
+                                                document.createTextNode(" "),
+                                                $("<button class='modmailArchiveButton'>")
+                                                    .attr("aria-label", _("Archive"))
+                                                    .append([
+                                                        $("<icon>").text("archive"),
+                                                        document.createTextNode(" "),
+                                                        $("<span>").text(_("Archive"))
+                                                    ])
+                                                    .click(function() {
+                                                        api.archiveModmail({
+                                                            group: groupName,
+                                                            modmail: modmailDocument.id
+                                                        });
+        
+                                                        $(this).prop("disabled", true);
+                                                        $(this).find("span").text(_("Archived!"));
+                                                    })
+                                            ] :
+                                            []
+                                        )
+                                    ])
+                                ])
+                            ])
+                            .click(function(event) {
+                                if (!$(event.target).closest("button, a, spoiler, card.post").is("button, a, .spoiler")) {
+                                    window.open("/g/" + groupName + "/posts/" + postDocument.id);
+                                }
+                            })
+                    )
+                });
+            });
+        } else {
+            $("#modmail .modModmailList").append(
+                $("<div class='pageMessage middle'>").append([
+                    $("<h1>").text(_("No modmail yet!")),
+                    $("<p>").text(_("Messages sent from your group's members will arrive here."))
+                ])
+            );
+        }
+    });
+}
+
 function modVisitGroup() {
     var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
 
@@ -347,6 +469,44 @@ function visitModmailSender() {
         });
     } else {
         showSignUpDialog();
+    }
+}
+
+function sendModmail() {
+    if (currentUser.uid != null) {
+        checkBanStatePage(function() {
+            var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+            if ($("#modmailSendContent textarea").val().trim() == "") {
+                $("#modmailSendError").text(_("Please enter your message."));
+
+                return;
+            }
+
+            if ($("#modmailSendContent textarea").val().length > 5000) {
+                $("#modmailSendError").text(_("Your message is too long! Please shorten it so that it's at most 5,000 characters long."));
+
+                return;
+            }
+
+            $(".modmailSendButton").prop("disabled", true);
+            $(".modmailSendButton").text(_("Sending..."));
+
+            api.sendModmail({
+                group: groupName,
+                content: $("#modmailSendContent textarea").val()
+            }).then(function() {
+                $(".modmailSendButton").text(_("Sent!"));
+            }).catch(function(error) {
+                console.error("Glipo backend error:", error);
+    
+                $("#modmailSendError").text(_("Sorry, an internal error has occurred. Please try sending your message again later."));
+                $(".modmailSendButton").prop("disabled", false);
+                $(".modmailSendButton").text(_("Send"));
+            });
+        });
+    } else {
+        $("#modmailSendError").text(_("Please sign in to send your message."));
     }
 }
 
@@ -370,9 +530,11 @@ $(function() {
 
                                 $("#modModqueue .loadingSpinner").hide();
                                 $("#modReports .loadingSpinner").hide();
+                                $("#modmail .loadingSpinner").hide();
 
                                 getModModqueue();
                                 getModReports();
+                                getModModmail();
                                 getModeratorList();
                             } else {
                                 $(".isModerator").hide();

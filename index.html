@@ -318,7 +318,7 @@
                                 </div>
                                 <div data-tab="modmail" id="modmail">
                                     <div class="loadingSpinner"></div>
-                                    <div class="modMemberList"></div>
+                                    <div class="modModmailList"></div>
                                 </div>
                                 <div data-tab="moderators" id="moderators">
                                     <div class="loadingSpinner"></div>
@@ -348,9 +348,10 @@
                     <h1 class="modmailHeading">@Message the moderators</h1>
                     <p><strong>@Enter the message that you would like to send to the moderators of this group. A member of this group should reply shortly.</strong></p>
                     <div class="modmailMessage"></div>
-                    <div class="contentEditor"></div>
+                    <div class="contentEditor" id="modmailSendContent"></div>
+                    <div class="errorMessage" id="modmailSendError"></div>
                     <div class="buttonRow">
-                        <button class="blue">@Send</button>
+                        <button onclick="sendModmail();" class="blue modmailSendButton">@Send</button>
                         <button onclick="window.history.back();">@Cancel</button>
                     </div>
                 </div>

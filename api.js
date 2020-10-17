@@ -27,5 +27,7 @@ var api = {
     createGroup: firebase.functions().httpsCallable("createGroup"),
     reportContent: firebase.functions().httpsCallable("reportContent"),
     dismissReport: firebase.functions().httpsCallable("dismissReport"),
-    siteWideBanUser: firebase.functions().httpsCallable("siteWideBanUser")
+    siteWideBanUser: firebase.functions().httpsCallable("siteWideBanUser"),
+    sendModmail: firebase.functions().httpsCallable("sendModmail"),
+    archiveModmail: firebase.functions().httpsCallable("archiveModmail")
 };
