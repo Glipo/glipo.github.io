@@ -1177,6 +1177,12 @@ blockquote {
     color: var(--yellow)!important;
 }
 
+[dir="rtl"] .staffBadge {
+    padding-left: 25px;
+    padding-right: 0;
+    background-position: left;
+}
+
 h1 .staffBadge, h2 .staffBadge {
     padding-right: 40px;
 }
@@ -1192,6 +1198,12 @@ h3 .staffBadge {
     background-position: right;
     background-repeat: no-repeat;
     color: var(--blue)!important;
+}
+
+[dir="rtl"] .moderatorBadge {
+    padding-left: 25px;
+    padding-right: 0;
+    background-position: left;
 }
 
 .myMessage {
@@ -1418,9 +1430,27 @@ h3 .staffBadge {
     }
 
     .menu {
-        left: 10px;
-        right: 10px;
+        left: 10px!important;
+        right: 10px!important;
         width: calc(100% - 20px);
+    }
+
+    .staffBadge {
+        padding-right: 20px;
+    }
+    
+    [dir="rtl"] .staffBadge {
+        padding-left: 20px;
+        padding-right: 0;
+    }
+
+    .moderatorBadge {
+        padding-right: 20px;
+    }
+    
+    [dir="rtl"] .moderatorBadge {
+        padding-left: 20px;
+        padding-right: 0;
     }
 
     .comment .info {
