@@ -307,15 +307,15 @@ function getModeratorList() {
     var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
 
     firebase.firestore().collection("groups").doc(groupName).collection("members").where("moderator", "==", true).get().then(function(moderatorMemberDocuments) {
-        $("#moderators .modMemberList").html("");
-        $("#moderators .loadingSpinner").hide();
+        $("#modMembers .modMemberList").html("");
+        $("#modMembers .loadingSpinner").hide();
 
-        $("#moderators .modMemberList").hide();
-        $("#moderators .modMemberList").show();
+        $("#modMembers .modMemberList").hide();
+        $("#modMembers .modMemberList").show();
 
         moderatorMemberDocuments.forEach(function(moderatorMemberDocument) {
             firebase.firestore().collection("users").doc(moderatorMemberDocument.id).get().then(function(moderatorDocument) {
-                $("#moderators .modMemberList").append(
+                $("#modMembers .modMemberList").append(
                     $("<card class='clickable'>")
                         .append([
                             $("<a class='bold'>")
