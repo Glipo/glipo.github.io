@@ -1002,6 +1002,49 @@
                 </div>
             </div>
         </dialog>
+        <dialog class="changePermsModDialog hasMultilineRadios">
+            <div class="title">
+                <span>@Change a member's permissions</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="labelDescription" id="changePermsModDescription">@What permissions do you wish to grant to this user?</p>
+                <label>
+                    <input type="radio" name="changePermsModPermissions" value="owner"></input>
+                    <span>
+                        <strong>@Owner</strong><br>
+                        <span>@Grant this user all moderator permissions, with the additional ability to change potentially dangerous settings, such as adding and removing other moderators and changing the group description and rules.</span>
+                    </span>
+                </label>
+                <label>
+                    <input type="radio" name="changePermsModPermissions" value="moderator"></input>
+                    <span>
+                        <strong>@Standard moderator</strong><br>
+                        <span>@Grant this user basic moderator permissions, allowing them to act upon reports and remove posts that violate the rules.</span>    
+                    </span>
+                </label>
+                <label>
+                    <input type="radio" name="changePermsModPermissions" value="member"></input>
+                    <span>
+                        <strong>@Member</strong><br>
+                        <span>@Don't grant this user any moderator permissions. This user will only be able to write, edit and delete their own posts and comments when in this group.</span>    
+                    </span>
+                </label>
+                <label>
+                    <input type="radio" name="changePermsModPermissions" value="banned"></input>
+                    <span>
+                        <strong>@Banned user</strong><br>
+                        <span>@Ban this user from this group, preventing them from being able to write their own posts and comments. They can still view and vote on posts.</span>    
+                    </span>
+                </label>
+                <p class="errorMessage" id="changePermsModError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="changeMemberPerms();" class="blue changePermsModButton">@Grant</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
         <dialog class="deletePostDialog">
             <div class="title">
                 <span>@Delete post</span>

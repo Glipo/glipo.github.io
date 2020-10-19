@@ -103,6 +103,7 @@ lang.load("en_GB", {
         "Reported by {0} · Against {1}": "Reported by <a href='/u/{1}' target='_blank'>u/{0}</a> · Against <a href='/u/{2}' target='_blank'>u/{1}</a>",
         "Post title: {0}": "Post title: {0}",
         "Group rule violated: {0}": "Group rule violated: {0}",
+        "What permissions do you wish to grant to {0}?": "What permissions do you wish to grant to <a href='/u/{0}' target='_blank'>u/{0}</a>?",
         "You cannot perform this action because you're currently banned from using Glipo. Your ban will be lifted in {0}.": "You cannot perform this action because you're currently banned from using Glipo. Your ban will be lifted in {0}.",
         "You must be a moderator of g/{0} to access moderator tools for this group": "You must be a moderator of g/{0} to access moderator tools for this group",
         "Message the moderators of {0}": "Message the moderators of g/{0}"

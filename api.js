@@ -29,5 +29,6 @@ var api = {
     dismissReport: firebase.functions().httpsCallable("dismissReport"),
     siteWideBanUser: firebase.functions().httpsCallable("siteWideBanUser"),
     sendModmail: firebase.functions().httpsCallable("sendModmail"),
-    archiveModmail: firebase.functions().httpsCallable("archiveModmail")
+    archiveModmail: firebase.functions().httpsCallable("archiveModmail"),
+    changeMemberPerms: firebase.functions().httpsCallable("changeMemberPerms")
 };

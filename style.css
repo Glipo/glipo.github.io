@@ -405,6 +405,10 @@ dialog.hasMixedInput .content {
     max-width: 375px;
 }
 
+dialog.hasMultilineRadios .content {
+    max-width: 600px;
+}
+
 label {
     display: block;
     margin-top: 5px;
@@ -1435,20 +1439,20 @@ h3 .staffBadge {
         width: calc(100% - 20px);
     }
 
-    .staffBadge {
+    .info .staffBadge {
         padding-right: 20px;
     }
     
-    [dir="rtl"] .staffBadge {
+    [dir="rtl"] .info .staffBadge {
         padding-left: 20px;
         padding-right: 0;
     }
 
-    .moderatorBadge {
+    .info .moderatorBadge {
         padding-right: 20px;
     }
     
-    [dir="rtl"] .moderatorBadge {
+    [dir="rtl"] .info .moderatorBadge {
         padding-left: 20px;
         padding-right: 0;
     }

@@ -6,7 +6,15 @@
     https://glipo.net
 */
 
+const PERM_TYPES = {
+    OWNER: "owner",
+    MODERATOR: "moderator",
+    MEMBER: "member",
+    BANNED: "banned"
+};
+
 var groupModerators = [];
+var usernameToChangePermsOf;
 
 function modRemovePost() {
     if ($("#modRemovePostModReason").val().trim() == "") {
@@ -303,28 +311,105 @@ function getModReports() {
     });
 }
 
-function getModeratorList() {
+function changeMemberPerms() {
+    var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+    var newPerms = $("[name='changePermsModPermissions']:checked").val();
+
+    $(".changePermsModButton").prop("disabled", true);
+    $(".changePermsModButton").text(_("Granting..."));
+
+    checkBanStatePage(function() {
+        firebase.firestore().collection("groups").doc(groupName).collection("members").doc(currentUser.uid).get().then(function(memberDocument) {
+            if (memberDocument.exists && memberDocument.data().owner) {
+                api.changeMemberPerms({
+                    group: groupName,
+                    user: usernameToChangePermsOf.toLowerCase(),
+                    permissions: newPerms
+                }).then(function() {
+                    getMemberList();
+                    closeDialogs();
+        
+                    $(".changePermsModButton").prop("disabled", false);
+                    $(".changePermsModButton").text(_("Grant"));
+
+                    firebase.firestore().collection("groups").doc(groupName).collection("members").doc(currentUser.uid).get().then(function(memberDocument) {
+                        if (!(memberDocument.exists && memberDocument.data().moderator)) {
+                            $(".isModerator").hide();
+                            $(".isNotModerator").show();
+                        }
+                    });
+                }).catch(function(error) {
+                    console.error("Glipo backend error:", error);
+        
+                    $("#changePermsModError").text(_("Sorry, an internal error has occurred. Please try changing this user's permissions again later."));
+                    $(".changePermsModButton").prop("disabled", false);
+                    $(".changePermsModButton").text(_("Grant"));
+                });
+            } else {
+                $("#changePermsModError").text(_("You need to be a moderator with owner permissions in order to grant permissions to other users."));
+                $(".changePermsModButton").prop("disabled", false);
+                $(".changePermsModButton").text(_("Grant"));
+            }
+        });
+    });
+}
+
+function showChangeMemberPermsDialog(username, currentPerms) {
+    usernameToChangePermsOf = username;
+
+    $("#changePermsModDescription").html(_("What permissions do you wish to grant to {0}?", [username]));
+    $("#changePermsModError").text("");
+    $("[name='changePermsModPermissions']").prop("checked", false);
+    $("[name='changePermsModPermissions'][value='" + currentPerms + "']").prop("checked", true);
+    $(".changePermsModDialog")[0].showModal();
+}
+
+function getMemberList() {
     var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
 
-    firebase.firestore().collection("groups").doc(groupName).collection("members").where("moderator", "==", true).get().then(function(moderatorMemberDocuments) {
+    firebase.firestore().collection("groups").doc(groupName).collection("members").get().then(function(memberDocuments) {
         $("#modMembers .modMemberList").html("");
         $("#modMembers .loadingSpinner").hide();
 
         $("#modMembers .modMemberList").hide();
         $("#modMembers .modMemberList").show();
 
-        moderatorMemberDocuments.forEach(function(moderatorMemberDocument) {
-            firebase.firestore().collection("users").doc(moderatorMemberDocument.id).get().then(function(moderatorDocument) {
+        memberDocuments.forEach(function(memberDocument) {
+            var userPerms = PERM_TYPES.MEMBER;
+            var userPermsText = "";
+
+            if (memberDocument.data().moderator) {
+                if (memberDocument.data().owner) {
+                    userPerms = PERM_TYPES.OWNER;
+                } else {
+                    userPerms = PERM_TYPES.MODERATOR;
+                }
+            }
+
+            if (userPerms == PERM_TYPES.OWNER) {
+                userPermsText = _("Owner");
+            } else if (userPerms == PERM_TYPES.MODERATOR) {
+                userPermsText = _("Standard moderator");
+            } else if (userPerms == PERM_TYPES.MEMBER) {
+                userPermsText = _("Member");
+            } else if (userPerms == PERM_TYPES.BANNED) {
+                userPermsText = _("Banned user");
+            }
+
+            firebase.firestore().collection("users").doc(memberDocument.id).get().then(function(userDocument) {
                 $("#modMembers .modMemberList").append(
                     $("<card class='clickable'>")
                         .append([
-                            $("<a class='bold'>")
-                                .addClass(moderatorDocument.data().staff ? "staffBadge" : "moderatorBadge")
-                                .attr("href", "/u/" + moderatorDocument.data().username)
-                                .text("u/" + moderatorDocument.data().username)
+                            $("<a class='bold noColour'>")
+                                .addClass(userDocument.data().staff ? "staffBadge" : (memberDocument.data().moderator ? "moderatorBadge" : ""))
+                                .attr("href", "javascript:void();")
+                                .text("u/" + userDocument.data().username)
+                            ,
+                            $("<span>").text(" · "),
+                            $("<span>").text(userPermsText)
                         ])
                         .click(function() {
-                            window.location.href = "/u/" + moderatorDocument.data().username;
+                            showChangeMemberPermsDialog(userDocument.data().username, userPerms);
                         })
                 );
             });
@@ -535,7 +620,7 @@ $(function() {
                                 getModModqueue();
                                 getModReports();
                                 getModModmail();
-                                getModeratorList();
+                                getMemberList();
                             } else {
                                 $(".isModerator").hide();
                                 $(".isNotModerator").show();
