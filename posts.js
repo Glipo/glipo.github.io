@@ -14,10 +14,99 @@ var recurseTimeoutMessageShown = false;
 var postsToLoad = 0;
 var searchLastPost;
 
+function renderCrosspost(group, post) {
+    firebase.firestore().collection("groups").doc(group.toLowerCase()).collection("posts").doc(post).get().then(function(postDocument) {
+        firebase.firestore().collection("groups").doc(group.toLowerCase()).get().then(function(groupDocument) {
+            firebase.firestore().collection("users").doc(postDocument.data().author || "__NOUSER").get().then(function(userDocument) {
+                var crosspostContainer = $(".crosspost[data-crosspost-group='" + group + "'][data-crosspost-post='" + post + "']");
+
+                if (postDocument.exists && !postDocument.data().staffRemoved && !postDocument.data().moderatorRemoved && !postDocument.data().deleted) {
+                    var postContent = "";
+                    
+                    if (postDocument.data().type == "writeup") {
+                        postContent = renderMarkdown(postDocument.data().content);
+                    } else if (postDocument.data().type == "link") {
+                        postContent = renderLink(postDocument.data().content);
+                    }
+
+                    crosspostContainer
+                        .html("")
+                        .addClass("clickable")
+                        .click(function() {
+                            if ($(this).closest("card.post.clickable").length == 0) {
+                                window.open("/g/" + encodeURIComponent(group) + "/posts/" + encodeURIComponent(post));
+                            }
+                        })
+                        .append([
+                            $("<h3 class='title'>").append(
+                                $("<a>")
+                                    .attr("href", "/g/" + encodeURIComponent(group) + "/posts/" + encodeURIComponent(post))
+                                    .attr("target", "_blank")
+                                    .text(postDocument.data().title)
+                            ),
+                            $("<div class='postContent'>")
+                                .addClass(postDocument.data().type)
+                                .html(postContent)
+                            ,
+                            $("<p class='info'>")
+                                .append([
+                                    $("<icon>")
+                                        .text("arrow_upward")
+                                        .attr("aria-label", _("Upvotes:"))
+                                    ,
+                                    document.createTextNode(" "),
+                                    $("<span>").text(postDocument.data().upvotes),
+                                    document.createTextNode(" "),
+                                    $("<icon>")
+                                        .text("arrow_downward")
+                                        .attr("aria-label", _("Downvotes:"))
+                                    ,
+                                    document.createTextNode(" "),
+                                    $("<span>").text(postDocument.data().downvotes),
+                                    $("<span>").text(" · "),
+                                    $("<a>")
+                                        .attr("href", "/g/" + groupDocument.data().name)
+                                        .text("g/" + groupDocument.data().name)
+                                    ,
+                                    $("<span>").text(" · "),
+                                    $("<a>")
+                                        .attr("href", "/u/" + userDocument.data().username)
+                                        .text("u/" + userDocument.data().username)
+                                        .addClass(userDocument.data().staff ? "staffBadge" : "")
+                                        .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : null)
+                                ])
+                        ])
+                    ;
+                } else {
+                    crosspostContainer
+                        .html("")
+                        .addClass("middle")
+                        .append(
+                            $("<p>").text(_("Sorry, this crosspost is unavailable."))
+                        );
+                }
+            });
+        });
+    });
+}
+
 function renderLink(url) {
     var result = $("<div>");
 
-    if (RE_IMAGE.test(url.split("?")[0].split("#")[0])) {
+    if (url.match(RE_GLIPO_CROSSPOST)) {
+        var originalGroup = url.match(RE_GLIPO_CROSSPOST)[1];
+        var originalPost = url.match(RE_GLIPO_CROSSPOST)[2];
+
+        result.append($("<div class='crosspost'>")
+            .attr("data-crosspost-group", originalGroup)
+            .attr("data-crosspost-post", originalPost)
+            .append(
+                $("<div class='loadingSpinner'>")
+            )
+        );
+
+        renderCrosspost(originalGroup, originalPost);
+    } else if (RE_IMAGE.test(url.split("?")[0].split("#")[0])) {
         if (url.startsWith("https://firebasestorage.googleapis.com/v0/b/glipo-net.appspot.com/o/")) {
             result.append($("<img>")
                 .attr("src", url)
@@ -275,12 +364,22 @@ function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAft
                                                     document.createTextNode(" "),
                                                     $("<button>")
                                                         .attr("title", _("Crosspost"))
-                                                        .attr("aria-label", _("Crosspost - {0}", [0]))
+                                                        .attr("aria-label", _("Crosspost - {0}", [postDocument.data().crossposts || 0]))
                                                         .append([
                                                             $("<icon>").text("share"),
                                                             document.createTextNode(" "),
-                                                            $("<span>").text(0)
+                                                            $("<span>").text(postDocument.data().crossposts || 0)
                                                         ])
+                                                        .click(function() {
+                                                            if (postDocument.data().type == "link" && postDocument.data().content.match(RE_GLIPO_CROSSPOST)) {
+                                                                var originalGroup = postDocument.data().content.match(RE_GLIPO_CROSSPOST)[1];
+                                                                var originalPost = postDocument.data().content.match(RE_GLIPO_CROSSPOST)[2];
+
+                                                                triggerCrosspost(originalGroup, originalPost, postDocument.data().title);
+                                                            } else {
+                                                                triggerCrosspost(groupDocument.data().name, postDocument.id, postDocument.data().title);
+                                                            }
+                                                        })
                                                     ,
                                                     document.createTextNode(" "),
                                                     $("<button>")

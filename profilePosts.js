@@ -104,12 +104,22 @@ function finaliseProfileHistory() {
                                     document.createTextNode(" "),
                                     $("<button>")
                                         .attr("title", _("Crosspost"))
-                                        .attr("aria-label", _("Crosspost - {0}", [0]))
+                                        .attr("aria-label", _("Crosspost - {0}", [profileHistory[i].crossposts || 0]))
                                         .append([
                                             $("<icon>").text("share"),
                                             document.createTextNode(" "),
-                                            $("<span>").text(0)
+                                            $("<span>").text(profileHistory[i].crossposts || 0)
                                         ])
+                                        .click(function() {
+                                            if (profileHistory[i].type == "link" && profileHistory[i].content.match(RE_GLIPO_CROSSPOST)) {
+                                                var originalGroup = profileHistory[i].content.match(RE_GLIPO_CROSSPOST)[1];
+                                                var originalPost = profileHistory[i].content.match(RE_GLIPO_CROSSPOST)[2];
+
+                                                triggerCrosspost(originalGroup, originalPost, profileHistory[i].title);
+                                            } else {
+                                                triggerCrosspost(profileHistory[i].name, profileHistory[i].post, profileHistory[i].title);
+                                            }
+                                        })
                                     ,
                                     document.createTextNode(" "),
                                     $("<button>")

@@ -92,6 +92,9 @@ function getPost(groupName, postId) {
                             $(".postUpvoteButton").attr("aria-label", _("Upvote - {}", [postDocument.data().upvotes]));
                             $(".postUpvotes").text(postDocument.data().upvotes);
 
+                            $(".postCrosspostButton").attr("aria-label", _("Crosspost - {}", [postDocument.data().crossposts]));
+                            $(".postCrossposts").text(postDocument.data().crossposts);
+
                             if (upvoterDocument.exists) {
                                 $(".postUpvoteButton").addClass("yellow");
                             } else {
@@ -189,6 +192,17 @@ function getPost(groupName, postId) {
                                     .prop("disabled", true)
                                 ;
                             }
+
+                            $(".postCrosspostButton").click(function() {
+                                if (postDocument.data().type == "link" && postDocument.data().content.match(RE_GLIPO_CROSSPOST)) {
+                                    var originalGroup = postDocument.data().content.match(RE_GLIPO_CROSSPOST)[1];
+                                    var originalPost = postDocument.data().content.match(RE_GLIPO_CROSSPOST)[2];
+
+                                    triggerCrosspost(originalGroup, originalPost, postDocument.data().title);
+                                } else {
+                                    triggerCrosspost(groupDocument.data().name, postDocument.id, postDocument.data().title);
+                                }
+                            });
 
                             $(".editPostButton").click(function() {
                                 $("#editPostTitle").val(postDocument.data().title);

@@ -7,10 +7,11 @@
 */
 
 const RE_IMAGE = /.*(\.png|\.jpg|\.jpeg|\.gif|\.PNG|\.JPG|\.JPEG|\.GIF)/;
-const RE_IMGUR = /https:\/\/imgur.com\/gallery\/(.*)/;
+const RE_GLIPO_CROSSPOST = /https:\/\/glipo\.net\/g\/(.*)\/posts\/(.*)/;
+const RE_IMGUR = /https:\/\/imgur\.com\/gallery\/(.*)/;
 const RE_YOUTUBE = /(https:\/\/www\.youtube\.com\/watch\?v=|https:\/\/youtu\.be\/)([a-zA-Z0-9_-]{1,64})/;
-const RE_GIPHY = /https:\/\/giphy.com\/gifs\/(.*)/;
-const RE_GFYCAT = /https:\/\/gfycat.com\/(.*)/;
+const RE_GIPHY = /https:\/\/giphy\.com\/gifs\/(.*)/;
+const RE_GFYCAT = /https:\/\/gfycat\.com\/(.*)/;
 const HIDDEN_COMMENT_REVEAL_FIRST = 10;
 const HIDDEN_COMMENT_REVEAL_INTERVAL = 10;
 const HIDDEN_REPLY_REVEAL_FIRST = 5;
@@ -493,25 +494,46 @@ function submitPost() {
                 $(".submitButton").prop("disabled", true);
                 $(".submitButton").text(_("Submitting..."));
         
-                api.submitPost({
-                    group: submitGroup,
-                    title: submitTitle.trim(),
-                    content: submitContent.trim(),
-                    type: "link"
-                }).then(function(postId) {
-                    window.location.href = "/g/" + submitGroup + "/posts/" + postId.data;
-                }).catch(function(error) {
-                    console.error("Glipo backend error:", error);
-        
-                    $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again."));
-                    $(".submitButton").prop("disabled", false);
-                    $(".submitButton").text(_("Submit"));
-                });
+                if (submitContent.trim().match(RE_GLIPO_CROSSPOST)) {
+                    var originalGroup = submitContent.trim().match(RE_GLIPO_CROSSPOST)[1];
+                    var originalPost = submitContent.trim().match(RE_GLIPO_CROSSPOST)[2];
+
+                    if (submitGroup == originalGroup.toLowerCase()) {
+                        $("#submitError").text(_("The group that you're crossposting to is the same as the original post's group. Please choose a different group."));
+
+                        $(".submitButton").prop("disabled", false);
+                        $(".submitButton").text(_("Submit"));        
+
+                        return;
+                    }
+
+                    api.submitCrosspost({
+                        group: submitGroup,
+                        title: submitTitle.trim(),
+                        originalGroup: originalGroup,
+                        originalPost: originalPost
+                    }).then(function(postId) {
+                        window.location.href = "/g/" + submitGroup + "/posts/" + postId.data;
+                    }).catch(function(error) {
+                        console.error("Glipo backend error:", error);
+            
+                        $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again."));
+                        $(".submitButton").prop("disabled", false);
+                        $(".submitButton").text(_("Submit"));
+                    });
+                }
             }
         } else {
             $("#submitError").text(_("The group you entered doesn't exist! Check the group name and try again."));
         }
     });
+}
+
+function triggerCrosspost(group, post, title) {
+    window.location.href =
+        "/submit?title=" + encodeURIComponent(title) +
+        "&url=" + encodeURIComponent("https://glipo.net/g/" + encodeURIComponent(group) + "/posts/" + encodeURIComponent(post))
+    ;
 }
 
 function visitUserMessages() {
@@ -879,6 +901,15 @@ $(function() {
     } else if (trimPage(currentPage) == "submit") {
         if (core.getURLParameter("group") != null) {
             $("#submitGroup").val("g/" + core.getURLParameter("group").trim());
+        }
+
+        if (core.getURLParameter("title") != null) {
+            $("#submitWriteupTitle, #submitMediaTitle, #submitLinkTitle").val(core.getURLParameter("title").trim());
+        }
+
+        if (core.getURLParameter("url") != null) {
+            $("#submitLinkUrl").val(core.getURLParameter("url").trim());
+            $("#submitLinkTab").click();
         }
     } else if (trimPage(currentPage) == "creategroup") {
         if (core.getURLParameter("group") != null) {

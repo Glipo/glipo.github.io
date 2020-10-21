@@ -1147,6 +1147,30 @@ blockquote {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+.crosspost {
+    background-color: var(--shade2);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.crosspost .loadingSpinner {
+    margin-top: 0;
+}
+
+.crosspost h3.title a {
+    color: inherit;
+}
+
+.crosspost h3.title a:hover {
+    text-decoration: none;
+}
+
+.crosspost .info {
+    margin-top: 10px;
+    margin-bottom: 0!important;
+    color: var(--shade3);
+}
+
 .errorMessage {
     color: var(--yellow);
 }

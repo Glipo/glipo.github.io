@@ -241,9 +241,9 @@
                                 </button>
                             </div>
                             <div>
-                                <button title="@Crosspost" aria-label="@Crosspost">
+                                <button title="@Crosspost" aria-label="@Crosspost" class="postCrosspostButton">
                                     <icon>share</icon>
-                                    <span>0</span>
+                                    <span class="postCrossposts">0</span>
                                 </button>
                                 <span class="postAuthoredByMe">
                                     <button title="@Edit or delete" aria-label="@Edit or delete" class="editPostButton">
@@ -374,9 +374,9 @@
                     <input placeholder="@Enter a group to post to" class="grow" id="submitGroup">
                     <div class="tabs">
                         <div class="tabstrip">
-                            <button class="selected" data-tab="writeup">@Writeup</button>
-                            <button data-tab="media">@Media</button>
-                            <button data-tab="link">@Link</button>
+                            <button class="selected" data-tab="writeup" id="submitWriteupTab">@Writeup</button>
+                            <button data-tab="media" id="submitMediaTab">@Media</button>
+                            <button data-tab="link" id="submitLinkTab">@Link</button>
                         </div>
                         <div class="tabcontents" id="submitType">
                             <div data-tab="writeup">

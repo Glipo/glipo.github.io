@@ -12,6 +12,7 @@ var api = {
     toggleUpvotePost: firebase.functions().httpsCallable("toggleUpvotePost"),
     toggleDownvotePost: firebase.functions().httpsCallable("toggleDownvotePost"),
     submitPost: firebase.functions().httpsCallable("submitPost"),
+    submitCrosspost: firebase.functions().httpsCallable("submitCrosspost"),
     sendMessage: firebase.functions().httpsCallable("sendMessage"),
     approvePost: firebase.functions().httpsCallable("approvePost"),
     removePost: firebase.functions().httpsCallable("removePost"),
