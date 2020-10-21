@@ -105,14 +105,19 @@
             <p class="groupDescription"></p>
             <span class="mobile">
                 <span class="pageExistent">
-                    <details> <!-- TODO: Change what's shown here depending on whether the user is a moderator or not -->
+                    <details>
                         <summary><span>@Group info</span> <button onclick="toggleGroupMembership();" class="floatEnd blue groupJoinButton">@Join</button></summary>
                         <p><strong class="groupMemberCount">@{0} members|---</strong></p>
                         <p class="groupPostCount">@{0} posts|---</p>
                         <p class="groupCommentCount">@{0} comments|---</p>
-                        <button class="big">@View group rules</button>
+                        <button class="big">@View group rules</button> <!-- TODO: Make this work -->
                         <span class="signedIn">
-                            <button class="big">@Message moderators</button> <!-- TODO: Make this function like main site does -->
+                            <span class="isModerator">
+                                <button onclick="visitModeratorTools();" class="big">@Moderator tools</button>
+                            </span>
+                            <span class="isNotModerator">
+                                <button onclick="visitModmailSender();" class="big">@Message moderators</button>
+                            </span>
                         </span>
                     </details>
                 </span>
