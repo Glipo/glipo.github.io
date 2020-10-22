@@ -9,7 +9,13 @@
 var currentPage = "/";
 
 function trimPage(page) {
-    return page.split("?")[0].split("#")[0];
+    var trimmedPage = page.split("?")[0].split("#")[0].replace(/\/$/, "");
+
+    if (trimmedPage == "") {
+        trimmedPage = "/";
+    }
+
+    return trimmedPage;
 }
 
 if (core.getURLParameter("page") != null) {
@@ -33,6 +39,8 @@ $(function() {
         $("main").addClass("afterHeader");
     } else if (trimPage(currentPage).match(/^g\/[^\/]+\/posts\/[^\/]+$/)) {
         $(".currentLocation").text(_("Viewing post"));
+    } else if (trimPage(currentPage).match(/^g\/[^\/]+\/rules$/)) {
+        $(".currentLocation").text("g/" + trimPage(currentPage.split("/")[1]));
     } else if (trimPage(currentPage).match(/^g\/[^\/]+\/modtools$/)) {
         $(".currentLocation").text(_("Moderator tools"));
     } else if (trimPage(currentPage).match(/^g\/[^\/]+\/modmail$/)) {

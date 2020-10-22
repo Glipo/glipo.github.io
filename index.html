@@ -110,7 +110,7 @@
                         <p><strong class="groupMemberCount">@{0} members|---</strong></p>
                         <p class="groupPostCount">@{0} posts|---</p>
                         <p class="groupCommentCount">@{0} comments|---</p>
-                        <button class="big">@View group rules</button> <!-- TODO: Make this work -->
+                        <button class="big visitGroupRules">@View group rules</button> <!-- TODO: Make this work -->
                         <span class="signedIn">
                             <span class="isModerator">
                                 <button onclick="visitModeratorTools();" class="big">@Moderator tools</button>
@@ -297,6 +297,38 @@
                     <div class="pageMessage">
                         <h1>@Which post were you talking about?!</h1>
                         <p>@It seems that no post exists with this link; check to see if the address is correct.</p>
+                        <button onclick="window.location.href = '/';" class="blue">@Go home</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^g\/[^\/]+\/rules$"> <!-- Group rules page -->
+                <div class="loadingRules">
+                    <div class="loadingSpinner"></div>
+                </div>
+                <div class="pageExistent">
+                    <div class="loadedRules">
+                        <card class="transparent noPadding">
+                            <button onclick="window.close(); window.history.back();" class="transparent">
+                                <icon aria-hidden="true" class="flippable">arrow_back</icon>
+                                <span>@Back</span>
+                            </button>
+                        </card>
+                            <card class="post">
+                                <h1 class="groupRulesHeader">@Group rules</h1>
+                                <div class="hasRules">
+                                    <div class="groupRules"></div>
+                                </div>
+                                <div class="hasNoRules">
+                                    <p>@This group doesn't have any rules! You will still need to abide by Glipo's Content Policy, though.</p>
+                                </div>
+                            </card>
+                        </div>
+                    </div>
+                </div>
+                <div class="pageNonExistent middle">
+                    <div class="pageMessage">
+                        <h1>@This non-existent group has no rules</h1>
+                        <p>@That's somewhat unsurprising, though. You may have mistyped the URL there.</p>
                         <button onclick="window.location.href = '/';" class="blue">@Go home</button>
                     </div>
                 </div>
@@ -681,6 +713,12 @@
                         <p class="groupDescription"></p>
                         <button onclick="modVisitGroup();" class="big">@Visit group</button>
                     </card>
+                    <span class="hasRules">
+                        <card data-location="^g\/[^\/]+$|^g\/[^\/]+\/posts\/[^\/]+$">
+                            <h2>@Group rules</h2>
+                            <div class="groupRules"></div>
+                        </card>
+                    </span>
                     <card data-location="^u\/.*$">
                         <h2><strong class="userUsername"></strong></h2>
                         <p><strong class="userStaffTitle"></strong></p>
@@ -754,6 +792,12 @@
                         <!-- TODO: Add links to Terms of Service and Content Policy -->
                     </details>
                 </card>
+                <span class="hasSubmitGroupRules">
+                    <card>
+                        <h2 class="submitGroupRulesHeader">@Group rules</h2>
+                        <div class="submitGroupRules"></div>
+                    </card>
+                </span>
                 <card>
                     <p>
                         Pretend that this is a footer with lots of clicky links

@@ -773,6 +773,22 @@ blockquote {
     display: none;
 }
 
+.hasRules {
+    display: none;
+}
+
+.hasNoRules {
+    display: none;
+}
+
+.hasSubmitGroupRules {
+    display: none;
+}
+
+.loadedRules {
+    display: none;
+}
+
 [dir="rtl"] .flippable {
     transform: rotateY(180deg);
 }

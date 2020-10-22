@@ -87,6 +87,7 @@ lang.load("en_GB", {
             "{0} == 1": "{0} second",
             "{0} != 1": "{0} seconds"
         },
+        "Rules of {0}": "Rules of g/{0}",
         "This comment is {0} deep.": "This comment is {0} deep.",
         "Sending...": "Sending...",
         "Literally just now": "Literally just now",

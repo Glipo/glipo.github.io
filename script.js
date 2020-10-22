@@ -808,6 +808,38 @@ $(function() {
         }
     });
 
+    $("#submitGroup").change(function() {
+        var submitGroup = $("#submitGroup").val();
+
+        if (submitGroup.startsWith("g/")) {
+            submitGroup = submitGroup.split("/")[1].trim();
+        }
+
+        $(".hasSubmitGroupRules").hide();
+        $(".submitGroupRulesHeader").text(_("Rules of {0}", [submitGroup]));
+
+        firebase.firestore().collection("groups").doc(submitGroup.toLowerCase() || "__NOGROUP").get().then(function(groupDocument) {
+            $(".submitGroupRules").html("");
+
+            if (groupDocument.exists && groupDocument.data().rules != null && groupDocument.data().rules.length > 0) {
+                for (var i = 0; i < groupDocument.data().rules.length; i++) {
+                    var rule = groupDocument.data().rules[i];
+
+                    $(".submitGroupRules").append(
+                        $("<details>").append(
+                            $("<summary>").text(_("{0}. {1}", [i + 1, rule.title])),
+                            $("<p>").text(rule.content)
+                        )
+                    );
+                }
+
+                $(".hasSubmitGroupRules").show();
+            } else {
+                $(".hasSubmitGroupRules").hide();
+            }
+        });
+    });
+
     if (core.getURLParameter("q") != null) {
         $("nav .search input").val(core.getURLParameter("q"));
     }
@@ -818,6 +850,7 @@ $(function() {
         $(".groupName").text("g/" + groupName);
         $(".groupLink").attr("href", "/g/" + groupName);
         $(".groupNameModRequirement").text(_("You must be a moderator of g/{0} to access moderator tools for this group", [groupName]));
+        $(".groupRulesHeader").text(_("Rules of {0}", [groupName]));
 
         firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
             if (groupDocument.exists) {
@@ -829,6 +862,28 @@ $(function() {
                 $(".groupPostCount").text(_("{0} posts", [groupDocument.data().postCount]));
                 $(".groupCommentCount").text(_("{0} comments", [groupDocument.data().commentCount]));
 
+                $(".groupRules").html("");
+
+                if (groupDocument.data().rules != null && groupDocument.data().rules.length > 0) {
+                    for (var i = 0; i < groupDocument.data().rules.length; i++) {
+                        var rule = groupDocument.data().rules[i];
+
+                        $(".groupRules").append(
+                            $("<details>").append(
+                                $("<summary>").text(_("{0}. {1}", [i + 1, rule.title])),
+                                $("<p>").text(rule.content)
+                            )
+                        );
+                    }
+
+                    $(".hasRules").show();
+                } else {
+                    $(".hasNoRules").show();
+                }
+
+                $(".loadingRules").hide();
+                $(".loadedRules").show();
+
                 if (currentUser.uid != null) {
                     firebase.firestore().collection("users").doc(currentUser.uid).collection("groups").doc(groupName).get().then(function(userMembershipDocument) {
                         if (userMembershipDocument.exists) {
@@ -837,7 +892,12 @@ $(function() {
                         }
                     });
                 }
+
+                $(".visitGroupRules").click(function() {
+                    window.location.href = "/g/" + groupName + "/rules";
+                });
             } else {
+                $(".loadingRules").hide();
                 $(".pageExistent").hide();
                 $(".pageNonExistent").show();
             }
@@ -901,6 +961,7 @@ $(function() {
     } else if (trimPage(currentPage) == "submit") {
         if (core.getURLParameter("group") != null) {
             $("#submitGroup").val("g/" + core.getURLParameter("group").trim());
+            $("#submitGroup").change();
         }
 
         if (core.getURLParameter("title") != null) {
