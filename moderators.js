@@ -6,7 +6,7 @@
     https://glipo.net
 */
 
-const PERM_TYPES = {
+const permTypes = {
     OWNER: "owner",
     MODERATOR: "moderator",
     MEMBER: "member",
@@ -375,24 +375,24 @@ function getMemberList() {
         $("#modMembers .modMemberList").show();
 
         memberDocuments.forEach(function(memberDocument) {
-            var userPerms = PERM_TYPES.MEMBER;
+            var userPerms = permTypes.MEMBER;
             var userPermsText = "";
 
             if (memberDocument.data().moderator) {
                 if (memberDocument.data().owner) {
-                    userPerms = PERM_TYPES.OWNER;
+                    userPerms = permTypes.OWNER;
                 } else {
-                    userPerms = PERM_TYPES.MODERATOR;
+                    userPerms = permTypes.MODERATOR;
                 }
             }
 
-            if (userPerms == PERM_TYPES.OWNER) {
+            if (userPerms == permTypes.OWNER) {
                 userPermsText = _("Owner");
-            } else if (userPerms == PERM_TYPES.MODERATOR) {
+            } else if (userPerms == permTypes.MODERATOR) {
                 userPermsText = _("Standard moderator");
-            } else if (userPerms == PERM_TYPES.MEMBER) {
+            } else if (userPerms == permTypes.MEMBER) {
                 userPermsText = _("Member");
-            } else if (userPerms == PERM_TYPES.BANNED) {
+            } else if (userPerms == permTypes.BANNED) {
                 userPermsText = _("Banned user");
             }
 
