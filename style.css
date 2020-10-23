@@ -765,6 +765,10 @@ blockquote {
     display: none;
 }
 
+.isGroupBanned {
+    display: none;
+}
+
 .canCreateGroups {
     display: none;
 }

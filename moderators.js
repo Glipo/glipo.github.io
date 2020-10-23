@@ -375,43 +375,47 @@ function getMemberList() {
         $("#modMembers .modMemberList").show();
 
         memberDocuments.forEach(function(memberDocument) {
-            var userPerms = permTypes.MEMBER;
-            var userPermsText = "";
+            firebase.firestore().collection("groups").doc(groupName).collection("bans").doc(memberDocument.id).get().then(function(banInfoDocument) {
+                var userPerms = permTypes.MEMBER;
+                var userPermsText = "";
 
-            if (memberDocument.data().moderator) {
-                if (memberDocument.data().owner) {
-                    userPerms = permTypes.OWNER;
-                } else {
-                    userPerms = permTypes.MODERATOR;
+                if (banInfoDocument.data().bannedForever || (banInfoDocument.data().bannedUntil != null && new Date().getTime() < banInfoDocument.data().bannedUntil.toDate().getTime())) {
+                    userPerms = permTypes.BANNED;
+                } else if (memberDocument.data().moderator) {
+                    if (memberDocument.data().owner) {
+                        userPerms = permTypes.OWNER;
+                    } else {
+                        userPerms = permTypes.MODERATOR;
+                    }
                 }
-            }
 
-            if (userPerms == permTypes.OWNER) {
-                userPermsText = _("Owner");
-            } else if (userPerms == permTypes.MODERATOR) {
-                userPermsText = _("Standard moderator");
-            } else if (userPerms == permTypes.MEMBER) {
-                userPermsText = _("Member");
-            } else if (userPerms == permTypes.BANNED) {
-                userPermsText = _("Banned user");
-            }
+                if (userPerms == permTypes.OWNER) {
+                    userPermsText = _("Owner");
+                } else if (userPerms == permTypes.MODERATOR) {
+                    userPermsText = _("Standard moderator");
+                } else if (userPerms == permTypes.MEMBER) {
+                    userPermsText = _("Member");
+                } else if (userPerms == permTypes.BANNED) {
+                    userPermsText = _("Banned user");
+                }
 
-            firebase.firestore().collection("users").doc(memberDocument.id).get().then(function(userDocument) {
-                $("#modMembers .modMemberList").append(
-                    $("<card class='clickable'>")
-                        .append([
-                            $("<a class='bold noColour'>")
-                                .addClass(userDocument.data().staff ? "staffBadge" : (memberDocument.data().moderator ? "moderatorBadge" : ""))
-                                .attr("href", "javascript:void();")
-                                .text("u/" + userDocument.data().username)
-                            ,
-                            $("<span>").text(" · "),
-                            $("<span>").text(userPermsText)
-                        ])
-                        .click(function() {
-                            showChangeMemberPermsDialog(userDocument.data().username, userPerms);
-                        })
-                );
+                firebase.firestore().collection("users").doc(memberDocument.id).get().then(function(userDocument) {
+                    $("#modMembers .modMemberList").append(
+                        $("<card class='clickable'>")
+                            .append([
+                                $("<a class='bold noColour'>")
+                                    .addClass(userDocument.data().staff ? "staffBadge" : (memberDocument.data().moderator ? "moderatorBadge" : ""))
+                                    .attr("href", "javascript:void();")
+                                    .text("u/" + userDocument.data().username)
+                                ,
+                                $("<span>").text(" · "),
+                                $("<span>").text(userPermsText)
+                            ])
+                            .click(function() {
+                                showChangeMemberPermsDialog(userDocument.data().username, userPerms);
+                            })
+                    );
+                });
             });
         });
     });
@@ -608,26 +612,34 @@ $(function() {
 
                 firebase.auth().onAuthStateChanged(function(user) {
                     if (user) {
-                        firebase.firestore().collection("groups").doc(groupName).collection("members").doc(currentUser.uid).get().then(function(memberDocument) {
-                            if (memberDocument.exists && memberDocument.data().moderator) {
-                                $(".isNotModerator").hide();
-                                $(".isModerator").show();
-
-                                $("#modModqueue .loadingSpinner").hide();
-                                $("#modReports .loadingSpinner").hide();
-                                $("#modmail .loadingSpinner").hide();
-
-                                getModModqueue();
-                                getModReports();
-                                getModModmail();
-                                getMemberList();
-                            } else {
-                                $(".isModerator").hide();
-                                $(".isNotModerator").show();
-                            }
+                        checkGroupBanState(groupName, function() {
+                            firebase.firestore().collection("groups").doc(groupName).collection("members").doc(currentUser.uid).get().then(function(memberDocument) {
+                                if (memberDocument.exists && memberDocument.data().moderator) {
+                                    $(".isNotModerator").hide();
+                                    $(".isModerator").show();
+    
+                                    $("#modModqueue .loadingSpinner").hide();
+                                    $("#modReports .loadingSpinner").hide();
+                                    $("#modmail .loadingSpinner").hide();
+    
+                                    getModModqueue();
+                                    getModReports();
+                                    getModModmail();
+                                    getMemberList();
+                                } else {
+                                    $(".isModerator").hide();
+                                    $(".isGroupBanned").hide();
+                                    $(".isNotModerator").show();
+                                }
+                            });
+                        }, function() {
+                            $(".isModerator").hide();
+                            $(".isNotModerator").hide();
+                            $(".isGroupBanned").show();
                         });
                     } else {
                         $(".isModerator").hide();
+                        $(".isGroupBanned").hide();
                         $(".isNotModerator").show();
                     }
                 });

@@ -349,6 +349,40 @@ function checkBanStatePage(callback = function() {}) {
     });
 }
 
+function checkGroupBanState(group, callback = function() {}, error = function() {}) {
+    firebase.firestore().collection("users").doc(currentUser.uid).get().then(function(userDocument) {
+        if (userDocument.data().staff) {
+            callback();
+
+            return;
+        } else {
+            firebase.firestore().collection("groups").doc(group.toLowerCase()).collection("bans").doc(currentUser.uid).get().then(function(banInfoDocument) {
+                if (!banInfoDocument.exists) {
+                    callback();
+        
+                    return;
+                }
+        
+                if (!!banInfoDocument.data().bannedForever) {
+                    error(_("You cannot perform this action because you're permanently banned from {0}.", [group]));
+        
+                    return;
+                }
+        
+                if (banInfoDocument.data().bannedUntil != null && new Date().getTime() < banInfoDocument.data().bannedUntil.toDate().getTime()) {
+                    var timeDifference = banInfoDocument.data().bannedUntil.toDate().getTime() - new Date().getTime();
+
+                    error(_("You cannot perform this action because you're currently banned from {0}. Your ban will be lifted in {1}.", [group, simpleTimeDifferenceToHumanReadable(timeDifference)]));
+        
+                    return;
+                }
+        
+                callback();
+            });
+        }
+    });
+}
+
 function submitPost() {
     var submitGroup = $("#submitGroup").val().trim().toLowerCase();
     var submitTitle = "";
@@ -408,17 +442,23 @@ function submitPost() {
                 $(".submitButton").prop("disabled", true);
                 $(".submitButton").text(_("Submitting..."));
         
-                api.submitPost({
-                    group: submitGroup,
-                    title: submitTitle.trim(),
-                    content: submitContent,
-                    type: "writeup"
-                }).then(function(postId) {
-                    window.location.href = "/g/" + submitGroup + "/posts/" + postId.data;
-                }).catch(function(error) {
-                    console.error("Glipo backend error:", error);
-        
-                    $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again later."));
+                checkGroupBanState(group, function() {
+                    api.submitPost({
+                        group: submitGroup,
+                        title: submitTitle.trim(),
+                        content: submitContent,
+                        type: "writeup"
+                    }).then(function(postId) {
+                        window.location.href = "/g/" + submitGroup + "/posts/" + postId.data;
+                    }).catch(function(error) {
+                        console.error("Glipo backend error:", error);
+            
+                        $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again later."));
+                        $(".submitButton").prop("disabled", false);
+                        $(".submitButton").text(_("Submit"));
+                    });
+                }, function(message) {
+                    $("#submitError").html(message);
                     $(".submitButton").prop("disabled", false);
                     $(".submitButton").text(_("Submit"));
                 });
@@ -440,23 +480,31 @@ function submitPost() {
                 $(".submitButton").prop("disabled", true);
                 $(".submitButton").text(_("Uploading..."));
 
-                firebase.storage().ref(
-                    "media/" +
-                    core.generateKey(32) +
-                    "." +
-                    $("#submitMediaUpload input[type='file']").val().split(".")[$("#submitMediaUpload input[type='file']"
-                ).val().split(".").length - 1].trim()).put($("#submitMediaUpload input[type='file']")[0].files[0]).then(function(snapshot) {
-                    snapshot.ref.getDownloadURL().then(function(url) {
-                        $(".submitButton").prop("disabled", true);
-                        $(".submitButton").text(_("Submitting..."));
-                        
-                        api.submitPost({
-                            group: submitGroup,
-                            title: submitTitle.trim(),
-                            content: url,
-                            type: "link"
-                        }).then(function(postId) {
-                            window.location.href = "/g/" + submitGroup + "/posts/" + postId.data;
+                checkGroupBanState(group, function() {
+                    firebase.storage().ref(
+                        "media/" +
+                        core.generateKey(32) +
+                        "." +
+                        $("#submitMediaUpload input[type='file']").val().split(".")[$("#submitMediaUpload input[type='file']"
+                    ).val().split(".").length - 1].trim()).put($("#submitMediaUpload input[type='file']")[0].files[0]).then(function(snapshot) {
+                        snapshot.ref.getDownloadURL().then(function(url) {
+                            $(".submitButton").prop("disabled", true);
+                            $(".submitButton").text(_("Submitting..."));
+                            
+                            api.submitPost({
+                                group: submitGroup,
+                                title: submitTitle.trim(),
+                                content: url,
+                                type: "link"
+                            }).then(function(postId) {
+                                window.location.href = "/g/" + submitGroup + "/posts/" + postId.data;
+                            }).catch(function(error) {
+                                console.error("Glipo backend error:", error);
+            
+                                $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again."));
+                                $(".submitButton").prop("disabled", false);
+                                $(".submitButton").text(_("Submit"));
+                            });
                         }).catch(function(error) {
                             console.error("Glipo backend error:", error);
         
@@ -464,14 +512,12 @@ function submitPost() {
                             $(".submitButton").prop("disabled", false);
                             $(".submitButton").text(_("Submit"));
                         });
-                    }).catch(function(error) {
-                        console.error("Glipo backend error:", error);
-    
-                        $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again."));
-                        $(".submitButton").prop("disabled", false);
-                        $(".submitButton").text(_("Submit"));
                     });
-                })
+                }, function(message) {
+                    $("#submitError").html(message);
+                    $(".submitButton").prop("disabled", false);
+                    $(".submitButton").text(_("Submit"));
+                });
             } else if (submitType == "link") {
                 if (submitContent.trim() == "") {
                     $("#submitError").text(_("Please insert your link to submit this post."));
@@ -507,17 +553,23 @@ function submitPost() {
                         return;
                     }
 
-                    api.submitCrosspost({
-                        group: submitGroup,
-                        title: submitTitle.trim(),
-                        originalGroup: originalGroup,
-                        originalPost: originalPost
-                    }).then(function(postId) {
-                        window.location.href = "/g/" + submitGroup + "/posts/" + postId.data;
-                    }).catch(function(error) {
-                        console.error("Glipo backend error:", error);
-            
-                        $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again."));
+                    checkGroupBanState(group, function() {
+                        api.submitCrosspost({
+                            group: submitGroup,
+                            title: submitTitle.trim(),
+                            originalGroup: originalGroup,
+                            originalPost: originalPost
+                        }).then(function(postId) {
+                            window.location.href = "/g/" + submitGroup + "/posts/" + postId.data;
+                        }).catch(function(error) {
+                            console.error("Glipo backend error:", error);
+                
+                            $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again."));
+                            $(".submitButton").prop("disabled", false);
+                            $(".submitButton").text(_("Submit"));
+                        });
+                    }, function(message) {
+                        $("#submitError").html(message);
                         $(".submitButton").prop("disabled", false);
                         $(".submitButton").text(_("Submit"));
                     });

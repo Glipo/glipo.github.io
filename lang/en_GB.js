@@ -106,6 +106,8 @@ lang.load("en_GB", {
         "Group rule violated: {0}": "Group rule violated: {0}",
         "What permissions do you wish to grant to {0}?": "What permissions do you wish to grant to <a href='/u/{0}' target='_blank'>u/{0}</a>?",
         "You cannot perform this action because you're currently banned from using Glipo. Your ban will be lifted in {0}.": "You cannot perform this action because you're currently banned from using Glipo. Your ban will be lifted in {0}.",
+        "You cannot perform this action because you're permanently banned from {0}.": "You cannot perform this action because you're permanently banned from <strong>g/{0}</strong>.",
+        "You cannot perform this action because you're currently banned from {0}. Your ban will be lifted in {1}.": "You cannot perform this action because you're currently banned from <strong>g/{0}</strong>. Your ban will be lifted in {1}.",
         "You must be a moderator of g/{0} to access moderator tools for this group": "You must be a moderator of g/{0} to access moderator tools for this group",
         "Message the moderators of {0}": "Message the moderators of g/{0}"
     }

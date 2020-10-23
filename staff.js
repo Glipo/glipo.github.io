@@ -426,7 +426,7 @@ function actOnReport() {
                         $(".actOnReportModError").text(_("Sorry, an internal error has occurred. Please try again later."));
 
                         $(".actOnReportModButton").prop("disabled", false);
-                        $(".actOnReportModButton").text(_("Create group"));
+                        $(".actOnReportModButton").text(_("Act"));
                     });
                 } else {
                     api.removeComment({
@@ -442,7 +442,7 @@ function actOnReport() {
                         $(".actOnReportModError").text(_("Sorry, an internal error has occurred. Please try again later."));
 
                         $(".actOnReportModButton").prop("disabled", false);
-                        $(".actOnReportModButton").text(_("Create group"));
+                        $(".actOnReportModButton").text(_("Act"));
                     });
                 }
 
@@ -458,7 +458,7 @@ function actOnReport() {
                         $(".actOnReportModError").text(_("Sorry, an internal error has occurred. Please try again later."));
 
                         $(".actOnReportModButton").prop("disabled", false);
-                        $(".actOnReportModButton").text(_("Create group"));
+                        $(".actOnReportModButton").text(_("Act"));
                     });
                 }
             });

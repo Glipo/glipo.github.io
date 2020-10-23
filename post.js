@@ -255,17 +255,23 @@ function getPost(groupName, postId) {
                                 $(".editPostSubmitButton").prop("disabled", true);
                                 $(".editPostSubmitButton").text(_("Editing..."));
 
-                                api.editPost({
-                                    group: groupName,
-                                    post: postDocument.id,
-                                    title: titleArgument,
-                                    content: contentArgument
-                                }).then(function() {
-                                    window.location.reload();
-                                }).catch(function(error) {
-                                    console.error("Glipo backend error:", error);
-
-                                    $("#editPostError").text(_("Sorry, an internal error has occurred. Please try editing your post again later."));
+                                checkGroupBanState(groupDocument.data().name, function() {
+                                    api.editPost({
+                                        group: groupName,
+                                        post: postDocument.id,
+                                        title: titleArgument,
+                                        content: contentArgument
+                                    }).then(function() {
+                                        window.location.reload();
+                                    }).catch(function(error) {
+                                        console.error("Glipo backend error:", error);
+    
+                                        $("#editPostError").text(_("Sorry, an internal error has occurred. Please try editing your post again later."));
+                                        $(".editPostSubmitButton").prop("disabled", false);
+                                        $(".editPostSubmitButton").text(_("Edit"));
+                                    });
+                                }, function(message) {
+                                    $("#editPostError").html(message);
                                     $(".editPostSubmitButton").prop("disabled", false);
                                     $(".editPostSubmitButton").text(_("Edit"));
                                 });
@@ -561,25 +567,31 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
 
                                                                 var thisScope = this;
 
-                                                                api.replyComment({
-                                                                    group: groupName,
-                                                                    post: postId,
-                                                                    parent: $(this).closest(".comment").closest(".comment").attr("data-id"),
-                                                                    parentType: depth == 0 ? "root" : "reply",
-                                                                    content: commentContent
-                                                                }).then(function(commentId) {
-                                                                    $(thisScope).prop("disabled", false);
-                                                                    $(thisScope).text(_("Send"));
-                                                                    commentElement.find("> .replyArea textarea").val("");
-
-                                                                    firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("replyComments").doc(commentId.data).get().then(function(newCommentDocument) {
-                                                                        addComment(commentElement.find("> .replies"), newCommentDocument, depth + 1, true);
-                                                                        $(".comment .replyArea").html("");
+                                                                checkGroupBanState(groupName, function() {
+                                                                    api.replyComment({
+                                                                        group: groupName,
+                                                                        post: postId,
+                                                                        parent: $(this).closest(".comment").closest(".comment").attr("data-id"),
+                                                                        parentType: depth == 0 ? "root" : "reply",
+                                                                        content: commentContent
+                                                                    }).then(function(commentId) {
+                                                                        $(thisScope).prop("disabled", false);
+                                                                        $(thisScope).text(_("Send"));
+                                                                        commentElement.find("> .replyArea textarea").val("");
+    
+                                                                        firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("replyComments").doc(commentId.data).get().then(function(newCommentDocument) {
+                                                                            addComment(commentElement.find("> .replies"), newCommentDocument, depth + 1, true);
+                                                                            $(".comment .replyArea").html("");
+                                                                        });
+                                                                    }).catch(function(error) {
+                                                                        console.error("Glipo backend error:", error);
+    
+                                                                        $(thisScope).parent().parent().find(".errorMessage").text(_("Sorry, an internal error has occurred."));
+                                                                        $(thisScope).prop("disabled", false);
+                                                                        $(thisScope).text(_("Send"));
                                                                     });
-                                                                }).catch(function(error) {
-                                                                    console.error("Glipo backend error:", error);
-
-                                                                    $(thisScope).parent().parent().find(".errorMessage").text(_("Sorry, an internal error has occurred."));
+                                                                }, function(message) {
+                                                                    $(thisScope).parent().parent().find(".errorMessage").html(message);
                                                                     $(thisScope).prop("disabled", false);
                                                                     $(thisScope).text(_("Send"));
                                                                 });
@@ -681,17 +693,23 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
 
                                                                     var commentElement = $(".comment");
                                     
-                                                                    api.editComment({
-                                                                        group: groupName,
-                                                                        post: postId,
-                                                                        comment: commentDocument.id,
-                                                                        commentType: depth == 0 ? "root" : "reply",
-                                                                        content: newCommentContent
-                                                                    }).catch(function(error) {
-                                                                        console.error("Glipo backend error:", error);
-                                    
+                                                                    checkGroupBanState(groupName, function() {
+                                                                        api.editComment({
+                                                                            group: groupName,
+                                                                            post: postId,
+                                                                            comment: commentDocument.id,
+                                                                            commentType: depth == 0 ? "root" : "reply",
+                                                                            content: newCommentContent
+                                                                        }).catch(function(error) {
+                                                                            console.error("Glipo backend error:", error);
+                                        
+                                                                            commentElement.find("> .postContent").prepend(
+                                                                                $("<p class='errorMessage'>").text(_("Sorry, an internal error has occurred and your new comment contents were not saved. Please try editing your comment again later. Your proposed edited comment is below:"))
+                                                                            );
+                                                                        });
+                                                                    }, function(message) {
                                                                         commentElement.find("> .postContent").prepend(
-                                                                            $("<p class='errorMessage'>").text(_("Sorry, an internal error has occurred and your new comment contents were not saved. Please try editing your comment again later. Your proposed edited comment is below:"))
+                                                                            $("<p class='errorMessage'>").html(message)
                                                                         );
                                                                     });
                                                                 })
@@ -895,28 +913,35 @@ function writeComment() {
     $("#writeCommentButton").prop("disabled", true);
     $("#writeCommentButton").text(_("Posting..."));
 
-    api.postComment({
-        group: groupName,
-        post: postId,
-        content: commentContent
-    }).then(function(commentId) {
-        $("#writeCommentButton").prop("disabled", false);
-        $("#writeCommentButton").text(_("Post"));
-        $(".writeComment textarea").val("");
-
-        firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("rootComments").doc(commentId.data).get().then(function(newCommentDocument) {
-            $(".noComments").hide();
-            ceUnsummon();
-            
-            addComment($(".postComments"), newCommentDocument, 0, true);
+    checkGroupBanState(groupName, function() {
+        api.postComment({
+            group: groupName,
+            post: postId,
+            content: commentContent
+        }).then(function(commentId) {
+            $("#writeCommentButton").prop("disabled", false);
+            $("#writeCommentButton").text(_("Post"));
+            $(".writeComment textarea").val("");
+    
+            firebase.firestore().collection("groups").doc(groupName).collection("posts").doc(postId).collection("rootComments").doc(commentId.data).get().then(function(newCommentDocument) {
+                $(".noComments").hide();
+                ceUnsummon();
+                
+                addComment($(".postComments"), newCommentDocument, 0, true);
+            });
+        }).catch(function(error) {
+            console.error("Glipo backend error:", error);
+    
+            $("#writeCommentError").text(_("Sorry, an internal error has occurred."));
+            $("#writeCommentButton").prop("disabled", false);
+            $("#writeCommentButton").text(_("Post"));
         });
-    }).catch(function(error) {
-        console.error("Glipo backend error:", error);
-
-        $("#writeCommentError").text(_("Sorry, an internal error has occurred."));
+    }, function(message) {
+        $("#writeCommentError").html(message);
         $("#writeCommentButton").prop("disabled", false);
         $("#writeCommentButton").text(_("Post"));
     });
+    
 }
 
 function visitGroup() {
