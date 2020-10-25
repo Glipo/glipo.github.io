@@ -673,6 +673,45 @@ function visitModeratorTools() {
     window.location.href = "/g/" + groupName + "/modtools";
 }
 
+function submitAppeal() {
+    if (currentUser.uid != null) {
+        if ($("#appealSubmitReason").val().trim() == "") {
+            $("#appealSubmitError").text(_("Please enter the reason as to why you wish to appeal your ban."));
+
+            return;
+        }
+
+        if (!$("#appealAccept").is(":checked")) {
+            $("#appealSubmitError").text(_("Please check the promise checkbox to submit your ban appeal."));
+
+            return;
+        }
+
+        if ($("#appealSubmitReason").val().length > 5000) {
+            $("#appealSubmitError").text(_("Your appeal reason is too long! Please shorten it so that it's at most 5,000 characters long."));
+
+            return;
+        }
+
+        $(".appealSubmitButton").prop("disabled", true);
+        $(".appealSubmitButton").text(_("Submitting..."));
+
+        api.submitAppeal({
+            reason: $("#appealSubmitReason").val()
+        }).then(function() {
+            $(".appealSubmitButton").text(_("Submitted!"));
+        }).catch(function(error) {
+            console.error("Glipo backend error:", error);
+
+            $("#appealSubmitError").text(_("Sorry, an internal error has occurred. Please try submitting your appeal again later."));
+            $(".appealSubmitButton").prop("disabled", false);
+            $(".appealSubmitButton").text(_("Submit"));
+        });
+    } else {
+        $("#appealSubmitError").text(_("Please sign in to submit your appeal."));
+    }
+}
+
 $(function() {
     if (localStorage.getItem("signedInUsername") != null) {
         currentUser.username = localStorage.getItem("signedInUsername");
@@ -767,6 +806,41 @@ $(function() {
                     $(".currentUsername").text(currentUser.username);
                     localStorage.setItem("signedInUsername", currentUser.username);
                 }
+            });
+
+            firebase.firestore().collection("users").doc(currentUser.uid).collection("auth").doc("banInfo").get().then(function(banInfoDocument) {
+                $(".loadingBanStatus").hide();
+
+                if (!banInfoDocument.exists) {
+                    $(".hasBan").hide();
+                    $(".hasNoBan").show();
+        
+                    return;
+                }
+
+                if (!!banInfoDocument.data().decisionFinal) {
+                    $(".canSubmitBanAppeal").hide();
+                    $(".cannotSubmitBanAppeal").show();
+                }
+        
+                if (!!banInfoDocument.data().bannedForever) {
+                    $(".banStatus").text(_("You are permanently banned from using Glipo."));
+
+                    $(".hasNoBan").hide();
+                    $(".hasBan").show();        
+                    return;
+                }
+        
+                if (banInfoDocument.data().bannedUntil != null && new Date().getTime() < banInfoDocument.data().bannedUntil.toDate().getTime()) {
+                    var timeDifference = banInfoDocument.data().bannedUntil - new Date().getTime();
+
+                    $(".banStatus").text(_("You are currently banned from using Glipo, but your ban will be lifted in {0}.", [simpleTimeDifferenceToHumanReadable(timeDifference)]));
+        
+                    return;
+                }
+        
+                $(".hasBan").hide();
+                $(".hasNoBan").show();
             });
 
             $(".signedOut").hide();

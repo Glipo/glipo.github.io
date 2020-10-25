@@ -769,6 +769,18 @@ blockquote {
     display: none;
 }
 
+.hasBan {
+    display: none;
+}
+
+.hasNoBan {
+    display: none;
+}
+
+.cannotSubmitBanAppeal {
+    display: none;
+}
+
 .canCreateGroups {
     display: none;
 }

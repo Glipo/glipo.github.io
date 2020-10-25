@@ -667,7 +667,48 @@
                 <div class="pageMessage middle">
                     <h1>@Sorry, you cannot do that</h1>
                     <p class="banMessage">@We don't know why you're here! Please try visiting Glipo again later.</p>
-                    <button class="blue">@Appeal ban</button> <!-- TODO: Add functionality -->
+                    <button onclick="window.location.href = '/appeal';" class="blue">@Appeal ban</button>
+                </div>
+            </section>
+            <section class="posts" data-location="^appeal$"> <!-- Ban page -->
+                <div class="signedIn">
+                    <h1>@Appeal a ban</h1>
+                    <p>@If you've recently been banned from participating on Glipo and you feel that the ban was made in error, fill in this form to submit a ban appeal. A member of Glipo's staff will then assess your ban appeal request and may lift the ban that was put in place.</p>
+                    <p>@If you were banned from participating in a particular group, please instead message the relevant group moderators as this ban appeal form is only used for appealing site-wide bans.</p>
+                    <p>@In some cases, Glipo's staff may find that their decision to ban you was final. Submitting this ban appeal form does not guarantee that your ban will be lifted.</p>
+                    <div class="loadingBanStatus">
+                        <div class="loadingSpinner"></div>
+                    </div>
+                    <div class="hasBan">
+                        <h2>@Account status</h2>
+                        <p class="banStatus">@You are currently banned from using Glipo.</p>
+                        <p>@For more information about your ban, check the messages that were sent to you from u/modbot.</p>
+                        <div class="canSubmitBanAppeal">
+                            <h2>@Appeal details</h2>
+                            <p>@Tell us why you think we should lift your ban below.</p>
+                            <textarea placeholder="@Explain why you think we banned you in error here..." id="appealSubmitReason"></textarea>
+                            <label><input type="checkbox" id="appealAccept"></input><span>@I promise not to violate the rules of Glipo's Content Policy again and I am sorry for any inconvenience that I have caused towards Glipo's staff</span></label>
+                            <div class="end buttonRow">
+                                <button onclick="submitAppeal();" class="blue appealSubmitButton">@Submit</button>
+                                <button onclick="window.history.back();">@Cancel</button>
+                            </div>
+                            <p class="errorMessage" id="appealSubmitError"></p>
+                        </div>
+                        <div class="cannotSubmitBanAppeal">
+                            <p class="errorMessage">@Sorry, you cannot submit a ban appeal because the decision to ban you was determined by Glipo's staff to be final.</p>
+                        </div>
+                    </div>
+                    <div class="hasNoBan">
+                        <h2>@Account status</h2>
+                        <p>@There are currently no active bans on your Glipo account, and so you do not need to submit an appeal at this time.</p>
+                    </div>
+                </div>
+                <div class="signedOut">
+                    <div class="pageMessage middle">
+                        <h1>@Sign in to appeal a ban</h1>
+                        <p>@We'll need you to sign in with the account that you received the ban from so that you can appeal it.</p>
+                        <button onclick="showSignInDialog();" class="blue">@Sign in</button>
+                    </div>
                 </div>
             </section>
             <aside id="sidebar">
@@ -1143,7 +1184,7 @@
                 <div class="spacer"></div>
                 <div class="end buttonRow">
                     <button onclick="closeDialogs();" class="blue">@OK</button>
-                    <button>@Appeal ban</button> <!-- TODO: Add functionality -->
+                    <button onclick="window.location.href = '/appeal';">@Appeal ban</button>
                 </div>
             </div>
         </dialog>

@@ -49,6 +49,16 @@ $(function() {
         $(".currentLocation").text("u/" + trimPage(currentPage.split("/")[1]));
 
         $(".userUsername").text("u/" + trimPage(currentPage.split("/")[1]));
+    } else if (trimPage(currentPage) == "submit") {
+        $(".currentLocation").text(_("Submit post"));
+    } else if (trimPage(currentPage) == "notifications") {
+        $(".currentLocation").text(_("Notifications"));
+    } else if (trimPage(currentPage) == "dm") {
+        $(".currentLocation").text(_("Messages"));
+    } else if (trimPage(currentPage) == "staff") {
+        $(".currentLocation").text(_("Staff area"));
+    } else if (trimPage(currentPage) == "creategroup") {
+        $(".currentLocation").text(_("Create a group"));
     } else if (trimPage(currentPage) == "banned") {
         $(".currentLocation").text(_("Ban information"));
 
@@ -72,16 +82,8 @@ $(function() {
         } else {
             window.location.replace("/");
         }
-    } else if (trimPage(currentPage) == "submit") {
-        $(".currentLocation").text(_("Submit post"));
-    } else if (trimPage(currentPage) == "notifications") {
-        $(".currentLocation").text(_("Notifications"));
-    } else if (trimPage(currentPage) == "dm") {
-        $(".currentLocation").text(_("Messages"));
-    } else if (trimPage(currentPage) == "staff") {
-        $(".currentLocation").text(_("Staff area"));
-    } else if (trimPage(currentPage) == "creategroup") {
-        $(".currentLocation").text(_("Create a group"));
+    } else if (trimPage(currentPage) == "appeal") {
+        $(".currentLocation").text(_("Appeal a ban"));
     } else {
         $(".currentLocation").text(_("Error 404"));
         $(".error404").show();

@@ -448,8 +448,8 @@ function getModModmail() {
                                 $("<div class='info'>").append([
                                     (
                                         !userDocument.exists ?
-                                        $("<span>").text(_("Posted by a deleted user")) :
-                                        $("<span>").html(_("Posted by {0}", [
+                                        $("<span>").text(_("Sent by a deleted user")) :
+                                        $("<span>").html(_("Sent by {0}", [
                                             $("<div>").append(
                                                 $("<a>")
                                                     .attr("href", "/u/" + userDocument.data().username)

@@ -35,6 +35,7 @@ lang.load("en_GB", {
         },
         "{0} post pts + {1} comment pts": "{0} post pts + {1} comment pts",
         "Posted by {0}": "Posted by {0}",
+        "Sent by {0}": "Sent by {0}",
         "Upvote - {0}": "Upvote - {0}",
         "Downvote - {0}": "Downvote - {0}",
         "Comment - {0}": "Comment - {0}",
@@ -109,6 +110,8 @@ lang.load("en_GB", {
         "You cannot perform this action because you're permanently banned from {0}.": "You cannot perform this action because you're permanently banned from <strong>g/{0}</strong>.",
         "You cannot perform this action because you're currently banned from {0}. Your ban will be lifted in {1}.": "You cannot perform this action because you're currently banned from <strong>g/{0}</strong>. Your ban will be lifted in {1}.",
         "You must be a moderator of g/{0} to access moderator tools for this group": "You must be a moderator of g/{0} to access moderator tools for this group",
-        "Message the moderators of {0}": "Message the moderators of g/{0}"
+        "Message the moderators of {0}": "Message the moderators of g/{0}",
+        "You are currently banned from using Glipo, but your ban will be lifted in {0}.": "You are currently banned from using Glipo, but your ban will be lifted in {0}.",
+        "For more information about your ban, check the messages that were sent to you from u/modbot.": "For more information about your ban, <a href='/dm?user=modbot' target='_blank'>check the messages that were sent to you from u/modbot</a>."
     }
 });
