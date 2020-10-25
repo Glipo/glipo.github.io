@@ -14,6 +14,7 @@ lang.load("en_GB", {
         "...": "...",
         "{0}. {1}": "{0}. {1}",
         "> {0}": "> {0}",
+        "{0} - Glipo": "{0} - Glipo",
         "{0} - Selected": "{0} - Selected",
         "Media selected: {0} ({1} KB)": "Media selected: {0} ({1} KB)",
         "Joined {0}": "Joined {0}",

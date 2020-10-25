@@ -89,6 +89,8 @@ $(function() {
         $(".error404").show();
     }
 
+    $("title").text(_("{0} - Glipo", [$(".currentLocation").text()]));
+
     for (var i = 0; i < $("[data-location]").length; i++) {
         var targetElement = $("[data-location]").eq(i);
         var targetLocation = targetElement.attr("data-location");
