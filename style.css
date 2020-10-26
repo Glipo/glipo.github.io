@@ -721,6 +721,12 @@ blockquote {
     border-right: 5px solid var(--blue);
 }
 
+img.aboutLogo {
+    width: 30%;
+    min-width: 150px;
+    margin-top: 20px;
+}
+
 .start {
     text-align: start;
 }
@@ -747,6 +753,10 @@ blockquote {
 
 .signedOut {
     display: unset;
+}
+
+.userIsMe {
+    display: none;
 }
 
 .isStaff {
@@ -1167,6 +1177,29 @@ blockquote {
     margin-bottom: 40px;
 }
 
+.settingsSheet label {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.settingsSheet label input {
+    width: calc(100% - 175px);
+}
+
+.settingsSheet label select {
+    width: calc(100% - 155px);
+}
+
+.settingsSheet label textarea {
+    width: calc(100% - 175px);
+    vertical-align: top;
+}
+
+.settingsSheet .itemDescription {
+    margin-left: 160px;
+    font-size: 0.8em;
+}
+
 .spoiler {
     background-color: var(--foreground);
     color: var(--foreground);
@@ -1224,7 +1257,7 @@ blockquote {
     display: none;
 }
 
-.loadedGroupResults, .loadedUserResults, .loadedPostsHeader, .loadedPosts, .noPosts, .pageNonExistent, .loadedDm, .selfMessaging, .notificationsNotEnabled, .searchSiteWidePrompt, .noResults, .postIsEdited {
+.loadedUser, .loadedGroupResults, .loadedUserResults, .loadedPostsHeader, .loadedPosts, .noPosts, .pageNonExistent, .loadedDm, .selfMessaging, .notificationsNotEnabled, .searchSiteWidePrompt, .noResults, .postIsEdited {
     display: none;
 }
 
@@ -1523,6 +1556,14 @@ h3 .staffBadge {
     
     .comment .actions div:last-of-type {
         width: 100px;
+    }
+
+    .settingsSheet label input, .settingsSheet label select, .settingsSheet label textarea {
+        width: calc(100% - 20px);
+    }
+    
+    .settingsSheet .itemDescription {
+        margin-left: unset;
     }
 }
 

@@ -55,6 +55,8 @@ $(function() {
         $(".currentLocation").text(_("Notifications"));
     } else if (trimPage(currentPage) == "dm") {
         $(".currentLocation").text(_("Messages"));
+    } else if (trimPage(currentPage) == "settings") {
+        $(".currentLocation").text(_("Settings"));
     } else if (trimPage(currentPage) == "staff") {
         $(".currentLocation").text(_("Staff area"));
     } else if (trimPage(currentPage) == "creategroup") {

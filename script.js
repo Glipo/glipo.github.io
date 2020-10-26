@@ -712,6 +712,98 @@ function submitAppeal() {
     }
 }
 
+function savePropertyType(elementClass, pushedButtonNewState = null) {
+    var pushedButton = $();
+    var previousButtonText = null;
+
+    if ($(document.activeElement).is("button")) {
+        pushedButton = $(document.activeElement);
+        previousButtonText = pushedButton.text();
+    }
+
+    var changes = {};
+
+    $("." + elementClass).each(function() {
+        changes[$(this).attr("data-property")] = $(this).val();
+    });
+
+    if (elementClass == "settingsPersonalProperty") {
+        if (changes.username.toLowerCase() != currentUser.username.toLowerCase()) {
+            $("#settingsProfileError").text(_("Sorry, your new username must be the same as your old username, excluding casing changes."));
+
+            return;
+        }
+    }
+
+    pushedButton.prop("disabled", true);
+    pushedButton.text(pushedButtonNewState);
+
+    api.saveSettings({
+        type: {"settingsPersonalProperty": "personal"}[elementClass],
+        changes: changes
+    }).then(function() {
+        pushedButton.prop("disabled", false);
+        pushedButton.text(previousButtonText);
+    }).catch(function(error) {
+        console.error("Glipo backend error:", error);
+
+        pushedButton.prop("disabled", false);
+        pushedButton.text(_("Error!"));
+    });
+}
+
+function changePassword() {
+    if ($("#settingsCurrentPassword").val().trim() != "" && $("#settingsNewPassword").val().length >= 6) {
+        $("#changePasswordButton").prop("disabled", true);
+        $("#changePasswordButton").text(_("Changing password..."));
+
+        firebase.auth().currentUser.reauthenticateWithCredential(
+            firebase.auth.EmailAuthProvider.credential(
+                firebase.auth().currentUser.email,
+                $("#settingsCurrentPassword").val()
+            )
+        ).then(function() {
+            firebase.auth().currentUser.updatePassword($("#settingsNewPassword").val()).then(function() {
+                $("#changePasswordButton").prop("disabled", false);
+                $("#changePasswordButton").text(_("Change password"));
+                $("#changePasswordError").text("");
+
+                $("#settingsCurrentPassword").val("");
+                $("#settingsNewPassword").val("");
+            }).catch(function(error) {
+                console.error("Glipo auth error:", error);
+
+                $("#changePasswordButton").prop("disabled", false);
+                $("#changePasswordButton").text(_("Change password"));
+                $("#changePasswordError").text(_("Sorry, an internal error has occurred. Please try changing your password again later."));
+            });
+        }).catch(function(error) {
+            if (error.code == "auth/invalid-email") {
+                console.error("Glipo auth error: Email address cannot be found");
+
+                $("#changePasswordError").text(_("Sorry, an internal error has occurred. Please try changing your password again later."));
+            } else if (error.code == "auth/user-not-found") {
+                console.error("Glipo auth error: User cannot be found");
+
+                $("#changePasswordError").text(_("Sorry, an internal error has occurred. Please try changing your password again later."));
+            } else if (error.code == "auth/wrong-password") {
+                $("#changePasswordError").text(_("The current password that you have entered is wrong and doesn't match this account's password. Try typing it in again."));
+            } else {
+                console.error("Glipo auth error:", error);
+
+                $("#changePasswordError").text(_("We ran into a problem when signing into your account. Please check your internet connection and try again."));
+            }
+
+            $("#changePasswordButton").prop("disabled", false);
+            $("#changePasswordButton").text(_("Change password"));
+        });
+    } else if ($("#settingsCurrentPassword").val() != "") {
+        $("#changePasswordError").text(_("Your new password must be at least 6 characters long."));
+    } else {
+        $("#changePasswordError").text(_("Please enter your current password to change it."));
+    }
+}
+
 $(function() {
     if (localStorage.getItem("signedInUsername") != null) {
         currentUser.username = localStorage.getItem("signedInUsername");
@@ -727,6 +819,9 @@ $(function() {
             currentUser.uid = user.uid;
 
             firebase.firestore().collection("users").doc(currentUser.uid).get().then(function(userDocument) {
+                $(".loadingUser").hide();
+                $(".loadedUser").show();
+                
                 if (userDocument.exists) {
                     currentUser.username = userDocument.data().username;
 
@@ -775,6 +870,16 @@ $(function() {
                             if (userMembershipDocument.exists) {
                                 $(".groupJoinButton").text(_("Leave"));
                                 $(".groupJoinButton").removeClass("blue");
+                            }
+                        });
+                    }
+
+                    if (trimPage(currentPage) == "settings") {
+                        $(".settingsPersonalProperty").each(function() {
+                            var propertyKey = $(this).attr("data-property");
+
+                            if ($(this).hasClass("settingsPersonalProperty")) {
+                               $(this).val(userDocument.data()[propertyKey]);
                             }
                         });
                     }
