@@ -379,7 +379,10 @@ function getMemberList() {
                 var userPerms = permTypes.MEMBER;
                 var userPermsText = "";
 
-                if (banInfoDocument.data().bannedForever || (banInfoDocument.data().bannedUntil != null && new Date().getTime() < banInfoDocument.data().bannedUntil.toDate().getTime())) {
+                if (banInfoDocument.exists && (
+                        banInfoDocument.data().bannedForever ||
+                        (banInfoDocument.data().bannedUntil != null && new Date().getTime() < banInfoDocument.data().bannedUntil.toDate().getTime())
+                )) {
                     userPerms = permTypes.BANNED;
                 } else if (memberDocument.data().moderator) {
                     if (memberDocument.data().owner) {

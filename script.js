@@ -1173,7 +1173,26 @@ $(function() {
         $("nav .search input").val(core.getURLParameter("q"));
     }
 
-    if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
+    if (trimPage(currentPage) == "/") {
+        firebase.firestore().collection("groups").orderBy("memberCount", "desc").limit(5).get().then(function(groupDocuments) {
+            $(".trendingGroups").html("");
+
+            groupDocuments.forEach(function(groupDocument) {
+                $(".trendingGroups").append(
+                    $("<p>").append(
+                        $("<a class='bold noColour'>")
+                            .attr("href", "/g/" + groupDocument.data().name)
+                            .text("g/" + groupDocument.data().name)
+                        ,
+                        $("<br>"),
+                        $("<span>").text(_("{0} members", groupDocument.data().memberCount))
+                    )
+                )
+            });
+
+            $(".loadedTrendingGroups").show();
+        });
+    } else if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
         var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
 
         $(".groupName").text("g/" + groupName);

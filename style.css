@@ -788,6 +788,10 @@ img.aboutLogo {
     display: unset;
 }
 
+.loadedTrendingGroups {
+    display: none;
+}
+
 .userIsMe {
     display: none;
 }

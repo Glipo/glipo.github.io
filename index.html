@@ -803,14 +803,12 @@
                         <button onclick="showSignUpDialog();" class="big blue">Sign up</button>
                     </card>
                 </span>
-                <card data-location="^\/$">
-                    <h2>@Trending groups</h2>
-                    <div>g/helloworld</div>
-                    <div>g/memes</div>
-                    <div>g/interesting</div>
-                    <div>g/technology</div>
-                    <div>g/glipo</div>
-                </card>
+                <span class="loadedTrendingGroups">
+                    <card data-location="^\/$">
+                        <h2>@Trending groups</h2>
+                        <div class="trendingGroups"></div>
+                    </card>
+                </span>
                 <span class="canCreateGroups">
                     <card data-location="^\/$">
                         <h1>@Want a group of your own?</h1>
