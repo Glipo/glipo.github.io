@@ -882,6 +882,80 @@ $(function() {
                                $(this).val(userDocument.data()[propertyKey]);
                             }
                         });
+
+                        var countedBlockedUsers = 0;
+
+                        $(".blockedUsers").html("");
+
+                        if (Array.isArray(userDocument.data().blockedUsers) && userDocument.data().blockedUsers.length > 0) {
+                            for (var i = 0; i < userDocument.data().blockedUsers.length; i++) {
+                                (function(currentI, blockedUid) {
+                                    firebase.firestore().collection("users").doc(blockedUid).get().then(function(blockedUserDocument) {
+                                        if (blockedUserDocument.exists) {
+                                            $(".blockedUsers").append(
+                                                $("<card class='post inline'>")
+                                                    .append([
+                                                        $("<div class='content'>").append(
+                                                            $("<a class='bold noColour'>")
+                                                                .addClass(blockedUserDocument.data().staff ? "staffBadge" : "")
+                                                                .attr("href", "/u/" + blockedUserDocument.data().username)
+                                                                .text("u/" + blockedUserDocument.data().username)
+                                                        )
+                                                        ,
+                                                        $("<div class='actions'>").append(
+                                                            $("<div class='full'>").append(
+                                                                $("<button>")
+                                                                    .attr("aria-label", _("Unblock"))
+                                                                    .append([
+                                                                        $("<icon>").text("clear"),
+                                                                        document.createTextNode(" "),
+                                                                        $("<span>").text(_("Unblock"))
+                                                                    ])
+                                                                    .click(function() {
+                                                                        var newBlockList = [];
+
+                                                                        for (var i = 0; i < userDocument.data().blockedUsers.length; i++) {
+                                                                            if (userDocument.data().blockedUsers[i] != blockedUid) {
+                                                                                newBlockList.push(userDocument.data().blockedUsers[i]);
+                                                                            }
+                                                                        }
+
+                                                                        if ($(this).closest(".blockedUsers").children().length == 1) {
+                                                                            $(this).closest(".blockedUsers").html("").append(
+                                                                                $("<p class='info middle'>").text(_("You're now friends with everyone again!"))
+                                                                            );
+                                                                        } else {
+                                                                            $(this).closest("card.post.inline").remove();
+                                                                        }
+
+                                                                        api.saveSettings({
+                                                                            type: "personal",
+                                                                            changes: {
+                                                                                blockedUsers: newBlockList
+                                                                            }
+                                                                        });
+                                                                    })
+                                                            )
+                                                        )
+                                                    ])
+                                            );
+    
+                                            countedBlockedUsers++;
+                                        }
+    
+                                        if (currentI == userDocument.data().blockedUsers.length - 1 && countedBlockedUsers == 0) {
+                                            $(".blockedUsers").append(
+                                                $("<p class='info middle'>").text(_("You haven't blocked any users yet"))
+                                            );
+                                        }
+                                    });
+                                })(i, String(userDocument.data().blockedUsers[i]));
+                            }
+                        } else {
+                            $(".blockedUsers").append(
+                                $("<p class='info middle'>").text(_("You haven't blocked any users yet"))
+                            );
+                        }
                     }
                 } else {
                     firebase.firestore().collection("users").doc(currentUser.uid).set({

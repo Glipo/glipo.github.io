@@ -283,6 +283,35 @@ card.post .actions div button {
     padding-bottom: 5px;
 }
 
+card.post.inline {
+    position: relative;
+    height: 30px;
+}
+
+card.post.inline .content {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    width: calc(50% - 15px);
+}
+
+[dir="rtl"] card.post.inline .content {
+    left: unset;
+    right: 10px;
+}
+
+card.post.inline .actions {
+    position: absolute;
+    top: -5px;
+    right: 10px;
+    width: calc(50% - 15px);
+}
+
+[dir="rtl"] card.post.inline .actions {
+    left: 10px;
+    right: unset;
+}
+
 card.informational {
     background-color: var(--yellow);
     color: var(--yellowText);
@@ -596,6 +625,10 @@ textarea.noResize {
 
 h2.step {
     font-size: 1.2em;
+}
+
+p.info {
+    color: var(--shade3);
 }
 
 a {
