@@ -443,7 +443,7 @@ function submitPost() {
                 $(".submitButton").prop("disabled", true);
                 $(".submitButton").text(_("Submitting..."));
         
-                checkGroupBanState(group, function() {
+                checkGroupBanState(submitGroup, function() {
                     api.submitPost({
                         group: submitGroup,
                         title: submitTitle.trim(),
@@ -481,7 +481,7 @@ function submitPost() {
                 $(".submitButton").prop("disabled", true);
                 $(".submitButton").text(_("Uploading..."));
 
-                checkGroupBanState(group, function() {
+                checkGroupBanState(submitGroup, function() {
                     firebase.storage().ref(
                         "media/" +
                         core.generateKey(32) +
@@ -554,7 +554,7 @@ function submitPost() {
                         return;
                     }
 
-                    checkGroupBanState(group, function() {
+                    checkGroupBanState(submitGroup, function() {
                         api.submitCrosspost({
                             group: submitGroup,
                             title: submitTitle.trim(),
