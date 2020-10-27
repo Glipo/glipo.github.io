@@ -48,6 +48,7 @@ try {
 } catch (e) {}
 
 var groupNameSettleTimeout;
+var deleteAccountActiveFromSettings = false;
 
 function timeDifferenceToHumanReadable(milliseconds) {
     var seconds = Math.floor(milliseconds / 1000);
@@ -802,6 +803,29 @@ function changePassword() {
     } else {
         $("#changePasswordError").text(_("Please enter your current password to change it."));
     }
+}
+
+function deleteAccount() {
+    if (deleteAccountActiveFromSettings) {
+        $(".deleteAccountButton").prop("disabled", true);
+        $(".deleteAccountButton").text(_("Deleting... 😭"));
+        
+        api.deleteAccount({
+            iKnowTheConsequences: "DELETE MY ACCOUNT NOW!"
+        }).then(function() {
+            signOut();
+
+            window.location.replace("/");
+        });
+    } else {
+        throw "Your account was saved from being deleted! Next time, don't copy and paste random scripts into the console without knowing what they do.";
+    }
+}
+
+function showDeleteAccountDialog() {
+    deleteAccountActiveFromSettings = true;
+    
+    $(".deleteAccountDialog")[0].showModal();
 }
 
 $(function() {

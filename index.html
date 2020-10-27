@@ -625,7 +625,7 @@
                                     <h2>@Delete your account</h2>
                                     <p>@When you delete your account, your profile will be removed. Your posts and comments will still be visible to others, but your username will not be shown.</p>
                                     <p>@You may want to delete your posts and comments first before deleting your account.</p>
-                                    <button>@Delete account</button>
+                                    <button onclick="showDeleteAccountDialog();">@Delete account</button>
                                 </div>
                                 <div data-tab="safety" class="settingsSheet">
                                     <h2>@Blocked users</h2>
@@ -1351,6 +1351,20 @@
                 <div class="end buttonRow">
                     <button onclick="blockSelectedUser();" class="blue">@Yes</button>
                     <button onclick="closeDialogs();">@No</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="deleteAccountDialog hasParagraph">
+            <div class="title">
+                <span>@Delete account?</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="blockUsername">@Do you really want to delete your Glipo account? This cannot be undone! Your posts and comments will still be visible on Glipo, but your username will be removed from them. We'll miss you!</p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="deleteAccount();" class="blue deleteAccountButton">@Yes</button>
+                    <button onclick="deleteAccountActiveFromSettings = false; closeDialogs();">@No</button>
                 </div>
             </div>
         </dialog>

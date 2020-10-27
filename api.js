@@ -33,5 +33,6 @@ var api = {
     archiveModmail: firebase.functions().httpsCallable("archiveModmail"),
     changeMemberPerms: firebase.functions().httpsCallable("changeMemberPerms"),
     submitAppeal: firebase.functions().httpsCallable("submitAppeal"),
-    saveSettings: firebase.functions().httpsCallable("saveSettings")
+    saveSettings: firebase.functions().httpsCallable("saveSettings"),
+    deleteAccount: firebase.functions().httpsCallable("deleteAccount")
 };
