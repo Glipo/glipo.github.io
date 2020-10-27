@@ -409,6 +409,7 @@ function getMemberList() {
                                 $("<a class='bold noColour'>")
                                     .addClass(userDocument.data().staff ? "staffBadge" : (memberDocument.data().moderator ? "moderatorBadge" : ""))
                                     .attr("href", "javascript:void();")
+                                    .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : (memberDocument.data().moderator ? _("This user is a moderator of this group.") : null))
                                     .text("u/" + userDocument.data().username)
                                 ,
                                 $("<span>").text(" · "),

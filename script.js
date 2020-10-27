@@ -923,6 +923,7 @@ $(function() {
                                                             $("<a class='bold noColour'>")
                                                                 .addClass(blockedUserDocument.data().staff ? "staffBadge" : "")
                                                                 .attr("href", "/u/" + blockedUserDocument.data().username)
+                                                                .attr("title", blockedUserDocument.data().staff ? _("This user is a staff member of Glipo.") : "")
                                                                 .text("u/" + blockedUserDocument.data().username)
                                                         )
                                                         ,

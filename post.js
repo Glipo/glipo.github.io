@@ -54,7 +54,7 @@ function getPost(groupName, postId) {
                                             .attr("href", "/u/" + userDocument.data().username)
                                             .text("u/" + userDocument.data().username)
                                             .addClass(userDocument.data().staff ? "staffBadge" : (groupModerators.indexOf(postDocument.data().author) > -1 ? "moderatorBadge" : ""))
-                                            .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : (groupModerators.indexOf(postDocument.data().author) > -1 ? _("This user is a moderator of this group") : null))
+                                            .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : (groupModerators.indexOf(postDocument.data().author) > -1 ? _("This user is a moderator of this group.") : null))
                                     ).html()
                                 ]));
                             } else {
@@ -394,7 +394,7 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                                 .attr("href", "/u/" + userDocument.data().username)
                                                 .text("u/" + userDocument.data().username)
                                                 .addClass(userDocument.data().staff ? "staffBadge" : (groupModerators.indexOf(commentDocument.data().author) > -1 ? "moderatorBadge" : ""))
-                                                .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : (groupModerators.indexOf(commentDocument.data().author) > -1 ? _("This user is a moderator of this group") : null))
+                                                .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : (groupModerators.indexOf(commentDocument.data().author) > -1 ? _("This user is a moderator of this group.") : null))
                                         ),
                                         $("<span>").text(" · "),
                                         $("<span>")
@@ -662,7 +662,7 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                                                                 .attr("href", "/u/" + userDocument.data().username)
                                                                                 .text("u/" + userDocument.data().username)
                                                                                 .addClass(userDocument.data().staff ? "staffBadge" : (groupModerators.indexOf(postDocument.data().author) > -1 ? "moderatorBadge" : ""))
-                                                                                .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : (groupModerators.indexOf(postDocument.data().author) > -1 ? _("This user is a moderator of this group") : null))
+                                                                                .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : (groupModerators.indexOf(postDocument.data().author) > -1 ? _("This user is a moderator of this group.") : null))
                                                                         ),
                                                                         $("<span>").text(" · "),
                                                                         $("<span>")
