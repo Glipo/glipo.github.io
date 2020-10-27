@@ -1251,6 +1251,7 @@ $(function() {
                     $(".userPostCount").text(_("{0} posts", [userDocument.data().postCount]));
                     $(".userCommentCount").text(_("{0} comments", [userDocument.data().commentCount]));
                     $(".userBio").text(userDocument.data().bio || "");
+                    $(".userAdminCommentary").text(userDocument.data().adminCommentary || "");
 
                     if (userDocument.data().staff) {
                         $(".userUsername").addClass("staffBadge");
