@@ -293,6 +293,9 @@ card.post.inline .content {
     top: 15px;
     left: 10px;
     width: calc(50% - 15px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 [dir="rtl"] card.post.inline .content {
@@ -455,6 +458,7 @@ label > input[type="checkbox"] + span, label > input[type="radio"] + span {
 
 label > span:first-child {
     width: 150px;
+    vertical-align: middle;
 }
 
 button {
@@ -1232,6 +1236,18 @@ img.aboutLogo {
     vertical-align: top;
 }
 
+.settingsSheet label .contentEditor {
+    display: inline-block;
+    width: calc(100% - 165px);
+    margin-bottom: 0;
+    vertical-align: top;
+}
+
+.settingsSheet label .contentEditor textarea {
+    width: calc(100% - 20px);
+    vertical-align: unset;
+}
+
 .settingsSheet .itemDescription {
     margin-left: 160px;
     font-size: 0.8em;
@@ -1469,6 +1485,14 @@ h3 .staffBadge {
     width: calc(100% - 55px);
 }
 
+.ruleEditLine select {
+    width: 80px;
+}
+
+.ruleEditLine input {
+    width: calc(100% - 105px);
+}
+
 @media (max-width: 1000px) {
     nav .location {
         width: calc(30vw - 28px);
@@ -1597,6 +1621,10 @@ h3 .staffBadge {
 
     .settingsSheet label input, .settingsSheet label select, .settingsSheet label textarea {
         width: calc(100% - 20px);
+    }
+
+    .settingsSheet label .contentEditor {
+        width: calc(100% - 10px);
     }
     
     .settingsSheet .itemDescription {

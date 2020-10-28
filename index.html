@@ -336,7 +336,10 @@
             <section class="posts" data-location="^g\/[^\/]+\/modtools$"> <!-- Group moderator tools page -->
                 <div class="signedIn">
                     <div class="isModerator">
-                        <h1 class="mobile"><a href="#" class="groupName groupLink noColour"></a></h1>
+                        <h1 class="mobile">
+                            <a href="#" class="groupName groupLink noColour"></a>
+                            <a href="javascript:modVisitSettings();"><icon aria-label="@Settings">settings</icon></a>
+                        </h1>
                         <div class="tabs">
                             <div class="tabstrip">
                                 <button class="selected" data-tab="modqueue">@Modqueue</button>
@@ -361,6 +364,73 @@
                                     <div class="loadingSpinner"></div>
                                     <div class="modMemberList"></div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="isNotModerator">
+                        <div class="pageMessage middle">
+                            <h1 class="groupNameModRequirement">@You must be a moderator to access moderator tools for this group</h1>
+                            <p>@This page is restricted to moderators only.</p>
+                            <button onclick="window.location.href = '/';" class="blue">@Go home</button>
+                        </div>
+                    </div>
+                    <div class="isGroupBanned">
+                        <div class="pageMessage middle">
+                            <h1>@You are currently banned from this group</h1>
+                            <p>@A moderator banned you from this group, preventing you from being able to access this group's moderator tools.</p>
+                            <button onclick="window.location.href = '/';" class="blue">@Go home</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="signedOut">
+                    <div class="pageMessage middle">
+                        <h1>@Sign in to access moderator tools</h1>
+                        <p>@You must be a moderator of this group to access moderator tools.</p>
+                        <button onclick="showSignInDialog();" class="blue">@Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^g\/[^\/]+\/settings$"> <!-- Group settings page -->
+                <div class="signedIn">
+                    <div class="isModerator">
+                        <span class="mobile">
+                            <card class="transparent noPadding">
+                                <button onclick="visitModeratorTools();" class="transparent">
+                                    <icon aria-hidden="true" class="flippable">arrow_back</icon>
+                                    <span>@Back</span>
+                                </button>
+                            </card>
+                        </span>
+                        <h1 class="modSettingsHeading">@Group settings</h1>
+                        <div class="settingsSheet">
+                            <label>
+                                <span>@Group name</span>
+                                <input id="modSettingsGroupName">
+                            </label>
+                            <p class="itemDescription">@The group name cannot be changed, but the casing of the letters in it can be changed.</p>
+                            <label>
+                                <span>@Description</span>
+                                <textarea placeholder="@Tell us about what your group does..." maxlength="200" id="modSettingsGroupDescription"></textarea>
+                            </label>
+                            <p class="errorMessage" id="modSettingsProfileError"></p>
+                            <div class="buttonRow">
+                                <button onclick="saveGroupProfile();" class="blue" id="modSettingsProfileButton">@Save</button>
+                            </div>
+                            <h2>@Rules</h2>
+                            <p>@Define what your group's members can and can't do through rules. Members can then report posts that violate certain rules through Glipo's reporting system.</p>
+                            <div class="modSettingsRules"></div>
+                            <div class="buttonRow">
+                                <button class="blue">@New rule</button>
+                            </div>
+                            <h2>@Modmail</h2>
+                            <label>
+                                <span>@Welcome message</span>
+                                <div class="contentEditor" id="modSettingsModmailMessage"></div>
+                            </label>
+                            <p class="itemDescription">@This welcome message will appear on the page that users visit to contact your group's moderators.</p>
+                            <p class="errorMessage" id="modSettingsModmailError"></p>
+                            <div class="buttonRow">
+                                <button onclick="saveGroupModmailSettings();" class="blue" id="modSettingsModmailButton">@Save</button>
                             </div>
                         </div>
                     </div>
@@ -647,7 +717,7 @@
                                 </div>
                                 <div data-tab="about">
                                     <div class="middle">
-                                        <img src="media/largeWhite.png" alt="" class="aboutLogo" />
+                                        <img src="/media/largeWhite.png" alt="" class="aboutLogo" />
                                         <h2>@Glipo Web Frontend</h2>
                                         <p>@Connecting communities through the internet</p>
                                         <p>@Made with ❤️ in Norwich, England</p>
@@ -841,6 +911,18 @@
                     <card data-location="^g\/[^\/]+\/modtools$">
                         <h2 class="groupName"></h2>
                         <p class="groupDescription"></p>
+                        <button onclick="modVisitGroup();" class="big">@Visit group</button>
+                        <button onclick="modVisitSettings();" class="big">@Settings</button>
+                    </card>
+                    <card data-location="^g\/[^\/]+\/settings$">
+                        <h2 class="groupName"></h2>
+                        <button onclick="modVisitGroup();" class="big">@Visit group</button>
+                        <button onclick="visitModeratorTools();" class="big">@Moderator tools</button>
+                    </card>
+                    <card data-location="^g\/[^\/]+\/modmail$">
+                        <h2 class="groupName"></h2>
+                        <p class="groupDescription"></p>
+                        <button onclick="toggleGroupMembership();" class="big blue groupJoinButton">@Join</button>
                         <button onclick="modVisitGroup();" class="big">@Visit group</button>
                     </card>
                     <span class="hasRules">
@@ -1336,6 +1418,27 @@
                 <div class="spacer"></div>
                 <div class="end buttonRow">
                     <button onclick="closeDialogs();" class="blue">@Done</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="editRuleModDialog hasTextarea hasMixedInput">
+            <div class="title">
+                <span>@Edit a rule</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p>@Rule title:</p>
+                <div class="ruleEditLine">
+                    <select id="editRuleModPosition"></select>
+                    <input placeholder="@eg. Do not post dino pics" maxlength="100" id="editRuleModTitle">
+                </div>
+                <p>@Rule content:</p>
+                <textarea placeholder="@Tell us more about the rule..." maxlength="500" class="noResize" id="editRuleModContent"></textarea>
+                <p class="errorMessage labelDescription" id="editRuleModError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button class="blue editRuleModButton">@Save</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
                 </div>
             </div>
         </dialog>

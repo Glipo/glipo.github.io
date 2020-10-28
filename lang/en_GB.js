@@ -12,6 +12,7 @@ lang.load("en_GB", {
     textDirection: "ltr",
     strings: {
         "...": "...",
+        "{0}.": "{0}.",
         "{0}. {1}": "{0}. {1}",
         "> {0}": "> {0}",
         "{0} - Glipo": "{0} - Glipo",
@@ -111,6 +112,7 @@ lang.load("en_GB", {
         "You cannot perform this action because you're permanently banned from {0}.": "You cannot perform this action because you're permanently banned from <strong>g/{0}</strong>.",
         "You cannot perform this action because you're currently banned from {0}. Your ban will be lifted in {1}.": "You cannot perform this action because you're currently banned from <strong>g/{0}</strong>. Your ban will be lifted in {1}.",
         "You must be a moderator of g/{0} to access moderator tools for this group": "You must be a moderator of g/{0} to access moderator tools for this group",
+        "Settings for {0}": "Settings for g/{0}",
         "Message the moderators of {0}": "Message the moderators of g/{0}",
         "You are currently banned from using Glipo, but your ban will be lifted in {0}.": "You are currently banned from using Glipo, but your ban will be lifted in {0}.",
         "For more information about your ban, check the messages that were sent to you from u/modbot.": "For more information about your ban, <a href='/dm?user=modbot' target='_blank'>check the messages that were sent to you from u/modbot</a>."

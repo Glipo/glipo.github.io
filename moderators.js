@@ -15,6 +15,7 @@ const permTypes = {
 
 var groupModerators = [];
 var usernameToChangePermsOf;
+var editRuleOldIndex;
 
 function modRemovePost() {
     if ($("#modRemovePostModReason").val().trim() == "") {
@@ -547,10 +548,155 @@ function getModModmail() {
     });
 }
 
+function getModSettingsRules() {
+    var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+    firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
+        $(".modSettingsRules").html("");
+
+        if (groupDocument.data().rules != null && groupDocument.data().rules.length > 0) {
+            for (var i = 0; i < groupDocument.data().rules.length; i++) {
+                var rule = groupDocument.data().rules[i];
+
+                (function(i) {
+                    $(".modSettingsRules").append(
+                        $("<card class='post inline'>")
+                            .append([
+                                $("<div class='content'>").append(
+                                    $("<strong>")
+                                        .attr("title", rule.content)
+                                        .text(_("{0}. {1}", [i + 1, rule.title]))
+                                )
+                                ,
+                                $("<div class='actions'>").append(
+                                    $("<div class='full'>").append(
+                                        $("<button>")
+                                            .attr("aria-label", _("Edit"))
+                                            .append([
+                                                $("<icon>").text("edit"),
+                                                document.createTextNode(" "),
+                                                $("<span>").text(_("Edit"))
+                                            ])
+                                            .click(function() {
+                                                editRuleOldIndex = i;
+
+                                                $("#editRuleModPosition").html("");
+    
+                                                for (var j = 0; j < groupDocument.data().rules.length; j++) {
+                                                    $("#editRuleModPosition").append(
+                                                        $("<option>")
+                                                            .attr("value", j)
+                                                            .text(_("{0}.", [j + 1]))
+                                                    )
+                                                }
+    
+                                                $("#editRuleModPosition").val(String(i));
+                                                $("#editRuleModTitle").val(rule.title);
+                                                $("#editRuleModContent").val(rule.content);
+    
+                                                $(".editRuleModDialog")[0].showModal();
+                                            })
+                                    )
+                                )
+                            ])
+                    );
+                })(i);
+            }
+
+            $(".hasNoRules").hide();
+            $(".hasRules").show();
+        } else {
+            $(".hasRules").hide();
+            $(".hasNoRules").show();
+        }
+    });
+}
+
 function modVisitGroup() {
     var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
 
     window.location.href = "/g/" + groupName;
+}
+
+function modVisitSettings() {
+    var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+    window.location.href = "/g/" + groupName + "/settings";
+}
+
+function saveGroupSettings(settings, callback, errorCallback) {
+    var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+    firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
+        var changes = {
+            ...groupDocument.data(),
+            ...settings
+        };
+
+        api.saveGroupSettings({
+            group: groupName,
+            changes: changes
+        }).then(function() {
+            callback();
+        }).catch(function(error) {
+            console.error("Glipo backend error:", error);
+
+            errorCallback();
+        });
+    });
+}
+
+function saveGroupProfile() {
+    var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+    if ($("#modSettingsGroupName").val().toLowerCase() != groupName.toLowerCase()) {
+        $("#modSettingsProfileError").text(_("Sorry, the new group name must be the same as the old group name, excluding casing changes."));
+
+        return;
+    }
+
+    if ($("#modSettingsGroupDescription").val().trim() == "") {
+        $("#modSettingsProfileError").text(_("Please enter the group's description."));
+
+        return;
+    }
+
+    $("#modSettingsProfileButton").prop("disabled", true);
+    $("#modSettingsProfileButton").text(_("Saving..."));
+
+    saveGroupSettings({
+        name: $("#modSettingsGroupName").val(),
+        description: $("#modSettingsGroupDescription").val().trim()
+    }, function() {
+        $("#modSettingsProfileButton").prop("disabled", false);
+        $("#modSettingsProfileButton").text(_("Save"));
+    }, function() {
+        $("#modSettingsProfileError").text(_("Sorry, an internal error has occurred. Please try saving these settings again later."));
+        $("#modSettingsProfileButton").prop("disabled", false);
+        $("#modSettingsProfileButton").text(_("Save"));
+    });
+}
+
+function saveGroupModmailSettings() {
+    if ($("#modSettingsModmailMessage textarea").val().length > 10000) {
+        $("#modSettingsProfileError").text(_("Your welcome message is too long! Please shorten it so that it's at most 10,000 characters long."));
+
+        return;
+    }
+
+    $("#modSettingsModmailButton").prop("disabled", true);
+    $("#modSettingsModmailButton").text(_("Saving..."));
+
+    saveGroupSettings({
+        modmailMessage: $("#modSettingsModmailMessage textarea").val()
+    }, function() {
+        $("#modSettingsModmailButton").prop("disabled", false);
+        $("#modSettingsModmailButton").text(_("Save"));
+    }, function() {
+        $("#modSettingsModmailError").text(_("Sorry, an internal error has occurred. Please try saving these settings again later."));
+        $("#modSettingsModmailButton").prop("disabled", false);
+        $("#modSettingsModmailButton").text(_("Save"));
+    });
 }
 
 function visitModmailSender() {
@@ -607,12 +753,18 @@ $(function() {
     if (currentPage.startsWith("g/") && trimPage(currentPage).split("/").length > 1) {
         var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
 
+        $(".modSettingsHeading").text(_("Settings for {0}", [groupName]));
         $(".modmailHeading").text(_("Message the moderators of {0}", [groupName]));
 
         firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
             if (groupDocument.exists) {
+                $(".modSettingsHeading").text(_("Settings for {0}", [groupDocument.data().name]));
                 $(".modmailHeading").text(_("Message the moderators of {0}", [groupDocument.data().name]));
                 $(".modmailMessage").html(renderMarkdown(groupDocument.data().modmailMessage || ""));
+
+                $("#modSettingsGroupName").val(groupDocument.data().name);
+                $("#modSettingsGroupDescription").val(groupDocument.data().description);
+                $("#modSettingsModmailMessage textarea").val(groupDocument.data().modmailMessage || "");
 
                 firebase.auth().onAuthStateChanged(function(user) {
                     if (user) {
@@ -630,6 +782,7 @@ $(function() {
                                     getModReports();
                                     getModModmail();
                                     getMemberList();
+                                    getModSettingsRules();
                                 } else {
                                     $(".isModerator").hide();
                                     $(".isGroupBanned").hide();

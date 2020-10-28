@@ -43,6 +43,8 @@ $(function() {
         $(".currentLocation").text("g/" + trimPage(currentPage.split("/")[1]));
     } else if (trimPage(currentPage).match(/^g\/[^\/]+\/modtools$/)) {
         $(".currentLocation").text(_("Moderator tools"));
+    } else if (trimPage(currentPage).match(/^g\/[^\/]+\/settings$/)) {
+        $(".currentLocation").text(_("Group settings"));
     } else if (trimPage(currentPage).match(/^g\/[^\/]+\/modmail$/)) {
         $(".currentLocation").text(_("Message moderators"));
     } else if (trimPage(currentPage).match(/^u\/[^\/]+$/)) {
