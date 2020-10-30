@@ -106,7 +106,7 @@ function renderLink(url) {
         );
 
         renderCrosspost(originalGroup, originalPost);
-    } else if (RE_IMAGE.test(url.split("?")[0].split("#")[0])) {
+    } else if (url.split("?")[0].split("#")[0].match(RE_IMAGE)) {
         if (url.startsWith("https://firebasestorage.googleapis.com/v0/b/glipo-net.appspot.com/o/")) {
             result.append($("<img>")
                 .attr("src", url)
