@@ -558,7 +558,7 @@ function getModSettingsRules() {
             for (var i = 0; i < groupDocument.data().rules.length; i++) {
                 var rule = groupDocument.data().rules[i];
 
-                (function(i) {
+                (function(i, rule) {
                     $(".modSettingsRules").append(
                         $("<card class='post inline'>")
                             .append([
@@ -593,6 +593,7 @@ function getModSettingsRules() {
                                                 $("#editRuleModPosition").val(String(i));
                                                 $("#editRuleModTitle").val(rule.title);
                                                 $("#editRuleModContent").val(rule.content);
+                                                $("#editRuleModError").text("");
     
                                                 $(".editRuleModDialog")[0].showModal();
                                             })
@@ -600,7 +601,7 @@ function getModSettingsRules() {
                                 )
                             ])
                     );
-                })(i);
+                })(i, rule);
             }
 
             $(".hasNoRules").hide();
@@ -699,6 +700,126 @@ function saveGroupModmailSettings() {
     });
 }
 
+function newGroupRule() {
+    var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+    if ($("#newRuleModTitle").val().trim() == "") {
+        $("#newRuleModError").text(_("Please enter the rule's title."));
+
+        return;
+    }
+
+    if ($("#newRuleModContent").val().trim() == "") {
+        $("#newRuleModError").text(_("Please enter the rule's contents."));
+
+        return;
+    }
+
+    $(".newRuleModButton").prop("disabled", true);
+    $(".newRuleModButton").text(_("Saving..."));
+
+    firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
+        var newRules = groupDocument.data().rules || [];
+
+        newRules.push({
+            title: $("#newRuleModTitle").val().trim(),
+            content: $("#newRuleModContent").val().trim()
+        });
+
+        saveGroupSettings({
+            rules: newRules
+        }, function() {
+            closeDialogs();
+            getModSettingsRules();
+
+            $(".newRuleModButton").prop("disabled", false);
+            $(".newRuleModButton").text(_("Save"));
+        }, function() {
+            $("#newRuleModError").text(_("Sorry, an internal error has occurred. Please try editing this rule again later."));
+            $(".newRuleModButton").prop("disabled", false);
+            $(".newRuleModButton").text(_("Save"));
+        });
+    });
+}
+
+function saveGroupRule() {
+    var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+    if ($("#editRuleModTitle").val().trim() == "") {
+        $("#editRuleModError").text(_("Please enter the rule's title."));
+
+        return;
+    }
+
+    if ($("#editRuleModContent").val().trim() == "") {
+        $("#editRuleModError").text(_("Please enter the rule's contents."));
+
+        return;
+    }
+
+    $(".editRuleModButton").prop("disabled", true);
+    $(".editRuleModButton").text(_("Saving..."));
+
+    firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
+        var newRules = groupDocument.data().rules;
+
+        newRules.splice(editRuleOldIndex, 1);
+        newRules.splice($("#editRuleModPosition option:selected").val(), 0, {
+            title: $("#editRuleModTitle").val().trim(),
+            content: $("#editRuleModContent").val().trim()
+        });
+
+        saveGroupSettings({
+            rules: newRules
+        }, function() {
+            closeDialogs();
+            getModSettingsRules();
+
+            $(".editRuleModButton").prop("disabled", false);
+            $(".editRuleModButton").text(_("Save"));
+        }, function() {
+            $("#editRuleModError").text(_("Sorry, an internal error has occurred. Please try editing this rule again later."));
+            $(".editRuleModButton").prop("disabled", false);
+            $(".editRuleModButton").text(_("Save"));
+        });
+    });
+}
+
+function deleteGroupRule() {
+    var groupName = trimPage(currentPage).split("/")[1].toLowerCase().trim();
+
+    $(".deleteRuleModButton").prop("disabled", true);
+    $(".deleteRuleModButton").text(_("Deleting..."));
+
+    firebase.firestore().collection("groups").doc(groupName).get().then(function(groupDocument) {
+        var newRules = groupDocument.data().rules;
+
+        newRules.splice(editRuleOldIndex, 1);
+
+        saveGroupSettings({
+            rules: newRules
+        }, function() {
+            closeDialogs();
+            getModSettingsRules();
+
+            $(".deleteRuleModButton").prop("disabled", false);
+            $(".deleteRuleModButton").text(_("Delete rule"));
+        }, function() {
+            $("#editRuleModError").text(_("Sorry, an internal error has occurred. Please try deleting this rule again later."));
+            $(".deleteRuleModButton").prop("disabled", false);
+            $(".deleteRuleModButton").text(_("Delete rule"));
+        });
+    });
+}
+
+function showNewGroupRuleDialog() {
+    $("#newRuleModTitle").val("");
+    $("#newRuleModContent").val("");
+    $("#newRuleModError").text("");
+
+    $(".newRuleModDialog")[0].showModal();
+}
+
 function visitModmailSender() {
     if (currentUser.uid != null) {
         checkBanStatePage(function() {
@@ -783,20 +904,34 @@ $(function() {
                                     getModModmail();
                                     getMemberList();
                                     getModSettingsRules();
+
+                                    if (memberDocument.data().owner) {
+                                        $(".isNotOwner").hide();
+                                        $(".isOwner").show();
+                                    } else {
+                                        $(".isOwner").hide();
+                                        $(".isNotOwner").show();
+                                    }
                                 } else {
                                     $(".isModerator").hide();
+                                    $(".isOwner").hide();
                                     $(".isGroupBanned").hide();
                                     $(".isNotModerator").show();
+                                    $(".isNotOwner").show();
                                 }
                             });
                         }, function() {
                             $(".isModerator").hide();
+                            $(".isOwner").hide();
                             $(".isNotModerator").hide();
+                            $(".isNotOwner").hide();
                             $(".isGroupBanned").show();
                         });
                     } else {
                         $(".isModerator").hide();
+                        $(".isOwner").hide();
                         $(".isGroupBanned").hide();
+                        $(".isNotOwner").hide();
                         $(".isNotModerator").show();
                     }
                 });

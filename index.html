@@ -396,44 +396,58 @@
             <section class="posts" data-location="^g\/[^\/]+\/settings$"> <!-- Group settings page -->
                 <div class="signedIn">
                     <div class="isModerator">
-                        <span class="mobile">
-                            <card class="transparent noPadding">
-                                <button onclick="visitModeratorTools();" class="transparent">
-                                    <icon aria-hidden="true" class="flippable">arrow_back</icon>
-                                    <span>@Back</span>
-                                </button>
-                            </card>
-                        </span>
-                        <h1 class="modSettingsHeading">@Group settings</h1>
-                        <div class="settingsSheet">
-                            <label>
-                                <span>@Group name</span>
-                                <input id="modSettingsGroupName">
-                            </label>
-                            <p class="itemDescription">@The group name cannot be changed, but the casing of the letters in it can be changed.</p>
-                            <label>
-                                <span>@Description</span>
-                                <textarea placeholder="@Tell us about what your group does..." maxlength="200" id="modSettingsGroupDescription"></textarea>
-                            </label>
-                            <p class="errorMessage" id="modSettingsProfileError"></p>
-                            <div class="buttonRow">
-                                <button onclick="saveGroupProfile();" class="blue" id="modSettingsProfileButton">@Save</button>
+                        <div class="isOwner">
+                            <span class="mobile">
+                                <card class="transparent noPadding">
+                                    <button onclick="visitModeratorTools();" class="transparent">
+                                        <icon aria-hidden="true" class="flippable">arrow_back</icon>
+                                        <span>@Back</span>
+                                    </button>
+                                </card>
+                            </span>
+                            <h1 class="modSettingsHeading">@Group settings</h1>
+                            <div class="settingsSheet">
+                                <label>
+                                    <span>@Group name</span>
+                                    <input id="modSettingsGroupName">
+                                </label>
+                                <p class="itemDescription">@The group name cannot be changed, but the casing of the letters in it can be changed.</p>
+                                <label>
+                                    <span>@Description</span>
+                                    <textarea placeholder="@Tell us about what your group does..." maxlength="200" id="modSettingsGroupDescription"></textarea>
+                                </label>
+                                <p class="errorMessage" id="modSettingsProfileError"></p>
+                                <div class="buttonRow">
+                                    <button onclick="saveGroupProfile();" class="blue" id="modSettingsProfileButton">@Save</button>
+                                </div>
+                                <h2>@Rules</h2>
+                                <p>@Define what your group's members can and can't do through rules. Members can then report posts that violate certain rules through Glipo's reporting system.</p>
+                                <div class="hasRules">
+                                    <div class="modSettingsRules"></div>
+                                </div>
+                                <div class="hasNoRules">
+                                    <p class="info middle">@There are no rules for this group</p>
+                                </div>
+                                <div class="buttonRow">
+                                    <button onclick="showNewGroupRuleDialog();" class="blue">@New rule</button>
+                                </div>
+                                <h2>@Modmail</h2>
+                                <label>
+                                    <span>@Welcome message</span>
+                                    <div class="contentEditor" id="modSettingsModmailMessage"></div>
+                                </label>
+                                <p class="itemDescription">@This welcome message will appear on the page that users visit to contact your group's moderators.</p>
+                                <p class="errorMessage" id="modSettingsModmailError"></p>
+                                <div class="buttonRow">
+                                    <button onclick="saveGroupModmailSettings();" class="blue" id="modSettingsModmailButton">@Save</button>
+                                </div>
                             </div>
-                            <h2>@Rules</h2>
-                            <p>@Define what your group's members can and can't do through rules. Members can then report posts that violate certain rules through Glipo's reporting system.</p>
-                            <div class="modSettingsRules"></div>
-                            <div class="buttonRow">
-                                <button class="blue">@New rule</button>
-                            </div>
-                            <h2>@Modmail</h2>
-                            <label>
-                                <span>@Welcome message</span>
-                                <div class="contentEditor" id="modSettingsModmailMessage"></div>
-                            </label>
-                            <p class="itemDescription">@This welcome message will appear on the page that users visit to contact your group's moderators.</p>
-                            <p class="errorMessage" id="modSettingsModmailError"></p>
-                            <div class="buttonRow">
-                                <button onclick="saveGroupModmailSettings();" class="blue" id="modSettingsModmailButton">@Save</button>
+                        </div>
+                        <div class="isNotOwner">
+                            <div class="pageMessage middle">
+                                <h1 class="groupNameModRequirement">@You must be an owner of this group to change group settings</h1>
+                                <p>@You must be a moderator with owner permissions in order to change this group's settings.</p>
+                                <button onclick="visitModeratorTools();" class="blue">@Back to moderator tools</button>
                             </div>
                         </div>
                     </div>
@@ -1428,6 +1442,24 @@
                 </div>
             </div>
         </dialog>
+        <dialog class="newRuleModDialog hasTextarea hasMixedInput">
+            <div class="title">
+                <span>@New rule</span>
+                <button onclick="closeDialogs();"><icon aria-label="@Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p>@Rule title:</p>
+                <input placeholder="@eg. Do not post dino pics" maxlength="100" class="big" id="newRuleModTitle">
+                <p>@Rule contents:</p>
+                <textarea placeholder="@Tell us more about the rule..." maxlength="500" class="noResize" id="newRuleModContent"></textarea>
+                <p class="errorMessage labelDescription" id="newRuleModError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="newGroupRule();" class="blue newRuleModButton">@Save</button>
+                    <button onclick="closeDialogs();">@Cancel</button>
+                </div>
+            </div>
+        </dialog>
         <dialog class="editRuleModDialog hasTextarea hasMixedInput">
             <div class="title">
                 <span>@Edit a rule</span>
@@ -1439,13 +1471,14 @@
                     <select id="editRuleModPosition"></select>
                     <input placeholder="@eg. Do not post dino pics" maxlength="100" id="editRuleModTitle">
                 </div>
-                <p>@Rule content:</p>
+                <p>@Rule contents:</p>
                 <textarea placeholder="@Tell us more about the rule..." maxlength="500" class="noResize" id="editRuleModContent"></textarea>
                 <p class="errorMessage labelDescription" id="editRuleModError"></p>
                 <div class="spacer"></div>
                 <div class="end buttonRow">
-                    <button class="blue editRuleModButton">@Save</button>
+                    <button onclick="saveGroupRule();" class="blue editRuleModButton">@Save</button>
                     <button onclick="closeDialogs();">@Cancel</button>
+                    <button onclick="deleteGroupRule();" class="deleteRuleModButton">@Delete rule</button>
                 </div>
             </div>
         </dialog>

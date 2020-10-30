@@ -1053,6 +1053,9 @@ $(function() {
             currentUser.uid = null;
             currentUser.username = null;
 
+            $(".loadingUser").hide();
+            $(".loadedUser").show();
+
             $(".signedIn").hide();
             $(".signedOut").show();
 

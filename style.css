@@ -816,6 +816,14 @@ img.aboutLogo {
     display: none;
 }
 
+.isOwner {
+    display: none;
+}
+
+.isNotOwner {
+    display: none;
+}
+
 .isGroupBanned {
     display: none;
 }
