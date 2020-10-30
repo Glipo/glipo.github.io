@@ -345,7 +345,7 @@ function sendDmMessage() {
                         $("<span>").text(" · "),
                         $("<span>").text(_("Sending..."))
                     ]),
-                    $("<div class='postContent'>").html(renderMarkdown(messageContent))
+                    $("<div class='postContent fullContent'>").html(renderMarkdown(messageContent))
                 ])
             );
         });
