@@ -286,7 +286,7 @@ function getDmMessages(user) {
                                                             )
                                                             .text(timeDifferenceToHumanReadable(new Date().getTime() - messageDocument.data().sent.toDate().getTime()))
                                                     ]),
-                                                    $("<div class='postContent'>").html(renderMarkdown(messageDocument.data().content))
+                                                    $("<div class='postContent fullContent'>").html(renderMarkdown(messageDocument.data().content))
                                                 ])
                                         );
     
