@@ -574,6 +574,27 @@ function submitPost() {
                         $(".submitButton").prop("disabled", false);
                         $(".submitButton").text(_("Submit"));
                     });
+                } else {
+                    checkGroupBanState(submitGroup, function() {
+                        api.submitPost({
+                            group: submitGroup,
+                            title: submitTitle.trim(),
+                            content: submitContent.trim(),
+                            type: "link"
+                        }).then(function(postId) {
+                            window.location.href = "/g/" + submitGroup + "/posts/" + postId.data;
+                        }).catch(function(error) {
+                            console.error("Glipo backend error:", error);
+                
+                            $("#submitError").text(_("Sorry, an internal error has occurred. Please try submitting your post again."));
+                            $(".submitButton").prop("disabled", false);
+                            $(".submitButton").text(_("Submit"));
+                        });
+                    }, function(message) {
+                        $("#submitError").html(message);
+                        $(".submitButton").prop("disabled", false);
+                        $(".submitButton").text(_("Submit"));
+                    });
                 }
             }
         } else {
