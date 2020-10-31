@@ -1261,6 +1261,18 @@ img.aboutLogo {
     font-size: 0.8em;
 }
 
+.footerSide {
+    display: inline-block;
+    width: calc(50% - 5px);
+    vertical-align: top;
+}
+
+.footerSide a {
+    display: block;
+    color: var(--foreground);
+    font-weight: bold;
+}
+
 .spoiler {
     background-color: var(--foreground);
     color: var(--foreground);
