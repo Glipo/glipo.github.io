@@ -1,0 +1,137 @@
+/*
+    Glipo
+
+    Copyright (C) Glipo Technologies. All Rights Reserved.
+
+    https://glipo.net
+*/
+
+nav a.page {
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 20px;
+    color: var(--foreground);
+    border-radius: 10px;
+    transition: 0.5s background-color;
+}
+
+nav a.page:hover {
+    background-color: var(--shade2);
+    text-decoration: none;
+}
+
+.menu {
+    width: 300px;
+}
+
+main {
+    padding: 0;
+}
+
+[dir="rtl"] main {
+    padding: 0;
+}
+
+section {
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10vw;
+    padding-right: 10vw;
+}
+
+section > div {
+    margin: 10px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+}
+
+section.highlight {
+    background-color: var(--shade1);
+}
+
+footer {
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: var(--shade3);
+    text-align: center;
+}
+
+footer img {
+    width: 50px;
+    margin-top: 10px;
+    margin-bottom: -10px;
+    filter: grayscale(1);
+    transition: 2s filter;
+}
+
+footer img:hover {
+    filter: grayscale(0);
+}
+
+h1 {
+    font-size: 40px;
+}
+
+img.perspective {
+    width: calc(100% - 20px);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    -webkit-transform: perspective(200px) rotateY(-5deg);
+    -moz-transform: perspective(200px) rotateY(-5deg);
+    transform: perspective(200px) rotateY(-5deg);
+    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+    -webkit-transition: 2s -webkit-transform;
+    -moz-transition: 2s -moz-transform;
+    transition: 2s transform;
+}
+
+img.perspective:hover {
+    -webkit-transform: perspective(200px) rotateY(-3deg);
+    -moz-transform: perspective(200px) rotateY(-3deg);
+    transform: perspective(200px) rotateY(-3deg);
+}
+
+[dir="rtl"] img.perspective {
+    -webkit-transform: perspective(200px) rotateY(5deg);
+    -moz-transform: perspective(200px) rotateY(5deg);
+    transform: perspective(200px) rotateY(5deg);
+}
+
+[dir="rtl"] img.perspective:hover {
+    -webkit-transform: perspective(200px) rotateY(3deg);
+    -moz-transform: perspective(200px) rotateY(3deg);
+    transform: perspective(200px) rotateY(3deg);
+}
+
+@media (max-width: 700px) {
+    nav {
+        text-align: start;
+    }
+
+    nav .menuToggle {
+        float: right;
+    }
+
+    [dir="rtl"] nav .menuToggle {
+        float: left;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .menu {
+        width: calc(100% - 20px);
+    }
+
+    section {
+        display: block;
+    }
+}
