@@ -24,11 +24,16 @@ nav a.page:hover {
     text-decoration: none;
 }
 
+nav a.page.selected {
+    font-weight: bold;
+}
+
 .menu {
     width: 300px;
 }
 
 main {
+    min-height: calc(100vh - 150px);
     padding: 0;
 }
 
@@ -108,6 +113,23 @@ img.perspective:hover {
     -webkit-transform: perspective(200px) rotateY(3deg);
     -moz-transform: perspective(200px) rotateY(3deg);
     transform: perspective(200px) rotateY(3deg);
+}
+
+.helpHome {
+    display: none;
+}
+
+.article .loadingSpinner {
+    margin-top: 150px;
+}
+
+.articleItem {
+    display: none;
+}
+
+.articleNotFound {
+    display: none;
+    padding-top: 50px;
 }
 
 @media (max-width: 700px) {

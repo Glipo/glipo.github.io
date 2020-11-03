@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>@About - Glipo</title>
+        <title>@Help centre - Glipo</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=3">
         <meta name="description" content="Learn more about Glipo, get help with using the platform, and contact us">
@@ -31,6 +31,7 @@
         <script src="/lang.js"></script>
         <script src="/mdRenderer.js"></script>
         <script src="/about/script.js"></script>
+        <script src="/about/help.js"></script>
         <script src="/lang/en_GB.js"></script>
     </head>
     <body>
@@ -40,8 +41,8 @@
                 <img src="/media/small.png" alt="@Glipo" class="mobile" />
             </a>
             <span class="desktop">
-                <a href="/about" class="page selected">@About</a>
-                <a href="/about/help.html" class="page">@Help centre</a>
+                <a href="/about" class="page">@About</a>
+                <a href="/about/help.html" class="page selected">@Help centre</a>
                 <a href="#" class="page">@Work with us</a>
                 <a href="#" class="page">@Donate</a>
                 <a href="javascript:toggleMenu();" class="page menuToggle menuAnchor">
@@ -70,57 +71,30 @@
             <button>@Environmental</button>
         </div>
         <main>
-            <section>
-                <div>
-                    <h1>@Connecting communities through the internet</h1>
-                    <p>@Discover the world of Glipo, a social network where you can discover your community through our groups.</p>
-                    <button onclick="window.location.href = '/';" class="blue">@Visit Glipo</button>
-                </div>
-                <div>
-                    <img src="/media/about/homepage.png" alt="@A screenshot of Glipo's homepage" class="perspective">          
-                </div>
-            </section>
-            <section class="highlight">
-                <div>
-                    <h2>@No ads. Just conversation.</h2>
-                    <p>
-                        @Glipo prides itself on being a network that is
-                        supported by its users. Our users are critical to the
-                        platform, and so we're giving back by not showing any
-                        ads and only asking for them to help out by donating.
-                    </p>
-                </div>
-                <div>
-                    <h2>@Vote on posts you love</h2>
-                    <p>
-                        @Glipo gives you the option to either upvote or downvote
-                        a post. This system ensures that everyone gets the best
-                        experience on the site through Glipo's vote-based
-                        filtering system.
-                    </p>
-                </div>
-                <div>
-                    <h2>@Powered by groups</h2>
-                    <p>
-                        @At its core, Glipo is run by hundreds of communities,
-                        called groups. Groups allow people to talk about a
-                        particular interest, be up-to-date on a certain topic,
-                        or hang out with other like-minded people.
-                    </p>
-                </div>
-            </section>
-            <section>
+            <section class="highlight helpHome">
                 <div class="middle">
-                    <h2>@Read all the latest updates on g/Glipo</h2>
-                    <p>
-                        @Are you looking for help with using Glipo? Make a post
-                        on g/Glipo and our staff will get to you ASAP. You can
-                        also read more about what's new on Glipo and see what
-                        new groups there are, too!
-                    </p>
-                    <button onclick="window.location.href = '/g/Glipo';" class="blue">@Visit g/Glipo</button>
+                    <h1>@Help centre</h1>
+                    <p>@Need help? Read our support articles to learn more about how to use Glipo.</p>
                 </div>
             </section>
+            <section class="articleItem">
+                <button onclick="window.location.href = '/about/help.html';" class="transparent">
+                    <icon aria-hidden="true" class="flippable">arrow_back</icon>
+                    <span>@Help home</span>
+                </button>
+            </section>
+            <div class="article">
+                <div class="loadingSpinner"></div>
+            </div>
+            <div class="articleNotFound">
+                <div class="pageMessage middle">
+                    <h1>@A bit lost?</h1>
+                    <p>@The help article that you requested was not found.</p>
+                    <button onclick="window.location.href = '/about/help.html';" class="blue">@Go to help home</button>
+                    <div class="spacer"></div>
+                    <small>404</small>
+                </div>
+            </div>
         </main>
         <footer>
             <a href="/"><img src="/media/small.png" alt="@Glipo" /></a>

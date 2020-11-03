@@ -6,7 +6,7 @@
     https://glipo.net
 */
 
-function renderMarkdown(markdown) {
+function renderMarkdown(markdown, openLinksInNewTab = true) {
     // HTML injection blocking ─ we use an invisible character which HTML won't parse
     markdown = markdown.trim().replace(/</g, "<\u200C");
 
@@ -32,7 +32,7 @@ function renderMarkdown(markdown) {
         disableForced4SpacesIndentedSublists: true,
         simpleLineBreaks: true,
         requireSpaceBeforeHeadingText: true,
-        openLinksInNewWindow: true,
+        openLinksInNewWindow: openLinksInNewTab,
         splitAdjacentBlockquotes: true
     });
     var html = showdownConverter.makeHtml(markdown);
@@ -49,8 +49,8 @@ function renderMarkdown(markdown) {
         html = html.replace(new RegExp("(?<!<code)\\\^([^\\\s]*)(?!([\\\w\\\s])*<\\\/code>)", "g"), "<sup>$1</sup>"); // Non-bracketed
 
         // Mentions
-        html = html.replace(new RegExp("(?<!<code)(^|>|\\\s|\\\/)g\\\/(([a-zA-Z0-9])*)($|<|\\\s)(?!([\\\w\\\s])*<\\\/code>)", "g"), "$1<a href='https://glipo.net/g/$2'>g/$2</a>$4"); // Groups
-        html = html.replace(new RegExp("(?<!<code)(^|>|\\\s|\\\/)u\\\/(([a-zA-Z0-9])*)($|<|\\\s)(?!([\\\w\\\s])*<\\\/code>)", "g"), "$1<a href='https://glipo.net/u/$2'>u/$2</a>$4"); // Users
+        html = html.replace(new RegExp("(?<!<code)(^|>|\\\s|\\\/)g\\\/(([a-zA-Z0-9])+)($|<|\\\s)(?!([\\\w\\\s])*<\\\/code>)", "g"), "$1<a href='https://glipo.net/g/$2'>g/$2</a>$4"); // Groups
+        html = html.replace(new RegExp("(?<!<code)(^|>|\\\s|\\\/)u\\\/(([a-zA-Z0-9])+)($|<|\\\s)(?!([\\\w\\\s])*<\\\/code>)", "g"), "$1<a href='https://glipo.net/u/$2'>u/$2</a>$4"); // Users
     } else { // Support for WebKit - WebKit doesn't support negative lookbehinds yet
         // JS injection blocking
         html = html.replace(new RegExp("javascript:", "g"), "javascript:return;");
@@ -63,8 +63,8 @@ function renderMarkdown(markdown) {
         html = html.replace(new RegExp("\\\^([^\\\s]*)", "g"), "<sup>$1</sup>"); // Non-bracketed
 
         // Mentions
-        html = html.replace(new RegExp("(^|>|\\\s|\\\/)g\\\/(([a-zA-Z0-9])*)($|<|\\\s)", "g"), "$1<a href='https://glipo.net/g/$2'>g/$2</a>$4"); // Groups
-        html = html.replace(new RegExp("(^|>|\\\s|\\\/)u\\\/(([a-zA-Z0-9])*)($|<|\\\s)", "g"), "$1<a href='https://glipo.net/u/$2'>u/$2</a>$4"); // Users
+        html = html.replace(new RegExp("(^|>|\\\s|\\\/)g\\\/(([a-zA-Z0-9])+)($|<|\\\s)", "g"), "$1<a href='https://glipo.net/g/$2'>g/$2</a>$4"); // Groups
+        html = html.replace(new RegExp("(^|>|\\\s|\\\/)u\\\/(([a-zA-Z0-9])+)($|<|\\\s)", "g"), "$1<a href='https://glipo.net/u/$2'>u/$2</a>$4"); // Users
     }
 
     return html;
