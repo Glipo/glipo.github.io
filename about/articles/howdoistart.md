@@ -18,3 +18,6 @@ In addition to following group rules, you also need to follow the rules of our [
 
 ## Can I use Glipo anonymously?
 Yes, on the condition that if you want to participate in groups, you must sign up ─ you can choose any username you'd like, as long as it follows our name formatting rules (only alphanumeric characters `a` to `z`, `A` to `Z`, `0` to `9`, between 3 and 20 characters long) and that the username that you chose hasn't already been taken by another user. We suggest that you sign up with your main email address, but we won't show your email address to others.
+
+## Can I have multiple accounts?
+We allow our users to have alternative accounts (often called _alt accounts_). However, we forbid our users from creating alternative accounts to circumvent any group-wide or site-wide bans.
