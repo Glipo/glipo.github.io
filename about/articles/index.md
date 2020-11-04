@@ -11,6 +11,7 @@
 <!-- split -->
 
 ## Policies and legal stuff
+[Terms of Service](?article=termsofservice.md)
 [Content Policy](?article=contentpolicy.md)
 
 <!-- section -->
