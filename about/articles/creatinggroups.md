@@ -1,0 +1,9 @@
+# Creating your own Glipo groups
+Glipo is an ever-growing community with hundreds of groups that capture the interests of its members. Creating your own groups can help others to discover a particular interest, and bring people together.
+
+To create your own group, you'll need at least 100 points on your account. To learn more about points, check out [our article about what Glipo is](?article=whatisglipo.md). We require you to have at least 100 points in order to reduce spam and to make sure that you have had enough experience with using Glipo. If you don't have 100 points yet, we suggest that you should participate in the currently-existing groups that you have an interest in so that your posts and comments get enough votes to meet the point requirement.
+
+When you've met the requirement, visit our [group creation page](/creategroup) where you can fill in the details to create your very own group! You'll need to choose a group name, which can be anything you'd like, as long as it follows our name formatting rules (only alphanumeric characters `a` to `z`, `A` to `Z`, `0` to `9`, between 3 and 20 characters long) and that the group name you chose isn't in use already. You'll also need to write a brief description of your group ─ this will appear at the top of the group page, underneath the group name you've chosen.
+
+## Making your very first post
+Once you've created your group, any posts that have been submitted to your group will appear on your feed. Other members can also add your group to their feed by joining your group. You'll be prompted to create the very first post in the group, which will appear to other members when they visit your group page.
