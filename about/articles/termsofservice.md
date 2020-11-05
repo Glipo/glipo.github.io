@@ -70,7 +70,7 @@ Should you wish to interpret these Terms of Service in an alternative format, Gl
 
 **5.10**. Glipo’s maximum aggregate liability under or in connection with the Agreement whether in contract, tort (including negligence) or otherwise, shall in all circumstances be limited to allowing you to receive another copy of the Service. This does not apply to the types of loss set out in condition.
 
-**5.11**. Nothing in this Agreement shall limit or exclude Emux’s liability for:
+**5.11**. Nothing in this Agreement shall limit or exclude Glipo's liability for:
     a. death or personal injury resulting from Glipo’s negligence;
     b. fraud or fraudulent misrepresentation; and
     c. any other liability that cannot be excluded or limited by English and United Kingdom law.
