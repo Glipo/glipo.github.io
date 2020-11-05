@@ -45,9 +45,9 @@ Should you wish to interpret these Terms of Service in an alternative format, Gl
     e. not collect or harvest any information or data from the Service or attempt to decipher any transmissions to or from the servers running the Service.
 
 ## 4. Intellectual Property Rights
-**4.1.** You acknowledge that all intellectual property rights in the Service anywhere in the world belong to Glipo or its licensors, that rights in the Service are licensed and not sold to you, and that you have no rights in, or to, Proxi other than the right to use it in accordance with the terms of these Terms of Service.
+**4.1.** You acknowledge that all intellectual property rights in the Service anywhere in the world belong to Glipo or its licensors, that rights in the Service are licensed and not sold to you, and that you have no rights in, or to, the Service other than the right to use it in accordance with the terms of these Terms of Service.
 
-**4.2.** You acknowledge that You have no right to have access Proxi in source-code form.
+**4.2.** You acknowledge that You have no right to have access to the Service in source-code form.
 
 ## 5. Limitation of Liability
 **5.1.** THE PRODUCTS AND SERVICES MANAGED BY GLIPO TECHNOLOGIES ARE PROVIDED ‘AS IS’, WITHOUT ANY WARRANTY OF ANY KIND. IN NO EVENT SHOULD GLIPO TECHNOLOGIES, ITS AUTHORS, ITS CONTRIBUTORS OR ITS COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIMS, DAMAGES OR OTHER LIABILITIES, ARISING FROM, OR IN CONNECTION WITH THE USE OR DEALINGS OF GLIPO TECHNOLOGIES’S PRODUCTS AND SERVICES.
