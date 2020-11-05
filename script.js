@@ -1002,6 +1002,8 @@ $(function() {
                                 $("<p class='info middle'>").text(_("You haven't blocked any users yet"))
                             );
                         }
+                    } else if (trimPage(currentPage) == "auth") {
+                        authContinue();
                     }
                 } else {
                     firebase.firestore().collection("users").doc(currentUser.uid).set({
@@ -1023,6 +1025,10 @@ $(function() {
                             $("#signUpEmail").val("");
                             $("#signUpPassword").val("");
                             $("#signUpUsername").val("");
+
+                            if (trimPage(currentPage) == "auth") {
+                                authContinue();
+                            }
                         });
                     });
     
@@ -1318,6 +1324,10 @@ $(function() {
                     } else {
                         $(".userIsMe").hide();
                         $(".userIsNotMe").show();
+                    }
+
+                    if ((userDocument.data().bio || "").trim() == "") {
+                        $(".userBioEditLink").text(_("Add a bio"));
                     }
 
                     if (userDocument.data().postCount == 0 && userDocument.data().commentCount == 0) {

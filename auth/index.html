@@ -50,15 +50,41 @@
                     <h1>@Sign into your Glipo Account</h1>
                     <p>@Welcome back! Enter your email address and password to continue.</p>
                     <div class="spacer"></div>
-                    <input type="email" placeholder="@Email address" class="big">
-                    <input type="password" placeholder="@Password" class="big">
+                    <input type="email" placeholder="@Email address" class="big" id="signInEmail">
+                    <input type="password" placeholder="@Password" class="big" id="signInPassword">
                     <div class="spacer"></div>
                     <p><span>@Don't have an account yet?</span> <a href="javascript:switchToState('signUp');">@Sign up instead</a></p>
+                    <p class="errorMessage" id="signInError"></p>
                     <div class="spacer"></div>
                     <div class="buttonRow">
-                        <button class="blue">@Sign in</button>
+                        <button onclick="signIn();" class="blue" id="signInButton">@Sign in</button>
                         <button onclick="window.history.back();">@Cancel</button>
                     </div>
+                </card>
+            </section>
+            <section data-state="signUp">
+                <card>
+                    <h1>@Create a Glipo Account</h1>
+                    <p>@Enter your email address and password below to sign up to Glipo.</p>
+                    <div class="spacer"></div>
+                    <input type="email" placeholder="@Email address" class="big" id="signUpEmail">
+                    <input placeholder="@Username" class="big" id="signUpUsername">
+                    <input type="password" placeholder="@Password" class="big" id="signUpPassword">
+                    <div class="spacer"></div>
+                    <p class="errorMessage" id="signUpUsernameError"></p>
+                    <div class="spacer"></div>
+                    <div class="buttonRow">
+                        <button onclick="authSignUp();" class="blue" id="signUpUsernameButton">@Sign up</button>
+                        <button onclick="switchToState('signIn');">@Back</button>
+                    </div>
+                </card>
+            </section>
+            <section data-state="apiError">
+                <card>
+                    <h1>@Sorry, you cannot connect your Glipo account at this time</h1>
+                    <p>@Contact the developer of the app you're using for help.</p>
+                    <div class="spacer"></div>
+                    <p class="info" id="apiErrorCode">ERROR_UNKNOWN</p>
                 </card>
             </section>
             <footer>
