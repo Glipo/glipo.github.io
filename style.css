@@ -193,6 +193,41 @@ main section.posts h1:first-of-type {
     margin-top: 0;
 }
 
+main.authContainer {
+    margin-left: 10vw;
+    margin-right: 10vw;
+    padding: 0;
+    text-align: center;
+}
+
+main.authContainer section {
+    display: none;
+}
+
+main.authContainer section[data-state="loading"] {
+    display: block;
+}
+
+main.authContainer section card {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+}
+
+main.authContainer footer {
+    margin-top: 20px;
+    color: var(--shade3);
+}
+
+main.authContainer .logo {
+    display: block;
+    margin-bottom: 20px;
+}
+
+main.authContainer .logo img {
+    width: 50px;
+}
+
 main aside {
     display: inline-block;
     width: calc(30vw - 30px);

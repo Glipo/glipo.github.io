@@ -1,0 +1,71 @@
+<!--
+    Glipo
+
+    Copyright (C) Glipo Technologies. All Rights Reserved.
+
+    https://glipo.net
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>@Authentication - Glipo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=3">
+        <meta name="description" content="Sign into your Glipo account">
+        <link rel="shortcut icon" href="/media/small.png">
+        <link rel="stylesheet" href="/lib/dialog-polyfill.css">
+        <link rel="stylesheet" href="/lib/font.css">
+        <link rel="stylesheet" href="/style.css">
+        <script src="/lib/dialog-polyfill.js"></script>
+        <script src="/lib/jquery.min.js"></script>
+        <script src="/lib/showdown.min.js"></script>
+        <script src="/lib/firebase-app.js"></script>
+        <script src="/lib/firebase-analytics.js"></script>
+        <script src="/lib/firebase-auth.js"></script>
+        <script src="/lib/firebase-firestore.js"></script>
+        <script src="/lib/firebase-functions.js"></script>
+        <script src="/lib/firebase-storage.js"></script>
+        <script src="/lib/firebase-messaging.js"></script>
+        <script src="/core.js"></script>
+        <script src="/lang.js"></script>
+        <script src="/mdRenderer.js"></script>
+        <script src="/script.js"></script>
+        <script src="/auth/auth.js"></script>
+        <script src="/api.js"></script>
+        <script src="/lang/en_GB.js"></script>
+    </head>
+    <body>
+        <main class="authContainer">
+            <a href="/" class="logo">
+                <img src="/media/small.png" alt="@Glipo" />
+            </a>
+            <section data-state="loading">
+                <card>
+                    <h1>@Signing you in...</h1>
+                    <div class="loadingSpinner"></div>
+                </card>
+            </section>
+            <section data-state="signIn">
+                <card>
+                    <h1>@Sign into your Glipo Account</h1>
+                    <p>@Welcome back! Enter your email address and password to continue.</p>
+                    <div class="spacer"></div>
+                    <input type="email" placeholder="@Email address" class="big">
+                    <input type="password" placeholder="@Password" class="big">
+                    <div class="spacer"></div>
+                    <p><span>@Don't have an account yet?</span> <a href="javascript:switchToState('signUp');">@Sign up instead</a></p>
+                    <div class="spacer"></div>
+                    <div class="buttonRow">
+                        <button class="blue">@Sign in</button>
+                        <button onclick="window.history.back();">@Cancel</button>
+                    </div>
+                </card>
+            </section>
+            <footer>
+                <a href="/">@Glipo</a> ·
+                <a href="/about/help.html">@Help</a> ·
+                <a href="/about/help.html?article=termsofservice.md">@Terms of Service</a>
+            </footer>
+        </main>
+    </body>
+</html>
