@@ -68,12 +68,14 @@ Should you wish to interpret these Terms of Service in an alternative format, Gl
 
 **5.9.** Glipo is only responsible for loss or damage you suffer that is a foreseeable result of Glipo’s breach of the Agreement or Glipo’s negligence up to the limit specified in Term 5.10, but Glipo is not responsible for any unforeseeable loss or damage. Loss or damage is foreseeable if it is an obvious consequence of Glipo’s breach or if they were contemplated by you and Glipo at the time Glipo granted you the Agreement.
 
-**5.10**. Glipo’s maximum aggregate liability under or in connection with the Agreement whether in contract, tort (including negligence) or otherwise, shall in all circumstances be limited to allowing you to receive another copy of the Service. This does not apply to the types of loss set out in condition.
+**5.10.** Glipo’s maximum aggregate liability under or in connection with the Agreement whether in contract, tort (including negligence) or otherwise, shall in all circumstances be limited to allowing you to receive another copy of the Service. This does not apply to the types of loss set out in condition.
 
-**5.11**. Nothing in this Agreement shall limit or exclude Glipo's liability for:
+**5.11.** Nothing in this Agreement shall limit or exclude Glipo's liability for:
     a. death or personal injury resulting from Glipo’s negligence;
     b. fraud or fraudulent misrepresentation; and
     c. any other liability that cannot be excluded or limited by English and United Kingdom law.
+
+**5.12.** You agree to defend, indemnify and hold harmless Glipo, its authors, its contributors and its copyright holders, against all losses, claims, liabilities and damages whatsoever. You may not falsely represent Glipo in any circumstances.
 
 ## 6. Termination
 **6.1.** If the situation arises such that you need to contact Glipo in writing, you can do so via email at [hi@glipo.net](mailto:hi@glipo.net).
