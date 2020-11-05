@@ -8,7 +8,7 @@ Should you wish to interpret these Terms of Service in an alternative format, Gl
 
 **1.2.** The language of this Agreement is in English (United Kingdom) and any translations made are for reference only and are not in effect. If there are any inaccuracies with the translated versions of this Agreement, the English (United Kingdom) version controls.
 
-**1.3.** This Agreement, its subject matter and its formation, are governed by English and United Kingdom law.
+**1.3.** This Agreement, its subject matter and its formation, is governed by English and United Kingdom law.
 
 **1.4.** The terms of this Agreement apply to the Service and include any updates or supplements to the Service. If any open-source software is included in the Service, the terms of an open-source licence may override some of the terms of this Agreement.
 
