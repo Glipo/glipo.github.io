@@ -35,5 +35,7 @@ var api = {
     submitAppeal: firebase.functions().httpsCallable("submitAppeal"),
     saveSettings: firebase.functions().httpsCallable("saveSettings"),
     saveGroupSettings: firebase.functions().httpsCallable("saveGroupSettings"),
-    deleteAccount: firebase.functions().httpsCallable("deleteAccount")
+    deleteAccount: firebase.functions().httpsCallable("deleteAccount"),
+    grantApiPermission: firebase.functions().httpsCallable("grantApiPermission"),
+    revokeApiPermission: firebase.functions().httpsCallable("revokeApiPermission")
 };

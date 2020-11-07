@@ -79,6 +79,20 @@
                     </div>
                 </card>
             </section>
+            <section data-state="grantPermissions">
+                <card>
+                    <h1 id="grantPermissionsHeader">@Allow this service to connect to your Glipo Account?</h1>
+                    <p>@Connecting your Glipo Account will give permission for this service to:</p>
+                    <div id="grantPermissionsList"></div>
+                    <div class="spacer"></div>
+                    <p><strong>@Only allow services that you trust.</strong> <span>@Some services could use your account to perform malicious activities.</span></p>
+                    <div class="spacer"></div>
+                    <div class="buttonRow">
+                        <button onclick="authGrantPermissions();" class="blue" id="grantPermissionsButton">@Allow</button>
+                        <button onclick="window.location.href = '/';">@Cancel</button>
+                    </div>
+                </card>
+            </section>
             <section data-state="apiError">
                 <card>
                     <h1>@Sorry, you cannot connect your Glipo account at this time</h1>

@@ -30,7 +30,61 @@ function authContinue() {
         if (authApiKey.match(/^[a-zA-Z0-9]+$/)) {
             firebase.firestore().collection("apiKeys").doc(authApiKey).get().then(function(keyDocument) {
                 if (keyDocument.exists) {
-                    window.location.replace("/");
+                    firebase.firestore().collection("users").doc(currentUser.uid).collection("apiGrants").doc(authApiKey).get().then(function(keyGrantDocument) {
+                        if (keyGrantDocument.exists) {
+                            window.location.replace("/");
+                        } else {
+                            $("#grantPermissionsHeader").text(_("Allow {0} to connect to your Glipo Account?", [keyDocument.data().displayName]));
+                            $("#grantPermissionsList").html("");
+
+                            var requestedPermissions = keyDocument.data().permissions || [];
+
+                            $("#grantPermissionsList").append(
+                                $("<details>").append([
+                                    $("<summary>").text(_("View your profile information")),
+                                    $("<p>").text(_("This service will be able to see your username, bio, points, posts and comments."))
+                                ])
+                            );
+
+                            if (requestedPermissions.indexOf("basic") > -1) {
+                                $("#grantPermissionsList").append(
+                                    $("<details>").append([
+                                        $("<summary>").text(_("Perform basic interaction on Glipo")),
+                                        $("<p>").text(_("This service will be able to upvote and downvote posts and comments, as well as join and leave groups. This service can also report posts and comments on your behalf."))
+                                    ])
+                                );
+                            }
+
+                            if (requestedPermissions.indexOf("submit") > -1) {
+                                $("#grantPermissionsList").append(
+                                    $("<details>").append([
+                                        $("<summary>").text(_("Submit posts and comments on your behalf")),
+                                        $("<p>").text(_("This service will be able to submit posts and comments to Glipo from your account at any time."))
+                                    ])
+                                );
+                            }
+
+                            if (requestedPermissions.indexOf("settings") > -1) {
+                                $("#grantPermissionsList").append(
+                                    $("<details>").append([
+                                        $("<summary>").text(_("Edit your account settings")),
+                                        $("<p>").text(_("This service will be able to modify the casing of your username and change any other settings on your Glipo Account. This service cannot change your password."))
+                                    ])
+                                );
+                            }
+
+                            if (requestedPermissions.indexOf("moderation") > -1) {
+                                $("#grantPermissionsList").append(
+                                    $("<details>").append([
+                                        $("<summary>").text(_("Moderate groups that you are part of")),
+                                        $("<p>").text(_("This service will be able to access all moderation tools for groups that you're a moderator in. If you're a group owner, this service will be able to modify group settings."))
+                                    ])
+                                );
+                            }
+
+                            switchToState("grantPermissions");
+                        }
+                    });
                 } else {
                     throwApiError("ERROR_UNKNOWN_KEY");
                 }
@@ -51,6 +105,20 @@ function authSignUp() {
     } else {
         $("#signUpUsernameError").text(_("Please enter your email address and password before continuing."));
     }
+}
+
+function authGrantPermissions() {
+    switchToState("loading");
+
+    api.grantApiPermission({
+        key: authApiKey
+    }).then(function() {
+        authContinue();
+    }).catch(function(error) {
+        console.error("Glipo backend error:", error);
+
+        throwApiError("ERROR_INTERNAL");
+    });
 }
 
 $(function() {

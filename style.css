@@ -228,6 +228,12 @@ main.authContainer .logo img {
     width: 50px;
 }
 
+main.authContainer details {
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: start;
+}
+
 main aside {
     display: inline-block;
     width: calc(30vw - 30px);
@@ -1688,12 +1694,22 @@ h3 .staffBadge {
 }
 
 @media (max-width: 440px) {
+    main.authContainer details {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
     dialog.hasTextarea .content {
         min-width: unset;
     }
 }
 
 @media (max-width: 400px) {
+    main.authContainer {
+        margin-left: 5vw;
+        margin-right: 5vw;
+    }
+    
     label input {
         width: calc(100% - 20px);
     }
