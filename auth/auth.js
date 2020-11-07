@@ -32,7 +32,11 @@ function authContinue() {
                 if (keyDocument.exists) {
                     firebase.firestore().collection("users").doc(currentUser.uid).collection("apiGrants").doc(authApiKey).get().then(function(keyGrantDocument) {
                         if (keyGrantDocument.exists) {
-                            window.location.replace("/");
+                            if (keyDocument.data().redirect.startsWith("/") || keyDocument.data().redirect.startsWith("http://") || keyDocument.data().redirect.startsWith("https://")) {
+                                window.location.replace(keyDocument.data().redirect.replace(/{uid}/g, currentUser.uid));
+                            } else {
+                                throwApiError("ERROR_INVALID_REDIRECT");
+                            }
                         } else {
                             $("#grantPermissionsHeader").text(_("Allow {0} to connect to your Glipo Account?", [keyDocument.data().displayName]));
                             $("#grantPermissionsList").html("");
@@ -91,6 +95,12 @@ function authContinue() {
             });
         } else {
             throwApiError("ERROR_KEY_FORMAT");
+        }
+    } else if (core.getURLParameter("go") != null) {
+        if (core.getURLParameter("go").startsWith("/") || core.getURLParameter("go").startsWith("http://") || core.getURLParameter("go").startsWith("https://")) {
+            window.location.replace(core.getURLParameter("go"));
+        } else {
+            throwApiError("ERROR_INVALID_REDIRECT");
         }
     } else {
         throwApiError("ERROR_NO_KEY");
