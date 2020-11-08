@@ -38,7 +38,7 @@ function authContinue() {
                                 throwApiError("ERROR_INVALID_REDIRECT");
                             }
                         } else {
-                            $("#grantPermissionsHeader").text(_("Allow {0} to connect to your Glipo Account?", [keyDocument.data().displayName]));
+                            $("#grantPermissionsHeader").text(_("Allow {0} to connect to your Glipo Account?", [keyDocument.data().displayName[lang.language] || keyDocument.data().displayName["default"]]));
                             $("#grantPermissionsList").html("");
 
                             var requestedPermissions = keyDocument.data().permissions || [];
