@@ -145,22 +145,24 @@ img.perspective:hover {
 }
 
 .donationAmountInput input {
-    width: calc(100% - 70px);
-    padding-left: 60px;
+    width: calc(100% - 40px);
+    padding-left: 30px;
     text-align: end;
     font-size: 30px;
 }
 
 [dir="rtl"] .donationAmountInput input {
     padding-left: 10px;
-    padding-right: 60px;
+    padding-right: 30px;
 }
 
 .donationAmountInput .currencySymbol {
     position: relative;
     display: inline-block;
-    top: -50px;
+    top: -51px;
     left: 20px;
+    padding-right: 5px;
+    background-color: var(--shade2);
     color: var(--yellow);
     font-size: 30px;
 }
@@ -168,6 +170,8 @@ img.perspective:hover {
 [dir="rtl"] .donationAmountInput .currencySymbol {
     left: unset;
     right: 20px;
+    padding-left: 5px;
+    padding-right: 0;
 }
 
 .donationAmountInput button {
