@@ -8,10 +8,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>@Help centre - Glipo</title>
+        <title>@Donate - Glipo</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=3">
-        <meta name="description" content="Learn more about Glipo, get help with using the platform, and contact us">
+        <meta name="description" content="Help fund Glipo by donating to us">
         <link rel="shortcut icon" href="/media/small.png">
         <link rel="stylesheet" href="/lib/dialog-polyfill.css">
         <link rel="stylesheet" href="/lib/font.css">
@@ -31,7 +31,8 @@
         <script src="/lang.js"></script>
         <script src="/mdRenderer.js"></script>
         <script src="/about/script.js"></script>
-        <script src="/about/help.js"></script>
+        <script src="/about/currencySymbols.js"></script>
+        <script src="/about/donate.js"></script>
         <script src="/lang/en_GB.js"></script>
     </head>
     <body>
@@ -42,9 +43,9 @@
             </a>
             <span class="desktop">
                 <a href="/about" class="page">@About</a>
-                <a href="/about/help.html" class="page selected">@Help centre</a>
+                <a href="/about/help.html" class="page">@Help centre</a>
                 <a href="#" class="page">@Work with us</a>
-                <a href="/about/donate.html" class="page">@Donate</a>
+                <a href="/about/donate.html" class="page selected">@Donate</a>
                 <a href="javascript:toggleMenu();" class="page menuToggle menuAnchor">
                     <span>@More</span>
                     <icon aria-hidden="true" class="menuToggleDropdownIndicator">arrow_drop_down</icon>
@@ -71,30 +72,27 @@
             <button>@Environmental</button>
         </div>
         <main>
-            <section class="highlight helpHome">
+            <section>
                 <div class="middle">
-                    <h1>@Help centre</h1>
-                    <p>@Need help? Read our support articles to learn more about how to use Glipo.</p>
+                    <h1>@Help fund Glipo and preserve our community</h1>
+                    <p>@Without donors, Glipo would not be running today. Show your support by donating to us!</p>
+                    <div class="donationAmountInput">
+                        <select>
+                            <option value="aud">@Australian Dollar</option>
+                            <option value="cad">@Canadian Dollar</option>
+                            <option value="cny">@Chinese Yuan</option>
+                            <option value="eur">@Euro</option>
+                            <option value="inr">@Indian Rupee</option>
+                            <option value="jpy">@Japanese Yen</option>
+                            <option value="gbp" selected>@UK Pound sterling</option>
+                            <option value="usd">@US Dollar</option>
+                        </select>
+                        <input type="number" min="0.01" max="10000" step="0.01" value="5.00">
+                        <span class="currencySymbol" aria-hidden="true">£</span>
+                        <button class="blue">@Donate</button>
+                    </div>
                 </div>
             </section>
-            <section class="articleItem">
-                <button onclick="window.location.href = '/about/help.html';" class="transparent">
-                    <icon aria-hidden="true" class="flippable">arrow_back</icon>
-                    <span>@Help home</span>
-                </button>
-            </section>
-            <div class="article">
-                <div class="loadingSpinner"></div>
-            </div>
-            <div class="articleNotFound">
-                <div class="pageMessage middle">
-                    <h1>@A bit lost?</h1>
-                    <p>@The help article that you requested was not found.</p>
-                    <button onclick="window.location.href = '/about/help.html';" class="blue">@Go to help home</button>
-                    <div class="spacer"></div>
-                    <small>404</small>
-                </div>
-            </div>
         </main>
         <footer>
             <a href="/"><img src="/media/small.png" alt="@Glipo" /></a>
