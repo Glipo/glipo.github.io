@@ -27,11 +27,13 @@
         <script src="/lib/firebase-functions.js"></script>
         <script src="/lib/firebase-storage.js"></script>
         <script src="/lib/firebase-messaging.js"></script>
+        <script src="https://js.stripe.com/v3/"></script>
         <script src="/core.js"></script>
         <script src="/lang.js"></script>
         <script src="/mdRenderer.js"></script>
+        <script src="/script.js"></script>
         <script src="/about/script.js"></script>
-        <script src="/about/currencySymbols.js"></script>
+        <script src="/about/currencies.js"></script>
         <script src="/about/donate.js"></script>
         <script src="/lang/en_GB.js"></script>
     </head>
@@ -89,8 +91,9 @@
                         </select>
                         <input type="number" min="0.01" max="10000" step="0.01" value="5.00">
                         <span class="currencySymbol" aria-hidden="true">£</span>
-                        <button class="blue">@Donate</button>
+                        <button onclick="visitDonationCheckout();" class="blue">@Donate</button>
                     </div>
+                    <p class="errorMessage" id="donationAmountError"></p>
                 </div>
             </section>
         </main>

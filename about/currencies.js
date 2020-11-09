@@ -144,3 +144,5 @@ const CURRENCY_SYMBOLS = {
     "zar": "R",
     "zmw": "ZK"
 };
+
+const ZERO_DECIMAL_CURRENCIES = ["bif", "clp", "djf", "gnf", "jpy", "kmf", "krw", "mga", "pyg", "rwf", "vnd", "vuv", "xaf", "xof", "xpf"];

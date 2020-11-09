@@ -6,6 +6,12 @@
     https://glipo.net
 */
 
+var currentPage = "about";
+
+function trimPage() {
+    return "about";
+}
+
 function showMenu() {
     $(".menu").show();
     $(".menuToggleDropdownIndicator").text("arrow_drop_up");
