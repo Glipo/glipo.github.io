@@ -6,7 +6,7 @@
     https://glipo.net
 */
 
-var stripe = Stripe("pk_test_51HlGrkFjByhTo8fA6n37riDVLxXV2hwVEPWy7YdrV7xPYj20F7944xK8616H5B0oH2lSlNwxfc12GpE2wueE20vV00wSI1B1c7");
+var stripe = Stripe("pk_live_51HlGrkFjByhTo8fAJYk6rCuFQzbPq01AF0pnzAUSYZc6McX8Rru906wZwayfaECDsXg1Vpi27mbh3RbwaIglkvoA002JYoGLUW");
 
 function visitDonationCheckout() {
     if (currentUser.uid == null) {
