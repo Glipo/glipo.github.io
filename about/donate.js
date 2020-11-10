@@ -19,15 +19,25 @@ function visitDonationCheckout() {
         return;
     }
 
-    $(".donationAmountInput button").prop("disabled", true);
-    $(".donationAmountInput button").text(_("Processing..."));
-
     var currency = $(".donationAmountInput select option:selected").val();
     var amount = Number($(".donationAmountInput input").val());
 
     if (!(ZERO_DECIMAL_CURRENCIES.includes(currency))) {
         amount = amount * 100;
     }
+
+    if (amount < 50) {
+        $("#donationAmountError").text(_("Sorry, your donation amount is too small. Try entering a bigger amount!"));
+
+        return;
+    } else if (amount > 1000000) {
+        $("#donationAmountError").text(_("Sorry, your donation amount is too large. Try entering a smaller amount!"));
+
+        return;
+    }
+
+    $(".donationAmountInput button").prop("disabled", true);
+    $(".donationAmountInput button").text(_("Processing..."));
 
     fetch(`https://us-central1-glipo-net.cloudfunctions.net/donations/createPayment/${currency}/${amount}/${currentUser.uid}`, {
         method: "POST"
@@ -74,6 +84,12 @@ $(function() {
             $(".donationAmountInput input").val($(".donationAmountInput input").val() + ".00");
         } else if (!($(".donationAmountInput input").val().match(/^\d+$/)) && ZERO_DECIMAL_CURRENCIES.includes(selectedCurrency)) {
             $(".donationAmountInput input").val($(".donationAmountInput input").val().replace(/\./g, "").replace(/,/g, ""));
+        }
+    });
+
+    $(".donationAmountInput input").keypress(function(event) {
+        if (event.keyCode == 13) {
+            visitDonationCheckout();
         }
     });
 
