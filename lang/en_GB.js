@@ -116,6 +116,7 @@ lang.load("en_GB", {
         "Message the moderators of {0}": "Message the moderators of g/{0}",
         "You are currently banned from using Glipo, but your ban will be lifted in {0}.": "You are currently banned from using Glipo, but your ban will be lifted in {0}.",
         "For more information about your ban, check the messages that were sent to you from u/modbot.": "For more information about your ban, <a href='/dm?user=modbot' target='_blank'>check the messages that were sent to you from u/modbot</a>.",
-        "Allow {0} to connect to your Glipo Account?": "Allow {0} to connect to your Glipo Account?"
+        "Allow {0} to connect to your Glipo Account?": "Allow {0} to connect to your Glipo Account?",
+        "If you wish to donate again (or if you want to tell others how to donate), feel free to visit glipo.net/donate.": "If you wish to donate again (or if you want to tell others how to donate), feel free to visit <a href='/about/donate.html'>glipo.net/donate</a>."
     }
 });

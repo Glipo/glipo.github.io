@@ -1,0 +1,90 @@
+<!--
+    Glipo
+
+    Copyright (C) Glipo Technologies. All Rights Reserved.
+
+    https://glipo.net
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>@Donate - Glipo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=3">
+        <meta name="description" content="Help fund Glipo by donating to us">
+        <link rel="shortcut icon" href="/media/small.png">
+        <link rel="stylesheet" href="/lib/dialog-polyfill.css">
+        <link rel="stylesheet" href="/lib/font.css">
+        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="/about/style.css">
+        <script src="/lib/dialog-polyfill.js"></script>
+        <script src="/lib/jquery.min.js"></script>
+        <script src="/lib/showdown.min.js"></script>
+        <script src="/lib/firebase-app.js"></script>
+        <script src="/lib/firebase-analytics.js"></script>
+        <script src="/lib/firebase-auth.js"></script>
+        <script src="/lib/firebase-firestore.js"></script>
+        <script src="/lib/firebase-functions.js"></script>
+        <script src="/lib/firebase-storage.js"></script>
+        <script src="/lib/firebase-messaging.js"></script>
+        <script src="https://js.stripe.com/v3/"></script>
+        <script src="/core.js"></script>
+        <script src="/lang.js"></script>
+        <script src="/mdRenderer.js"></script>
+        <script src="/script.js"></script>
+        <script src="/about/script.js"></script>
+        <script src="/lang/en_GB.js"></script>
+    </head>
+    <body>
+        <nav>
+            <a href="/" class="logo">
+                <img src="/media/largeWhite.png" alt="@Glipo" class="desktop" />
+                <img src="/media/small.png" alt="@Glipo" class="mobile" />
+            </a>
+            <span class="desktop">
+                <a href="/about" class="page">@About</a>
+                <a href="/about/help.html" class="page">@Help centre</a>
+                <a href="#" class="page">@Work with us</a>
+                <a href="/about/donate.html" class="page selected">@Donate</a>
+                <a href="javascript:toggleMenu();" class="page menuToggle menuAnchor">
+                    <span>@More</span>
+                    <icon aria-hidden="true" class="menuToggleDropdownIndicator">arrow_drop_down</icon>
+                </a>
+            </span>
+            <span class="mobile">
+                <a href="javascript:toggleMenu();" class="page menuToggle">
+                    <icon aria-label="@Menu">menu</icon>
+                </a>
+            </span>
+        </nav>
+        <div class="menu">
+            <span class="mobile">
+                <button onclick="window.location.href = '/about';">@About</button>
+                <button onclick="window.location.href = '/about/help.html';">@Help centre</button>
+                <button>@Work with us</button>
+                <button onclick="window.location.href = '/about/donate.html';">@Donate</button>
+                <hr>
+            </span>
+            <button onclick="window.location.href = '/about/help.html?article=termsofservice.md';">@Terms of Service</button>
+            <button onclick="window.location.href = '/about/help.html?article=contentpolicy.md';">@Content Policy</button>
+            <button>@Privacy Policy</button>
+            <button>@Accessibility</button>
+            <button>@Environmental</button>
+        </div>
+        <main>
+            <section>
+                <div class="middle">
+                    <h1>@Thanks for donating!</h1>
+                    <p>@Your donation will be put towards helping to maintain and build upon Glipo's future.</p>
+                    <p>@If you wish to donate again (or if you want to tell others how to donate), feel free to visit glipo.net/donate.</p>
+                    <button onclick="window.location.href = '/about/index.html';" class="blue">@Done</button>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <a href="/"><img src="/media/small.png" alt="@Glipo" /></a>
+            <p><strong>@Connecting communities through the internet</strong><span> · </span><span>@Made with ❤️ in Norwich, England</span></p>
+            <p>@Copyright &copy; Glipo Technologies. All Rights Reserved.</p>
+        </footer>
+    </body>
+</html>
