@@ -43,17 +43,22 @@ main {
 
 section {
     display: flex;
+    flex-wrap: wrap;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-left: 10vw;
     padding-right: 10vw;
 }
 
-section > div {
+section > div:not(.big) {
     margin: 10px;
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
+}
+
+section > div.big {
+    flex-basis: 100%;
 }
 
 section.highlight {
