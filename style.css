@@ -1554,6 +1554,20 @@ h3 .staffBadge {
     width: calc(100% - 105px);
 }
 
+.donorInfo {
+    display: none;
+}
+
+.donorInfo card {
+    background: linear-gradient(150deg, var(--shade2) 50%, #817d08 100%);
+    text-align: center;
+    font-weight: bold;
+}
+
+[dir="rtl"] .donorInfo card {
+    background: linear-gradient(240deg, var(--shade2) 50%, #817d08 100%);
+}
+
 @media (max-width: 1000px) {
     nav .location {
         width: calc(30vw - 28px);

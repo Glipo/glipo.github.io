@@ -1318,6 +1318,20 @@ $(function() {
                         $(".userStaffTitle").html("");
                     }
 
+                    if (userDocument.data().donor) {
+                        $(".donorSince").text(
+                            _("Glipo donor since {0}", [
+                                lang.format(userDocument.data().donorSince.toDate(), lang.language, {
+                                    month: "long",
+                                    year: "numeric"
+                                })
+                            ])
+                        );
+                        $(".donorInfo").show();
+                    } else {
+                        $(".donorInfo").hide();
+                    }
+
                     if (currentUser.uid == userProfileUid) {
                         $(".userIsNotMe").hide();
                         $(".userIsMe").show();
