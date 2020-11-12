@@ -35,11 +35,3 @@ function toggleMenu() {
         showMenu();
     }
 }
-
-$(function() {
-    $("html").mouseup(function(event) {
-        if (!$(".menuToggle, .menuButton").is(event.target) && $(".menuToggle, .menuButton").has(event.target).length == 0) {
-            hideMenu();
-        }
-    });
-});

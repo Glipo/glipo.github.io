@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>@Donate - Glipo</title>
+        <title>@Work with us - Glipo</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=3">
         <meta name="description" content="Help fund Glipo by donating to us">
@@ -44,8 +44,8 @@
             <span class="desktop">
                 <a href="/about" class="page">@About</a>
                 <a href="/about/help.html" class="page">@Help centre</a>
-                <a href="/about/work.html" class="page">@Work with us</a>
-                <a href="/about/donate.html" class="page selected">@Donate</a>
+                <a href="/about/work.html" class="page selected">@Work with us</a>
+                <a href="/about/donate.html" class="page">@Donate</a>
                 <a href="javascript:toggleMenu();" class="page menuToggle menuAnchor">
                     <span>@More</span>
                     <icon aria-hidden="true" class="menuToggleDropdownIndicator">arrow_drop_down</icon>
@@ -74,10 +74,37 @@
         <main>
             <section>
                 <div class="middle">
-                    <h1>@Thanks for donating!</h1>
-                    <p>@Your donation will be put towards helping to maintain and build upon Glipo's future.</p>
-                    <p>@If you wish to donate again (or if you want to tell others how to donate), feel free to visit glipo.net/donate.</p>
-                    <button onclick="window.location.href = '/about/index.html';" class="blue">@Done</button>
+                    <h1>@Engage with your fans on Glipo</h1>
+                    <p>@Let us grow your brand by establishing an online presence and attracting your very own fanbase.</p>
+                </div>
+            </section>
+            <section>
+                <div class="tabs">
+                    <div class="tabstrip central">
+                        <button class="selected" data-tab="qna">@QnA</button>
+                        <button data-tab="group">@Fan group</button>
+                        <button data-tab="account">@Brand account</button>
+                    </div>
+                    <div class="tabcontents giveMarginTop middle">
+                        <div data-tab="qna">
+                            <img src="/media/graphics/qna.png" />
+                            <h2>@Answer questions asked by your fanbase through g/QnA</h2>
+                            <p>@Directly chat to our users by setting up a Question-and-Answer event with us. This is perfect for personal brands who want to make their name heard out there.</p>
+                            <button onclick="window.location.href = '/g/QnA/modmail';" class="blue">@Organise a QnA event</button>
+                        </div>
+                        <div data-tab="group">
+                            <img src="/media/graphics/fanGroups.png" />
+                            <h2>@Create your very own fan group</h2>
+                            <p>@Attract potential buyers to your brand's dedicated group and allow your fans to share their thoughts about your products.</p>
+                            <button onclick="window.location.href = '/creategroup';" class="blue">@Create a group</button>
+                        </div>
+                        <div data-tab="account">
+                            <img src="/media/graphics/brandAccounts.png" />
+                            <h2>@Establish a brand account for help and support</h2>
+                            <p>@Glipo is a great platform for helping to resolve others' issues. Users can directly message your brand account and you can respond to help.</p>
+                            <button onclick="window.location.href = '/';" class="blue">@Sign up on Glipo</button>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>

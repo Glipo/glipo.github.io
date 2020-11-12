@@ -1109,7 +1109,7 @@ $(function() {
     });
 
     $("html").mouseup(function(event) {
-        if (!$(".location, .menuButton").is(event.target) && $(".location, .menuButton").has(event.target).length == 0) {
+        if (!$(".location, .menuButton, .menuToggle").is(event.target) && $(".location, .menuButton, .menuToggle").has(event.target).length == 0) {
             hideMenu();
         }
     });

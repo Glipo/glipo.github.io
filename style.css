@@ -1121,6 +1121,12 @@ img.aboutLogo {
     border-bottom: 5px solid var(--blue);
 }
 
+.tabs .tabstrip.central {
+    width: fit-content;
+    margin: auto;
+    text-align: center;
+}
+
 .tabs .tabcontents {
     margin-top: 5px;
 }
