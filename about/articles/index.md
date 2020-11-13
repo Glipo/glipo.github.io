@@ -7,6 +7,7 @@
 
 ## Inside Glipo
 [How is Glipo funded?](?article=funding.md)
+[Donating to Glipo](?article=donating.md)
 
 <!-- split -->
 
