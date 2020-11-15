@@ -93,7 +93,9 @@ $(function() {
         $(".error404").show();
     }
 
-    $("title").text(_("{0} - Glipo", [$(".currentLocation").text()]));
+    if (_("{0} - Glipo", [$(".currentLocation").text()]) != "{0} - Glipo") { // Fix web crawlers from thinking the page is entitled "{0} - Glipo"
+        $("title").text(_("{0} - Glipo", [$(".currentLocation").text()]));
+    }
 
     for (var i = 0; i < $("[data-location]").length; i++) {
         var targetElement = $("[data-location]").eq(i);
