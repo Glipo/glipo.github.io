@@ -6,51 +6,69 @@
         <priority>1</priority>
     </url>
     <url>
-        <loc>/g/memes</loc>
+        <loc>/?page=/g/memes</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>/g/technology</loc>
+        <loc>/?page=/g/technology</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>/g/news</loc>
+        <loc>/?page=/g/news</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>/g/pics</loc>
+        <loc>/?page=/g/pics</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>/g/Glipo</loc>
+        <loc>/about</loc>
+        <lastmod>2020-11-15T19:22:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>/about/donate.html</loc>
+        <lastmod>2020-11-15T19:22:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>/about/help.html</loc>
+        <lastmod>2020-11-15T19:22:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>/?page=/g/Glipo</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>/g/programming</loc>
+        <loc>/?page=/g/programming</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
-        <priority>0.8</priority>
+        <priority>0.7</priority>
     </url>
     <url>
-        <loc>/g/stories</loc>
+        <loc>/?page=/g/stories</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
-        <priority>0.8</priority>
+        <priority>0.7</priority>
     </url>
     <url>
-        <loc>/g/MaliciousThings</loc>
+        <loc>/?page=/g/MaliciousThings</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
-        <priority>0.8</priority>
+        <priority>0.7</priority>
     </url>
 </urlset>
