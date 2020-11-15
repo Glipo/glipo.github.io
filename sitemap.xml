@@ -1,72 +1,72 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
-        <loc>/</loc>
+        <loc>https://glipo.net/</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
     <url>
-        <loc>/?page=/g/memes</loc>
+        <loc>https://glipo.net/?page=/g/memes</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>/?page=/g/technology</loc>
+        <loc>https://glipo.net/?page=/g/technology</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>/?page=/g/news</loc>
+        <loc>https://glipo.net/?page=/g/news</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>/?page=/g/pics</loc>
+        <loc>https://glipo.net/?page=/g/pics</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>/about</loc>
+        <loc>https://glipo.net/about</loc>
         <lastmod>2020-11-15T19:22:00+00:00</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>/about/donate.html</loc>
+        <loc>https://glipo.net/about/donate.html</loc>
         <lastmod>2020-11-15T19:22:00+00:00</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>/about/help.html</loc>
+        <loc>https://glipo.net/about/help.html</loc>
         <lastmod>2020-11-15T19:22:00+00:00</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>/?page=/g/Glipo</loc>
+        <loc>https://glipo.net/?page=/g/Glipo</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>/?page=/g/programming</loc>
+        <loc>https://glipo.net/?page=/g/programming</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>/?page=/g/stories</loc>
+        <loc>https://glipo.net/?page=/g/stories</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>/?page=/g/MaliciousThings</loc>
+        <loc>https://glipo.net/?page=/g/MaliciousThings</loc>
         <lastmod>2020-11-01T18:00:00+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.7</priority>
