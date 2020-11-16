@@ -14,6 +14,9 @@
 ## Policies and legal stuff
 [Terms of Service](?article=termsofservice.md)
 [Content Policy](?article=contentpolicy.md)
+[Privacy Policy](?article=privacypolicy.md)
+[Accessibility statement](?article=accessibility.md)
+[Environmental promise](?article=environmental.md)
 
 <!-- section -->
 
