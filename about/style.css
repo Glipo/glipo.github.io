@@ -98,6 +98,8 @@ img.perspective {
     width: calc(100% - 20px);
     margin-top: 20px;
     margin-bottom: 20px;
+    object-fit: cover;
+    object-position: top;
     -webkit-transform: perspective(200px) rotateY(-5deg);
     -moz-transform: perspective(200px) rotateY(-5deg);
     transform: perspective(200px) rotateY(-5deg);
