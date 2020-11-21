@@ -571,7 +571,7 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                                                     api.replyComment({
                                                                         group: groupName,
                                                                         post: postId,
-                                                                        parent: $(this).closest(".comment").closest(".comment").attr("data-id"),
+                                                                        parent: $(thisScope).closest(".comment").closest(".comment").attr("data-id"),
                                                                         parentType: depth == 0 ? "root" : "reply",
                                                                         content: commentContent
                                                                     }).then(function(commentId) {
