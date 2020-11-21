@@ -30,7 +30,10 @@ var firebaseConfig = {
 
 var currentUser = {
     uid: null,
-    username: null
+    username: null,
+    isStaff: false,
+    isDonor: false,
+    donorSince: null
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -869,6 +872,9 @@ $(function() {
                 
                 if (userDocument.exists) {
                     currentUser.username = userDocument.data().username;
+                    currentUser.isStaff = !!userDocument.data().staff;
+                    currentUser.isDonor = !!userDocument.data().donor;
+                    currentUser.donorSince = !!userDocument.data().donorSince ? userDocument.data().donorSince.toDate() : null;
 
                     $(".loadingUserDetails").hide();
 
@@ -881,6 +887,14 @@ $(function() {
                     } else {
                         $(".isStaff").hide();
                         $(".isNotStaff").show();
+
+                        if (userDocument.data().donor) {
+                            $(".isNotDonor").hide();
+                            $(".isDonor").show();
+                        } else {
+                            $(".isDonor").hide();
+                            $(".isNotDonor").show();
+                        }
                     }
 
                     if (userDocument.data().postPoints + userDocument.data().commentPoints >= 100 || userDocument.data().staff) {
@@ -1079,6 +1093,9 @@ $(function() {
         } else {
             currentUser.uid = null;
             currentUser.username = null;
+            currentUser.isStaff = false;
+            currentUser.isDonor = false;
+            currentUser.donorSince = null;
 
             $(".loadingUser").hide();
             $(".loadedUser").show();
@@ -1091,6 +1108,9 @@ $(function() {
 
             $(".isStaff").hide();
             $(".isNotStaff").show();
+
+            $(".isDonor").hide();
+            $(".isNotDonor").show();
 
             $(".canCreateGroups").hide();
             $(".cannotCreateGroups").show();

@@ -12,6 +12,7 @@ var sortMethod = "popular";
 var recurseTimeout = 10;
 var recurseTimeoutMessageShown = false;
 var postsToLoad = 0;
+var postsLoaded = 0;
 var searchLastPost;
 
 function renderCrosspost(group, post) {
@@ -154,6 +155,38 @@ function makeSearchTerm(title) {
     }
 
     return filteredTitle.join(" ");
+}
+
+function getIntervalContent() {
+    if ((postsLoaded + 10) % 20 == 0 && !currentUser.isDonor && !currentUser.isStaff) {
+        var donateMessages = [
+            _("Love Glipo? Show your support"),
+            _("Help keep ads off of Glipo by supporting us"),
+            _("Keep Glipo open by giving us your support"),
+            _("Enjoying Glipo? Consider supporting us"),
+            _("Your support can help to preserve our community")
+        ];
+
+        $(".loadedPosts").append(
+            $("<card class='post clickable highlight'>")
+                .append([
+                    $("<h2>").text(donateMessages[Math.floor(Math.random() * donateMessages.length)]),
+                    $("<p>").text(_("Donate to us today and help fund Glipo so that we can preserve our community and keep it ad-free.")),
+                    $("<div class='buttonRow'>").append(
+                        $("<button class='blue'>")
+                            .text(_("Donate now"))
+                            .click(function() {
+                                window.open("/about/donate.html");
+                            })
+                    )
+                ])
+                .click(function(event) {
+                    if (!$(event.target).closest("button, card.post").is("button")) {
+                        window.open("/about/donate.html");
+                    }
+                })
+        );
+    }
 }
 
 function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAfterwards = false, recurse = 0, specificId = null) {
@@ -405,6 +438,10 @@ function getGroupPosts(groupName, limit = 10, startAfter = null, setGroupPoolAft
                                 if (postsToLoad > 0) {
                                     postsToLoad--;
                                 }
+
+                                postsLoaded++;
+
+                                getIntervalContent();
                             }
                         });
                     });

@@ -356,6 +356,10 @@ card.post.inline .actions {
     right: unset;
 }
 
+card.post.highlight {
+    background-color: var(--shade2);
+}
+
 card.informational {
     background-color: var(--yellow);
     color: var(--yellowText);
@@ -862,6 +866,14 @@ img.aboutLogo {
 }
 
 .isNotOwner {
+    display: none;
+}
+
+.isDonor {
+    display: none;
+}
+
+.isNotDonor {
     display: none;
 }
 
