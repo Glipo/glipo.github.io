@@ -661,8 +661,8 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                                                             $("<a class='user'>")
                                                                                 .attr("href", "/u/" + userDocument.data().username)
                                                                                 .text("u/" + userDocument.data().username)
-                                                                                .addClass(userDocument.data().staff ? "staffBadge" : (groupModerators.indexOf(postDocument.data().author) > -1 ? "moderatorBadge" : ""))
-                                                                                .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : (groupModerators.indexOf(postDocument.data().author) > -1 ? _("This user is a moderator of this group.") : null))
+                                                                                .addClass(userDocument.data().staff ? "staffBadge" : (groupModerators.indexOf(userDocument.data().author) > -1 ? "moderatorBadge" : ""))
+                                                                                .attr("title", userDocument.data().staff ? _("This user is a staff member of Glipo.") : (groupModerators.indexOf(userDocument.data().author) > -1 ? _("This user is a moderator of this group.") : null))
                                                                         ),
                                                                         $("<span>").text(" · "),
                                                                         $("<span>")
