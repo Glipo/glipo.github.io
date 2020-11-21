@@ -425,7 +425,7 @@ function addComment(parent, commentDocument, depth = 0, isNew = false) {
                                 ]
                             ),
 
-                        $("<div class='postContent'>").html(!(commentDocument.data().staffRemoved || commentDocument.data().moderatorRemoved) && !commentDocument.data().deleted ? renderMarkdown(commentContent) : ""),
+                        $("<div class='postContent fullContent'>").html(!(commentDocument.data().staffRemoved || commentDocument.data().moderatorRemoved) && !commentDocument.data().deleted ? renderMarkdown(commentContent) : ""),
                         $("<div class='actions'>").append([
                             $("<div>").append([
                                 $("<button class='upvoteButton'>")
