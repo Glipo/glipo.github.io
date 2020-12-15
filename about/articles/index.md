@@ -22,3 +22,4 @@
 
 ## Moderation and reporting
 [Using Glipo's group moderator tools](?article=modtools.md)
+[Who receives content reports?](?article=whoreceivesreports.md)
