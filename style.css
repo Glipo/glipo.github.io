@@ -1214,6 +1214,7 @@ img.aboutLogo {
 .upload label span {
     display: block;
     width: unset;
+    max-width: 100%;
     margin-bottom: 20px;
     font-size: 20px;
 }
