@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0026)https://glipo.net/settings -->
+<!-- saved from url=(0023)https://glipo.net/staff -->
 <html dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Settings - Glipo</title>
+        <title>Staff area - Glipo</title>
         
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=3">
         <meta name="description" content="Join Glipo today, the network that connects communities through the internet. We&#39;ve got stories, photos, memes, tips, tricks and more!">
@@ -9,132 +9,42 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="apple-mobile-web-app-title" content="Glipo">
         <link rel="apple-touch-icon" sizes="180x180" href="https://glipo.net/media/icons/apple-touch-icon.png">
-        <link rel="shortcut icon" href="./Settings - Glipo_files/small.png">
+        <link rel="shortcut icon" href="./Staff area - Glipo_files/small.png">
         <link rel="manifest" href="https://glipo.net/manifest.json">
-        <!-- <link rel="stylesheet" href="./Settings - Glipo_files/dialog-polyfill.css"> -->
-        <!-- <link rel="stylesheet" href="./Settings - Glipo_files/font.css"> -->
-        <link rel="stylesheet" href="./Settings - Glipo_files/style.css">
+        <link rel="stylesheet" href="./Staff area - Glipo_files/dialog-polyfill.css">
+        <link rel="stylesheet" href="./Staff area - Glipo_files/font.css">
+        <link rel="stylesheet" href="./Staff area - Glipo_files/style.css">
+        <script type="text/javascript" async="" src="./Staff area - Glipo_files/js"></script><script src="./Staff area - Glipo_files/dialog-polyfill.js"></script>
+        <script src="./Staff area - Glipo_files/jquery.min.js"></script>
+        <script src="./Staff area - Glipo_files/showdown.min.js"></script>
+        <script src="./Staff area - Glipo_files/firebase-app.js"></script>
+        <script src="./Staff area - Glipo_files/firebase-analytics.js"></script>
+        <script src="./Staff area - Glipo_files/firebase-auth.js"></script>
+        <script src="./Staff area - Glipo_files/firebase-firestore.js"></script>
+        <script src="./Staff area - Glipo_files/firebase-functions.js"></script>
+        <script src="./Staff area - Glipo_files/firebase-storage.js"></script>
+        <script src="./Staff area - Glipo_files/firebase-messaging.js"></script>
+        <script src="./Staff area - Glipo_files/core.js"></script>
+        <script src="./Staff area - Glipo_files/lang.js"></script>
+        <script src="./Staff area - Glipo_files/pages.js"></script>
+        <script src="./Staff area - Glipo_files/mdRenderer.js"></script>
+        <script src="./Staff area - Glipo_files/ce.js"></script>
+        <script src="./Staff area - Glipo_files/upload.js"></script>
+        <script src="./Staff area - Glipo_files/script.js"></script><script src="./Staff area - Glipo_files/js(1)" async=""></script>
+        <script src="./Staff area - Glipo_files/api.js"></script>
+        <script src="./Staff area - Glipo_files/posts.js"></script>
+        <script src="./Staff area - Glipo_files/profilePosts.js"></script>
+        <script src="./Staff area - Glipo_files/post.js"></script>
+        <script src="./Staff area - Glipo_files/messages.js"></script>
+        <script src="./Staff area - Glipo_files/staff.js"></script>
+        <script src="./Staff area - Glipo_files/moderators.js"></script>
+        <script src="./Staff area - Glipo_files/report.js"></script>
+        <script src="./Staff area - Glipo_files/en_GB.js"></script>
+
+
 
         <style>
-            dialog {
-  position: absolute;
-  left: 0; right: 0;
-  width: -moz-fit-content;
-  width: -webkit-fit-content;
-  width: fit-content;
-  height: -moz-fit-content;
-  height: -webkit-fit-content;
-  height: fit-content;
-  margin: auto;
-  border: solid;
-  padding: 1em;
-  background: white;
-  color: black;
-  display: block;
-}
-
-dialog:not([open]) {
-  display: none;
-}
-
-dialog + .backdrop {
-  position: fixed;
-  top: 0; right: 0; bottom: 0; left: 0;
-  background: rgba(0,0,0,0.1);
-}
-
-._dialog_overlay {
-  position: fixed;
-  top: 0; right: 0; bottom: 0; left: 0;
-}
-
-dialog.fixed {
-  position: fixed;
-  top: 50%;
-  transform: translate(0, -50%);
-}
-
-/*
-    Glipo
-
-    Copyright (C) Glipo Technologies. All Rights Reserved.
-
-    https://glipo.net
-*/
-
-@font-face {
-    font-family: "Nunito";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-latin.woff2") format("woff2");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-    font-family: "Nunito";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-latinExt.woff2") format("woff2");
-    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-@font-face {
-    font-family: "Nunito";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-cyrillic.woff2") format("woff2");
-    unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-@font-face {
-    font-family: "Nunito";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-cyrillicExt.woff2") format("woff2");
-    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-
-@font-face {
-    font-family: "Nunito";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-vietnamese.woff2") format("woff2");
-    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
-}
-
-@font-face {
-    font-family: "Material Icons";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url("fonts/materialIcons.woff2") format("woff2");
-}
-  
-icon {
-    position: relative;
-    top: -2px;
-    font-family: "Material Icons";
-    font-weight: normal;
-    font-style: normal;
-    font-size: inherit;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    vertical-align: middle;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-feature-settings: "liga";
-    -webkit-font-smoothing: antialiased;
-}
-
-/*
+            /*
     Glipo
 
     Copyright (C) Glipo Technologies. All Rights Reserved.
@@ -1905,50 +1815,147 @@ h3 .staffBadge {
         box-shadow: 0 20px 0 0 var(--yellow);
     }
 }
+
+dialog {
+  position: absolute;
+  left: 0; right: 0;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: -webkit-fit-content;
+  height: fit-content;
+  margin: auto;
+  border: solid;
+  padding: 1em;
+  background: white;
+  color: black;
+  display: block;
+}
+
+dialog:not([open]) {
+  display: none;
+}
+
+dialog + .backdrop {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: rgba(0,0,0,0.1);
+}
+
+._dialog_overlay {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+}
+
+dialog.fixed {
+  position: fixed;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+/*
+    Glipo
+
+    Copyright (C) Glipo Technologies. All Rights Reserved.
+
+    https://glipo.net
+*/
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-latin.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-latinExt.woff2") format("woff2");
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-cyrillic.woff2") format("woff2");
+    unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-cyrillicExt.woff2") format("woff2");
+    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-vietnamese.woff2") format("woff2");
+    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+
+@font-face {
+    font-family: "Material Icons";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("fonts/materialIcons.woff2") format("woff2");
+}
+  
+icon {
+    position: relative;
+    top: -2px;
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+}
+
+
         </style>
 
 
-        <script type="text/javascript" async="" src="./Settings - Glipo_files/js"></script><script src="./Settings - Glipo_files/dialog-polyfill.js"></script>
-        <script src="./Settings - Glipo_files/jquery.min.js"></script>
-        <script src="./Settings - Glipo_files/showdown.min.js"></script>
-        <script src="./Settings - Glipo_files/firebase-app.js"></script>
-        <script src="./Settings - Glipo_files/firebase-analytics.js"></script>
-        <script src="./Settings - Glipo_files/firebase-auth.js"></script>
-        <script src="./Settings - Glipo_files/firebase-firestore.js"></script>
-        <script src="./Settings - Glipo_files/firebase-functions.js"></script>
-        <script src="./Settings - Glipo_files/firebase-storage.js"></script>
-        <script src="./Settings - Glipo_files/firebase-messaging.js"></script>
-        <script src="./Settings - Glipo_files/core.js"></script>
-        <script src="./Settings - Glipo_files/lang.js"></script>
-        <script src="./Settings - Glipo_files/pages.js"></script>
-        <script src="./Settings - Glipo_files/mdRenderer.js"></script>
-        <script src="./Settings - Glipo_files/ce.js"></script>
-        <script src="./Settings - Glipo_files/upload.js"></script>
-        <script src="./Settings - Glipo_files/script.js"></script><script src="./Settings - Glipo_files/js(1)" async=""></script>
-        <script src="./Settings - Glipo_files/api.js"></script>
-        <script src="./Settings - Glipo_files/posts.js"></script>
-        <script src="./Settings - Glipo_files/profilePosts.js"></script>
-        <script src="./Settings - Glipo_files/post.js"></script>
-        <script src="./Settings - Glipo_files/messages.js"></script>
-        <script src="./Settings - Glipo_files/staff.js"></script>
-        <script src="./Settings - Glipo_files/moderators.js"></script>
-        <script src="./Settings - Glipo_files/report.js"></script>
-        <script src="./Settings - Glipo_files/en_GB.js"></script>
+
+
+
     </head>
     <body>
-        <a class="skipTo" href="https://glipo.net/settings#content">Skip to content</a>
-        <a class="skipTo" href="https://glipo.net/settings#sidebar">Skip to sidebar</a>
+        <a class="skipTo" href="https://glipo.net/staff#content">Skip to content</a>
+        <a class="skipTo" href="https://glipo.net/staff#sidebar">Skip to sidebar</a>
         <nav>
             <a href="https://glipo.net/" class="logo">
-                <img src="./Settings - Glipo_files/largeWhite.png" alt="Glipo" class="desktop">
-                <img src="./Settings - Glipo_files/small.png" alt="Glipo" class="mobile">
+                <img src="http://127.0.0.1:5501/media/largeWhite.png" alt="Glipo" class="desktop">
+                <img src="http://127.0.0.1:5501/media/largeWhite.png" alt="Glipo" class="mobile">
             </a>
             <div class="search">
                 <input placeholder="Search">
                 <icon aria-hidden="true">search</icon>
             </div>
             <button onclick="toggleMenu();" class="location desktop">
-                <span class="currentLocation">Settings</span>
+                <span class="currentLocation">Staff area</span>
                 <icon aria-hidden="true" class="locationDropdownIndicator">arrow_drop_down</icon>
             </button>
             <span class="signedIn" style="display: inline;">
@@ -1960,7 +1967,7 @@ h3 .staffBadge {
             </span>
             <button onclick="toggleMenu();" class="menuButton menuButtonSmall"><icon aria-label="Open/close menu">menu</icon></button>
         </nav>
-        <div class="menu" style="display: none;">
+        <div class="menu">
             <div class="forMenuButtonSmall">
                 <div class="signedIn" style="display: block;">
                     <button onclick="window.location.href = &#39;/notifications&#39;;">Notifications</button>
@@ -1984,11 +1991,11 @@ h3 .staffBadge {
                 </div>
                 <hr>
             </div>
-            <button onclick="window.location.href = &#39;/&#39;">Feed</button>
+            <button onclick="window.location.href = &#39;/&#39;;">Feed</button>
             <div class="signedIn" style="display: block;">
                 <button onclick="visitUserProfile();">u/<span class="currentUsername">cmruparell</span></button>
             </div>
-            <div class="joinedGroups"><hr><button>g/glipo</button></div>
+            <div class="joinedGroups"></div>
         </div>
         <header data-location="^g\/[^\/]+$" style="display: none;">
             <h1 class="groupName"></h1>
@@ -2013,7 +2020,7 @@ h3 .staffBadge {
                 </span>
             </span>
         </header>
-        <main id="content" style="outline: none;">
+        <main id="content">
             <span class="error404">
                 <section class="posts pageMessage middle">
                     <h1>A bit lost?</h1>
@@ -2227,7 +2234,7 @@ h3 .staffBadge {
                 <div class="signedIn" style="display: block;">
                     <div class="isModerator" style="display: none;">
                         <h1 class="mobile">
-                            <a href="https://glipo.net/settings#" class="groupName groupLink noColour"></a>
+                            <a href="https://glipo.net/staff#" class="groupName groupLink noColour"></a>
                             <a href="javascript:modVisitSettings();"><icon aria-label="Settings">settings</icon></a>
                         </h1>
                         <div class="tabs">
@@ -2570,7 +2577,7 @@ h3 .staffBadge {
                     </div>
                 </div>
             </section>
-            <section class="posts" data-location="^settings$"> <!-- Settings page -->
+            <section class="posts" data-location="^settings$" style="display: none;"> <!-- Settings page -->
                 <div class="signedIn" style="display: block;">
                     <div class="loadedUser" style="display: block;">
                         <div class="tabs">
@@ -2587,7 +2594,7 @@ h3 .staffBadge {
                                         <input data-property="username" class="settingsPersonalProperty">
                                     </label>
                                     <p class="itemDescription">Your username cannot be changed, but the casing of the letters in it can be changed.</p>
-                                    <label style="outline: none;">
+                                    <label>
                                         <span>Bio</span>
                                         <textarea placeholder="Write a brief description about yourself to show on your profile..." maxlength="200" data-property="bio" class="settingsPersonalProperty"></textarea>
                                     </label>
@@ -2616,7 +2623,7 @@ h3 .staffBadge {
                                 <div data-tab="safety" class="settingsSheet">
                                     <h2>Blocked users</h2>
                                     <p>Messages and replies sent by the users listed below will not be shown in your notifications.</p>
-                                    <div class="blockedUsers"><p class="info middle">You haven't blocked any users yet</p></div>
+                                    <div class="blockedUsers"></div>
                                     <div class="loadingBanStatus" style="display: none;">
                                         <div class="loadingSpinner"></div>
                                     </div>
@@ -2633,7 +2640,7 @@ h3 .staffBadge {
                                 </div>
                                 <div data-tab="about">
                                     <div class="middle">
-                                        <img src="./Settings - Glipo_files/largeWhite.png" alt="" class="aboutLogo">
+                                        <img src="./Staff area - Glipo_files/largeWhite.png" alt="" class="aboutLogo">
                                         <h2>Glipo Web Frontend</h2>
                                         <p>Connecting communities through the internet</p>
                                         <p>Made with ❤️ in Norwich, England</p>
@@ -2655,7 +2662,7 @@ h3 .staffBadge {
                     </div>
                 </div>
             </section>
-            <section class="posts" data-location="^staff$" style="display: none;"> <!-- Staff page -->
+            <section class="posts" data-location="^staff$"> <!-- Staff page -->
                 <div class="signedIn" style="display: block;">
                     <div class="isStaff" style="display: none;">
                         <div class="tabs">
@@ -3414,5 +3421,4 @@ h3 .staffBadge {
             </div>
         </dialog>
     
-</body>
-</html>
+</body></html>
