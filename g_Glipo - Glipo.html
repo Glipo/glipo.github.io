@@ -1,0 +1,3311 @@
+<!DOCTYPE html>
+<!-- saved from url=(0025)https://glipo.net/g/Glipo -->
+<html dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>g/Glipo - Glipo</title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=3">
+        <meta name="description" content="Join Glipo today, the network that connects communities through the internet. We&#39;ve got stories, photos, memes, tips, tricks and more!">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Glipo">
+        <link rel="apple-touch-icon" sizes="180x180" href="https://glipo.net/media/icons/apple-touch-icon.png">
+        <link rel="shortcut icon" href="./g_Glipo - Glipo_files/small.png">
+        <link rel="manifest" href="https://glipo.net/manifest.json">
+        <link rel="stylesheet" href="./g_Glipo - Glipo_files/dialog-polyfill.css">
+        <link rel="stylesheet" href="./g_Glipo - Glipo_files/font.css">
+        <link rel="stylesheet" href="./g_Glipo - Glipo_files/style.css">
+        <script type="text/javascript" async="" src="./g_Glipo - Glipo_files/js"></script><script src="./g_Glipo - Glipo_files/dialog-polyfill.js"></script>
+        <script src="./g_Glipo - Glipo_files/jquery.min.js"></script>
+        <script src="./g_Glipo - Glipo_files/showdown.min.js"></script>
+        <script src="./g_Glipo - Glipo_files/firebase-app.js"></script>
+        <script src="./g_Glipo - Glipo_files/firebase-analytics.js"></script>
+        <script src="./g_Glipo - Glipo_files/firebase-auth.js"></script>
+        <script src="./g_Glipo - Glipo_files/firebase-firestore.js"></script>
+        <script src="./g_Glipo - Glipo_files/firebase-functions.js"></script>
+        <script src="./g_Glipo - Glipo_files/firebase-storage.js"></script>
+        <script src="./g_Glipo - Glipo_files/firebase-messaging.js"></script>
+        <script src="./g_Glipo - Glipo_files/core.js"></script>
+        <script src="./g_Glipo - Glipo_files/lang.js"></script>
+        <script src="./g_Glipo - Glipo_files/pages.js"></script>
+        <script src="./g_Glipo - Glipo_files/mdRenderer.js"></script>
+        <script src="./g_Glipo - Glipo_files/ce.js"></script>
+        <script src="./g_Glipo - Glipo_files/upload.js"></script>
+        <script src="./g_Glipo - Glipo_files/script.js"></script><script src="./g_Glipo - Glipo_files/js(1)" async=""></script>
+        <script src="./g_Glipo - Glipo_files/api.js"></script>
+        <script src="./g_Glipo - Glipo_files/posts.js"></script>
+        <script src="./g_Glipo - Glipo_files/profilePosts.js"></script>
+        <script src="./g_Glipo - Glipo_files/post.js"></script>
+        <script src="./g_Glipo - Glipo_files/messages.js"></script>
+        <script src="./g_Glipo - Glipo_files/staff.js"></script>
+        <script src="./g_Glipo - Glipo_files/moderators.js"></script>
+        <script src="./g_Glipo - Glipo_files/report.js"></script>
+        <script src="./g_Glipo - Glipo_files/en_GB.js"></script>
+
+
+        <style>
+            /*
+    Glipo
+
+    Copyright (C) Glipo Technologies. All Rights Reserved.
+
+    https://glipo.net
+*/
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-latin.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-latinExt.woff2") format("woff2");
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-cyrillic.woff2") format("woff2");
+    unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-cyrillicExt.woff2") format("woff2");
+    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local("Nunito Regular"), local("Nunito-Regular"), url("fonts/nunito-vietnamese.woff2") format("woff2");
+    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+
+@font-face {
+    font-family: "Material Icons";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("fonts/materialIcons.woff2") format("woff2");
+}
+  
+icon {
+    position: relative;
+    top: -2px;
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+}
+
+dialog {
+  position: absolute;
+  left: 0; right: 0;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: -webkit-fit-content;
+  height: fit-content;
+  margin: auto;
+  border: solid;
+  padding: 1em;
+  background: white;
+  color: black;
+  display: block;
+}
+
+dialog:not([open]) {
+  display: none;
+}
+
+dialog + .backdrop {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: rgba(0,0,0,0.1);
+}
+
+._dialog_overlay {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+}
+
+dialog.fixed {
+  position: fixed;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+/*
+    Glipo
+
+    Copyright (C) Glipo Technologies. All Rights Reserved.
+
+    https://glipo.net
+*/
+
+:root {
+    --background: #202c3b;
+    --foreground: white;
+    --shade1: #2e4057;
+    --shade2: #3d5370;
+    --shade3: #89b5ee;
+    --blue: #3089ff;
+    --blueText: white;
+    --yellow: #fff726;
+    --yellowText: black;
+    --blur: rgba(0, 0, 0, 0.5);
+}
+
+* {
+    font-family: "Nunito", sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: calc(100% - 20px);
+    height: 40px;
+    padding: 10px;
+    background-color: var(--shade1);
+    z-index: 1;
+}
+
+nav > * {
+    vertical-align: middle;
+}
+
+nav .logo {
+    display: inline-block;
+    height: 100%;
+}
+
+nav .logo img {
+    width: calc(10vw - 10px);
+    height: 100%;
+    object-fit: contain;
+}
+
+nav .search {
+    display: inline-block;
+    position: relative;
+}
+
+nav .search input {
+    width: calc(50vw - 50px);
+    padding-left: 40px;
+}
+
+[dir="rtl"] nav .search input {
+    padding-left: 10px;
+    padding-right: 40px;
+}
+
+nav .search icon {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    font-size: 20px;
+    pointer-events: none;
+}
+
+[dir="rtl"] nav .search icon {
+    left: unset;
+    right: 12px;
+}
+
+nav .location {
+    position: relative;
+    width: calc(20vw - 33px);
+    margin-left: 15px;
+    padding-right: 40px;
+    text-align: start;
+}
+
+[dir="rtl"] nav .location {
+    margin-left: 0;
+    margin-right: 15px;
+    padding-left: 40px;
+    padding-right: 20px;
+}
+
+nav .location icon {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 20px;
+}
+
+[dir="rtl"] nav .location icon {
+    left: 12px;
+    right: unset;
+}
+
+nav .menuButton {
+    width: calc(7vw - 5px);
+    margin-left: 5px;
+}
+
+[dir="rtl"] nav .menuButton {
+    margin-left: unset;
+    margin-right: 5px;
+}
+
+nav .menuButtonBig {
+    width: calc(10vw - 7px);
+}
+
+nav .menuButtonHalf {
+    width: calc(5vw - 8px);
+    padding-left: 0;
+    padding-right: 0;
+}
+
+nav .menuButtonSmall {
+    position: relative;
+    height: 100%;
+}
+
+nav .menuButtonSmall icon {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    right: 0;
+    font-size: 24px;
+}
+
+header {
+    margin-top: 60px;
+    padding: 20px;
+    padding-left: calc(10vw + 5px);
+    padding-right: calc(10vw + 5px);
+    background-color: var(--shade2);
+}
+
+header button {
+    background-color: var(--shade1);
+}
+
+header details {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+header details summary span {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+main {
+    margin-top: 60px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: calc(10vw + 5px);
+}
+
+[dir="rtl"] main {
+    padding-left: 0;
+    padding-right: calc(10vw + 5px);
+}
+
+main.afterHeader {
+    margin-top: 0;
+}
+
+main section.posts {
+    display: inline-block;
+    width: 50vw;
+    vertical-align: top;
+}
+
+main section.posts h1:first-of-type {
+    margin-top: 0;
+}
+
+main.authContainer {
+    margin-left: 10vw;
+    margin-right: 10vw;
+    padding: 0;
+    text-align: center;
+}
+
+main.authContainer section {
+    display: none;
+}
+
+main.authContainer section[data-state="loading"] {
+    display: block;
+}
+
+main.authContainer section card {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+}
+
+main.authContainer footer {
+    margin-top: 20px;
+    color: var(--shade3);
+}
+
+main.authContainer .logo {
+    display: block;
+    margin-bottom: 20px;
+}
+
+main.authContainer .logo img {
+    width: 50px;
+}
+
+main.authContainer details {
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: start;
+}
+
+main aside {
+    display: inline-block;
+    width: calc(30vw - 30px);
+    margin-left: 15px;
+    vertical-align: top;
+}
+
+[dir="rtl"] main aside {
+    margin-left: 0;
+    margin-right: 15px;
+}
+
+card {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: var(--shade1);
+    border-radius: 10px;
+}
+
+card h1, card h2, card h3, card h4, card h5, card h6 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+card p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+card.transparent {
+    background-color: inherit;
+    color: inherit;
+}
+
+card.sorts button {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+card.post .info {
+    margin-bottom: 10px;
+    color: var(--shade3);
+}
+
+card.post .info a.group {
+    font-weight: bold;
+}
+
+card.post h2.title a {
+    color: var(--foreground);
+    text-decoration: none;
+}
+
+card.post .actions {
+    height: 32px;
+    margin-top: 15px;
+}
+
+card.post .actions div:first-of-type {
+    float: left;
+    width: 50%;
+    text-align: start;
+}
+
+[dir="rtl"] card.post .actions div:first-of-type {
+    float: right;
+}
+
+card.post .actions div:last-of-type {
+    float: right;
+    width: 50%;
+    text-align: end;
+}
+
+[dir="rtl"] card.post .actions div:last-of-type {
+    float: left;
+}
+
+card.post .actions .full {
+    width: 100%!important;
+}
+
+card.post .actions div button {
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+card.post.inline {
+    position: relative;
+    height: 30px;
+}
+
+card.post.inline .content {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    width: calc(50% - 15px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+[dir="rtl"] card.post.inline .content {
+    left: unset;
+    right: 10px;
+}
+
+card.post.inline .actions {
+    position: absolute;
+    top: -5px;
+    right: 10px;
+    width: calc(50% - 15px);
+}
+
+[dir="rtl"] card.post.inline .actions {
+    left: 10px;
+    right: unset;
+}
+
+card.post.highlight {
+    background-color: var(--shade2);
+}
+
+card.informational {
+    background-color: var(--yellow);
+    color: var(--yellowText);
+}
+
+card.informational > strong, card.informational > span {
+    display: block;
+}
+
+card.dm {
+    cursor: pointer;
+}
+
+card.dm a {
+    color: var(--foreground);
+    font-weight: bold;
+}
+
+card.dm span {
+    color: var(--shade3);
+}
+
+card.reportItem {
+    padding-top: 0;
+    padding-bottom: 1px;
+}
+
+card.reportItem details[open] {
+    padding-bottom: 4px;
+}
+
+card.reportItem.cat1 {
+    background-color: var(--yellow);
+    color: var(--yellowText);
+}
+
+card.reportItem.cat2 {
+    background-color: var(--blue);
+    color: var(--blueText);
+}
+
+card.reportItem.cat2 blockquote {
+    border-left: 5px solid var(--yellow);
+}
+
+[dir="rtl"] card.reportItem.cat2 blockquote {
+    border-left: none;
+    border-right: 5px solid var(--yellow);
+}
+
+card.reportItem.cat2 button.blue {
+    background-color: var(--yellow);
+    color: var(--yellowText);
+}
+
+card.reportItem a {
+    color: inherit;
+    font-weight: bold;
+}
+
+dialog {
+    position: fixed;
+    top: 50%;
+    max-width: calc(100vw - 20px);
+    padding: 0;
+    background-color: var(--background);
+    color: var(--foreground);
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transform: translate(0, -50%);
+}
+
+dialog::backdrop, dialog + .backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: 1s opacity;
+}
+
+dialog .title {
+    background-color: var(--shade1);
+    padding: 10px;
+}
+
+dialog .title span {
+    display: inline-block;
+    width: calc(100% - 35px);
+    font-size: 20px;
+}
+
+dialog .title button {
+    width: 30px;
+    padding: 5px;
+}
+
+dialog .content {
+    max-height: calc(100vh - 100px);
+    padding: 10px;
+    overflow: auto;
+}
+
+dialog .content h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+dialog.loader .content {
+    width: 300px;
+    height: 150px;
+}
+
+dialog.hasTextarea .content {
+    min-width: 400px;
+}
+
+dialog.hasParagraph .content {
+    max-width: 500px;
+}
+
+dialog.hasMixedInput .content {
+    max-width: 375px;
+}
+
+dialog.hasMultilineRadios .content {
+    max-width: 600px;
+}
+
+label {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+label > span:first-of-type {
+    display: inline-block;
+    max-width: calc(100% - 40px);
+}
+
+label > input[type="checkbox"] + span, label > input[type="radio"] + span {
+    vertical-align: top;
+}
+
+label > span:first-child {
+    width: 150px;
+    vertical-align: middle;
+}
+
+button {
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: var(--shade2);
+    color: var(--foreground);
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.5s opacity;
+}
+
+button:hover {
+    opacity: 0.7;
+}
+
+button:active {
+    opacity: 0.5;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+button.big {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button.blue {
+    background-color: var(--blue);
+    color: var(--blueText);
+}
+
+button.yellow {
+    background-color: var(--yellow);
+    color: var(--yellowText);
+}
+
+button.transparent {
+    background-color: inherit;
+    color: inherit;
+}
+
+button.transparent:hover {
+    background-color: var(--shade2);
+}
+
+input, select {
+    width: 200px;
+    padding: 10px;
+    background-color: var(--shade2);
+    color: var(--foreground);
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+}
+
+select {
+    width: 220px;
+    padding-right: 30px;
+    background-image: url("/media/graphics/dropdownWhite.png");
+    background-size: 20px;
+    background-position: right 10px top 10px;
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+[dir="rtl"] select {
+    padding-left: 30px;
+    padding-right: 10px;
+    background-position: left 10px top 10px;
+}
+
+input::placeholder {
+    color: var(--shade3);
+}
+
+input:disabled, select:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+input.big, select.big {
+    display: block;
+    width: calc(100% - 20px);
+    margin-top: 10px;
+}
+
+select.big {
+    width: 100%;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    position: relative;
+    display: inline-block;
+    top: -4px;
+    width: unset;
+    -webkit-appearance: none;
+    padding: 10px;
+    background-color: var(--shade2);
+    border-radius: 5px;
+    transition: 0.5s background-color;
+}
+
+span + input[type="checkbox"], span + input[type="radio"] {
+    top: 8px;
+}
+
+input[type="checkbox"]:first-child, input[type="radio"]:first-child {
+    margin-right: 10px;
+}
+
+[dir="rtl"] input[type="checkbox"]:first-child, [dir="rtl"] input[type="radio"]:first-child {
+    margin-left: 10px;
+    margin-right: unset;
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--blue);
+    background-image: url("/media/graphics/checkWhite.png");
+    background-size: contain;
+}
+
+input[type="checkbox"]:indeterminate {
+    background-color: var(--blue);
+    background-image: url("/media/graphics/indeterminateWhite.png");
+    background-size: contain;
+}
+
+input[type="radio"] {
+    border-radius: 10px;
+}
+
+input[type="radio"]:checked {
+    background-color: var(--blue);
+    background-image: url("/media/graphics/radioWhite.png");
+    background-size: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+textarea {
+    width: calc(100% - 20px);
+    min-height: 100px;
+    padding: 10px;
+    background-color: var(--shade2);
+    color: var(--foreground);
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    resize: vertical;
+}
+
+textarea::placeholder {
+    color: var(--shade3);
+}
+
+textarea.noResize {
+    resize: none;
+}
+
+h2.step {
+    font-size: 1.2em;
+}
+
+p.info {
+    color: var(--shade3);
+}
+
+a {
+    color: var(--shade3);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a.noColour {
+    color: inherit;
+}
+
+hr {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 2px solid transparent;
+    border-radius: 2px;
+}
+
+details {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+summary {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: 0.5s opacity;
+    cursor: pointer;
+}
+
+summary:hover {
+    opacity: 0.8;
+}
+
+summary::-webkit-details-marker {
+    position: relative;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    background: url("/media/graphics/expandWhite.png") center no-repeat;
+    background-size: contain;
+    color: transparent;
+    transform: rotate(0deg);
+    transition: 0.5s transform;
+}
+
+details[open] summary::-webkit-details-marker {
+    transform: rotate(-180deg);
+}
+
+card.reportItem.cat1 summary::-webkit-details-marker {
+    background: url("/media/graphics/expandBlack.png") center no-repeat;
+    background-size: contain;
+}
+
+pre {
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    font-family: monospace;
+    overflow-x: auto;
+}
+
+pre > code {
+    padding: 0;
+    background-color: transparent;
+}
+
+code {
+    padding: 3px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    font-family: monospace;
+}
+
+table {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--shade2);
+    border-radius: 10px;
+    border-spacing: 0;
+}
+
+th, td {
+    padding: 5px;
+    border: 1px solid var(--shade2);
+}
+
+table tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+
+table tr:first-child th:last-child {
+    border-top-right-radius: 10px;
+}
+
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+blockquote {
+    margin: 0;
+    padding-left: 10px;
+    border-left: 5px solid var(--blue);
+    border-radius: 5px;
+}
+
+[dir="rtl"] blockquote {
+    padding-left: 0;
+    padding-right: 10px;
+    border-left: none;
+    border-right: 5px solid var(--blue);
+}
+
+img.aboutLogo {
+    width: 30%;
+    min-width: 150px;
+    margin-top: 20px;
+}
+
+.start {
+    text-align: start;
+}
+
+.middle {
+    text-align: center;
+}
+
+.end {
+    text-align: end;
+}
+
+.desktop {
+    display: unset;
+}
+
+.mobile {
+    display: none;
+}
+
+.signedIn {
+    display: none;
+}
+
+.signedOut {
+    display: unset;
+}
+
+.loadedTrendingGroups {
+    display: none;
+}
+
+.userIsMe {
+    display: none;
+}
+
+.isStaff {
+    display: none;
+}
+
+.isNotStaff {
+    display: none;
+}
+
+.isModerator {
+    display: none;
+}
+
+.isNotModerator {
+    display: none;
+}
+
+.isOwner {
+    display: none;
+}
+
+.isNotOwner {
+    display: none;
+}
+
+.isDonor {
+    display: none;
+}
+
+.isNotDonor {
+    display: none;
+}
+
+.isGroupBanned {
+    display: none;
+}
+
+.hasBan {
+    display: none;
+}
+
+.hasNoBan {
+    display: none;
+}
+
+.cannotSubmitBanAppeal {
+    display: none;
+}
+
+.canCreateGroups {
+    display: none;
+}
+
+.cannotCreateGroups {
+    display: none;
+}
+
+.hasRules {
+    display: none;
+}
+
+.hasNoRules {
+    display: none;
+}
+
+.hasSubmitGroupRules {
+    display: none;
+}
+
+.loadedRules {
+    display: none;
+}
+
+[dir="rtl"] .flippable {
+    transform: rotateY(180deg);
+}
+
+.floatStart {
+    float: left;
+}
+
+[dir="rtl"] .floatStart {
+    float: right;
+}
+
+.floatEnd {
+    float: right;
+}
+
+[dir="rtl"] .floatEnd {
+    float: left;
+}
+
+.spacer {
+    height: 10px;
+}
+
+.cutOff {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.overflowX {
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
+.split {
+    margin-left: 5px;
+    margin-right: 5px;
+    border-left: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.noMargin {
+    margin: 0;
+}
+
+.noPadding {
+    padding: 0;
+}
+
+.loadingSpinner {
+    position: relative;
+    display: none;
+    background-color: transparent;
+    margin: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 10px;
+    transform: translateZ(0);
+}
+
+.loadingSpinner, .loadingSpinner::before, .loadingSpinner::after {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border-radius: 10px;
+    animation: loadingSpinner 2s infinite ease-in-out;
+    animation-fill-mode: both;
+}
+
+.loadingSpinner::before, .loadingSpinner::after {
+    position: absolute;
+    top: 0;
+    content: "";
+}
+
+.loadingSpinner::before {
+    left: -30px;
+    animation-delay: -0.5s;
+}
+
+.loadingSpinner::after {
+    left: 30px;
+    animation-delay: 0.5s;
+}
+
+.skipTo {
+    position: absolute;
+    top: 0;
+    left: -200px;
+    margin: 10px;
+    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-decoration: none;
+    background-color: var(--blue);
+    color: var(--blueText);
+    border-radius: 10px;
+    z-index: 2;
+    outline: none;
+    transition: 0.2s;
+}
+
+[dir="rtl"] .skipTo {
+    left: unset;
+    right: -200px;
+}
+
+.skipTo:focus, .skipTo:active {
+    left: 0;
+}
+
+[dir="rtl"] .skipTo:focus, [dir="rtl"] .skipTo:active {
+    left: unset;
+    right: 0;
+}
+
+.menuButtonBig {
+    display: unset;
+}
+
+.menuButtonSmall {
+    display: none;
+}
+
+.menu {
+    position: fixed;
+    display: none;
+    top: 70px;
+    left: calc(60vw + 24px);
+    width: calc(30vw - 30px);
+    max-height: calc(100vh - 100px);
+    background-color: var(--shade2);
+    border-radius: 10px;
+    overflow: auto;
+    z-index: 1;
+}
+
+[dir="rtl"] .menu {
+    left: unset;
+    right: calc(60vw + 24px);
+}
+
+.menu button {
+    width: 100%;
+    border-radius: 0;
+    text-align: start;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: 0.5s background-color, 0.5s opacity;
+}
+
+.menu button:hover {
+    background-color: var(--shade1);
+}
+
+.forMenuButtonSmall {
+    display: none;
+}
+
+.labelDescription {
+    max-width: 375px;
+}
+
+.buttonRow {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.buttonRow button {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.buttonRow button:first-of-type {
+    margin-right: 0;
+}
+
+.buttonRow.paddingBottom {
+    padding-bottom: 10px;
+}
+
+.tabs {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.tabs .tabstrip {
+    border-bottom: 5px solid rgba(245, 167, 167, 0.2);
+    border-radius: 5px;
+}
+
+.tabs .tabstrip button {
+    margin-bottom: -5px;
+    background-color: transparent;
+    color: inherit;
+    border-bottom: 5px solid transparent;
+    border-radius: 5px;
+    transition: 0.5s color, 0.5s border-bottom;
+}
+
+.tabs .tabstrip button.selected {
+    color: var(--blue);
+    border-bottom: 5px solid var(--blue);
+}
+
+.tabs .tabstrip.central {
+    width: fit-content;
+    margin: auto;
+    text-align: center;
+}
+
+.tabs .tabcontents {
+    margin-top: 5px;
+}
+
+.tabs .tabcontents.giveMarginTop {
+    margin-top: 10px;
+}
+
+.tabs .tabcontents > *:not(:first-of-type) {
+    display: none;
+}
+
+.contentEditor {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+    padding-bottom: 0;
+    background-color: var(--shade1);
+    color: var(--foreground);
+    border-radius: 10px;
+}
+
+.contentEditor .toolbar {
+    min-height: 33px;
+    margin-bottom: 5px;
+}
+
+.contentEditor .toolbar.previewing {
+    display: none;
+}
+
+.contentEditor .toolbar button {
+    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: transparent;
+    color: inherit;
+    transition: 0.5s background-color;
+}
+
+.contentEditor .toolbar button:hover {
+    background-color: var(--shade2);
+}
+
+.contentEditor .toolbar button.special {
+    background-color: var(--blue);
+    color: var(--blueText);
+    transition: 0.5s opacity;
+}
+
+.contentEditor .toolbar button.special:hover {
+    opacity: 0.8;
+}
+
+.contentEditor .preview {
+    display: none;
+    padding: 10px;
+}
+
+.upload {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: var(--shade1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.upload input[type="file"] {
+    display: none;
+}
+
+.upload label span {
+    display: block;
+    width: unset;
+    max-width: 100%;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.upload .uploaded {
+    display: none;
+}
+
+.upload .uploaded .info {
+    text-align: start;
+}
+
+.upload .uploaded span {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+[dir="rtl"] .upload .uploaded span {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+.upload .uploaded button {
+    float: right;
+}
+
+[dir="rtl"] .upload .uploaded button {
+    float: left;
+}
+
+.upload .uploaded img.result {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.postContent {
+    word-break: break-word;
+}
+
+.postContent:not(.fullContent) {
+    overflow: hidden;
+    max-height: 60vh;
+}
+
+.postContent.link img {
+    display: block;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+}
+
+.postContent:not(.fullContent).link img {
+    max-height: 60vh;
+}
+
+.postContent:not(.link) img {
+    display: block;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pageMessage {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.settingsSheet label {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.settingsSheet label input {
+    width: calc(100% - 175px);
+}
+
+.settingsSheet label select {
+    width: calc(100% - 155px);
+}
+
+.settingsSheet label textarea {
+    width: calc(100% - 175px);
+    vertical-align: top;
+}
+
+.settingsSheet label .contentEditor {
+    display: inline-block;
+    width: calc(100% - 165px);
+    margin-bottom: 0;
+    vertical-align: top;
+}
+
+.settingsSheet label .contentEditor textarea {
+    width: calc(100% - 20px);
+    vertical-align: unset;
+}
+
+.settingsSheet .itemDescription {
+    margin-left: 160px;
+    font-size: 0.8em;
+}
+
+.footerSide {
+    display: inline-block;
+    width: calc(50% - 5px);
+    vertical-align: top;
+}
+
+.footerSide a {
+    display: block;
+    color: var(--foreground);
+    font-weight: bold;
+}
+
+.spoiler {
+    background-color: var(--foreground);
+    color: var(--foreground);
+    border-radius: 3px;
+    transition: 1s background-color;
+    cursor: pointer;
+}
+
+.spoiler.open {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.crosspost {
+    background-color: var(--shade2);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.crosspost .loadingSpinner {
+    margin-top: 0;
+}
+
+.crosspost h3.title a {
+    color: inherit;
+}
+
+.crosspost h3.title a:hover {
+    text-decoration: none;
+}
+
+.crosspost .info {
+    margin-top: 10px;
+    margin-bottom: 0!important;
+    color: var(--shade3);
+}
+
+.errorMessage {
+    color: var(--yellow);
+}
+
+.error404 {
+    display: none;
+}
+
+.task-list-item input[type="checkbox"] {
+    position: relative;
+    top: 1px;
+}
+
+[data-location] {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.loadedUser, .loadedGroupResults, .loadedUserResults, .loadedPostsHeader, .loadedPosts, .noPosts, .pageNonExistent, .loadedDm, .selfMessaging, .notificationsNotEnabled, .searchSiteWidePrompt, .noResults, .postIsEdited {
+    display: none;
+}
+
+.staffBadge {
+    padding-right: 25px;
+    background-image: url("/media/small.png");
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    color: var(--yellow)!important;
+}
+
+[dir="rtl"] .staffBadge {
+    padding-left: 25px;
+    padding-right: 0;
+    background-position: left;
+}
+
+h1 .staffBadge, h2 .staffBadge {
+    padding-right: 40px;
+}
+
+h3 .staffBadge {
+    padding-right: 30px;
+}
+
+.moderatorBadge {
+    padding-right: 25px;
+    background-image: url("/media/moderatorBadge.svg");
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    color: var(--blue)!important;
+}
+
+[dir="rtl"] .moderatorBadge {
+    padding-left: 25px;
+    padding-right: 0;
+    background-position: left;
+}
+
+.myMessage {
+    background-color: var(--shade2);
+}
+
+.ceSummoner {
+    display: none;
+    width: 100%;
+    padding: 10px;
+    padding-bottom: 40px;
+    background-color: var(--shade2);
+    color: var(--shade3);
+    text-align: start;
+    cursor: text;
+}
+
+.ceSummoner:hover {
+    opacity: 1;
+}
+
+.comment {
+    margin-bottom: 20px;
+    padding-left: 10px;
+    border-left: 5px solid var(--shade1);
+    border-radius: 5px;
+}
+
+[dir="rtl"] .comment {
+    padding-left: unset;
+    padding-right: 10px;
+    border-left: none;
+    border-right: 5px solid var(--shade1);
+}
+
+.comment .info {
+    margin-bottom: 10px;
+    color: var(--shade3);
+}
+
+.comment .info a.user {
+    font-weight: bold;
+}
+
+.comment .deletedMessage {
+    color: var(--yellow);
+}
+
+.comment .postContent > p:first-of-type {
+    margin-top: 0;
+}
+
+.comment .postContent > p:last-of-type {
+    margin-bottom: 0;
+}
+
+.comment .actions {
+    height: 32px;
+    margin-top: 15px;
+}
+
+.comment .actions div:first-of-type {
+    float: left;
+    width: 50%;
+    text-align: start;
+}
+
+[dir="rtl"] .comment .actions div:first-of-type {
+    float: right;
+}
+
+.comment .actions div:last-of-type {
+    float: right;
+    width: 50%;
+    text-align: end;
+}
+
+[dir="rtl"] .comment .actions div:last-of-type {
+    float: left;
+}
+
+.comment .actions div button {
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.comment .replies:not(:empty) {
+    margin-top: 20px;
+}
+
+.comment.plus {
+    padding-left: 0;
+    padding-right: 0;
+    border-left: none;
+    border-right: none;
+}
+
+.plusValue {
+    background-color: var(--shade2);
+    color: var(--foreground);
+    margin-right: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 10px;
+}
+
+[dir="rtl"] .plusValue {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+.editPost, .editPostWriteup, .editPostOther {
+    display: none;
+}
+
+.showMoreComments, .showAllReplies, .continueThread, .postAuthoredByMe {
+    display: none;
+}
+
+.showAllReplies, .continueThread {
+    margin-top: 20px;
+}
+
+.createGroupName span {
+    display: inline-block;
+    width: 30px;
+    font-size: 25px;
+}
+
+.createGroupName input {
+    font-size: 28px;
+    width: calc(100% - 55px);
+}
+
+.ruleEditLine select {
+    width: 80px;
+}
+
+.ruleEditLine input {
+    width: calc(100% - 105px);
+}
+
+.donorInfo {
+    display: none;
+}
+
+.donorInfo card {
+    background: linear-gradient(150deg, var(--shade2) 50%, #817d08 100%);
+    text-align: center;
+    font-weight: bold;
+}
+
+[dir="rtl"] .donorInfo card {
+    background: linear-gradient(240deg, var(--shade2) 50%, #817d08 100%);
+}
+
+@media (max-width: 1000px) {
+    nav .location {
+        width: calc(30vw - 28px);
+    }
+
+    nav .menuButtonBig, nav .menuButtonHalf {
+        display: none;
+    }
+
+    .forMenuButtonSmall {
+        display: unset;
+    }
+
+    card.sorts button.sort span {
+        display: none;
+    }
+
+    card.sorts button.sort.blue span {
+        display: unset;
+    }
+}
+
+@media (max-width: 700px) {
+    nav {
+        width: calc(100% - 40px);
+        padding-left: 20px;
+        padding-right: 20px;
+        text-align: center;
+    }
+
+    nav .logo img {
+        width: 50px;
+        margin-right: 10px;
+    }
+
+    nav .search input {
+        width: calc(100vw - 210px);
+    }
+
+    nav .menuButtonSmall {
+        display: unset;
+    }
+
+    header {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    main, [dir="rtl"] main {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    main section.posts {
+        width: 100%;
+    }
+
+    main aside {
+        display: none;
+    }
+
+    dialog.hasInputs {
+        top: 10px;
+        transform: none;
+    }
+
+    button.grow {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    input.grow {
+        display: block;
+        width: calc(100% - 20px);
+        margin-top: 10px;
+    }
+
+    card.post .info {
+        font-size: 12px;
+    }
+
+    .desktop {
+        display: none;
+    }
+
+    .mobile {
+        display: unset;
+    }
+
+    .menu {
+        left: 10px!important;
+        right: 10px!important;
+        width: calc(100% - 20px);
+    }
+
+    .info .staffBadge {
+        padding-right: 20px;
+    }
+    
+    [dir="rtl"] .info .staffBadge {
+        padding-left: 20px;
+        padding-right: 0;
+    }
+
+    .info .moderatorBadge {
+        padding-right: 20px;
+    }
+    
+    [dir="rtl"] .info .moderatorBadge {
+        padding-left: 20px;
+        padding-right: 0;
+    }
+
+    .comment .info {
+        font-size: 12px;
+    }
+
+    .comment .actions div:first-of-type {
+        width: calc(100% - 100px);
+    }
+    
+    .comment .actions div:last-of-type {
+        width: 100px;
+    }
+
+    .settingsSheet label input, .settingsSheet label select, .settingsSheet label textarea {
+        width: calc(100% - 20px);
+    }
+
+    .settingsSheet label .contentEditor {
+        width: calc(100% - 10px);
+    }
+    
+    .settingsSheet .itemDescription {
+        margin-left: unset;
+    }
+}
+
+@media (max-width: 440px) {
+    main.authContainer details {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    dialog.hasTextarea .content {
+        min-width: unset;
+    }
+}
+
+@media (max-width: 400px) {
+    main.authContainer {
+        margin-left: 5vw;
+        margin-right: 5vw;
+    }
+    
+    label input {
+        width: calc(100% - 20px);
+    }
+}
+
+@media (max-width: 360px) {
+    card.sorts button.newPost span {
+        display: none;
+    }
+}
+
+@-moz-document url-prefix() {
+    .contentEditor {
+        padding-bottom: 5px;
+    }
+}
+
+@keyframes loadingSpinner {
+    0%, 80%, 100% {
+        box-shadow: 0 20px 0 -10px var(--yellow);
+    }
+
+    40% {
+        box-shadow: 0 20px 0 0 var(--yellow);
+    }
+}
+        </style>
+    </head>
+    <body>
+        <a class="skipTo" href="https://glipo.net/g/Glipo#content">Skip to content</a>
+        <a class="skipTo" href="https://glipo.net/g/Glipo#sidebar">Skip to sidebar</a>
+        <nav>
+            <a href="https://glipo.net/" class="logo">
+                <img src="http://127.0.0.1:5501/media/largeWhite.png" alt="Glipo" class="desktop">
+                <img src="http://127.0.0.1:5501/media/largeWhite.png" alt="Glipo" class="mobile">
+            </a>
+            <div class="search">
+                <input placeholder="Search">
+                <icon aria-hidden="true">search</icon>
+            </div>
+            <button onclick="toggleMenu();" class="location desktop">
+                <span class="currentLocation">g/Glipo</span>
+                <icon aria-hidden="true" class="locationDropdownIndicator">arrow_drop_down</icon>
+            </button>
+            <span class="signedIn" style="display: inline;">
+                <button title="Notifications" onclick="window.location.href = &#39;/notifications&#39;;" class="menuButton menuButtonHalf notificationsButton"><icon aria-label="Notifications">notifications</icon></button>
+                <button title="Sign out" onclick="signOut();" class="menuButton menuButtonHalf"><icon aria-label="Sign out" class="flippable">exit_to_app</icon></button>
+            </span>
+            <span class="signedOut" style="display: none;">
+                <button onclick="showSignInDialog();" class="menuButton menuButtonBig blue">Sign in</button>
+            </span>
+            <button onclick="toggleMenu();" class="menuButton menuButtonSmall"><icon aria-label="Open/close menu">menu</icon></button>
+        </nav>
+        <div class="menu">
+            <div class="forMenuButtonSmall">
+                <div class="signedIn" style="display: block;">
+                    <button onclick="window.location.href = &#39;/notifications&#39;;">Notifications</button>
+                    <button onclick="signOut();">Sign out</button>
+                </div>
+                <div class="signedOut" style="display: none;">
+                    <button onclick="showSignInDialog();">Sign in</button>
+                    <button onclick="showSignUpDialog();">Sign up</button>
+                </div>
+            </div>
+            <div class="mobile">
+                <button onclick="window.location.href = &#39;/about&#39;;">About Glipo</button>
+            </div>
+            <div class="signedIn" style="display: block;">
+                <button onclick="window.location.href = &#39;/settings&#39;;">Settings</button>
+                <div class="isStaff" style="display: none;">
+                    <button onclick="window.location.href = &#39;/staff&#39;;">Staff area</button>
+                </div>
+                <div class="canCreateGroups" style="display: none;">
+                    <button onclick="window.location.href = &#39;/creategroup&#39;;">Create a group</button>
+                </div>
+                <hr>
+            </div>
+            <button onclick="window.location.href = &#39;/&#39;;">Feed</button>
+            <div class="signedIn" style="display: block;">
+                <button onclick="visitUserProfile();">u/<span class="currentUsername">cmruparell</span></button>
+            </div>
+            <div class="joinedGroups"></div>
+        </div>
+        <header data-location="^g\/[^\/]+$" style="display: block;">
+            <h1 class="groupName">g/Glipo</h1>
+            <p class="groupDescription">The official group for Glipo. Ask questions to our staff and keep up-to-date with our announcements.</p>
+            <span class="mobile">
+                <span class="pageExistent">
+                    <details>
+                        <summary><span>Group info</span> <button onclick="toggleGroupMembership();" class="floatEnd blue groupJoinButton">Join</button></summary>
+                        <p><strong class="groupMemberCount">14 members</strong></p>
+                        <p class="groupPostCount">22 posts</p>
+                        <p class="groupCommentCount">49 comments</p>
+                        <button class="big visitGroupRules">View group rules</button>
+                        <span class="signedIn" style="display: inline;">
+                            <span class="isModerator" style="display: none;">
+                                <button onclick="visitModeratorTools();" class="big">Moderator tools</button>
+                            </span>
+                            <span class="isNotModerator" style="display: inline;">
+                                <button onclick="visitModmailSender();" class="big">Message moderators</button>
+                            </span>
+                        </span>
+                    </details>
+                </span>
+            </span>
+        </header>
+        <main id="content" class="afterHeader">
+            <span class="error404">
+                <section class="posts pageMessage middle">
+                    <h1>A bit lost?</h1>
+                    <p>The page that you requested was not found.</p>
+                    <button onclick="window.location.href = &#39;/&#39;;" class="blue">Go home</button>
+                    <div class="spacer"></div>
+                    <small>404</small>
+                </section>
+            </span>
+            <section class="posts" data-location="^g\/[^\/]+$|^\/$"> <!-- Feed and group page -->
+                <div data-location="^/$" style="display: none;"> <!-- Feed page only -->
+                    <div class="mobile">
+                        <div class="signedOut" style="display: none;">
+                            <card data-location="^g\/[^\/]+$|^\/$" style="display: block;">
+                                <h1>Welcome to Glipo</h1>
+                                <p>Glipo is a social network where you can discover your community through our groups.</p>
+                                <button onclick="showSignUpDialog();" class="big blue">Sign up</button>
+                            </card>
+                        </div>
+                    </div>
+                </div>
+                <div class="pageExistent">
+                    <card class="sorts">
+                        <button onclick="sortPostsBy(&#39;popular&#39;);" class="sort sortPopular blue" aria-label="Popular - Selected"><icon aria-hidden="true">whatshot</icon> <span>Popular</span></button>
+                        <button onclick="sortPostsBy(&#39;best&#39;);" class="sort sortBest"><icon aria-hidden="true">bar_chart</icon> <span>Best</span></button>
+                        <button onclick="sortPostsBy(&#39;newest&#39;);" class="sort sortNewest"><icon aria-hidden="true">new_releases</icon> <span>Newest</span></button>
+                        <button onclick="visitSubmitPost();" class="newPost yellow floatEnd"><icon aria-hidden="true">add</icon> <span>New post</span></button>
+                    </card>
+                    <card class="searchSiteWidePrompt">
+                        <p>Looking for something that's a bit less specific? We can search for posts that are outside of this group, too!</p>
+                        <div class="buttonRow">
+                            <button onclick="searchSiteWide();" class="blue">Search the whole site</button>
+                        </div>
+                    </card>
+                    <div class="loadingPosts" style="display: none;">
+                        <div class="loadingSpinner"></div>
+                    </div>
+                    <div class="loadedGroupResults">
+                        <h1>Groups</h1>
+                    </div>
+                    <div class="loadedUserResults">
+                        <h1>Users</h1>
+                    </div>
+                    <div class="loadedPostsHeader">
+                        <h1>Posts</h1>
+                    </div>
+                    <div class="loadedPosts" style="display: block;"><card class="post clickable"><div class="info"><a class="group" href="https://glipo.net/g/Glipo">g/Glipo</a><span> · </span><span>Posted by <a href="https://glipo.net/u/lol">u/lol</a></span><span> · </span><span title="26 December 2021 06:07:19">3 weeks ago</span></div><h2 class="title"><a href="https://glipo.net/g/glipo/posts/0kElww4kYx2PZ29Fo6zS" target="_blank">glipo is dead</a></h2><div class="postContent writeup"><h1 id="f">F</h1></div><div class="actions"><div><button class="upvoteButton yellow" title="Upvote" aria-label="Upvote - 4"><icon>arrow_upward</icon> <span>4</span></button> <button class="downvoteButton" title="Downvote" aria-label="Downvote - 0"><icon>arrow_downward</icon> <span>0</span></button></div><div class="desktop"><button title="Comment" aria-label="Comment - 4"><icon>comment</icon> <span>4</span></button> <button title="Crosspost" aria-label="Crosspost - 0"><icon>share</icon> <span>0</span></button> <button title="Report" aria-label="Report"><icon>flag</icon></button></div></div></card></div>
+                    <div class="noPosts pageMessage middle">
+                        <h1>Give this group its very first post</h1>
+                        <p>Get started by writing this group's first ever post. It'll be monumental!</p>
+                        <button onclick="visitSubmitPost();" class="blue">Write a post</button>
+                    </div>
+                    <div class="noResults pageMessage middle">
+                        <h1>We can't find what you're looking for</h1>
+                        <p>There doesn't seem to be any posts that match your search term. Maybe try searching for something different!</p>
+                        <button onclick="window.location.href = &#39;/&#39;;" class="blue">Go home</button>
+                    </div>
+                </div>
+                <div class="pageNonExistent pageMessage middle">
+                    <h1>This group doesn't exist!</h1>
+                    <p>Check to see if you entered the group name correctly. If you want to create a group with this name, go ahead!</p>
+                    <button onclick="visitCreateGroup();" class="blue">Create a group</button>
+                </div>
+            </section>
+            <section class="posts" data-location="^g\/[^\/]+\/posts\/[^\/]+$" style="display: none;"> <!-- Opened post page -->
+                <div class="loadingPosts" style="display: none;">
+                    <div class="loadingSpinner"></div>
+                </div>
+                <div class="loadedPosts" style="display: block;"><card class="post clickable"><div class="info"><a class="group" href="https://glipo.net/g/Glipo">g/Glipo</a><span> · </span><span>Posted by <a href="https://glipo.net/u/lol">u/lol</a></span><span> · </span><span title="26 December 2021 06:07:19">3 weeks ago</span></div><h2 class="title"><a href="https://glipo.net/g/glipo/posts/0kElww4kYx2PZ29Fo6zS" target="_blank">glipo is dead</a></h2><div class="postContent writeup"><h1 id="f">F</h1></div><div class="actions"><div><button class="upvoteButton yellow" title="Upvote" aria-label="Upvote - 4"><icon>arrow_upward</icon> <span>4</span></button> <button class="downvoteButton" title="Downvote" aria-label="Downvote - 0"><icon>arrow_downward</icon> <span>0</span></button></div><div class="desktop"><button title="Comment" aria-label="Comment - 4"><icon>comment</icon> <span>4</span></button> <button title="Crosspost" aria-label="Crosspost - 0"><icon>share</icon> <span>0</span></button> <button title="Report" aria-label="Report"><icon>flag</icon></button></div></div></card></div>
+                <div class="pageNonExistent middle">
+                    <div class="pageMessage">
+                        <h1>Which post were you talking about?!</h1>
+                        <p>It seems that no post exists with this link; check to see if the address is correct.</p>
+                        <button onclick="window.location.href = &#39;/&#39;;" class="blue">Go home</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^g\/[^\/]+\/rules$" style="display: none;"> <!-- Group rules page -->
+                <div class="loadingRules" style="display: none;">
+                    <div class="loadingSpinner"></div>
+                </div>
+                <div class="pageExistent">
+                    <div class="loadedRules" style="display: block;">
+                        <card class="transparent noPadding">
+                            <button onclick="window.close(); window.history.back();" class="transparent">
+                                <icon aria-hidden="true" class="flippable">arrow_back</icon>
+                                <span>Back</span>
+                            </button>
+                        </card>
+                            <card class="post">
+                                <h1 class="groupRulesHeader">Rules of g/glipo</h1>
+                                <div class="hasRules" style="display: block;">
+                                    <div class="groupRules"><details><summary>1. Relevant content only</summary><p>g/Glipo is a place for announcements, help requests and feedback for Glipo. Please don't use g/Glipo as a place to post content that doesn't fit in any particular group.</p></details><details><summary>2. No fake announcements</summary><p>Only Glipo's staff members can announce new things  (such as service updates) on Glipo. If you're letting everyone know about a new group you've made, that's fine.</p></details><details><summary>3. Discussion about web frontend only</summary><p>Please don't ask questions about third-party Glipo clients as our group members and staff only can help you with the official Glipo Web Frontend.</p></details></div>
+                                </div>
+                                <div class="hasNoRules">
+                                    <p>This group doesn't have any rules! You will still need to abide by Glipo's Content Policy, though.</p>
+                                </div>
+                            </card>
+                        </div>
+                    </div>
+                
+                <div class="pageNonExistent middle">
+                    <div class="pageMessage">
+                        <h1>This non-existent group has no rules</h1>
+                        <p>That's somewhat unsurprising, though. You may have mistyped the URL there.</p>
+                        <button onclick="window.location.href = &#39;/&#39;;" class="blue">Go home</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^g\/[^\/]+\/modtools$" style="display: none;"> <!-- Group moderator tools page -->
+                <div class="signedIn" style="display: block;">
+                    <div class="isModerator" style="display: none;">
+                        <h1 class="mobile">
+                            <a href="https://glipo.net/g/glipo" class="groupName groupLink noColour">g/Glipo</a>
+                            <a href="javascript:modVisitSettings();"><icon aria-label="Settings">settings</icon></a>
+                        </h1>
+                        <div class="tabs">
+                            <div class="tabstrip">
+                                <button class="selected" data-tab="modqueue">Modqueue</button>
+                                <button data-tab="reports">Reports</button>
+                                <button data-tab="modmail">Modmail</button>
+                                <button data-tab="members">Members</button>
+                            </div>
+                            <div class="tabcontents giveMarginTop">
+                                <div data-tab="modqueue" id="modModqueue">
+                                    <div class="loadingSpinner"></div>
+                                    <div class="modqueueItems"></div>
+                                </div>
+                                <div data-tab="reports" id="modReports">
+                                    <div class="loadingSpinner"></div>
+                                    <div class="modReportItems"></div>
+                                </div>
+                                <div data-tab="modmail" id="modmail">
+                                    <div class="loadingSpinner"></div>
+                                    <div class="modModmailList"></div>
+                                </div>
+                                <div data-tab="members" id="modMembers">
+                                    <div class="loadingSpinner"></div>
+                                    <div class="modMemberList"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="isNotModerator" style="display: block;">
+                        <div class="pageMessage middle">
+                            <h1 class="groupNameModRequirement">You must be a moderator of g/Glipo to access moderator tools for this group</h1>
+                            <p>This page is restricted to moderators only.</p>
+                            <button onclick="window.location.href = &#39;/&#39;;" class="blue">Go home</button>
+                        </div>
+                    </div>
+                    <div class="isGroupBanned" style="display: none;">
+                        <div class="pageMessage middle">
+                            <h1>You are currently banned from this group</h1>
+                            <p>A moderator banned you from this group, preventing you from being able to access this group's moderator tools.</p>
+                            <button onclick="window.location.href = &#39;/&#39;;" class="blue">Go home</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="signedOut" style="display: none;">
+                    <div class="pageMessage middle">
+                        <h1>Sign in to access moderator tools</h1>
+                        <p>You must be a moderator of this group to access moderator tools.</p>
+                        <button onclick="showSignInDialog();" class="blue">Sign in</button>
+                    </div>
+                </div>
+                <div class="loadingUser" style="display: none;">
+                    <div class="loadingSpinner"></div>
+                </div>
+            </section>
+            <section class="posts" data-location="^g\/[^\/]+\/settings$" style="display: none;"> <!-- Group settings page -->
+                <div class="signedIn" style="display: block;">
+                    <div class="isModerator" style="display: none;">
+                        <div class="isOwner" style="display: none;">
+                            <span class="mobile">
+                                <card class="transparent noPadding">
+                                    <button onclick="visitModeratorTools();" class="transparent">
+                                        <icon aria-hidden="true" class="flippable">arrow_back</icon>
+                                        <span>Back</span>
+                                    </button>
+                                </card>
+                            </span>
+                            <h1 class="modSettingsHeading">Settings for g/Glipo</h1>
+                            <div class="settingsSheet">
+                                <label>
+                                    <span>Group name</span>
+                                    <input id="modSettingsGroupName">
+                                </label>
+                                <p class="itemDescription">The group name cannot be changed, but the casing of the letters in it can be changed.</p>
+                                <label>
+                                    <span>Description</span>
+                                    <textarea placeholder="Tell us about what your group does..." maxlength="200" id="modSettingsGroupDescription"></textarea>
+                                </label>
+                                <p class="errorMessage" id="modSettingsProfileError"></p>
+                                <div class="buttonRow">
+                                    <button onclick="saveGroupProfile();" class="blue" id="modSettingsProfileButton">Save</button>
+                                </div>
+                                <h2>Rules</h2>
+                                <p>Define what your group's members can and can't do through rules. Members can then report posts that violate certain rules through Glipo's reporting system.</p>
+                                <div class="hasRules" style="display: block;">
+                                    <div class="modSettingsRules"></div>
+                                </div>
+                                <div class="hasNoRules">
+                                    <p class="info middle">There are no rules for this group</p>
+                                </div>
+                                <div class="buttonRow">
+                                    <button onclick="showNewGroupRuleDialog();" class="blue">New rule</button>
+                                </div>
+                                <h2>Modmail</h2>
+                                <label>
+                                    <span>Welcome message</span>
+                                    <div class="contentEditor" id="modSettingsModmailMessage"><div class="toolbar editing"><button aria-label="Bold" title="Bold"><icon>format_bold</icon></button><button aria-label="Italic" title="Italic"><icon>format_italic</icon></button><button aria-label="Strikethrough" title="Strikethrough"><icon>format_strikethrough</icon></button><button aria-label="Link" title="Link"><icon>link</icon></button><button aria-label="Inline code" title="Inline code"><icon>code</icon></button><button aria-label="Superscript" title="Superscript"><icon>keyboard_arrow_up</icon></button><button aria-label="Spoiler" title="Spoiler"><icon>new_releases</icon></button><span class="split"></span><button aria-label="Heading" title="Heading"><icon>title</icon></button><button aria-label="Bullet-point list" title="Bullet-point list"><icon class="flippable">format_list_bulleted</icon></button><button aria-label="Numerical list" title="Numerical list"><icon>format_list_numbered</icon></button><button aria-label="Checkbox" title="Checkbox"><icon>check_box</icon></button><button aria-label="Blockquote" title="Blockquote"><icon>format_quote</icon></button><button aria-label="Code block" title="Code block"><icon>description</icon></button><button aria-label="Horizontal rule" title="Horizontal rule"><icon>remove</icon></button><span class="split"></span><button aria-label="Table" title="Table"><icon>table_chart</icon></button><button aria-label="Media" title="Media"><icon>perm_media</icon></button><button class="special floatEnd">Preview</button></div><div class="toolbar previewing"><button class="special floatEnd">Edit</button></div><textarea placeholder="Write your thoughts here..."></textarea><div class="preview postContent fullContent"></div></div>
+                                </label>
+                                <p class="itemDescription">This welcome message will appear on the page that users visit to contact your group's moderators.</p>
+                                <p class="errorMessage" id="modSettingsModmailError"></p>
+                                <div class="buttonRow">
+                                    <button onclick="saveGroupModmailSettings();" class="blue" id="modSettingsModmailButton">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="isNotOwner" style="display: block;">
+                            <div class="pageMessage middle">
+                                <h1 class="groupNameModRequirement">You must be a moderator of g/Glipo to access moderator tools for this group</h1>
+                                <p>You must be a moderator with owner permissions in order to change this group's settings.</p>
+                                <button onclick="visitModeratorTools();" class="blue">Back to moderator tools</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="isNotModerator" style="display: block;">
+                        <div class="pageMessage middle">
+                            <h1 class="groupNameModRequirement">You must be a moderator of g/Glipo to access moderator tools for this group</h1>
+                            <p>This page is restricted to moderators only.</p>
+                            <button onclick="window.location.href = &#39;/&#39;;" class="blue">Go home</button>
+                        </div>
+                    </div>
+                    <div class="isGroupBanned" style="display: none;">
+                        <div class="pageMessage middle">
+                            <h1>You are currently banned from this group</h1>
+                            <p>A moderator banned you from this group, preventing you from being able to access this group's moderator tools.</p>
+                            <button onclick="window.location.href = &#39;/&#39;;" class="blue">Go home</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="signedOut" style="display: none;">
+                    <div class="pageMessage middle">
+                        <h1>Sign in to access moderator tools</h1>
+                        <p>You must be a moderator of this group to access moderator tools.</p>
+                        <button onclick="showSignInDialog();" class="blue">Sign in</button>
+                    </div>
+                </div>
+                <div class="loadingUser" style="display: none;">
+                    <div class="loadingSpinner"></div>
+                </div>
+            </section>
+            <section class="posts" data-location="^g\/[^\/]+\/modmail$" style="display: none;"> <!-- Modmail sender page -->
+                <div class="signedIn" style="display: block;">
+                    <h1 class="modmailHeading">Message the moderators of g/Glipo</h1>
+                    <p><strong>Enter the message that you would like to send to the moderators of this group. A member of this group should reply shortly.</strong></p>
+                    <div class="modmailMessage"><p>Your message will be read by Glipo's staff, who all manage the <a href="https://glipo.net/g/Glipo">g/Glipo</a> group. If you're looking to report a post or comment, press the report button on that post/comment so that we can investigate the issue. For all other matters, message us here!</p></div>
+                    <div class="contentEditor" id="modmailSendContent"><div class="toolbar editing"><button aria-label="Bold" title="Bold"><icon>format_bold</icon></button><button aria-label="Italic" title="Italic"><icon>format_italic</icon></button><button aria-label="Strikethrough" title="Strikethrough"><icon>format_strikethrough</icon></button><button aria-label="Link" title="Link"><icon>link</icon></button><button aria-label="Inline code" title="Inline code"><icon>code</icon></button><button aria-label="Superscript" title="Superscript"><icon>keyboard_arrow_up</icon></button><button aria-label="Spoiler" title="Spoiler"><icon>new_releases</icon></button><span class="split"></span><button aria-label="Heading" title="Heading"><icon>title</icon></button><button aria-label="Bullet-point list" title="Bullet-point list"><icon class="flippable">format_list_bulleted</icon></button><button aria-label="Numerical list" title="Numerical list"><icon>format_list_numbered</icon></button><button aria-label="Checkbox" title="Checkbox"><icon>check_box</icon></button><button aria-label="Blockquote" title="Blockquote"><icon>format_quote</icon></button><button aria-label="Code block" title="Code block"><icon>description</icon></button><button aria-label="Horizontal rule" title="Horizontal rule"><icon>remove</icon></button><span class="split"></span><button aria-label="Table" title="Table"><icon>table_chart</icon></button><button aria-label="Media" title="Media"><icon>perm_media</icon></button><button class="special floatEnd">Preview</button></div><div class="toolbar previewing"><button class="special floatEnd">Edit</button></div><textarea placeholder="Write your thoughts here..."></textarea><div class="preview postContent fullContent"></div></div>
+                    <div class="errorMessage" id="modmailSendError"></div>
+                    <div class="buttonRow">
+                        <button onclick="sendModmail();" class="blue modmailSendButton">Send</button>
+                        <button onclick="window.history.back();">Cancel</button>
+                    </div>
+                </div>
+                <div class="signedOut" style="display: none;">
+                    <div class="pageMessage middle">
+                        <h1>Sign in to send messages to moderators</h1>
+                        <p>To send a message to the moderators of this group, please sign in.</p>
+                        <button onclick="showSignInDialog();" class="blue">Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^submit$" style="display: none;"> <!-- Post submitting page -->
+                <div class="signedIn" style="display: block;">
+                    <h1>Submit your post</h1>
+                    <input placeholder="Enter a group to post to" class="grow" id="submitGroup">
+                    <div class="tabs">
+                        <div class="tabstrip">
+                            <button class="selected" data-tab="writeup" id="submitWriteupTab">Writeup</button>
+                            <button data-tab="media" id="submitMediaTab">Media</button>
+                            <button data-tab="link" id="submitLinkTab">Link</button>
+                        </div>
+                        <div class="tabcontents" id="submitType">
+                            <div data-tab="writeup">
+                                <input placeholder="Post title" class="big" id="submitWriteupTitle">
+                                <div class="contentEditor" id="submitWriteupContent"><div class="toolbar editing"><button aria-label="Bold" title="Bold"><icon>format_bold</icon></button><button aria-label="Italic" title="Italic"><icon>format_italic</icon></button><button aria-label="Strikethrough" title="Strikethrough"><icon>format_strikethrough</icon></button><button aria-label="Link" title="Link"><icon>link</icon></button><button aria-label="Inline code" title="Inline code"><icon>code</icon></button><button aria-label="Superscript" title="Superscript"><icon>keyboard_arrow_up</icon></button><button aria-label="Spoiler" title="Spoiler"><icon>new_releases</icon></button><span class="split"></span><button aria-label="Heading" title="Heading"><icon>title</icon></button><button aria-label="Bullet-point list" title="Bullet-point list"><icon class="flippable">format_list_bulleted</icon></button><button aria-label="Numerical list" title="Numerical list"><icon>format_list_numbered</icon></button><button aria-label="Checkbox" title="Checkbox"><icon>check_box</icon></button><button aria-label="Blockquote" title="Blockquote"><icon>format_quote</icon></button><button aria-label="Code block" title="Code block"><icon>description</icon></button><button aria-label="Horizontal rule" title="Horizontal rule"><icon>remove</icon></button><span class="split"></span><button aria-label="Table" title="Table"><icon>table_chart</icon></button><button aria-label="Media" title="Media"><icon>perm_media</icon></button><button class="special floatEnd">Preview</button></div><div class="toolbar previewing"><button class="special floatEnd">Edit</button></div><textarea placeholder="Write your thoughts here..."></textarea><div class="preview postContent fullContent"></div></div>
+                            </div>
+                            <div data-tab="media">
+                                <input placeholder="Post title" class="big" id="submitMediaTitle">
+                                <div class="upload" id="submitMediaUpload"><div class="none"><label><input type="file"><span>Drag and drop or choose a file</span><button class="blue">Choose file</button></label></div><div class="uploaded"><div class="info"><span></span><button>Cancel</button></div><img class="result"></div></div>
+                            </div>
+                            <div data-tab="link">
+                                <input placeholder="Post title" class="big" id="submitLinkTitle">
+                                <input placeholder="URL to content" class="big" id="submitLinkUrl">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttonRow">
+                        <button onclick="submitPost();" class="blue submitButton">Submit</button>
+                        <button onclick="window.history.back();">Cancel</button>
+                    </div>
+                    <p class="errorMessage" id="submitError"></p>
+                </div>
+                <div class="signedOut middle" style="display: none;">
+                    <div class="pageMessage">
+                        <h1>Make your mark</h1>
+                        <p>Sign in to submit your brand new post. If you don't have an account, sign up!</p>
+                        <button onclick="showSignInDialog();" class="blue">Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts userProfile" data-location="^u\/.*$" style="display: none;"> <!-- User page -->
+                <span class="mobile">
+                    <span class="pageExistent">
+                        <card data-location="^u\/.*$" style="display: none;">
+                            <h2><strong class="userUsername"></strong></h2>
+                            <p><strong class="userStaffTitle"></strong></p>
+                            <p class="userBio"></p>
+                            <p title="This message was added by a member of Glipo staff." class="errorMessage userStaffCommentary"></p>
+                            <p class="userJoinDate">Joined ---</p>
+                            <p>
+                                <strong class="userPoints">--- points</strong>
+                                <span>·</span>
+                                <span class="userPostCount">--- posts</span>
+                                <span>·</span>
+                                <span class="userCommentCount">--- comments</span>
+                            </p>
+                            <div class="userIsNotMe">
+                                <button onclick="visitUserMessages();" class="big blue">Send message</button>
+                            </div>
+                        </card>
+                        <span class="donorInfo">
+                            <card>
+                                <p class="donorSince">Glipo donor</p>
+                            </card>
+                        </span>
+                    </span>
+                </span>
+                <div class="loadingPosts" style="display: none;">
+                    <div class="loadingSpinner"></div>
+                </div>
+                <div class="loadedPosts" style="display: block;"><card class="post clickable"><div class="info"><a class="group" href="https://glipo.net/g/Glipo">g/Glipo</a><span> · </span><span>Posted by <a href="https://glipo.net/u/lol">u/lol</a></span><span> · </span><span title="26 December 2021 06:07:19">3 weeks ago</span></div><h2 class="title"><a href="https://glipo.net/g/glipo/posts/0kElww4kYx2PZ29Fo6zS" target="_blank">glipo is dead</a></h2><div class="postContent writeup"><h1 id="f">F</h1></div><div class="actions"><div><button class="upvoteButton yellow" title="Upvote" aria-label="Upvote - 4"><icon>arrow_upward</icon> <span>4</span></button> <button class="downvoteButton" title="Downvote" aria-label="Downvote - 0"><icon>arrow_downward</icon> <span>0</span></button></div><div class="desktop"><button title="Comment" aria-label="Comment - 4"><icon>comment</icon> <span>4</span></button> <button title="Crosspost" aria-label="Crosspost - 0"><icon>share</icon> <span>0</span></button> <button title="Report" aria-label="Report"><icon>flag</icon></button></div></div></card></div>
+                <div class="noPosts pageMessage middle">
+                    <div class="userIsMe">
+                        <h1>Nothing to show off yet!</h1>
+                        <p>The world's waiting to see what you can make! Write a post or comment in a group that you're part of and it'll show here too.</p>
+                        <button onclick="visitSubmitPost();" class="blue">Write a post</button>
+                    </div>
+                    <div class="userIsNotMe">
+                        <h1>What a mystery...</h1>
+                        <p>This user hasn't posted or commented on anything yet! Come back later when they've made something to share.</p>
+                        <button onclick="window.location.href = &#39;/&#39;;" class="blue">Go home</button>
+                    </div>
+                </div>
+                <div class="pageNonExistent pageMessage middle">
+                    <div class="signedIn" style="display: block;">
+                        <h1>Who is this?!</h1>
+                        <p>No-one exists with this username. If you're looking for someone in particular, make sure that you typed in the username correctly!</p>
+                        <button onclick="window.location.href = &#39;/&#39;;" class="blue">Go home</button>
+                    </div>
+                    <div class="signedOut" style="display: none;">
+                        <h1>Who is this?!</h1>
+                        <p>No-one exists with this username. If you like the username, feel free to create an account with it!</p>
+                        <button onclick="showSignUpDialog();" class="blue">Sign up</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^notifications$" style="display: none;"> <!-- Notifications page -->
+                <div class="signedIn" style="display: block;">
+                    <div class="tabs">
+                        <div class="tabstrip">
+                            <button class="selected" data-tab="unread">Unread</button>
+                            <button data-tab="archive">Archive</button>
+                            <button data-tab="messages">Messages</button>
+                        </div>
+                        <div class="tabcontents giveMarginTop" id="submitType">
+                            <div data-tab="unread" id="unreadNotificationsTab">
+                                <div class="loadingSpinner"></div>
+                                <div class="unreadNotifications"></div>
+                                <div class="notificationsNotEnabled" style="display: block;">
+                                    <card>
+                                        <h2>Never miss a message</h2>
+                                        <p>Enable push notifications to keep updated when you're not on the site</p>
+                                        <div class="buttonRow">
+                                            <button onclick="enablePushNotifications();" class="blue">Enable</button>
+                                        </div>
+                                    </card>
+                                </div>
+                            </div>
+                            <div data-tab="archive" id="archivedNotificationsTab">
+                                <div class="loadingSpinner"></div>
+                                <div class="archivedNotifications"></div>
+                            </div>
+                            <div data-tab="messages" id="messagesTab">
+                                <div class="loadingSpinner"></div>
+                                <div class="messageDms"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="signedOut middle" style="display: none;">
+                    <div class="pageMessage">
+                        <h1>Sign in to see your notifications</h1>
+                        <p>To catch up with all of your messages and replies, please sign in.</p>
+                        <button onclick="showSignInDialog();" class="blue">Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^dm$" style="display: none;"> <!-- DM page -->
+                <div class="signedIn" style="display: block;">
+                    <div class="loadingDm">
+                        <div class="loadingSpinner"></div>
+                    </div>
+                    <div class="loadedDm">
+                        <div class="pageExistent">
+                            <h1 class="dmHeader"></h1>
+                            <div class="dmMessages"></div>
+                            <div class="dmReplyContainer">
+                                <div class="contentEditor" id="dmMessageReply"><div class="toolbar editing"><button aria-label="Bold" title="Bold"><icon>format_bold</icon></button><button aria-label="Italic" title="Italic"><icon>format_italic</icon></button><button aria-label="Strikethrough" title="Strikethrough"><icon>format_strikethrough</icon></button><button aria-label="Link" title="Link"><icon>link</icon></button><button aria-label="Inline code" title="Inline code"><icon>code</icon></button><button aria-label="Superscript" title="Superscript"><icon>keyboard_arrow_up</icon></button><button aria-label="Spoiler" title="Spoiler"><icon>new_releases</icon></button><span class="split"></span><button aria-label="Heading" title="Heading"><icon>title</icon></button><button aria-label="Bullet-point list" title="Bullet-point list"><icon class="flippable">format_list_bulleted</icon></button><button aria-label="Numerical list" title="Numerical list"><icon>format_list_numbered</icon></button><button aria-label="Checkbox" title="Checkbox"><icon>check_box</icon></button><button aria-label="Blockquote" title="Blockquote"><icon>format_quote</icon></button><button aria-label="Code block" title="Code block"><icon>description</icon></button><button aria-label="Horizontal rule" title="Horizontal rule"><icon>remove</icon></button><span class="split"></span><button aria-label="Table" title="Table"><icon>table_chart</icon></button><button aria-label="Media" title="Media"><icon>perm_media</icon></button><button class="special floatEnd">Preview</button></div><div class="toolbar previewing"><button class="special floatEnd">Edit</button></div><textarea placeholder="Write your thoughts here..."></textarea><div class="preview postContent fullContent"></div></div>
+                                <div class="buttonRow">
+                                    <button onclick="sendDmMessage();" class="blue">Send</button>
+                                    <button onclick="window.history.back();">Cancel</button>
+                                </div>
+                                <p class="errorMessage" id="sendDmMessageError"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pageNonExistent">
+                        <div class="pageMessage middle">
+                            <h1>This user does not exist...</h1>
+                            <p>Check to see if you entered the right username in the URL.</p>
+                            <button onclick="window.location.href = &#39;/notifications&#39;;" class="blue">View notifications</button>
+                        </div>
+                    </div>
+                    <div class="selfMessaging">
+                        <div class="pageMessage middle">
+                            <h1>Talking to yourself?!</h1>
+                            <p>You can't send messages to yourself ─ only to other people.</p>
+                            <button onclick="window.location.href = &#39;/notifications&#39;;" class="blue">View notifications</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="signedOut middle" style="display: none;">
+                    <div class="pageMessage">
+                        <h1>Sign in to send and receive messages</h1>
+                        <p>You need a Glipo account in order to privately message users.</p>
+                        <button onclick="showSignInDialog();" class="blue">Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^settings$" style="display: none;"> <!-- Settings page -->
+                <div class="signedIn" style="display: block;">
+                    <div class="loadedUser" style="display: block;">
+                        <div class="tabs">
+                            <div class="tabstrip">
+                                <button class="selected" data-tab="general">General</button>
+                                <button data-tab="safety">Safety</button>
+                                <button data-tab="about">About</button>
+                            </div>
+                            <div class="tabcontents giveMarginTop">
+                                <div data-tab="general" class="settingsSheet">
+                                    <h2>Your profile</h2>
+                                    <label>
+                                        <span>Username</span>
+                                        <input data-property="username" class="settingsPersonalProperty">
+                                    </label>
+                                    <p class="itemDescription">Your username cannot be changed, but the casing of the letters in it can be changed.</p>
+                                    <label>
+                                        <span>Bio</span>
+                                        <textarea placeholder="Write a brief description about yourself to show on your profile..." maxlength="200" data-property="bio" class="settingsPersonalProperty"></textarea>
+                                    </label>
+                                    <p class="errorMessage" id="settingsProfileError"></p>
+                                    <div class="buttonRow">
+                                        <button onclick="savePropertyType(&#39;settingsPersonalProperty&#39;, _(&#39;Saving...&#39;));" class="blue">Save</button>
+                                    </div>
+                                    <h2>Account security</h2>
+                                    <label>
+                                        <span>Current password</span>
+                                        <input type="password" placeholder="(Unchanged)" id="settingsCurrentPassword">
+                                    </label>
+                                    <label>
+                                        <span>New password</span>
+                                        <input type="password" id="settingsNewPassword">
+                                    </label>
+                                    <p class="errorMessage" id="changePasswordError"></p>
+                                    <div class="buttonRow">
+                                        <button onclick="changePassword();" class="blue" id="changePasswordButton">Change password</button>
+                                    </div>
+                                    <h2>Delete your account</h2>
+                                    <p>When you delete your account, your profile will be removed. Your posts and comments will still be visible to others, but your username will not be shown.</p>
+                                    <p>You may want to delete your posts and comments first before deleting your account.</p>
+                                    <button onclick="showDeleteAccountDialog();">Delete account</button>
+                                </div>
+                                <div data-tab="safety" class="settingsSheet">
+                                    <h2>Blocked users</h2>
+                                    <p>Messages and replies sent by the users listed below will not be shown in your notifications.</p>
+                                    <div class="blockedUsers"></div>
+                                    <div class="loadingBanStatus" style="display: none;">
+                                        <div class="loadingSpinner"></div>
+                                    </div>
+                                    <div class="hasBan" style="display: none;">
+                                        <h2>Account status</h2>
+                                        <p class="banStatus">You are currently banned from using Glipo.</p>
+                                        <p>For more information about your ban, <a href="https://glipo.net/dm?user=modbot" target="_blank">check the messages that were sent to you from u/modbot</a>.</p>
+                                        <button onclick="window.location.href = &#39;/appeal&#39;;" class="blue">Appeal ban</button>
+                                    </div>
+                                    <div class="hasNoBan" style="display: block;">
+                                        <h2>Account status</h2>
+                                        <p>There are currently no active bans on your Glipo account.</p>
+                                    </div>
+                                </div>
+                                <div data-tab="about">
+                                    <div class="middle">
+                                        <img src="./g_Glipo - Glipo_files/largeWhite.png" alt="" class="aboutLogo">
+                                        <h2>Glipo Web Frontend</h2>
+                                        <p>Connecting communities through the internet</p>
+                                        <p>Made with ❤️ in Norwich, England</p>
+                                        <button onclick="window.location.href = &#39;/about&#39;;">About us</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="loadingUser" style="display: none;">
+                        <div class="loadingSpinner"></div>
+                    </div>
+                </div>
+                <div class="signedOut" style="display: none;">
+                    <div class="pageMessage middle">
+                        <h1>Sign in to manage your Glipo account's settings</h1>
+                        <p>You'll need to sign in with a Glipo account to modify its settings.</p>
+                        <button onclick="showSignInDialog();" class="blue">Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^staff$" style="display: none;"> <!-- Staff page -->
+                <div class="signedIn" style="display: block;">
+                    <div class="isStaff" style="display: none;">
+                        <div class="tabs">
+                            <div class="tabstrip">
+                                <button class="selected" data-tab="modqueue">Modqueue</button>
+                                <button data-tab="reports">Reports</button>
+                                <button data-tab="staff">Staff members</button>
+                            </div>
+                            <div class="tabcontents giveMarginTop">
+                                <div data-tab="modqueue" id="staffModqueue">
+                                    <div class="loadingSpinner"></div>
+                                    <div class="modqueueItems"></div>
+                                </div>
+                                <div data-tab="reports" id="staffReports">
+                                    <div class="loadingSpinner"></div>
+                                    <div class="staffReportItems"></div>
+                                </div>
+                                <div data-tab="staff" id="staffMembers">
+                                    <div class="loadingSpinner"></div>
+                                    <div class="staffMemberList"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="isNotStaff" style="display: block;">
+                        <div class="pageMessage middle">
+                            <h1>You must be a member of staff at Glipo to access the staff area</h1>
+                            <p>Only staff members can access the staff area.</p>
+                            <button onclick="window.location.href = &#39;/&#39;;" class="blue">Go home</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="signedOut" style="display: none;">
+                    <div class="pageMessage middle">
+                        <h1>Sign in to access the staff area</h1>
+                        <p>If you are a member of staff, please sign in with your staff account.</p>
+                        <button onclick="showSignInDialog();" class="blue">Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^creategroup$" style="display: none;"> <!-- Create a group page -->
+                <div class="signedIn" style="display: block;">
+                    <div class="loadingUserDetails" style="display: none;">
+                        <div class="loadingSpinner"></div>
+                    </div>
+                    <div class="canCreateGroups" style="display: none;">
+                        <h1>Create a group</h1>
+                        <h2 class="step">1. Choose a group name</h2>
+                        <card dir="ltr" class="createGroupName">
+                            <span>g/</span>
+                            <input placeholder="groupname" id="createGroupNameInput">
+                        </card>
+                        <p class="createGroupNamePrompt">The group name must be between 3-20 characters long, and must only contain lowercase and uppercase letters as well as numbers.</p>
+                        <h2 class="step">2. Write a brief description of your group</h2>
+                        <textarea id="createGroupDescriptionInput" placeholder="Write something here that will entice people to your group..." maxlength="200"></textarea>
+                        <p>The group description will appear just below the group name and can only be a maximum of 200 characters long.</p>
+                        <h3 class="step">3. Do the honours</h3>
+                        <p>It's time for you to press the magic button! Check that everything above is correct, then press the button below to create your group.</p>
+                        <button onclick="createGroup();" class="blue" id="createGroupButton">Create group</button>
+                        <p class="errorMessage createGroupError"></p>
+                    </div>
+                    <div class="cannotCreateGroups" style="display: block;">
+                        <div class="pageMessage middle">
+                            <h1>You'll need at least 100 points to create a group</h1>
+                            <p>We require our users to have a sufficient amount of points in order to create a group. This is to prevent spam and to ensure that users are fit to moderate their own groups.</p>
+                            <p>Want to get more points? Try writing a post!</p>
+                            <button onclick="visitSubmitPost();" class="blue">Write a post</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="signedOut" style="display: none;">
+                    <div class="pageMessage middle">
+                        <h1>Sign in to create your own group</h1>
+                        <p>You need a Glipo account with at least 100 points in order to create a group.</p>
+                        <button onclick="showSignInDialog();" class="blue">Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <section class="posts" data-location="^banned$" style="display: none;"> <!-- Ban page -->
+                <div class="pageMessage middle">
+                    <h1>Sorry, you cannot do that</h1>
+                    <p class="banMessage">We don't know why you're here! Please try visiting Glipo again later.</p>
+                    <button onclick="window.location.href = &#39;/appeal&#39;;" class="blue">Appeal ban</button>
+                </div>
+            </section>
+            <section class="posts" data-location="^appeal$" style="display: none;"> <!-- Ban page -->
+                <div class="signedIn" style="display: block;">
+                    <h1>Appeal a ban</h1>
+                    <p>If you've recently been banned from participating on Glipo and you feel that the ban was made in error, fill in this form to submit a ban appeal. A member of Glipo's staff will then assess your ban appeal request and may lift the ban that was put in place.</p>
+                    <p>If you were banned from participating in a particular group, please instead message the relevant group moderators as this ban appeal form is only used for appealing site-wide bans.</p>
+                    <p>In some cases, Glipo's staff may find that their decision to ban you was final. Submitting this ban appeal form does not guarantee that your ban will be lifted.</p>
+                    <div class="loadingBanStatus" style="display: none;">
+                        <div class="loadingSpinner"></div>
+                    </div>
+                    <div class="hasBan" style="display: none;">
+                        <h2>Account status</h2>
+                        <p class="banStatus">You are currently banned from using Glipo.</p>
+                        <p>For more information about your ban, <a href="https://glipo.net/dm?user=modbot" target="_blank">check the messages that were sent to you from u/modbot</a>.</p>
+                        <div class="canSubmitBanAppeal">
+                            <h2>Appeal details</h2>
+                            <p>Tell us why you think we should lift your ban below.</p>
+                            <textarea placeholder="Explain why you think we banned you in error here..." id="appealSubmitReason"></textarea>
+                            <label><input type="checkbox" id="appealAccept"><span>I promise not to violate the rules of Glipo's Content Policy again and I am sorry for any inconvenience that I have caused towards Glipo's staff</span></label>
+                            <div class="end buttonRow">
+                                <button onclick="submitAppeal();" class="blue appealSubmitButton">Submit</button>
+                                <button onclick="window.history.back();">Cancel</button>
+                            </div>
+                            <p class="errorMessage" id="appealSubmitError"></p>
+                        </div>
+                        <div class="cannotSubmitBanAppeal">
+                            <p class="errorMessage">Sorry, you cannot submit a ban appeal because the decision to ban you was determined by Glipo's staff to be final.</p>
+                        </div>
+                    </div>
+                    <div class="hasNoBan" style="display: block;">
+                        <h2>Account status</h2>
+                        <p>There are currently no active bans on your Glipo account, and so you do not need to submit an appeal at this time.</p>
+                    </div>
+                </div>
+                <div class="signedOut" style="display: none;">
+                    <div class="pageMessage middle">
+                        <h1>Sign in to appeal a ban</h1>
+                        <p>We'll need you to sign in with the account that you received the ban from so that you can appeal it.</p>
+                        <button onclick="showSignInDialog();" class="blue">Sign in</button>
+                    </div>
+                </div>
+            </section>
+            <aside id="sidebar">
+                <span class="signedOut" style="display: none;">
+                    <card data-location="^g\/[^\/]+$|^\/$" style="display: block;">
+                        <h1>Welcome to Glipo</h1>
+                        <p>Glipo is a social network where you can discover your community through our groups.</p>
+                        <button onclick="showSignUpDialog();" class="big blue">Sign up</button>
+                    </card>
+                </span>
+                <span class="loadedTrendingGroups">
+                    <card data-location="^\/$" style="display: none;">
+                        <h2>Trending groups</h2>
+                        <div class="trendingGroups"></div>
+                    </card>
+                </span>
+                <span class="canCreateGroups" style="display: none;">
+                    <card data-location="^\/$" style="display: none;">
+                        <h1>Want a group of your own?</h1>
+                        <p>You're now eligible to start your own groups! Let people discover your very own community.</p>
+                        <button onclick="window.location.href = &#39;/creategroup&#39;;" class="big blue">Create a group</button>
+                    </card>
+                </span>
+                <span class="pageExistent">
+                    <card data-location="^g\/[^\/]+$" style="display: block;">
+                        <h2>About this group</h2>
+                        <p><strong class="groupMemberCount">14 members</strong></p>
+                        <p class="groupPostCount">22 posts</p>
+                        <p class="groupCommentCount">49 comments</p>
+                        <button onclick="toggleGroupMembership();" class="big blue groupJoinButton">Join</button>
+                        <span class="signedIn" style="display: inline;">
+                            <span class="isModerator" style="display: none;">
+                                <button onclick="visitModeratorTools();" class="big">Moderator tools</button>
+                            </span>
+                            <span class="isNotModerator" style="display: inline;">
+                                <button onclick="visitModmailSender();" class="big">Message moderators</button>
+                            </span>
+                        </span>
+                    </card>
+                    <card data-location="^g\/[^\/]+\/posts\/[^\/]+$" style="display: none;">
+                        <h2 class="postGroupHeader"></h2>
+                        <p class="postGroupDescription"></p>
+                        <button onclick="toggleGroupMembership();" class="big blue groupJoinButton">Join</button>
+                        <button onclick="visitGroup();" class="big">Visit group</button>
+                    </card>
+                    <card data-location="^g\/[^\/]+\/modtools$" style="display: none;">
+                        <h2 class="groupName">g/Glipo</h2>
+                        <p class="groupDescription">The official group for Glipo. Ask questions to our staff and keep up-to-date with our announcements.</p>
+                        <button onclick="modVisitGroup();" class="big">Visit group</button>
+                        <button onclick="modVisitSettings();" class="big">Settings</button>
+                    </card>
+                    <card data-location="^g\/[^\/]+\/settings$" style="display: none;">
+                        <h2 class="groupName">g/Glipo</h2>
+                        <button onclick="modVisitGroup();" class="big">Visit group</button>
+                        <button onclick="visitModeratorTools();" class="big">Moderator tools</button>
+                    </card>
+                    <card data-location="^g\/[^\/]+\/modmail$" style="display: none;">
+                        <h2 class="groupName">g/Glipo</h2>
+                        <p class="groupDescription">The official group for Glipo. Ask questions to our staff and keep up-to-date with our announcements.</p>
+                        <button onclick="toggleGroupMembership();" class="big blue groupJoinButton">Join</button>
+                        <button onclick="modVisitGroup();" class="big">Visit group</button>
+                    </card>
+                    <span class="hasRules" style="display: inline;">
+                        <card data-location="^g\/[^\/]+$|^g\/[^\/]+\/posts\/[^\/]+$" style="display: block;">
+                            <h2>Group rules</h2>
+                            <div class="groupRules"><details><summary>1. Relevant content only</summary><p>g/Glipo is a place for announcements, help requests and feedback for Glipo. Please don't use g/Glipo as a place to post content that doesn't fit in any particular group.</p></details><details><summary>2. No fake announcements</summary><p>Only Glipo's staff members can announce new things  (such as service updates) on Glipo. If you're letting everyone know about a new group you've made, that's fine.</p></details><details><summary>3. Discussion about web frontend only</summary><p>Please don't ask questions about third-party Glipo clients as our group members and staff only can help you with the official Glipo Web Frontend.</p></details></div>
+                        </card>
+                    </span>
+                    <card data-location="^u\/.*$" style="display: none;">
+                        <h2><strong class="userUsername"></strong></h2>
+                        <p><strong class="userStaffTitle"></strong></p>
+                        <p>
+                            <span class="userBio"></span>
+                            <span class="userIsMe">
+                                <a href="https://glipo.net/settings" class="userBioEditLink">Edit</a>
+                            </span>
+                            </p><p title="This message was added by a member of Glipo staff." class="errorMessage userStaffCommentary"></p>
+                        <p></p>
+                        <p class="userJoinDate">Joined ---</p>
+                        <p>
+                            <strong class="userPoints">--- points</strong>
+                            <span>·</span>
+                            <span class="userPostCount">--- posts</span>
+                            <span>·</span>
+                            <span class="userCommentCount">--- comments</span>
+                        </p>
+                        <div class="userIsNotMe">
+                            <button onclick="visitUserMessages();" class="big blue">Send message</button>
+                        </div>
+                    </card>
+                    <span class="donorInfo">
+                        <card>
+                            <p class="donorSince">Glipo donor</p>
+                        </card>
+                    </span>
+                </span>
+                <card data-location="^submit$" style="display: none;">
+                    <h2>Community guidelines</h2>
+                    <details>
+                        <summary>1. Think before you post</summary>
+                        <p>Before pressing the submit button, give yourself a
+                            few seconds to think whether the actions you're
+                            taking will be beneficial and useful to others on
+                            Glipo.</p>
+                    </details>
+                    <details>
+                        <summary>2. There's a human at the other end</summary>
+                        <p>Remember that real, living people are going to read
+                            your posts and comments. Be polite and don't offend
+                            anyone ─ words can hurt. If you're criticising
+                            someone's opinion, do so politely and
+                            constructively.</p>
+                    </details>
+                    <details>
+                        <summary>3. Do as you would in real life</summary>
+                        <p>Behave as you would do when you're offline. Pretend
+                            that a member of your family is reading your posts ─
+                            it's a good check to see if the content that you're
+                            posting is fit for discussion!</p>
+                    </details>
+                    <details>
+                        <summary>4. Help keep groups neat and tidy</summary>
+                        <p>Don't repost something that's already posted on the
+                            group (unless it's <em>really</em> old) ─ people
+                            don't want to see the same post again once or twice!
+                            In addition to this, make sure that you properly
+                            attribute others (this can be done by crossposting
+                            if you're re-sharing a Glipo post on a different
+                            group) and that you also format your posts correctly
+                            (use the preview option to check your post's
+                            formatting before submitting it)!</p>
+                    </details>
+                    <details>
+                        <summary>5. Abide by the rules</summary>
+                        <p>Make sure that your post complies with the rules of
+                            the group that you're posting to. As well as this,
+                            ensure that your post won't violate our
+                            <a href="https://glipo.net/about/help.html?article=termsofservice.md">Terms of Service</a>
+                            and
+                            <a href="https://glipo.net/about/help.html?article=contentpolicy.md">Content Policy</a>.
+                            Failure to do so could result in a group-wide ban,
+                            or even a site-wide ban.</p>
+                    </details>
+                </card>
+                <span class="hasSubmitGroupRules">
+                    <card>
+                        <h2 class="submitGroupRulesHeader">Group rules</h2>
+                        <div class="submitGroupRules"></div>
+                    </card>
+                </span>
+                <card>
+                    <div class="footerSide">
+                        <a href="https://glipo.net/">Feed</a>
+                        <a href="https://glipo.net/settings">Settings</a>
+                        <a href="https://glipo.net/staff">Staff area</a>
+                        <a href="https://glipo.net/appeal">Appeal a ban</a>
+                        <a href="https://glipo.net/creategroup">Create a group</a>
+                        <a href="https://glipo.net/g/Glipo">g/Glipo</a>
+                        <a href="https://glipo.net/g/Glipo/modmail">Message us</a>
+                    </div>
+                    <div class="footerSide">
+                        <a href="https://glipo.net/about">About Glipo</a>
+                        <a href="https://glipo.net/about/help.html">Help centre</a>
+                        <a href="https://glipo.net/about/donate.html">Donate to us</a>
+                        <a href="https://glipo.net/about/help.html?article=termsofservice.md">Terms of Service</a>
+                        <a href="https://glipo.net/about/help.html?article=contentpolicy.md">Content Policy</a>
+                        <a href="https://glipo.net/about/help.html?article=privacypolicy.md">Privacy Policy</a>
+                        <a href="https://glipo.net/about/help.html?article=accessibility.md">Accessibility</a>
+                    </div>
+                    <p>Copyright © Glipo Technologies. All Rights Reserved.</p>
+                </card>
+            </aside>
+        </main>
+        <dialog class="alertDialog">
+            <div class="title">
+                <span class="alertTitle"></span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="alertContent"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="closeDialogs();" class="blue">OK</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="signInDialog hasInputs">
+            <div class="title">
+                <span>Sign in</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <h2>Welcome back</h2>
+                <p class="labelDescription">Enter your email address and password to sign into your Glipo account.</p>
+                <p><span>Don't have an account yet?</span> <a href="javascript:switchToSignUpDialog();">Sign up instead</a></p>
+                <label>
+                    <span>Email address</span>
+                    <input type="email" id="signInEmail">
+                </label>
+                <label>
+                    <span>Password</span>
+                    <input type="password" id="signInPassword">
+                </label>
+                <p class="errorMessage labelDescription" id="signInError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="signIn();" class="blue" id="signInButton">Sign in</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="signUpDialog hasInputs">
+            <div class="title">
+                <span>Sign up</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <h2>Join the conversation</h2>
+                <p class="labelDescription"><span>Enter your email address and password below to sign up to Glipo and discover your community.</span> <a href="javascript:switchToSignInDialog();">Sign in instead</a></p>
+                <label>
+                    <span>Email address</span>
+                    <input type="email" id="signUpEmail">
+                </label>
+                <label>
+                    <span>Password</span>
+                    <input type="password" id="signUpPassword">
+                </label>
+                <p class="errorMessage labelDescription" id="signUpError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="switchToSignUpUsernameDialog();" class="blue">Next</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="signUpUsernameDialog hasInputs">
+            <div class="title">
+                <span>Sign up</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <h2>Nearly there</h2>
+                <p class="labelDescription"><span>Choose a username for your account. Your username will be visible to everyone when you post or comment on Glipo.</span></p>
+                <label>
+                    <span>Username</span>
+                    <input id="signUpUsername">
+                </label>
+                <p class="errorMessage labelDescription" id="signUpUsernameError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="signUp();" class="blue" id="signUpUsernameButton">Sign up</button>
+                    <button onclick="switchToSignUpDialog();">Back</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="ceInsertLinkDialog hasInputs">
+            <div class="title">
+                <span>Insert link</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <label>
+                    <span>Link text</span>
+                    <input id="ceInsertLinkText">
+                </label>
+                <label>
+                    <span>URL to content</span>
+                    <input id="ceInsertLinkUrl">
+                </label>
+                <p class="errorMessage labelDescription" id="ceInsertLinkError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="ceInsertLink();" class="blue">Insert</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="ceInsertCheckboxDialog hasInputs">
+            <div class="title">
+                <span>Insert checkbox</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <label>
+                    <span>Checkbox state</span>
+                    <input type="checkbox" id="ceInsertCheckboxState">
+                </label>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="ceInsertCheckbox();" class="blue">Insert</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="ceInsertTableDialog hasInputs">
+            <div class="title">
+                <span>Insert table</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <label>
+                    <span>Columns</span>
+                    <input type="number" min="1" max="20" step="1" value="3" id="ceInsertTableColumns">
+                </label>
+                <label>
+                    <span>Rows</span>
+                    <input type="number" min="1" max="100" step="1" value="3" id="ceInsertTableRows">
+                </label>
+                <p class="errorMessage labelDescription" id="ceInsertTableError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="ceInsertTable();" class="blue">Insert</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="ceInsertMediaDialog hasInputs">
+            <div class="title">
+                <span>Insert media</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="labelDescription">PNG, JPEG and GIF photos are supported.</p>
+                <label>
+                    <span>URL to media</span>
+                    <input id="ceInsertMediaUrl">
+                </label>
+                <label>
+                    <span>Brief description</span>
+                    <input placeholder="eg. Photo of dancing lizard" id="ceInsertMediaDescription">
+                </label>
+                <p class="errorMessage labelDescription" id="ceInsertMediaError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="ceInsertMedia();" class="blue">Insert</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="leaveGroupDialog">
+            <div class="title">
+                <span>Leave group?</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p>Do you really want to leave this group? You can join again later if you change your mind.</p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="leaveGroup();" class="blue">Yes</button>
+                    <button onclick="closeDialogs();">No</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="staffRemovePostModDialog hasInputs">
+            <div class="title">
+                <span>Remove a post</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="labelDescription">Enter the reason as to why this post was removed. The post author will see this reason.</p>
+                <label>
+                    <span>Reason</span>
+                    <input id="staffRemovePostModReason">
+                </label>
+                <p class="errorMessage labelDescription" id="staffRemovePostModError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="staffRemovePost();" class="blue">Remove</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="modRemovePostModDialog hasInputs">
+            <div class="title">
+                <span>Remove a post</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="labelDescription">Enter the reason as to why this post was removed. The post author will see this reason.</p>
+                <label>
+                    <span>Reason</span>
+                    <input id="modRemovePostModReason">
+                </label>
+                <p class="errorMessage labelDescription" id="modRemovePostModError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="modRemovePost();" class="blue">Remove</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="actOnReportModDialog hasTextarea hasMixedInput">
+            <div class="title">
+                <span>Act upon a report</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="labelDescription">Please enter the details of the action that you wish to take.</p>
+                <p>Reason for action:</p>
+                <textarea placeholder="(Optional)" class="noResize" id="actOnReportModReason"></textarea>
+                <div class="spacer"></div>
+                <label><input type="checkbox" checked="" id="actOnReportModNoMessage"><span>Send message to offender via u/modbot as to why this content was removed</span></label>
+                <span class="isStaff" style="display: none;">
+                    <label><input type="checkbox" id="actOnReportModDeleteContent"><span>Delete the content from Glipo's servers</span></label>
+                    <label><input type="checkbox" id="actOnReportModBanOffender"><span>Ban the offender from Glipo</span></label>
+                </span>
+                <p class="errorMessage labelDescription" id="actOnReportModError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="actOnReport();" class="blue actOnReportModButton">Act</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="changePermsModDialog hasMultilineRadios">
+            <div class="title">
+                <span>Change a member's permissions</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="labelDescription" id="changePermsModDescription">What permissions do you wish to grant to this user?</p>
+                <label>
+                    <input type="radio" name="changePermsModPermissions" value="owner">
+                    <span>
+                        <strong>Owner</strong><br>
+                        <span>Grant this user all moderator permissions, with the additional ability to change potentially dangerous settings, such as adding and removing other moderators and changing the group description and rules.</span>
+                    </span>
+                </label>
+                <label>
+                    <input type="radio" name="changePermsModPermissions" value="moderator">
+                    <span>
+                        <strong>Standard moderator</strong><br>
+                        <span>Grant this user basic moderator permissions, allowing them to act upon reports and remove posts that violate the rules.</span>    
+                    </span>
+                </label>
+                <label>
+                    <input type="radio" name="changePermsModPermissions" value="member">
+                    <span>
+                        <strong>Member</strong><br>
+                        <span>Don't grant this user any moderator permissions. This user will only be able to write, edit and delete their own posts and comments when in this group.</span>    
+                    </span>
+                </label>
+                <label>
+                    <input type="radio" name="changePermsModPermissions" value="banned">
+                    <span>
+                        <strong>Banned user</strong><br>
+                        <span>Ban this user from this group, preventing them from being able to write their own posts and comments. They can still view and vote on posts.</span>    
+                    </span>
+                </label>
+                <p class="errorMessage" id="changePermsModError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="changeMemberPerms();" class="blue changePermsModButton">Grant</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="deletePostDialog">
+            <div class="title">
+                <span>Delete post</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p>Do you really want to delete this post? This action cannot be undone.</p>
+                <p class="errorMessage" id="deletePostError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button class="blue deletePostButton">Delete</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="deleteCommentDialog">
+            <div class="title">
+                <span>Delete comment</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p>Do you really want to delete this comment? This action cannot be undone.</p>
+                <p class="errorMessage" id="deleteCommentError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button class="blue deleteCommentButton">Delete</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="reportBlockedDialog">
+            <div class="title">
+                <span>Reporting is blocked</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p>You cannot send reports because you are currently banned from using Glipo for offences related to reports abuse.</p>
+                <p><span>Need to urgently contact us? Email us:</span> <a href="mailto:abuse@glipo.net">abuse@glipo.net</a></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="closeDialogs();" class="blue">OK</button>
+                    <button onclick="window.location.href = &#39;/appeal&#39;;">Appeal ban</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="reportLoaderDialog loader">
+            <div class="title">
+                <span class="reportTitle">Report content</span>
+            </div>
+            <div class="content">
+                <div class="loadingSpinner"></div>
+            </div>
+        </dialog>
+        <dialog class="reportDialog">
+            <div class="title">
+                <span class="reportTitle">Report content</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="reportDescription">Tell us why you're reporting this post so that we can further investigate the issue.</p>
+                <label class="reportRuleViolationOption"><input type="radio" name="reportType" value="rules"><span class="reportGroupRule">It violates the rules of this group</span></label>
+                <label><input type="radio" name="reportType" value="spam"><span>It is spam or unsolicited advertising</span></label>
+                <label><input type="radio" name="reportType" value="misinformation"><span>It is deceptive or misleading, or is otherwise misinformative</span></label>
+                <label><input type="radio" name="reportType" value="abuse"><span>It is abusive, harassing or offensive</span></label>
+                <label><input type="radio" name="reportType" value="other"><span>It is something else</span></label>
+                <p><a href="https://glipo.net/about/help.html?article=whoreceivesreports.md" target="_blank">Learn more about who receives reports</a></p>
+                <p class="reportError errorMessage"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="reportNext();" class="blue">Next</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="reportNextDialog hasTextarea">
+            <div class="title">
+                <span class="reportTitle">Report content</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p><strong class="reportSelectedType"></strong></p>
+                <div class="reportSelectedTypeForm"></div>
+                <p>Is there anything else that you would like to tell us?</p>
+                <textarea placeholder="(Optional)" class="reportExtra noResize"></textarea>
+                <p class="reportError errorMessage"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="reportSend();" class="blue reportSendButton">Send</button>
+                    <button onclick="reportBack();">Back</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="reportThanksDialog hasParagraph">
+            <div class="title">
+                <span class="reportTitle">Report content</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <h2>Your report has been sent</h2>
+                <p>Thanks for making the Glipo community safe! Your report will be seen shortly.</p>
+                <p>Please note that not all reports are responded to straight away due to other reports taking priority, and that some reports that we investigate may not result in an outcome.</p>
+                <p><span>Depending on the details of your report, your report may either be read by staff or group moderators.</span> <a href="https://glipo.net/about/help.html?article=whoreceivesreports.md" target="_blank">Learn more about who will receive your report</a></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="closeDialogs();" class="blue">Done</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="newRuleModDialog hasTextarea hasMixedInput">
+            <div class="title">
+                <span>New rule</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p>Rule title:</p>
+                <input placeholder="eg. Do not post dino pics" maxlength="100" class="big" id="newRuleModTitle">
+                <p>Rule contents:</p>
+                <textarea placeholder="Tell us more about the rule..." maxlength="500" class="noResize" id="newRuleModContent"></textarea>
+                <p class="errorMessage labelDescription" id="newRuleModError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="newGroupRule();" class="blue newRuleModButton">Save</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="editRuleModDialog hasTextarea hasMixedInput">
+            <div class="title">
+                <span>Edit a rule</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p>Rule title:</p>
+                <div class="ruleEditLine">
+                    <select id="editRuleModPosition"></select>
+                    <input placeholder="eg. Do not post dino pics" maxlength="100" id="editRuleModTitle">
+                </div>
+                <p>Rule contents:</p>
+                <textarea placeholder="Tell us more about the rule..." maxlength="500" class="noResize" id="editRuleModContent"></textarea>
+                <p class="errorMessage labelDescription" id="editRuleModError"></p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="saveGroupRule();" class="blue editRuleModButton">Save</button>
+                    <button onclick="closeDialogs();">Cancel</button>
+                    <button onclick="deleteGroupRule();" class="deleteRuleModButton">Delete rule</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="blockUserDialog">
+            <div class="title">
+                <span>Block user?</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="blockUsername">Do you really want to block this user? You can unblock them later in Glipo's settings.</p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="blockSelectedUser();" class="blue">Yes</button>
+                    <button onclick="closeDialogs();">No</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog class="deleteAccountDialog hasParagraph">
+            <div class="title">
+                <span>Delete account?</span>
+                <button onclick="closeDialogs();"><icon aria-label="Close dialog">close</icon></button>
+            </div>
+            <div class="content">
+                <p class="blockUsername">Do you really want to delete your Glipo account? This cannot be undone! Your posts and comments will still be visible on Glipo, but your username will be removed from them. We'll miss you!</p>
+                <div class="spacer"></div>
+                <div class="end buttonRow">
+                    <button onclick="deleteAccount();" class="blue deleteAccountButton">Yes</button>
+                    <button onclick="deleteAccountActiveFromSettings = false; closeDialogs();">No</button>
+                </div>
+            </div>
+        </dialog>
+    
+</body></html>
